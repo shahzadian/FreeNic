@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 val AppTypography = Typography(
-    // Крупные цифры и заголовки
+    // Large titles
     displayLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Bold,
@@ -28,7 +28,7 @@ val AppTypography = Typography(
         lineHeight = 44.sp
     ),
 
-    // Заголовки экранов / секций
+    // Screen and section titles
     headlineLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.SemiBold,
@@ -48,7 +48,7 @@ val AppTypography = Typography(
         lineHeight = 32.sp
     ),
 
-    // Названия карточек, кнопок
+    // Card and button titles
     titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.SemiBold,
@@ -70,7 +70,7 @@ val AppTypography = Typography(
         letterSpacing = 0.1.sp
     ),
 
-    // Основной текст
+    // Main text
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
@@ -93,7 +93,7 @@ val AppTypography = Typography(
         letterSpacing = 0.4.sp
     ),
 
-    // Подписи, кнопки, чипы
+    // Signs, buttons, chips
     labelLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Medium,
