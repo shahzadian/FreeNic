@@ -1,14 +1,12 @@
-package com.shahzadian.homescreen.ui.welcomescreen
+package com.shahzadian.homescreen.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.Spring.DampingRatioMediumBouncy
 import androidx.compose.animation.core.StartOffset
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
@@ -40,10 +38,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.shahzadian.baseui.R
-
-
-private const val DURATION_ANIMATION_VISIBILITY: Int = 1000
-private const val DELAY_ANIMATION_VISIBILITY_TITLE: Int = 1000
+import com.shahzadian.homescreen.ui.UiUtils.DELAY_ANIMATION_VISIBILITY_TITLE
+import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 @Composable
 fun WelcomeScreen(
@@ -70,12 +66,17 @@ fun WelcomeScreen(
             .fillMaxSize()
             .background(gradient)
     ) {
-        Content()
+        Content(
+            onClick = {
+
+            }
+        )
     }
 }
 
 @Composable
 private fun Content(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -98,7 +99,7 @@ private fun Content(
                 .padding(bottom = 32.dp)
         )
         StartButton(
-            onClick = { /* TODO */ },
+            onClick = onClick,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -161,7 +162,7 @@ private fun Title(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(R.string.home_screen_title),
+            text = stringResource(R.string.welcome_screen_title),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.headlineLarge,
         )
@@ -185,7 +186,7 @@ private fun Description(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(R.string.home_screen_desc),
+            text = stringResource(R.string.welcome_screen_desc),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
@@ -233,7 +234,7 @@ private fun StartButton(
                 .height(56.dp)
         ) {
             Text(
-                text = stringResource(R.string.home_screen_button),
+                text = stringResource(R.string.welcome_screen_button),
                 color = MaterialTheme.colorScheme.primary,
             )
         }

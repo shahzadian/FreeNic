@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FreeNic</string>
-    <string name="home_screen_title">Добро пожаловать в FreeNic</string>
-    <string name="home_screen_desc">Ваш путь к жизни без курения начинается здесь. Я буду с вами на каждом шагу!</string>
-    <string name="home_screen_button">Начать</string>
+    <string name="welcome_screen_title">Добро пожаловать в FreeNic</string>
+    <string name="welcome_screen_desc">Ваш путь к жизни без курения начинается здесь. Я буду с вами на каждом шагу!</string>
+    <string name="welcome_screen_button">Начать</string>
 </resources>
