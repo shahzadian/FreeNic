@@ -1,0 +1,20 @@
+# Android Studio IDE files
+.idea/*
+!.idea/vcs.xml
+*.iml
+local.properties
+
+# Gradle files
+.gradle/
+build/
+gradle-wrapper.properties
+
+# Keystore files
+*.jks
+*.keystore
+
+# Proguard output files
+proguard/
+
+# Log files
+*.log
