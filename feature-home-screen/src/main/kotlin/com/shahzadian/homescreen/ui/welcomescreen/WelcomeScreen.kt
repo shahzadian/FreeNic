@@ -2,10 +2,13 @@ package com.shahzadian.homescreen.ui.welcomescreen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.Spring.DampingRatioMediumBouncy
 import androidx.compose.animation.core.StartOffset
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
@@ -14,7 +17,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,6 +40,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.shahzadian.baseui.R
+
 
 private const val DURATION_ANIMATION_VISIBILITY: Int = 1000
 private const val DELAY_ANIMATION_VISIBILITY_TITLE: Int = 1000
@@ -75,20 +83,23 @@ private fun Content(
             .fillMaxSize()
             .padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         WelcomeImage(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
                 .padding(bottom = 32.dp)
         )
         Title(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
                 .padding(bottom = 12.dp),
         )
         Description(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 32.dp)
+        )
+        StartButton(
+            onClick = { /* TODO */ },
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -179,5 +190,52 @@ private fun Description(
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
         )
+    }
+}
+
+@Composable
+private fun StartButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val animationDelay = DELAY_ANIMATION_VISIBILITY_TITLE * 2
+    var buttonVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { buttonVisible = true }
+
+    val elevation by animateDpAsState(
+        targetValue = if (buttonVisible) 8.dp else 0.dp,
+        animationSpec = tween(
+            durationMillis = DURATION_ANIMATION_VISIBILITY,
+            delayMillis = animationDelay + 500 // Compose bug. If there is no delay, elevation does not animate
+        )
+    )
+    AnimatedVisibility(
+        visible = buttonVisible,
+        enter = fadeIn(
+            animationSpec = tween(
+                durationMillis = DURATION_ANIMATION_VISIBILITY / 2,
+                delayMillis = animationDelay,
+            )
+        ),
+        modifier = modifier,
+    ) {
+        Button(
+            onClick = onClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.background,
+            ),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = elevation,
+                pressedElevation = elevation + elevation / 2,
+            ),
+            shape = MaterialTheme.shapes.medium,
+            modifier = modifier
+                .height(56.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.home_screen_button),
+                color = MaterialTheme.colorScheme.primary,
+            )
+        }
     }
 }
