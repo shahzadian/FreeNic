@@ -5,10 +5,10 @@ import com.freenic.ui.AppScreen
 import com.freenic.ui.vm.BaseViewModel
 import kotlinx.coroutines.launch
 
-class HomeScreenViewModel : BaseViewModel<HomeScreenState, HomeScreenEvent, HomeScreenCommand>() {
+class HomeViewModel : BaseViewModel<HomeViewState, HomeViewEvent, HomeViewCommand>() {
 
-    override val initState: HomeScreenState by lazy {
-        HomeScreenState(
+    override val initState: HomeViewState by lazy {
+        HomeViewState(
             isLoading = false,
         )
     }
@@ -16,7 +16,7 @@ class HomeScreenViewModel : BaseViewModel<HomeScreenState, HomeScreenEvent, Home
     init {
         viewModelScope.launch {
             sendViewCommand(
-                HomeScreenCommand.Navigate(
+                HomeViewCommand.Navigate(
                     screenId = AppScreen.WelcomeScreen.route,
                     shouldRemoveCurrentScreenFromStack = true,
                 )
@@ -24,7 +24,7 @@ class HomeScreenViewModel : BaseViewModel<HomeScreenState, HomeScreenEvent, Home
         }
     }
 
-    override fun onViewEventHappened(event: HomeScreenEvent) {
+    override fun onViewEventHappened(event: HomeViewEvent) {
 //        Nothing
     }
 }

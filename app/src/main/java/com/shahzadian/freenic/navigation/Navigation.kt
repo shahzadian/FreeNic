@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.freenic.ui.AppScreen
 import com.shahzadian.homescreen.ui.homescreen.HomeScreen
-import com.shahzadian.homescreen.ui.WelcomeScreen
+import com.shahzadian.homescreen.ui.welcomescreen.WelcomeScreen
 import com.shahzadian.homescreen.ui.onboardingscreen.OnboardingScreen
 
 @Composable
@@ -17,10 +17,14 @@ fun Navigation() {
             HomeScreen(navController = navController)
         }
         composable(route = AppScreen.WelcomeScreen.route) {
-            WelcomeScreen()
+            WelcomeScreen(
+                navController = navController,
+            )
         }
         composable(route = AppScreen.OnboardingScreen.route) {
-            OnboardingScreen()
+            OnboardingScreen(
+                navController = navController
+            )
         }
         // TODO: Add other screens
     }

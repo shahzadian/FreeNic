@@ -4,6 +4,6 @@ import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
 
 @Immutable
-data class HomeScreenState(
+data class HomeViewState(
     val isLoading: Boolean,
 ) : ViewState

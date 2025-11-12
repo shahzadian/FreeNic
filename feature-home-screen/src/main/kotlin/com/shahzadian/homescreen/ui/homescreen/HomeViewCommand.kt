@@ -4,9 +4,9 @@ import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewCommand
 
 @Immutable
-sealed interface HomeScreenCommand : ViewCommand {
+sealed interface HomeViewCommand : ViewCommand {
     data class Navigate(
         val screenId: String,
         val shouldRemoveCurrentScreenFromStack: Boolean,
-    ) : HomeScreenCommand
+    ) : HomeViewCommand
 }

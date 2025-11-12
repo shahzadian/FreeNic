@@ -1,14 +1,11 @@
 package com.shahzadian.homescreen.ui.onboardingscreen
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,36 +22,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.shahzadian.baseui.R
+import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.textFromWrapper
+import com.freenic.ui.wrapper.ImageWrapper
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.homescreen.ui.UiUtils.DELAY_ANIMATION_VISIBILITY_TITLE
 import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 @Composable
-@Preview
-fun Test() {
-    OnboardingView(
-        titleRes = R.string.welcome_screen_title,
-        descriptionRes = R.string.welcome_screen_desc,
-        imageRes = com.shahzadian.homescreen.R.drawable.ic_welcome_screen,
-        buttonTextRes = R.string.welcome_screen_button,
-        onButtonClick = {},
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primary)
-    )
-}
-
-@Composable
 internal fun OnboardingView(
-    @StringRes titleRes: Int,
-    @StringRes descriptionRes: Int,
-    @DrawableRes imageRes: Int,
-    @StringRes buttonTextRes: Int,
+    title: TextWrapper,
+    description: TextWrapper,
+    imageWrapper: ImageWrapper,
+    buttonText: TextWrapper,
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -66,22 +48,22 @@ internal fun OnboardingView(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ContentImage(
-            imageRes = imageRes,
+            imageWrapper = imageWrapper,
             modifier = Modifier
                 .padding(bottom = 32.dp)
         )
         OnboardingTitle(
-            textRes = titleRes,
+            text = title,
             modifier = Modifier
                 .padding(bottom = 12.dp),
         )
         OnboardingDescription(
-            textRes = descriptionRes,
+            text = description,
             modifier = Modifier
                 .padding(bottom = 32.dp)
         )
         SubmitButton(
-            textRes = buttonTextRes,
+            text = buttonText,
             onClick = onButtonClick,
             modifier = Modifier.fillMaxWidth()
         )
@@ -90,7 +72,7 @@ internal fun OnboardingView(
 
 @Composable
 private fun ContentImage(
-    @DrawableRes imageRes: Int,
+    imageWrapper: ImageWrapper,
     modifier: Modifier = Modifier,
 ) {
     var imageVisible by remember { mutableStateOf(false) }
@@ -118,16 +100,16 @@ private fun ContentImage(
             .scale(scale),
     ) {
         Image(
-            painter = painterResource(imageRes),
+            painter = imageFromWrapper(imageWrapper),
             contentDescription = "Onboarding view",
-          //  modifier = Modifier.scale(scale),
+            //  modifier = Modifier.scale(scale),
         )
     }
 }
 
 @Composable
 private fun OnboardingTitle(
-    @StringRes textRes: Int,
+    text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
     var titleVisible by remember { mutableStateOf(false) }
@@ -143,7 +125,7 @@ private fun OnboardingTitle(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(textRes),
+            text = textFromWrapper(text),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.headlineLarge,
         )
@@ -152,7 +134,7 @@ private fun OnboardingTitle(
 
 @Composable
 private fun OnboardingDescription(
-    @StringRes textRes: Int,
+    text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
     var descriptionVisible by remember { mutableStateOf(false) }
@@ -168,7 +150,7 @@ private fun OnboardingDescription(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(textRes),
+            text = textFromWrapper(text),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
@@ -178,7 +160,7 @@ private fun OnboardingDescription(
 
 @Composable
 private fun SubmitButton(
-    @StringRes textRes: Int,
+    text: TextWrapper,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

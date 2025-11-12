@@ -1,4 +1,4 @@
-package com.shahzadian.homescreen.ui
+package com.shahzadian.homescreen.ui.welcomescreen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.RepeatMode
@@ -24,6 +24,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,17 +35,25 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.shahzadian.baseui.R
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import com.freenic.ui.extensions.textFromWrapper
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.homescreen.ui.UiUtils.DELAY_ANIMATION_VISIBILITY_TITLE
 import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 @Composable
 fun WelcomeScreen(
     modifier: Modifier = Modifier,
+    navController: NavController,
+    viewModel: WelcomeViewModel = viewModel(),
 ) {
+    val state: WelcomeViewState by viewModel.viewStateFlow.collectAsState()
+    val onClick: (WelcomeViewEvent) -> Unit = remember {
+        { event -> viewModel.onViewEvent(event) }
+    }
     var contentVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { contentVisible = true }
 
@@ -66,16 +75,33 @@ fun WelcomeScreen(
             .fillMaxSize()
             .background(gradient)
     ) {
-        Content(
-            onClick = {
-
+        when (state) {
+            is WelcomeViewState.Data -> {
+                Content(
+                    data = state as WelcomeViewState.Data,
+                    onClick = {
+                        onClick(WelcomeViewEvent.OnGetStartedClicked)
+                    }
+                )
             }
-        )
+        }
+    }
+    LaunchedEffect(key1 = viewModel.viewCommandFlow) {
+        viewModel
+            .viewCommandFlow
+            .collect { command ->
+                when (command) {
+                    is WelcomeViewCommand.Navigate -> {
+                        navController.navigate(command.screen.route)
+                    }
+                }
+            }
     }
 }
 
 @Composable
 private fun Content(
+    data: WelcomeViewState.Data,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -91,14 +117,17 @@ private fun Content(
                 .padding(bottom = 32.dp)
         )
         Title(
+            text = data.title,
             modifier = Modifier
                 .padding(bottom = 12.dp),
         )
         Description(
+            text = data.description,
             modifier = Modifier
                 .padding(bottom = 32.dp)
         )
         StartButton(
+            text = data.buttonText,
             onClick = onClick,
             modifier = Modifier.fillMaxWidth()
         )
@@ -147,6 +176,7 @@ private fun WelcomeImage(
 
 @Composable
 private fun Title(
+    text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
     var titleVisible by remember { mutableStateOf(false) }
@@ -162,7 +192,7 @@ private fun Title(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(R.string.welcome_screen_title),
+            text = textFromWrapper(text),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.headlineLarge,
         )
@@ -171,6 +201,7 @@ private fun Title(
 
 @Composable
 private fun Description(
+    text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
     var descriptionVisible by remember { mutableStateOf(false) }
@@ -186,7 +217,7 @@ private fun Description(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(R.string.welcome_screen_desc),
+            text = textFromWrapper(text),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.titleMedium,
             textAlign = TextAlign.Center,
@@ -196,6 +227,7 @@ private fun Description(
 
 @Composable
 private fun StartButton(
+    text: TextWrapper,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -234,7 +266,7 @@ private fun StartButton(
                 .height(56.dp)
         ) {
             Text(
-                text = stringResource(R.string.welcome_screen_button),
+                text = textFromWrapper(text),
                 color = MaterialTheme.colorScheme.primary,
             )
         }

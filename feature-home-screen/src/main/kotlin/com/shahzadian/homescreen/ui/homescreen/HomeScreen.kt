@@ -8,20 +8,19 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppScreen
-import com.shahzadian.homescreen.ui.homescreen.HomeScreenViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
-    viewModel: HomeScreenViewModel = viewModel(),
+    viewModel: HomeViewModel = viewModel(),
 ) {
     val state by viewModel.viewStateFlow.collectAsState()
 
     LaunchedEffect(viewModel.viewCommandFlow) {
         viewModel.viewCommandFlow.collect { command ->
             when (command) {
-                is HomeScreenCommand.Navigate -> {
+                is HomeViewCommand.Navigate -> {
                     navController.navigate(
                         route = command.screenId,
                     ) {

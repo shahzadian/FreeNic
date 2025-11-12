@@ -26,6 +26,12 @@ abstract class BaseViewModel<VS : ViewState, VE : ViewEvent, VC : ViewCommand> :
 
     protected abstract fun onViewEventHappened(event: VE)
 
+    protected suspend fun setViewState(state: VS) {
+        withContext(Dispatchers.Main) {
+            _viewStateFlow.emit(state)
+        }
+    }
+
     protected suspend fun sendViewCommand(command: VC) {
         withContext(Dispatchers.Main) {
             _viewCommandFlow.emit(command)
