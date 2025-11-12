@@ -143,6 +143,7 @@ private fun Title(
         text = stringResource(R.string.welcome_screen_title),
         color = MaterialTheme.colorScheme.onPrimary,
         style = MaterialTheme.typography.headlineLarge,
+        textAlign = TextAlign.Center
     )
 }
 

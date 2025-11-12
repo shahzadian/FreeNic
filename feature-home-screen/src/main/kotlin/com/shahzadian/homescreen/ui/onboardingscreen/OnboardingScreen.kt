@@ -1,5 +1,6 @@
 package com.shahzadian.homescreen.ui.onboardingscreen
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -7,6 +8,8 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -118,7 +121,8 @@ private fun OnboardingImage(
         animationSpec = tween(
             durationMillis = DURATION_ANIMATION_IMAGE_SCALE,
             easing = LinearOutSlowInEasing
-        )
+        ),
+        label = ""
     )
 
     AnimatedVisibility(
@@ -167,72 +171,90 @@ private fun TitleText(
     text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
-    var visible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { visible = true }
-
-    AnimatedVisibility(
+    var currentText by remember { mutableStateOf<TextWrapper?>(null) }
+    LaunchedEffect(text) {
+        currentText = text
+    }
+    AnimatedContent(
+        targetState = currentText,
+        label = "TitleTextAnimation",
         modifier = modifier,
-        visible = visible,
-        enter = slideInHorizontally(
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_TITLE_SLIDE,
-                delayMillis = DELAY_ANIMATION_TEXT_SLIDE,
-                easing = LinearOutSlowInEasing
-            ),
-            initialOffsetX = { -it },
-        )
-    ) {
-        Surface(
-            modifier = modifier.padding(start = 16.dp, end = 64.dp),
-            shape = MaterialTheme.shapes.medium,
-            tonalElevation = 8.dp,
-            color = MaterialTheme.colorScheme.background,
-        ) {
-            Text(
-                text = textFromWrapper(text),
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.titleLarge
+        transitionSpec = {
+            slideInHorizontally(
+                animationSpec = tween(
+                    durationMillis = DURATION_ANIMATION_TITLE_SLIDE,
+                    delayMillis = DELAY_ANIMATION_TEXT_SLIDE,
+                    easing = LinearOutSlowInEasing
+                ),
+                initialOffsetX = { -it },
+            ) togetherWith slideOutHorizontally(
+                targetOffsetX = { it * 2 }
             )
+        }
+    ) { targetText ->
+        if (targetText != null) {
+            Surface(
+                modifier = Modifier.padding(start = 16.dp, end = 64.dp),
+                shape = MaterialTheme.shapes.medium,
+                tonalElevation = 8.dp,
+                color = MaterialTheme.colorScheme.background,
+            ) {
+                Text(
+                    text = textFromWrapper(targetText),
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(16.dp),
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
         }
     }
 }
+
 
 @Composable
 private fun SubtitleText(
     text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
-    var visible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { visible = true }
-
-    AnimatedVisibility(
+    var currentText by remember { mutableStateOf<TextWrapper?>(null) }
+    LaunchedEffect(text) {
+        currentText = text
+    }
+    AnimatedContent(
+        targetState = currentText,
         modifier = modifier,
-        visible = visible,
-        enter = slideInHorizontally(
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_TITLE_SLIDE,
-                delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 2,
-                easing = LinearOutSlowInEasing
-            ),
-            initialOffsetX = { it * 2 },
-        )
-    ) {
-        Surface(
-            modifier = modifier.padding(start = 64.dp, end = 16.dp),
-            shape = MaterialTheme.shapes.medium,
-            tonalElevation = 8.dp,
-            color = MaterialTheme.colorScheme.secondaryContainer,
-        ) {
-            Text(
-                text = textFromWrapper(text),
-                color = MaterialTheme.colorScheme.onSecondaryContainer,
-                modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.bodyLarge
+        transitionSpec = {
+            slideInHorizontally(
+                animationSpec = tween(
+                    durationMillis = DURATION_ANIMATION_TITLE_SLIDE,
+                    delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 2,
+                    easing = LinearOutSlowInEasing
+                ),
+                initialOffsetX = { it * 2 },
+            ) togetherWith slideOutHorizontally(
+                targetOffsetX = { -it }
             )
+        },
+        label = "SubtitleTextAnimation"
+    ) { targetText ->
+        if (targetText != null) {
+            Surface(
+                modifier = Modifier.padding(start = 64.dp, end = 16.dp),
+                shape = MaterialTheme.shapes.medium,
+                tonalElevation = 8.dp,
+                color = MaterialTheme.colorScheme.secondaryContainer,
+            ) {
+                Text(
+                    text = textFromWrapper(targetText),
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
+                    modifier = Modifier.padding(16.dp),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
     }
 }
+
 
 @Composable
 private fun SubmitButton(
@@ -260,7 +282,7 @@ private fun SubmitButton(
         enter = fadeIn(
             animationSpec = tween(
                 durationMillis = DURATION_ANIMATION_VISIBILITY,
-                delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 4,
+                delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 3,
             )
         ),
         modifier = modifier,
