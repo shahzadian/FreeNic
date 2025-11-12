@@ -34,12 +34,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
+import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.homescreen.ui.UiUtils.DELAY_ANIMATION_VISIBILITY_TITLE
 import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
@@ -113,6 +114,7 @@ private fun Content(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         WelcomeImage(
+            image = data.image,
             modifier = Modifier
                 .padding(bottom = 32.dp)
         )
@@ -136,6 +138,7 @@ private fun Content(
 
 @Composable
 private fun WelcomeImage(
+    image: ImageWrapper,
     modifier: Modifier = Modifier,
 ) {
     var imageVisible by remember { mutableStateOf(false) }
@@ -167,7 +170,7 @@ private fun WelcomeImage(
         modifier = modifier,
     ) {
         Image(
-            painter = painterResource(com.shahzadian.homescreen.R.drawable.ic_welcome_screen),
+            painter = imageFromWrapper(image),
             contentDescription = "Welcome screen",
             modifier = Modifier.scale(scale)
         )
