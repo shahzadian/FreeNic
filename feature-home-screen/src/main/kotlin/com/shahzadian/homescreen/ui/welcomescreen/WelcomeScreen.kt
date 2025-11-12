@@ -206,6 +206,7 @@ private fun StartButton(
             Text(
                 text = stringResource(R.string.welcome_screen_button),
                 color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleMedium,
             )
         }
     }

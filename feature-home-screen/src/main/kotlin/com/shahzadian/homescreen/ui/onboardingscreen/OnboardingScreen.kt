@@ -7,6 +7,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
@@ -47,7 +48,7 @@ import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 private const val DURATION_ANIMATION_IMAGE_SCALE: Int = 20_000
 private const val DURATION_ANIMATION_TITLE_SLIDE: Int = 800
-private const val DELAY_ANIMATION_TEXT_SLIDE: Int = 1000
+private const val DELAY_ANIMATION_TEXT_SLIDE: Int = 1500
 
 
 @Composable
@@ -227,7 +228,7 @@ private fun SubtitleText(
             slideInHorizontally(
                 animationSpec = tween(
                     durationMillis = DURATION_ANIMATION_TITLE_SLIDE,
-                    delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 2,
+                    delayMillis = DELAY_ANIMATION_TEXT_SLIDE + DELAY_ANIMATION_TEXT_SLIDE / 2,
                     easing = LinearOutSlowInEasing
                 ),
                 initialOffsetX = { it * 2 },
@@ -277,35 +278,47 @@ private fun SubmitButton(
     )
     val interactionSource = remember { MutableInteractionSource() }
 
-    AnimatedVisibility(
-        visible = buttonVisible,
-        enter = fadeIn(
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_VISIBILITY,
-                delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 3,
-            )
-        ),
+    var currentText by remember { mutableStateOf<TextWrapper?>(null) }
+    LaunchedEffect(buttonText) {
+        currentText = buttonText
+    }
+
+    AnimatedContent(
+        targetState = currentText,
         modifier = modifier,
-    ) {
-        Button(
-            onClick = onClick,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.background,
-            ),
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = elevation,
-                pressedElevation = elevation * 2,
-            ),
-            shape = MaterialTheme.shapes.medium,
-            interactionSource = interactionSource,
-            modifier = modifier
-                .padding(horizontal = 16.dp)
-                .height(56.dp)
-        ) {
-            Text(
-                text = textFromWrapper(buttonText),
-                color = MaterialTheme.colorScheme.primary,
-            )
+        transitionSpec = {
+            fadeIn(
+                animationSpec = tween(
+                    durationMillis = DURATION_ANIMATION_VISIBILITY,
+                    delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 2,
+                )
+            ) togetherWith fadeOut()
+        },
+        label = "buttonAnimation"
+    ) { targetText ->
+        if (targetText != null) {
+            Button(
+                onClick = onClick,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.background,
+                ),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = elevation,
+                    pressedElevation = elevation * 2,
+                ),
+                shape = MaterialTheme.shapes.medium,
+                interactionSource = interactionSource,
+                modifier = modifier
+                    .padding(horizontal = 16.dp)
+                    .height(56.dp)
+            ) {
+                Text(
+                    text = textFromWrapper(targetText),
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
         }
     }
 }
+
