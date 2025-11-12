@@ -8,17 +8,17 @@ internal class GetOnboardingDataUseCaseImpl @Inject constructor(
 ) : GetOnboardingDataUseCase {
 
     private var onboardingDataList: List<OnboardingData>? = null
+    private var currentDataIndex: Int = -1
 
-    override suspend fun invoke(currentDataKey: String?): OnboardingData? {
+    override suspend fun getNextData(): OnboardingData? {
         val listToGetDataFrom = onboardingDataList ?: let {
             val data = onboardingDataRepository.getAllData()
             onboardingDataList = data
             data
         }
         if (listToGetDataFrom.isEmpty()) return null
-        if (currentDataKey == null) return listToGetDataFrom.first()
-        val currentIndex = listToGetDataFrom.indexOfFirst { it.key == currentDataKey }
-        if (currentIndex == -1 || currentIndex == listToGetDataFrom.lastIndex) return null
-        return listToGetDataFrom[currentIndex + 1]
+        if (currentDataIndex == -1) return listToGetDataFrom.first()
+        if (currentDataIndex == listToGetDataFrom.lastIndex) return null
+        return listToGetDataFrom[currentDataIndex++]
     }
 }

@@ -5,5 +5,6 @@ import com.freenic.ui.vm.ViewState
 
 @Immutable
 sealed interface WelcomeViewState : ViewState {
+    @Immutable
     data object Default : WelcomeViewState
 }

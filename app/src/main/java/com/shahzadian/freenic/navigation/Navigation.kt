@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.freenic.ui.AppScreen
 import com.shahzadian.homescreen.ui.homescreen.HomeScreen
+import com.shahzadian.homescreen.ui.onboardingscreen.OnboardingScreen
 import com.shahzadian.homescreen.ui.welcomescreen.WelcomeScreen
 
 @Composable
@@ -17,6 +18,11 @@ fun Navigation() {
         }
         composable(route = AppScreen.WelcomeScreen.route) {
             WelcomeScreen(
+                navController = navController,
+            )
+        }
+        composable(route = AppScreen.OnboardingScreen.route) {
+            OnboardingScreen(
                 navController = navController,
             )
         }

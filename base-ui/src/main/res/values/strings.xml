@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">FreeNic</string>
     <string name="welcome_screen_title">Welcome to FreeNic</string>
-    <string name="welcome_screen_desc">Your journey to a smoke-free life starts here. I am with you every step of the way.</string>
+    <string name="welcome_screen_desc">Your journey to a smoke-free life starts here. I am with you every step of the way</string>
     <string name="welcome_screen_button">Get started</string>
+
+    <string name="onboarding_1_title">Every smoky breath takes you further from life</string>
+    <string name="onboarding_1_subtitle">Smoking harms your body silently, slowly, but surely. Today is the best day to stop</string>
+
+    <string name="onboarding_2_title">You don’t hold the cigarette - it holds you</string>
+    <string name="onboarding_2_subtitle">Smoking dulls your will and steals your freedom. FreeNic helps you take control back</string>
+
+    <string name="onboarding_3_title">You’re not just burning cigarettes</string>
+    <string name="onboarding_3_subtitle">Every day of addiction costs you more. Freedom is cheaper than you think</string>
 </resources>
