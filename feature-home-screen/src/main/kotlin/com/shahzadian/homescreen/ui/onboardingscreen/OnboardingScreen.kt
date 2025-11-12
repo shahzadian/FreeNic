@@ -54,12 +54,18 @@ fun OnboardingScreen(
 ) {
     val viewModel: OnboardingViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()
+    val onButtonClick: (OnboardingViewEvent) -> Unit = remember {
+        { event -> viewModel.onViewEvent(event) }
+    }
+
     when (state) {
         is OnboardingViewState.Loading -> {}
         is OnboardingViewState.Data -> {
             Content(
                 data = state as OnboardingViewState.Data,
-                onButtonClick = {},
+                onButtonClick = {
+                    onButtonClick(OnboardingViewEvent.OnSubmitButtonClicked)
+                },
                 modifier = modifier
             )
         }

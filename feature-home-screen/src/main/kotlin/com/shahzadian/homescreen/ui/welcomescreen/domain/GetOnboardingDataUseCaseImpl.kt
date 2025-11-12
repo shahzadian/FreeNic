@@ -17,8 +17,8 @@ internal class GetOnboardingDataUseCaseImpl @Inject constructor(
             data
         }
         if (listToGetDataFrom.isEmpty()) return null
-        if (currentDataIndex == -1) return listToGetDataFrom.first()
         if (currentDataIndex == listToGetDataFrom.lastIndex) return null
-        return listToGetDataFrom[currentDataIndex++]
+        if (currentDataIndex++ == -1) return listToGetDataFrom.first()
+        return listToGetDataFrom[currentDataIndex]
     }
 }

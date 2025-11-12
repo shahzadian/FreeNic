@@ -21,7 +21,11 @@ internal class OnboardingViewModel @Inject constructor(
     }
 
     override fun onViewEventHappened(event: OnboardingViewEvent) {
-
+        when (event) {
+            is OnboardingViewEvent.OnSubmitButtonClicked -> {
+                updateData()
+            }
+        }
     }
 
     private fun updateData() {
