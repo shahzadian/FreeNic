@@ -16,5 +16,6 @@ internal sealed interface OnboardingViewState : ViewState {
         val title: TextWrapper,
         val subtitle: TextWrapper,
         val image: ImageWrapper,
+        val buttonText: TextWrapper,
     ) : OnboardingViewState
 }

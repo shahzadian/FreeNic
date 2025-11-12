@@ -19,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -126,12 +125,11 @@ private fun Content(
             }
         }
 
-        // This will be pushed to the bottom
         StartButton(
             onClick = onClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 48.dp) // Add padding to lift it off the bottom edge
+                .padding(bottom = 48.dp)
         )
     }
 }

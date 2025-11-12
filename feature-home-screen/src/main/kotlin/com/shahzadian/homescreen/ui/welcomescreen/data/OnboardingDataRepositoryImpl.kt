@@ -25,6 +25,9 @@ internal class OnboardingDataRepositoryImpl @Inject constructor() : OnboardingDa
                     resId = R.string.onboarding_1_subtitle,
                 ),
                 image = image,
+                submitText = TextWrapper.FromRes(
+                    resId = R.string.onboarding_1_submit,
+                ),
             ),
             OnboardingData(
                 title = TextWrapper.FromRes(
@@ -34,6 +37,9 @@ internal class OnboardingDataRepositoryImpl @Inject constructor() : OnboardingDa
                     resId = R.string.onboarding_2_subtitle,
                 ),
                 image = image,
+                submitText = TextWrapper.FromRes(
+                    resId = R.string.onboarding_2_submit,
+                ),
             ),
             OnboardingData(
                 title = TextWrapper.FromRes(
@@ -43,6 +49,9 @@ internal class OnboardingDataRepositoryImpl @Inject constructor() : OnboardingDa
                     resId = R.string.onboarding_3_subtitle,
                 ),
                 image = image,
+                submitText = TextWrapper.FromRes(
+                    resId = R.string.onboarding_3_submit,
+                ),
             ),
         )
     }

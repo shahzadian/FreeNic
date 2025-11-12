@@ -7,4 +7,5 @@ class OnboardingData(
     val title: TextWrapper,
     val subtitle: TextWrapper,
     val image: ImageWrapper,
+    val submitText: TextWrapper,
 )

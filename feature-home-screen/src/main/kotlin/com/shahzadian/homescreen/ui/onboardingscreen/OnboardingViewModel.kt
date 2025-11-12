@@ -39,6 +39,7 @@ internal class OnboardingViewModel @Inject constructor(
             title = this.title,
             subtitle = this.subtitle,
             image = this.image,
+            buttonText = this.submitText,
         )
     }
 }

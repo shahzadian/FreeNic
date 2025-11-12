@@ -2,17 +2,22 @@ package com.shahzadian.homescreen.ui.onboardingscreen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,10 +39,11 @@ import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.homescreen.ui.UiUtils.DELAY_ANIMATION_VISIBILITY_TITLE
 import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 private const val DURATION_ANIMATION_IMAGE_SCALE: Int = 20_000
-private const val DURATION_ANIMATION_TITLE_SLIDE: Int = 1500
+private const val DURATION_ANIMATION_TITLE_SLIDE: Int = 800
 private const val DELAY_ANIMATION_TEXT_SLIDE: Int = 1000
 
 
@@ -52,8 +58,9 @@ fun OnboardingScreen(
         is OnboardingViewState.Loading -> {}
         is OnboardingViewState.Data -> {
             Content(
-                modifier = modifier,
-                data = state as OnboardingViewState.Data
+                data = state as OnboardingViewState.Data,
+                onButtonClick = {},
+                modifier = modifier
             )
         }
     }
@@ -61,8 +68,9 @@ fun OnboardingScreen(
 
 @Composable
 private fun Content(
-    modifier: Modifier = Modifier,
-    data: OnboardingViewState.Data
+    data: OnboardingViewState.Data,
+    onButtonClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp.dp
@@ -72,13 +80,21 @@ private fun Content(
         OnboardingImage(
             image = data.image
         )
-        TextContent(
+        Content(
             title = data.title,
             subtitle = data.subtitle,
             modifier = Modifier
                 .wrapContentHeight()
                 .align(Alignment.BottomCenter)
                 .padding(bottom = screenHeight / 4)
+        )
+        SubmitButton(
+            buttonText = data.buttonText,
+            onClick = onButtonClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 48.dp)
         )
     }
 }
@@ -118,7 +134,7 @@ private fun OnboardingImage(
 }
 
 @Composable
-private fun TextContent(
+private fun Content(
     title: TextWrapper,
     subtitle: TextWrapper,
     modifier: Modifier = Modifier,
@@ -161,7 +177,7 @@ private fun TitleText(
         )
     ) {
         Surface(
-            modifier = modifier.padding(horizontal = 16.dp),
+            modifier = modifier.padding(start = 16.dp, end = 64.dp),
             shape = MaterialTheme.shapes.medium,
             tonalElevation = 8.dp,
             color = MaterialTheme.colorScheme.background,
@@ -190,14 +206,14 @@ private fun SubtitleText(
         enter = slideInHorizontally(
             animationSpec = tween(
                 durationMillis = DURATION_ANIMATION_TITLE_SLIDE,
-                delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 3,
+                delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 2,
                 easing = LinearOutSlowInEasing
             ),
             initialOffsetX = { it * 2 },
         )
     ) {
         Surface(
-            modifier = modifier.padding(horizontal = 16.dp),
+            modifier = modifier.padding(start = 64.dp, end = 16.dp),
             shape = MaterialTheme.shapes.medium,
             tonalElevation = 8.dp,
             color = MaterialTheme.colorScheme.secondaryContainer,
@@ -207,6 +223,60 @@ private fun SubtitleText(
                 color = MaterialTheme.colorScheme.onSecondaryContainer,
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
+}
+
+@Composable
+private fun SubmitButton(
+    buttonText: TextWrapper,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+
+    val animationDelay = DELAY_ANIMATION_VISIBILITY_TITLE * 2
+    var buttonVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { buttonVisible = true }
+
+    val elevation by animateDpAsState(
+        targetValue = if (buttonVisible) 4.dp else 0.dp,
+        animationSpec = tween(
+            durationMillis = DURATION_ANIMATION_VISIBILITY,
+            delayMillis = animationDelay + 100
+        ),
+        label = "elevation"
+    )
+    val interactionSource = remember { MutableInteractionSource() }
+
+    AnimatedVisibility(
+        visible = buttonVisible,
+        enter = fadeIn(
+            animationSpec = tween(
+                durationMillis = DURATION_ANIMATION_VISIBILITY,
+                delayMillis = DELAY_ANIMATION_TEXT_SLIDE * 4,
+            )
+        ),
+        modifier = modifier,
+    ) {
+        Button(
+            onClick = onClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.background,
+            ),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = elevation,
+                pressedElevation = elevation * 2,
+            ),
+            shape = MaterialTheme.shapes.medium,
+            interactionSource = interactionSource,
+            modifier = modifier
+                .padding(horizontal = 16.dp)
+                .height(56.dp)
+        ) {
+            Text(
+                text = textFromWrapper(buttonText),
+                color = MaterialTheme.colorScheme.primary,
             )
         }
     }
