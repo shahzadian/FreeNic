@@ -12,6 +12,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,7 +37,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
@@ -49,8 +50,8 @@ import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 fun WelcomeScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: WelcomeViewModel = viewModel(),
 ) {
+    val viewModel: WelcomeViewModel = hiltViewModel()
     val state: WelcomeViewState by viewModel.viewStateFlow.collectAsState()
     val onClick: (WelcomeViewEvent) -> Unit = remember {
         { event -> viewModel.onViewEvent(event) }
@@ -149,12 +150,13 @@ private fun WelcomeImage(
         initialValue = 1f,
         targetValue = 1.2f,
         animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1200),
+            animation = tween(durationMillis = 1000),
             repeatMode = RepeatMode.Reverse,
             initialStartOffset = StartOffset(1000)
         ),
         label = "scale"
     )
+
     AnimatedVisibility(
         visible = imageVisible,
         enter = slideInVertically(
@@ -243,8 +245,11 @@ private fun StartButton(
         animationSpec = tween(
             durationMillis = DURATION_ANIMATION_VISIBILITY,
             delayMillis = animationDelay + 500 // Compose bug. If there is no delay, elevation does not animate
-        )
+        ),
+        label = "elevation"
     )
+    val interactionSource = remember { MutableInteractionSource() }
+
     AnimatedVisibility(
         visible = buttonVisible,
         enter = fadeIn(
@@ -265,6 +270,7 @@ private fun StartButton(
                 pressedElevation = elevation * 2,
             ),
             shape = MaterialTheme.shapes.medium,
+            interactionSource = interactionSource,
             modifier = modifier
                 .height(56.dp)
         ) {

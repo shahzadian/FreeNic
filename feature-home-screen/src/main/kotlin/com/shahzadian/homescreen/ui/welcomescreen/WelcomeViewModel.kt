@@ -5,8 +5,14 @@ import com.freenic.ui.vm.BaseViewModel
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.homescreen.ui.welcomescreen.domain.GetOnboardingDataUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class WelcomeViewModel : BaseViewModel<WelcomeViewState, WelcomeViewEvent, WelcomeViewCommand>() {
+@HiltViewModel
+internal class WelcomeViewModel @Inject constructor(
+    private val getOnboardingDataUseCase: GetOnboardingDataUseCase,
+) : BaseViewModel<WelcomeViewState, WelcomeViewEvent, WelcomeViewCommand>() {
 
     override val initState: WelcomeViewState by lazyUnsafe {
         WelcomeViewState.Data(
@@ -21,7 +27,8 @@ class WelcomeViewModel : BaseViewModel<WelcomeViewState, WelcomeViewEvent, Welco
             ),
             image = ImageWrapper.FromRes(
                 resId = com.shahzadian.homescreen.R.drawable.ic_welcome_screen,
-            )
+            ),
+            key = "sample"
         )
     }
 
