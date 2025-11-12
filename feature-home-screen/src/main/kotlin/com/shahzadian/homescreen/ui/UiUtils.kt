@@ -2,6 +2,6 @@ package com.shahzadian.homescreen.ui
 
 internal object UiUtils {
 
-    const val DURATION_ANIMATION_VISIBILITY: Int = 1000
-    const val DELAY_ANIMATION_VISIBILITY_TITLE: Int = 1000
+    const val DURATION_ANIMATION_VISIBILITY: Int = 700
+    const val DELAY_ANIMATION_VISIBILITY_TITLE: Int = 700
 }

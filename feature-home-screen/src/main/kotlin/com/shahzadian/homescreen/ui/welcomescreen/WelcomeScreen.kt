@@ -1,16 +1,10 @@
 package com.shahzadian.homescreen.ui.welcomescreen
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.StartOffset
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -32,17 +26,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.freenic.ui.extensions.imageFromWrapper
-import com.freenic.ui.extensions.textFromWrapper
-import com.freenic.ui.wrapper.ImageWrapper
-import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
 import com.shahzadian.homescreen.ui.UiUtils.DELAY_ANIMATION_VISIBILITY_TITLE
 import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
@@ -52,7 +43,6 @@ fun WelcomeScreen(
     navController: NavController,
 ) {
     val viewModel: WelcomeViewModel = hiltViewModel()
-    val state: WelcomeViewState by viewModel.viewStateFlow.collectAsState()
     val onClick: (WelcomeViewEvent) -> Unit = remember {
         { event -> viewModel.onViewEvent(event) }
     }
@@ -77,16 +67,11 @@ fun WelcomeScreen(
             .fillMaxSize()
             .background(gradient)
     ) {
-        when (state) {
-            is WelcomeViewState.Data -> {
-                Content(
-                    data = state as WelcomeViewState.Data,
-                    onClick = {
-                        onClick(WelcomeViewEvent.OnGetStartedClicked)
-                    }
-                )
+        Content(
+            onClick = {
+                onClick(WelcomeViewEvent.OnGetStartedClicked)
             }
-        }
+        )
     }
     LaunchedEffect(key1 = viewModel.viewCommandFlow) {
         viewModel
@@ -103,7 +88,6 @@ fun WelcomeScreen(
 
 @Composable
 private fun Content(
-    data: WelcomeViewState.Data,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -111,128 +95,74 @@ private fun Content(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 24.dp),
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        WelcomeImage(
-            image = data.image,
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-        )
-        Title(
-            text = data.title,
-            modifier = Modifier
-                .padding(bottom = 12.dp),
-        )
-        Description(
-            text = data.description,
-            modifier = Modifier
-                .padding(bottom = 32.dp)
-        )
+        var contentVisible by remember { mutableStateOf(false) }
+        LaunchedEffect(Unit) { contentVisible = true }
+        AnimatedVisibility(
+            modifier = modifier.weight(1f),
+            visible = contentVisible,
+            enter = slideInVertically(
+                initialOffsetY = { it },
+                animationSpec = tween(
+                    durationMillis = DURATION_ANIMATION_VISIBILITY * 2,
+                )
+            ) + fadeIn(
+                animationSpec = tween(
+                    durationMillis = DURATION_ANIMATION_VISIBILITY,
+                )
+            ),
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Title(
+                    modifier = Modifier
+                        .padding(bottom = 12.dp),
+                )
+                Description(
+                )
+            }
+        }
+
+        // This will be pushed to the bottom
         StartButton(
-            text = data.buttonText,
             onClick = onClick,
-            modifier = Modifier.fillMaxWidth()
-        )
-    }
-}
-
-@Composable
-private fun WelcomeImage(
-    image: ImageWrapper,
-    modifier: Modifier = Modifier,
-) {
-    var imageVisible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { imageVisible = true }
-
-    val infiniteTransition = rememberInfiniteTransition(label = "heartbeat")
-    val scale by infiniteTransition.animateFloat(
-        initialValue = 1f,
-        targetValue = 1.2f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(durationMillis = 1000),
-            repeatMode = RepeatMode.Reverse,
-            initialStartOffset = StartOffset(1000)
-        ),
-        label = "scale"
-    )
-
-    AnimatedVisibility(
-        visible = imageVisible,
-        enter = slideInVertically(
-            initialOffsetY = { it },
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_VISIBILITY,
-            )
-        ) + fadeIn(
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_VISIBILITY,
-            )
-        ),
-        modifier = modifier,
-    ) {
-        Image(
-            painter = imageFromWrapper(image),
-            contentDescription = "Welcome screen",
-            modifier = Modifier.scale(scale)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 48.dp) // Add padding to lift it off the bottom edge
         )
     }
 }
 
 @Composable
 private fun Title(
-    text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
-    var titleVisible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { titleVisible = true }
-    AnimatedVisibility(
-        visible = titleVisible,
-        enter = fadeIn(
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_VISIBILITY,
-                delayMillis = DELAY_ANIMATION_VISIBILITY_TITLE,
-            )
-        ),
+    Text(
         modifier = modifier,
-    ) {
-        Text(
-            text = textFromWrapper(text),
-            color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.headlineLarge,
-        )
-    }
+        text = stringResource(R.string.welcome_screen_title),
+        color = MaterialTheme.colorScheme.onPrimary,
+        style = MaterialTheme.typography.headlineLarge,
+    )
 }
 
 @Composable
 private fun Description(
-    text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
-    var descriptionVisible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { descriptionVisible = true }
-    AnimatedVisibility(
-        visible = descriptionVisible,
-        enter = fadeIn(
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_VISIBILITY,
-                delayMillis = DELAY_ANIMATION_VISIBILITY_TITLE,
-            )
-        ),
+    Text(
         modifier = modifier,
-    ) {
-        Text(
-            text = textFromWrapper(text),
-            color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.titleMedium,
-            textAlign = TextAlign.Center,
-        )
-    }
+        text = stringResource(R.string.welcome_screen_desc),
+        color = MaterialTheme.colorScheme.onPrimary,
+        style = MaterialTheme.typography.titleMedium,
+        textAlign = TextAlign.Center,
+    )
 }
 
 @Composable
 private fun StartButton(
-    text: TextWrapper,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -244,7 +174,7 @@ private fun StartButton(
         targetValue = if (buttonVisible) 4.dp else 0.dp,
         animationSpec = tween(
             durationMillis = DURATION_ANIMATION_VISIBILITY,
-            delayMillis = animationDelay + 500 // Compose bug. If there is no delay, elevation does not animate
+            delayMillis = animationDelay + 100
         ),
         label = "elevation"
     )
@@ -254,7 +184,7 @@ private fun StartButton(
         visible = buttonVisible,
         enter = fadeIn(
             animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_VISIBILITY / 2,
+                durationMillis = DURATION_ANIMATION_VISIBILITY,
                 delayMillis = animationDelay,
             )
         ),
@@ -275,7 +205,7 @@ private fun StartButton(
                 .height(56.dp)
         ) {
             Text(
-                text = textFromWrapper(text),
+                text = stringResource(R.string.welcome_screen_button),
                 color = MaterialTheme.colorScheme.primary,
             )
         }
