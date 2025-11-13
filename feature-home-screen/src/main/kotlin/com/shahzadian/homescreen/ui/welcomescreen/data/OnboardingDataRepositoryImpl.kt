@@ -9,9 +9,15 @@ import javax.inject.Inject
 
 internal class OnboardingDataRepositoryImpl @Inject constructor() : OnboardingDataRepository {
 
-    private val image: ImageWrapper by lazyUnsafe {
+    private val negativeImage: ImageWrapper by lazyUnsafe {
         ImageWrapper.FromRes(
-            resId = com.shahzadian.homescreen.R.drawable.ic_onboarding_1,
+            resId = com.shahzadian.homescreen.R.drawable.ic_onboarding_negative,
+        )
+    }
+
+    private val positiveImage: ImageWrapper by lazyUnsafe {
+        ImageWrapper.FromRes(
+            resId = com.shahzadian.homescreen.R.drawable.ic_onboarding_positive,
         )
     }
 
@@ -24,7 +30,7 @@ internal class OnboardingDataRepositoryImpl @Inject constructor() : OnboardingDa
                 subtitle = TextWrapper.FromRes(
                     resId = R.string.onboarding_1_subtitle,
                 ),
-                image = image,
+                image = negativeImage,
                 submitText = TextWrapper.FromRes(
                     resId = R.string.onboarding_1_submit,
                 ),
@@ -36,7 +42,7 @@ internal class OnboardingDataRepositoryImpl @Inject constructor() : OnboardingDa
                 subtitle = TextWrapper.FromRes(
                     resId = R.string.onboarding_2_subtitle,
                 ),
-                image = image,
+                image = negativeImage,
                 submitText = TextWrapper.FromRes(
                     resId = R.string.onboarding_2_submit,
                 ),
@@ -48,9 +54,21 @@ internal class OnboardingDataRepositoryImpl @Inject constructor() : OnboardingDa
                 subtitle = TextWrapper.FromRes(
                     resId = R.string.onboarding_3_subtitle,
                 ),
-                image = image,
+                image = negativeImage,
                 submitText = TextWrapper.FromRes(
                     resId = R.string.onboarding_3_submit,
+                ),
+            ),
+            OnboardingData(
+                title = TextWrapper.FromRes(
+                    resId = R.string.onboarding_4_title,
+                ),
+                subtitle = TextWrapper.FromRes(
+                    resId = R.string.onboarding_4_subtitle,
+                ),
+                image = positiveImage,
+                submitText = TextWrapper.FromRes(
+                    resId = R.string.onboarding_4_submit,
                 ),
             ),
         )

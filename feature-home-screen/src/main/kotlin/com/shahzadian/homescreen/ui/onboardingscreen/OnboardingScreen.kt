@@ -114,8 +114,13 @@ private fun OnboardingImage(
     image: ImageWrapper,
     modifier: Modifier = Modifier
 ) {
-    var visible by remember { mutableStateOf(false) }
+    var visible by remember(image) { mutableStateOf(false) }
     LaunchedEffect(Unit) { visible = true }
+
+    var currentImage by remember { mutableStateOf<ImageWrapper?>(null) }
+    LaunchedEffect(image) {
+        currentImage = image
+    }
 
     val scale by animateFloatAsState(
         targetValue = if (visible) 1.8f else 1f,
@@ -126,22 +131,48 @@ private fun OnboardingImage(
         label = ""
     )
 
-    AnimatedVisibility(
-        visible = visible,
-        enter = fadeIn(
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_VISIBILITY * 4
-            )
-        ),
+    AnimatedContent(
+        targetState = currentImage,
+        label = "ImageAnimation",
         modifier = modifier
             .fillMaxSize()
-            .scale(scale = scale)
-    ) {
-        Image(
-            painter = imageFromWrapper(image),
-            contentDescription = "Onboarding"
-        )
+            .scale(scale = scale),
+        transitionSpec = {
+            fadeIn(
+                animationSpec = tween(
+                    durationMillis = DURATION_ANIMATION_VISIBILITY * 4
+                )
+            ) togetherWith fadeOut(
+                animationSpec = tween(
+                    durationMillis = DURATION_ANIMATION_VISIBILITY * 4
+                )
+            )
+        },
+    ) { image ->
+        if (image != null) {
+            Image(
+                painter = imageFromWrapper(image),
+                contentDescription = "Onboarding"
+            )
+        }
     }
+//
+//    AnimatedVisibility(
+//        visible = visible,
+//        enter = fadeIn(
+//            animationSpec = tween(
+//                durationMillis = DURATION_ANIMATION_VISIBILITY * 4
+//            )
+//        ),
+//        modifier = modifier
+//            .fillMaxSize()
+//            .scale(scale = scale)
+//    ) {
+//        Image(
+//            painter = imageFromWrapper(image),
+//            contentDescription = "Onboarding"
+//        )
+//    }
 }
 
 @Composable

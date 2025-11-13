@@ -14,6 +14,9 @@
 
     <string name="onboarding_3_title">You pay for your habit every day</string>
     <string name="onboarding_3_subtitle">Cigarettes quietly steal your money. Imagine how much you could save if you quit</string>
-    <string name="onboarding_3_submit">I am ready!</string>
+    <string name="onboarding_3_submit">Next</string>
 
+    <string name="onboarding_4_title">You can change everything. We’ll help you!</string>
+    <string name="onboarding_4_subtitle">FreeNic is your first step to freedom. Support, motivation, and a smoke-free journey start here</string>
+    <string name="onboarding_4_submit">I am ready!</string>
 </resources>

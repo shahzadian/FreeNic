@@ -6,13 +6,18 @@
 
     <string name="onboarding_1_title">Каждый вдох с дымом - шаг прочь от жизни</string>
     <string name="onboarding_1_subtitle">Курение разрушает тело медленно, незаметно, но неотвратимо. Сегодня - лучший день, чтобы остановиться</string>
-
     <string name="onboarding_1_submit">Далее</string>
+
     <string name="onboarding_2_title">Ты не держишь сигарету - она держит тебя</string>
     <string name="onboarding_2_subtitle">Курение притупляет волю и крадёт свободу. FreeNic поможет вернуть контроль над собой</string>
-
     <string name="onboarding_2_submit">Далее</string>
+
     <string name="onboarding_3_title">Ты платишь за привычку каждый день</string>
     <string name="onboarding_3_subtitle">Сигареты незаметно крадут твои деньги. Подумай, сколько могло остаться у тебя, если бы ты бросил</string>
-    <string name="onboarding_3_submit">Я готов!</string>
+    <string name="onboarding_3_submit">Далее</string>
+
+    <string name="onboarding_4_title">Ты можешь изменить всё. Мы поможем!</string>
+    <string name="onboarding_4_subtitle">FreeNic — это твой первый шаг к свободе. Поддержка, мотивация и путь без дыма начинаются прямо здесь</string>
+    <string name="onboarding_4_submit">Я готов!</string>
+
 </resources>
