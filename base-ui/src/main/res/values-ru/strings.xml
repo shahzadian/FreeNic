@@ -12,7 +12,7 @@
     <string name="onboarding_2_subtitle">Курение притупляет волю и крадёт свободу. FreeNic поможет вернуть контроль над собой</string>
 
     <string name="onboarding_2_submit">Далее</string>
-    <string name="onboarding_3_title">Ты сжигаешь не только сигареты</string>
-    <string name="onboarding_3_subtitle">Каждый день зависимости стоит тебе всё дороже. Свобода - дешевле, чем ты думаешь</string>
+    <string name="onboarding_3_title">Ты платишь за привычку каждый день</string>
+    <string name="onboarding_3_subtitle">Сигареты незаметно крадут твои деньги. Подумай, сколько могло остаться у тебя, если бы ты бросил</string>
     <string name="onboarding_3_submit">Я готов!</string>
 </resources>
