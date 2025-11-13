@@ -29,6 +29,11 @@ fun DataFillScreen(
             .fillMaxSize()
             .background(mainGradientBackground())
     ) {
+        DataFillStartView(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        )
         Footer(
             pagesCount = 5,
             currentPageIndex = 1,
@@ -75,7 +80,7 @@ private fun SubmitButton(
 ) {
     MainSubmitButton(
         text = TextWrapper.FromRes(
-            R.string.personal_data_fill_main_screen_submit_button
+            R.string.data_fill_submit_button
         ),
         onClick = onClick,
         modifier = modifier,

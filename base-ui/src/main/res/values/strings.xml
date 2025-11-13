@@ -20,7 +20,7 @@
     <string name="onboarding_4_subtitle">FreeNic is your first step to freedom. Support, motivation, and a smoke-free journey start here</string>
     <string name="onboarding_4_submit">I am ready!</string>
 
-    <string name="personal_data_fill_screen_1_title">Tell us a bit about yourself</string>
-    <string name="personal_data_fill_screen_1_subtitle">So we can help you quit more effectively</string>
-    <string name="personal_data_fill_main_screen_submit_button">Continue</string>
+    <string name="data_fill_start_title">Tell us a bit about yourself</string>
+    <string name="data_fill_start_subtitle">So we can help you quit more effectively</string>
+    <string name="data_fill_submit_button">Continue</string>
 </resources>
