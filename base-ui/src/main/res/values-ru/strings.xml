@@ -19,5 +19,7 @@
     <string name="onboarding_4_title">Ты можешь изменить всё. Мы поможем!</string>
     <string name="onboarding_4_subtitle">FreeNic — это твой первый шаг к свободе. Поддержка, мотивация и путь без дыма начинаются прямо здесь</string>
     <string name="onboarding_4_submit">Я готов!</string>
+    <string name="personal_data_fill_start_screen_title">Расскажи немного о себе</string>
+    <string name="personal_data_fill_start_screen_subtitle">Чтобы мы помогли тебе бросить эффективнее</string>
 
 </resources>

@@ -1,20 +1,16 @@
 package com.shahzadian.homescreen.ui.welcomescreen
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,13 +21,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.TileMode
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.freenic.ui.extensions.MainSubmitButton
+import com.freenic.ui.extensions.mainGradientBackground
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.homescreen.ui.UiUtils.DELAY_ANIMATION_VISIBILITY_TITLE
 import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
@@ -48,13 +46,7 @@ fun WelcomeScreen(
     var contentVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { contentVisible = true }
 
-    val gradient = Brush.horizontalGradient(
-        colors = listOf(
-            MaterialTheme.colorScheme.primary,
-            MaterialTheme.colorScheme.secondaryContainer
-        ),
-        tileMode = TileMode.Mirror
-    )
+    val gradient = mainGradientBackground()
     AnimatedVisibility(
         visible = contentVisible,
         enter = fadeIn(
@@ -169,16 +161,6 @@ private fun StartButton(
     var buttonVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { buttonVisible = true }
 
-    val elevation by animateDpAsState(
-        targetValue = if (buttonVisible) 4.dp else 0.dp,
-        animationSpec = tween(
-            durationMillis = DURATION_ANIMATION_VISIBILITY,
-            delayMillis = animationDelay + 100
-        ),
-        label = "elevation"
-    )
-    val interactionSource = remember { MutableInteractionSource() }
-
     AnimatedVisibility(
         visible = buttonVisible,
         enter = fadeIn(
@@ -189,25 +171,10 @@ private fun StartButton(
         ),
         modifier = modifier,
     ) {
-        Button(
+        MainSubmitButton(
+            text = TextWrapper.FromRes(R.string.welcome_screen_button),
             onClick = onClick,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = MaterialTheme.colorScheme.background,
-            ),
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = elevation,
-                pressedElevation = elevation * 2,
-            ),
-            shape = MaterialTheme.shapes.medium,
-            interactionSource = interactionSource,
-            modifier = modifier
-                .height(56.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.welcome_screen_button),
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.titleMedium,
-            )
-        }
+            modifier = Modifier
+        )
     }
 }

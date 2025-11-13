@@ -1,6 +1,7 @@
 package com.shahzadian.homescreen.ui.onboardingscreen
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.homescreen.ui.welcomescreen.domain.GetOnboardingDataUseCase
@@ -35,7 +36,16 @@ internal class OnboardingViewModel @Inject constructor(
                     ?.let { data ->
                         setViewState(data.toViewState())
                     }
+                    ?: navigateToPersonalDataFillScreen()
             }
+    }
+
+    private suspend fun navigateToPersonalDataFillScreen() {
+        sendViewCommand(
+            OnboardingViewCommand.NavigateTo(
+                screen = AppScreen.PersonalDataFillStartScreen
+            )
+        )
     }
 
     private fun OnboardingData.toViewState(): OnboardingViewState.Data {

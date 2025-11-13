@@ -46,6 +46,7 @@ android {
 dependencies {
     implementation(project(":base-ui"))
     implementation(project(":feature-home-screen"))
+    implementation(project(":feature-data-fill"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

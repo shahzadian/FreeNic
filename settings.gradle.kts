@@ -17,3 +17,4 @@ rootProject.name = "FreeNic"
 include(":app")
 include(":base-ui")
 include(":feature-home-screen")
+include(":feature-data-fill")

@@ -2,7 +2,6 @@ package com.shahzadian.homescreen.ui.onboardingscreen
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -11,16 +10,13 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,15 +30,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.mainGradientBackground
+import com.freenic.ui.extensions.screenHeight
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
-import com.shahzadian.homescreen.ui.UiUtils.DELAY_ANIMATION_VISIBILITY_TITLE
 import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 private const val DURATION_ANIMATION_IMAGE_SCALE: Int = 20_000
@@ -73,6 +71,18 @@ fun OnboardingScreen(
             )
         }
     }
+
+    LaunchedEffect(key1 = viewModel.viewCommandFlow) {
+        viewModel
+            .viewCommandFlow
+            .collect { command ->
+                when (command) {
+                    is OnboardingViewCommand.NavigateTo -> {
+                        navController.navigate(command.screen.route)
+                    }
+                }
+            }
+    }
 }
 
 @Composable
@@ -81,10 +91,10 @@ private fun Content(
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val configuration = LocalConfiguration.current
-    val screenHeight = configuration.screenHeightDp.dp
     Box(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier
+            .fillMaxSize()
+            .background(mainGradientBackground())
     ) {
         OnboardingImage(
             image = data.image
@@ -95,7 +105,7 @@ private fun Content(
             modifier = Modifier
                 .wrapContentHeight()
                 .align(Alignment.BottomCenter)
-                .padding(bottom = screenHeight / 4)
+                .padding(bottom = screenHeight.dp / 4)
         )
         SubmitButton(
             buttonText = data.buttonText,
@@ -155,23 +165,6 @@ private fun OnboardingImage(
             )
         }
     }
-//
-//    AnimatedVisibility(
-//        visible = visible,
-//        enter = fadeIn(
-//            animationSpec = tween(
-//                durationMillis = DURATION_ANIMATION_VISIBILITY * 4
-//            )
-//        ),
-//        modifier = modifier
-//            .fillMaxSize()
-//            .scale(scale = scale)
-//    ) {
-//        Image(
-//            painter = imageFromWrapper(image),
-//            contentDescription = "Onboarding"
-//        )
-//    }
 }
 
 @Composable
@@ -293,21 +286,6 @@ private fun SubmitButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-
-    val animationDelay = DELAY_ANIMATION_VISIBILITY_TITLE * 2
-    var buttonVisible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { buttonVisible = true }
-
-    val elevation by animateDpAsState(
-        targetValue = if (buttonVisible) 4.dp else 0.dp,
-        animationSpec = tween(
-            durationMillis = DURATION_ANIMATION_VISIBILITY,
-            delayMillis = animationDelay + 100
-        ),
-        label = "elevation"
-    )
-    val interactionSource = remember { MutableInteractionSource() }
-
     var currentText by remember { mutableStateOf<TextWrapper?>(null) }
     LaunchedEffect(buttonText) {
         currentText = buttonText
@@ -327,28 +305,15 @@ private fun SubmitButton(
         label = "buttonAnimation"
     ) { targetText ->
         if (targetText != null) {
-            Button(
+            MainSubmitButton(
+                text = buttonText,
                 onClick = onClick,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                ),
-                elevation = ButtonDefaults.buttonElevation(
-                    defaultElevation = elevation,
-                    pressedElevation = elevation * 2,
-                ),
-                shape = MaterialTheme.shapes.medium,
-                interactionSource = interactionSource,
-                modifier = modifier
+                modifier = Modifier
                     .padding(horizontal = 16.dp)
-                    .height(56.dp)
-            ) {
-                Text(
-                    text = textFromWrapper(targetText),
-                    color = MaterialTheme.colorScheme.primary,
-                    style = MaterialTheme.typography.titleMedium,
-                )
-            }
+                    .graphicsLayer {
+                        this.shadowElevation
+                    }
+            )
         }
     }
 }
-
