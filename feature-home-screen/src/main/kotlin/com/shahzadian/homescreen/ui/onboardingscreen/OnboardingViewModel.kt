@@ -43,7 +43,7 @@ internal class OnboardingViewModel @Inject constructor(
     private suspend fun navigateToPersonalDataFillScreen() {
         sendViewCommand(
             OnboardingViewCommand.NavigateTo(
-                screen = AppScreen.PersonalDataFillStartScreen
+                screen = AppScreen.DataFillScreen
             )
         )
     }
