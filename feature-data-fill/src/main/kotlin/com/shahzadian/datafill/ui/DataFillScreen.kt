@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.mainGradientBackground
 import com.freenic.ui.theme.Smoke
@@ -24,6 +25,7 @@ import com.shahzadian.baseui.R
 @Composable
 fun DataFillScreen(
 ) {
+    val viewModel: DataFillViewModel = hiltViewModel()
     Box(
         modifier = Modifier
             .fillMaxSize()
