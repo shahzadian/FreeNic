@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.mainGradientBackground
 import com.freenic.ui.theme.Smoke
@@ -24,17 +25,21 @@ import com.shahzadian.baseui.R
 
 @Composable
 fun DataFillScreen(
+    modifier: Modifier = Modifier,
 ) {
     val viewModel: DataFillViewModel = hiltViewModel()
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(mainGradientBackground())
     ) {
-        DataFillStartView(
+        DataFillAboutView(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(24.dp),
+            data = DataFillViewState.About(),
+            onNameChanged = {},
+            onAgeChanged = {},
         )
         Footer(
             pagesCount = 5,

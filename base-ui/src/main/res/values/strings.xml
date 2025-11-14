@@ -4,6 +4,7 @@
     <string name="welcome_screen_desc">Your journey to a smoke-free life starts here. I am with you every step of the way</string>
     <string name="welcome_screen_button">Get started</string>
 
+<!--    Onboarding-->
     <string name="onboarding_1_title">Every smoky breath takes you further from life</string>
     <string name="onboarding_1_subtitle">Smoking harms your body silently, slowly, but surely. Today is the best day to stop</string>
     <string name="onboarding_1_submit">Next</string>
@@ -20,7 +21,22 @@
     <string name="onboarding_4_subtitle">FreeNic is your first step to freedom. Support, motivation, and a smoke-free journey start here</string>
     <string name="onboarding_4_submit">I am ready!</string>
 
+<!--    Data fill-->
     <string name="data_fill_start_title">Tell us a bit about yourself</string>
     <string name="data_fill_start_subtitle">So we can help you quit more effectively</string>
     <string name="data_fill_submit_button">Continue</string>
+
+    <string name="data_fill_about_title">About you</string>
+    <string name="data_fill_about_subtitle">This information helps estimate how your body recovers after quitting smoking</string>
+
+    <string name="data_fill_about_field_name_label">Name</string>
+    <string name="data_fill_about_field_name_hint">Enter your name</string>
+    <string name="data_fill_about_field_name_desc">We will use it to personalize your experience</string>
+
+    <string name="data_fill_about_field_age_label">Age</string>
+    <string name="data_fill_about_field_age_hint">Enter your age</string>
+    <string name="data_fill_about_field_age_desc">Your age helps estimate recovery speed</string>
+
+    <string name="data_fill_about_confidential_info">All your data is confidential and used only for analysis</string>
+
 </resources>

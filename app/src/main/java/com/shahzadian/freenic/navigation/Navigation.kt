@@ -1,6 +1,9 @@
 package com.shahzadian.freenic.navigation
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,21 +18,35 @@ fun Navigation() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppScreen.HomeScreen.route) {
         composable(route = AppScreen.HomeScreen.route) {
-            HomeScreen(navController = navController)
+            Scaffold {
+                HomeScreen(
+                    navController = navController,
+                    modifier = Modifier.padding(it)
+                )
+            }
         }
         composable(route = AppScreen.WelcomeScreen.route) {
-            WelcomeScreen(
-                navController = navController,
-            )
+            Scaffold {
+                WelcomeScreen(
+                    navController = navController,
+                    modifier = Modifier.padding(it)
+                )
+            }
         }
         composable(route = AppScreen.OnboardingScreen.route) {
-            OnboardingScreen(
-                navController = navController,
-            )
+            Scaffold {
+                OnboardingScreen(
+                    navController = navController,
+                    modifier = Modifier.padding(it)
+                )
+            }
         }
         composable(route = AppScreen.DataFillScreen.route) {
-            DataFillScreen(
-            )
+            Scaffold {
+                DataFillScreen(
+                    modifier = Modifier.padding(it)
+                )
+            }
         }
     }
 }

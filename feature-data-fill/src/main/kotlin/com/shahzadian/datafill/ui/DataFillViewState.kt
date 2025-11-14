@@ -7,4 +7,10 @@ import com.freenic.ui.vm.ViewState
 internal sealed interface DataFillViewState : ViewState {
 
     data object Loading : DataFillViewState
+
+    @Immutable
+    data class About(
+        val name: String? = null,
+        val age: String? = null,
+    ) : DataFillViewState
 }

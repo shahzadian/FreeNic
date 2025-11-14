@@ -36,8 +36,8 @@ import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 @Composable
 fun WelcomeScreen(
-    modifier: Modifier = Modifier,
     navController: NavController,
+    modifier: Modifier = Modifier,
 ) {
     val viewModel: WelcomeViewModel = hiltViewModel()
     val onClick: (WelcomeViewEvent) -> Unit = remember {
