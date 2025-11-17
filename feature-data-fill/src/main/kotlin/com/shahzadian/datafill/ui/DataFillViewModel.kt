@@ -1,6 +1,5 @@
 package com.shahzadian.datafill.ui
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -51,13 +50,11 @@ internal class DataFillViewModel @Inject constructor(
         fillableInfoHelper
             .currentInfoFlow
             .onEach { info ->
-                Log.d("LogMog", "got info $info")
                 setViewState(mapInfoToViewState(info))
             }
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
-            Log.d("LogMog", "getting next data")
             fillableInfoHelper.getNextData()
         }
     }

@@ -1,6 +1,8 @@
 package com.shahzadian.datafill.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -125,15 +127,27 @@ private fun PagesIndicators(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         repeat(pagesCount) { item ->
+            val target = if (item <= currentPageIndex) 1f else 0f
+            val progress = animateFloatAsState(
+                targetValue = target,
+                animationSpec = tween(durationMillis = 450),
+                label = "page_indicator_progress"
+            )
+
             Box(
                 modifier = Modifier
                     .height(6.dp)
                     .clip(MaterialTheme.shapes.medium)
-                    .background(
-                        if (item <= currentPageIndex) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
-                    )
+                    .background(MaterialTheme.colorScheme.outline)
                     .weight(1f)
-            )
+            ) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(progress.value)
+                        .height(6.dp)
+                        .background(MaterialTheme.colorScheme.primary)
+                )
+            }
         }
     }
 }
