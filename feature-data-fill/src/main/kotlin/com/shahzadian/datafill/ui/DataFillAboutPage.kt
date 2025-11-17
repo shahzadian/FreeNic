@@ -36,7 +36,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun DataFillAboutView(
+internal fun DataFillAboutPage(
     data: DataFillViewState.About,
     onNameChanged: (String) -> Unit,
     onAgeChanged: (String) -> Unit,

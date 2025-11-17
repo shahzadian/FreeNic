@@ -28,7 +28,7 @@ import com.shahzadian.datafill.R
 private const val ANIMATION_DURATION_IMAGE_APPEARANCE: Int = 700
 
 @Composable
-internal fun DataFillStartView(
+internal fun DataFillInitPage(
     modifier: Modifier = Modifier,
 ) {
     Column(

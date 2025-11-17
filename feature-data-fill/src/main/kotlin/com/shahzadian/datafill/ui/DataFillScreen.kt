@@ -37,9 +37,15 @@ fun DataFillScreen(
         val state by viewModel.viewStateFlow.collectAsState()
 
         when (state) {
-            is DataFillViewState.Loading -> {}
+            is DataFillViewState.Init -> {
+                DataFillInitPage(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp)
+                )
+            }
             is DataFillViewState.About -> {
-                DataFillAboutView(
+                DataFillAboutPage(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(24.dp),

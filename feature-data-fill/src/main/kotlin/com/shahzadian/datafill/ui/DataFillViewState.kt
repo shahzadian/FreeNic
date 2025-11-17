@@ -6,7 +6,7 @@ import com.freenic.ui.vm.ViewState
 @Immutable
 internal sealed interface DataFillViewState : ViewState {
 
-    data object Loading : DataFillViewState
+    data object Init : DataFillViewState
 
     @Immutable
     data class About(
