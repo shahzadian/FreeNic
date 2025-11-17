@@ -1,5 +1,6 @@
 package com.shahzadian.datafill.ui
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -9,6 +10,8 @@ import com.shahzadian.datafill.domain.fillableInfo.aboutinfo.AboutScreenFillable
 import com.shahzadian.datafill.domain.fillableInfo.aboutinfo.AboutScreenFillableInfoEvent
 import com.shahzadian.datafill.domain.fillableInfo.initinfo.InitScreenFillableInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,9 +21,8 @@ internal class DataFillViewModel @Inject constructor(
 ) :
     BaseViewModel<DataFillViewState, DataFillViewEvent, DataFillCommand>() {
 
-    // Initialize with Init state; real state will be loaded from providers
     override val initState: DataFillViewState by lazyUnsafe {
-        DataFillViewState.Init
+        DataFillViewState.Loading
     }
 
     override fun onViewEventHappened(event: DataFillViewEvent) {
@@ -34,32 +36,51 @@ internal class DataFillViewModel @Inject constructor(
                 fillableInfoHelper.sendEvent(
                     AboutScreenFillableInfoEvent.OnAgeChanged(event.age.toIntOrNull())
                 )
+
+            DataFillViewEvent.OnSubmitNext -> {
+                viewModelScope.launch {
+                    fillableInfoHelper.getNextData()
+                }
+            }
         }
     }
 
     init {
-        // Initialize domain helper and request the first page
         fillableInfoHelper.initialize(viewModelScope)
 
-        viewModelScope.launch {
-            // Move to the first provider
-            fillableInfoHelper.getNextData()
-            // Observe provider's info and map to UI state
-            fillableInfoHelper.currentInfoFlow?.collect { info ->
+        fillableInfoHelper
+            .currentInfoFlow
+            .onEach { info ->
+                Log.d("LogMog", "got info $info")
                 setViewState(mapInfoToViewState(info))
             }
+            .launchIn(viewModelScope)
+
+        viewModelScope.launch {
+            Log.d("LogMog", "getting next data")
+            fillableInfoHelper.getNextData()
         }
     }
 
     private fun mapInfoToViewState(info: FillableInfo): DataFillViewState {
         return when (info) {
-            is InitScreenFillableInfo -> DataFillViewState.Init
+            is InitScreenFillableInfo -> DataFillViewState.Init(
+                pagesData = DataFillViewState.PagesData(
+                    pagesCount = fillableInfoHelper.infoPagesCount,
+                    currentPageIndex = fillableInfoHelper.currentPageIndex,
+                )
+            )
+
             is AboutScreenFillableInfo -> DataFillViewState.About(
+                pagesData = DataFillViewState.PagesData(
+                    pagesCount = fillableInfoHelper.infoPagesCount,
+                    currentPageIndex = fillableInfoHelper.currentPageIndex,
+                ),
                 name = info.name,
                 age = info.age?.toString()
             )
 
-            else -> DataFillViewState.Init
+            else -> DataFillViewState.Loading
         }
     }
 }

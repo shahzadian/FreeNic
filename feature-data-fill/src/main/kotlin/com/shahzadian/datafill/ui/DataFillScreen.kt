@@ -37,6 +37,7 @@ fun DataFillScreen(
         val state by viewModel.viewStateFlow.collectAsState()
 
         when (state) {
+            is DataFillViewState.Loading -> {}
             is DataFillViewState.Init -> {
                 DataFillInitPage(
                     modifier = Modifier
@@ -44,6 +45,7 @@ fun DataFillScreen(
                         .padding(24.dp)
                 )
             }
+
             is DataFillViewState.About -> {
                 DataFillAboutPage(
                     modifier = Modifier
@@ -55,13 +57,17 @@ fun DataFillScreen(
                 )
             }
         }
-        Footer(
-            pagesCount = 5,
-            currentPageIndex = 1,
-            onSubmitClick = { },
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-        )
+        state.pagesData?.let { pagesData ->
+            Footer(
+                pagesCount = pagesData.pagesCount,
+                currentPageIndex = pagesData.currentPageIndex,
+                onSubmitClick = {
+                    viewModel.onViewEvent(DataFillViewEvent.OnSubmitNext)
+                },
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+            )
+        }
     }
 }
 
