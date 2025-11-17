@@ -39,4 +39,12 @@
 
     <string name="data_fill_about_confidential_info">All your data is confidential and used only for analysis</string>
 
+    <string name="data_fill_smoking_habits_cigarettes_count_label">How many cigarettes did you smoke per day?</string>
+    <string name="data_fill_smoking_habits_cigarettes_count_desc">On average over the past few weeks</string>
+
+    <string name="data_fill_smoking_habits_packs_count_label">Approximately how many packs is that?</string>
+
+    <string name="data_fill_smoking_habits_price_label">How much does your cigarette pack cost?</string>
+    <string name="data_fill_smoking_habits_price_desc">This will help calculate how much money you save</string>
+
 </resources>

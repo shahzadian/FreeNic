@@ -2,6 +2,7 @@ package com.shahzadian.datafill.ui
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
+import java.util.Currency
 
 @Immutable
 internal sealed interface DataFillViewState : ViewState {
@@ -22,6 +23,19 @@ internal sealed interface DataFillViewState : ViewState {
         val name: String? = null,
         val age: String? = null,
     ) : DataFillViewState
+
+    data class SmokingHabits(
+        override val pagesData: PagesData,
+        val cigarettesPerDay: String? = null,
+        val packsPerDay: String? = null,
+        val priceData: PriceData? = null,
+    ) : DataFillViewState {
+
+        data class PriceData(
+            val price: String,
+            val currency: Currency
+        )
+    }
 
     data class PagesData(
         val pagesCount: Int,

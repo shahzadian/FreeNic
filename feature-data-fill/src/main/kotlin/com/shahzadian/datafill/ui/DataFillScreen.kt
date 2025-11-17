@@ -25,6 +25,8 @@ import com.freenic.ui.extensions.mainGradientBackground
 import com.freenic.ui.theme.Smoke
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.datafill.ui.pages.DataFillAboutPage
+import com.shahzadian.datafill.ui.pages.DataFillInitPage
 
 @Composable
 fun DataFillScreen(
@@ -58,6 +60,8 @@ fun DataFillScreen(
                     onAgeChanged = { viewModel.onViewEvent(DataFillViewEvent.OnAgeChanged(it)) },
                 )
             }
+
+            is DataFillViewState.SmokingHabits -> {}
         }
         state.pagesData?.let { pagesData ->
             Footer(

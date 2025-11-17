@@ -1,4 +1,4 @@
-package com.shahzadian.datafill.ui
+package com.shahzadian.datafill.ui.pages
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -70,7 +70,7 @@ private fun ImageView(
         )
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_data_fill_start_view),
+            painter = painterResource(R.drawable.ic_data_fill_init_page),
             contentDescription = "Data fill"
         )
     }

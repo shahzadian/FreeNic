@@ -1,11 +1,9 @@
-package com.shahzadian.datafill.ui
+package com.shahzadian.datafill.ui.pages
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
@@ -19,68 +17,35 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.TextWrapper
-import com.shahzadian.baseui.R
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun DataFillAboutPage(
-    data: DataFillViewState.About,
-    onNameChanged: (String) -> Unit,
-    onAgeChanged: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = modifier
-            .verticalScroll(scrollState),
-    ) {
-        Header(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 48.dp)
-        )
-        NameBlock(
-            value = data.name ?: "",
-            onValueChange = onNameChanged,
-            modifier = Modifier
-                .padding(bottom = 24.dp),
-        )
-        AgeBlock(
-            value = data.age ?: "",
-            onValueChange = onAgeChanged,
-            modifier = Modifier
-        )
-    }
-}
-
-@Composable
-fun Header(
+internal fun DataFillHeader(
+    title: TextWrapper,
+    subtitle: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(R.string.data_fill_about_title),
+            text = textFromWrapper(title),
             color = MaterialTheme.colorScheme.onBackground,
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(bottom = 12.dp)
         )
         Text(
-            text = stringResource(R.string.data_fill_about_subtitle),
+            text = textFromWrapper(subtitle),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSecondary,
         )
@@ -88,80 +53,33 @@ fun Header(
 }
 
 @Composable
-private fun NameBlock(
-    value: String,
-    onValueChange: (String) -> Unit,
+internal fun DataFillInputLabel(
+    text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
-    FieldBlock(
-        label = TextWrapper.FromRes(R.string.data_fill_about_field_name_label),
-        description = TextWrapper.FromRes(R.string.data_fill_about_field_name_desc),
-        inputField = { inputModifier ->
-            InputField(
-                value = value,
-                hint = stringResource(R.string.data_fill_about_field_name_hint),
-                onValueChange = onValueChange,
-                hasNextField = true,
-                modifier = inputModifier,
-            )
-        },
+    Text(
+        text = textFromWrapper(text),
+        style = MaterialTheme.typography.bodyMedium,
+        color = MaterialTheme.colorScheme.onBackground,
         modifier = modifier,
     )
 }
 
 @Composable
-private fun AgeBlock(
-    value: String,
-    onValueChange: (String) -> Unit,
+internal fun DataFillInputDescription(
+    text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
-    FieldBlock(
-        label = TextWrapper.FromRes(R.string.data_fill_about_field_age_label),
-        description = TextWrapper.FromRes(R.string.data_fill_about_field_age_desc),
-        inputField = { inputModifier ->
-            InputField(
-                value = value,
-                hint = stringResource(R.string.data_fill_about_field_age_hint),
-                onValueChange = onValueChange,
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    keyboardType = KeyboardType.Number
-                ),
-                hasNextField = false,
-                modifier = inputModifier,
-            )
-        },
+    Text(
+        text = textFromWrapper(text),
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSecondary,
         modifier = modifier,
     )
 }
 
 @Composable
-private fun FieldBlock(
-    label: TextWrapper,
-    description: TextWrapper,
-    inputField: @Composable (Modifier) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier,
-    ) {
-        Text(
-            text = textFromWrapper(label),
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onBackground,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        inputField(Modifier.fillMaxWidth())
-        Text(
-            text = textFromWrapper(description),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSecondary,
-            modifier = Modifier.padding(top = 8.dp, end = 2.dp)
-        )
-    }
-}
-
-@Composable
-fun InputField(
+internal fun DataFillInputField(
     value: String,
     hint: String,
     onValueChange: (String) -> Unit,
