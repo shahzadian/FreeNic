@@ -80,12 +80,12 @@ internal fun DataFillInputDescription(
 
 @Composable
 internal fun DataFillInputField(
-    value: String,
+    value: String?,
     hint: String,
     onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     hasNextField: Boolean = false,
-    modifier: Modifier = Modifier,
 ) {
     // Throttle rapid value changes so we don't call the external callback too frequently
     val coroutineScope = rememberCoroutineScope()
@@ -100,7 +100,7 @@ internal fun DataFillInputField(
     }
 
     TextField(
-        value = localText,
+        value = localText ?: "",
         onValueChange = { newText ->
             localText = newText
             // Restart debounce timer

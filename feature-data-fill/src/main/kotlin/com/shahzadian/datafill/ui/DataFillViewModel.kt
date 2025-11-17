@@ -8,6 +8,8 @@ import com.shahzadian.datafill.domain.fillableInfo.FillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.aboutinfo.AboutScreenFillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.aboutinfo.AboutScreenFillableInfoEvent
 import com.shahzadian.datafill.domain.fillableInfo.initinfo.InitScreenFillableInfo
+import com.shahzadian.datafill.domain.fillableInfo.cigarettesperday.CigarettesPerDayFillableInfo
+import com.shahzadian.datafill.domain.fillableInfo.cigarettesperday.CigarettesPerDayFillableInfoEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -41,6 +43,11 @@ internal class DataFillViewModel @Inject constructor(
                     fillableInfoHelper.getNextData()
                 }
             }
+
+            is DataFillViewEvent.OnCigarettesPerDayChanged ->
+                fillableInfoHelper.sendEvent(
+                    CigarettesPerDayFillableInfoEvent.OnCigarettesPerDayChanged(event.cigarettesPerDay)
+                )
         }
     }
 
@@ -75,6 +82,17 @@ internal class DataFillViewModel @Inject constructor(
                 ),
                 name = info.name,
                 age = info.age?.toString()
+            )
+
+            is CigarettesPerDayFillableInfo -> DataFillViewState.CigarettesPerDay(
+                pagesData = DataFillViewState.PagesData(
+                    pagesCount = fillableInfoHelper.infoPagesCount,
+                    currentPageIndex = fillableInfoHelper.currentPageIndex,
+                ),
+                cigarettesCountIntRange = info.cigarettesCountIntRange,
+                cigarettesPerDay = info.cigarettesPerDay,
+                packsPerDay = info.packsPerDay,
+                priceData = info.priceData
             )
 
             else -> DataFillViewState.Loading

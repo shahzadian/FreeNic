@@ -27,6 +27,7 @@ import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.datafill.ui.pages.DataFillAboutPage
 import com.shahzadian.datafill.ui.pages.DataFillInitPage
+import com.shahzadian.datafill.ui.pages.DataFillCigarettesPerDayPagePage
 
 @Composable
 fun DataFillScreen(
@@ -61,7 +62,15 @@ fun DataFillScreen(
                 )
             }
 
-            is DataFillViewState.SmokingHabits -> {}
+            is DataFillViewState.CigarettesPerDay -> {
+                DataFillCigarettesPerDayPagePage(
+                    data = state as DataFillViewState.CigarettesPerDay,
+                    onCigarettesCountChanged = { viewModel.onViewEvent(DataFillViewEvent.OnCigarettesPerDayChanged(it)) },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp)
+                )
+            }
         }
         state.pagesData?.let { pagesData ->
             Footer(

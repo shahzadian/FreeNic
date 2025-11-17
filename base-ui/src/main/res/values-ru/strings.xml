@@ -36,10 +36,12 @@
     <string name="data_fill_about_field_age_hint">Введите возраст</string>
     <string name="data_fill_about_field_age_desc">Возраст помогает рассчитать скорость восстановления</string>
     <string name="data_fill_about_confidential_info">Все данные конфиденциальны и используются только для анализа</string>
-    <string name="data_fill_smoking_habits_cigarettes_count_label">Сколько сигарет ты курил(а) в день?</string>
-    <string name="data_fill_smoking_habits_cigarettes_count_desc">В среднем за последние недели</string>
-    <string name="data_fill_smoking_habits_packs_count_label">Сколько пачек это примерно?</string>
-    <string name="data_fill_smoking_habits_price_label">Сколько стоит твоя пачка сигарет?</string>
-    <string name="data_fill_smoking_habits_price_desc">Это поможет рассчитать, сколько ты экономишь</string>
+    <string name="data_fill_smoking_habits_subtitle">Мы используем эти данные, чтобы рассчитать твой прогресс и экономию</string>
+    <string name="data_fill_cigarettes_per_day_label">Сколько сигарет ты курил(а) в день?</string>
+    <string name="data_fill_cigarettes_per_day_desc">В среднем за последние недели</string>
+    <string name="data_fill_packs_count_label">Сколько пачек это примерно?</string>
+    <string name="data_fill_price_label">Сколько стоит твоя пачка сигарет?</string>
+    <string name="data_fill_price_desc">Это поможет рассчитать, сколько ты экономишь</string>
+    <string name="data_fill_smoking_habits_title">Твои привычки курения</string>
 
 </resources>
