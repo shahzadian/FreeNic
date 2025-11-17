@@ -11,12 +11,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.mainGradientBackground
 import com.freenic.ui.theme.Smoke
@@ -33,14 +34,21 @@ fun DataFillScreen(
             .fillMaxSize()
             .background(mainGradientBackground())
     ) {
-        DataFillAboutView(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp),
-            data = DataFillViewState.About(),
-            onNameChanged = {},
-            onAgeChanged = {},
-        )
+        val state by viewModel.viewStateFlow.collectAsState()
+
+        when (state) {
+            is DataFillViewState.Loading -> {}
+            is DataFillViewState.About -> {
+                DataFillAboutView(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    data = state as DataFillViewState.About,
+                    onNameChanged = { viewModel.onViewEvent(DataFillViewEvent.OnNameChanged(it)) },
+                    onAgeChanged = { viewModel.onViewEvent(DataFillViewEvent.OnAgeChanged(it)) },
+                )
+            }
+        }
         Footer(
             pagesCount = 5,
             currentPageIndex = 1,

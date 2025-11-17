@@ -9,6 +9,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.freenic.ui.theme.FreeNicTheme
 import com.shahzadian.datafill.ui.DataFillScreen
+import com.shahzadian.freenic.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FreeNicTheme {
+              //  Navigation()
                 Scaffold {
                     DataFillScreen(
                         modifier = Modifier.padding(it)
