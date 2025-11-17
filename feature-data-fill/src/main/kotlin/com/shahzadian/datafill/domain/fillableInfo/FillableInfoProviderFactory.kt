@@ -3,6 +3,7 @@ package com.shahzadian.datafill.domain.fillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.aboutinfo.AboutScreenFillableInfoProvider
 import com.shahzadian.datafill.domain.fillableInfo.initinfo.InitScreenFillableInfoProvider
 import com.shahzadian.datafill.domain.fillableInfo.cigarettesperday.CigarettesPerDayInfoProvider
+import com.shahzadian.datafill.domain.fillableInfo.packprice.PackPriceInfoProvider
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
 
@@ -19,7 +20,8 @@ internal class FillableInfoProviderFactoryImpl @Inject constructor() : FillableI
         return listOf(
             InitScreenFillableInfoProvider(coroutineScope),
             AboutScreenFillableInfoProvider(coroutineScope),
-            CigarettesPerDayInfoProvider(coroutineScope)
+            CigarettesPerDayInfoProvider(coroutineScope),
+            PackPriceInfoProvider(coroutineScope)
         )
     }
 }

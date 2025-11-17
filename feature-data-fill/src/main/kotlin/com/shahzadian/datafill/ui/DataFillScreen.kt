@@ -28,6 +28,7 @@ import com.shahzadian.baseui.R
 import com.shahzadian.datafill.ui.pages.DataFillAboutPage
 import com.shahzadian.datafill.ui.pages.DataFillInitPage
 import com.shahzadian.datafill.ui.pages.DataFillCigarettesPerDayPagePage
+import com.shahzadian.datafill.ui.pages.DataFillPackPricePage
 
 @Composable
 fun DataFillScreen(
@@ -66,6 +67,23 @@ fun DataFillScreen(
                 DataFillCigarettesPerDayPagePage(
                     data = state as DataFillViewState.CigarettesPerDay,
                     onCigarettesCountChanged = { viewModel.onViewEvent(DataFillViewEvent.OnCigarettesPerDayChanged(it)) },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp)
+                )
+            }
+
+            is DataFillViewState.PackPrice -> {
+                DataFillPackPricePage(
+                    data = state as DataFillViewState.PackPrice,
+                    onPriceChanged = { price, currency ->
+                        viewModel.onViewEvent(
+                            DataFillViewEvent.OnPackPriceChanged(
+                                price = price,
+                                currency = currency
+                            )
+                        )
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(24.dp)

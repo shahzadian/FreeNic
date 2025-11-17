@@ -17,7 +17,6 @@ internal class CigarettesPerDayInfoProvider(
         CigarettesPerDayFillableInfo(
             cigarettesCountIntRange = cigarettesCountIntRange,
             cigarettesPerDay = cigarettesPerDay,
-            priceData = null,
         )
     }
 

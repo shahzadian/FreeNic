@@ -7,9 +7,11 @@ import com.shahzadian.datafill.domain.FillableInfoHelper
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.aboutinfo.AboutScreenFillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.aboutinfo.AboutScreenFillableInfoEvent
-import com.shahzadian.datafill.domain.fillableInfo.initinfo.InitScreenFillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.cigarettesperday.CigarettesPerDayFillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.cigarettesperday.CigarettesPerDayFillableInfoEvent
+import com.shahzadian.datafill.domain.fillableInfo.initinfo.InitScreenFillableInfo
+import com.shahzadian.datafill.domain.fillableInfo.packprice.PackPriceFillableInfo
+import com.shahzadian.datafill.domain.fillableInfo.packprice.PackPriceFillableInfoEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -47,6 +49,14 @@ internal class DataFillViewModel @Inject constructor(
             is DataFillViewEvent.OnCigarettesPerDayChanged ->
                 fillableInfoHelper.sendEvent(
                     CigarettesPerDayFillableInfoEvent.OnCigarettesPerDayChanged(event.cigarettesPerDay)
+                )
+
+            is DataFillViewEvent.OnPackPriceChanged ->
+                fillableInfoHelper.sendEvent(
+                    PackPriceFillableInfoEvent.OnPriceChanged(
+                        price = event.price,
+                        currency = event.currency
+                    )
                 )
         }
     }
@@ -92,7 +102,18 @@ internal class DataFillViewModel @Inject constructor(
                 cigarettesCountIntRange = info.cigarettesCountIntRange,
                 cigarettesPerDay = info.cigarettesPerDay.toString(),
                 packsPerDay = info.packsPerDay.toString(),
-                priceData = info.priceData
+            )
+
+            is PackPriceFillableInfo -> DataFillViewState.PackPrice(
+                price = DataFillViewState.PackPrice.PriceData(
+                    price = info.price?.toString() ?: "",
+                    currency = info.currency,
+                    currencies = info.currencies,
+                ),
+                pagesData = DataFillViewState.PagesData(
+                    pagesCount = fillableInfoHelper.infoPagesCount,
+                    currentPageIndex = fillableInfoHelper.currentPageIndex,
+                ),
             )
 
             else -> DataFillViewState.Loading

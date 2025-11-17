@@ -1,6 +1,7 @@
 package com.shahzadian.datafill.ui.pages
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -79,6 +80,30 @@ internal fun DataFillInputDescription(
 }
 
 @Composable
+internal fun DataFillFieldBlock(
+    label: TextWrapper,
+    description: TextWrapper? = null,
+    inputField: @Composable (Modifier) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        DataFillInputLabel(
+            text = label,
+            modifier = Modifier.padding(bottom = description?.let { 8.dp } ?: 0.dp)
+        )
+        inputField(Modifier.fillMaxWidth())
+        description?.let {
+            DataFillInputDescription(
+                text = it,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
+    }
+}
+
+@Composable
 internal fun DataFillInputField(
     value: String?,
     hint: String,
@@ -86,6 +111,7 @@ internal fun DataFillInputField(
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     hasNextField: Boolean = false,
+    trailingContent: (@Composable (() -> Unit))? = null,
 ) {
     // Throttle rapid value changes so we don't call the external callback too frequently
     val coroutineScope = rememberCoroutineScope()
@@ -125,6 +151,7 @@ internal fun DataFillInputField(
                 keyboardController?.hide()
             }
         ),
+        trailingIcon = trailingContent,
         placeholder = {
             Text(
                 text = hint,

@@ -69,7 +69,7 @@ private fun NameBlock(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FieldBlock(
+    DataFillFieldBlock(
         label = TextWrapper.FromRes(R.string.data_fill_about_field_name_label),
         description = TextWrapper.FromRes(R.string.data_fill_about_field_name_desc),
         inputField = { inputModifier ->
@@ -91,7 +91,7 @@ private fun AgeBlock(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    FieldBlock(
+    DataFillFieldBlock(
         label = TextWrapper.FromRes(R.string.data_fill_about_field_age_label),
         description = TextWrapper.FromRes(R.string.data_fill_about_field_age_desc),
         inputField = { inputModifier ->
@@ -108,28 +108,6 @@ private fun AgeBlock(
         },
         modifier = modifier,
     )
-}
-
-@Composable
-private fun FieldBlock(
-    label: TextWrapper,
-    description: TextWrapper,
-    inputField: @Composable (Modifier) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier,
-    ) {
-        DataFillInputLabel(
-            text = label,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        inputField(Modifier.fillMaxWidth())
-        DataFillInputDescription(
-            text = description,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-    }
 }
 
 @Composable
