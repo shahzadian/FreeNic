@@ -27,8 +27,8 @@ internal sealed interface DataFillViewState : ViewState {
     data class CigarettesPerDay(
         override val pagesData: PagesData,
         val cigarettesCountIntRange: IntRange,
-        val cigarettesPerDay: String? = null,
-        val packsPerDay: String? = null,
+        val cigarettesPerDay: String,
+        val packsPerDay: String,
         val priceData: PriceData? = null,
     ) : DataFillViewState {
 

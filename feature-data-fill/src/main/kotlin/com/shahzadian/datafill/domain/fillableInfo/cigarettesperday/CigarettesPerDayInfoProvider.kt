@@ -10,11 +10,13 @@ internal class CigarettesPerDayInfoProvider(
     coroutineScope
 ) {
 
+    private val cigarettesCountIntRange: IntRange = IntRange(1, 40)
+    private var cigarettesPerDay: Int = cigarettesCountIntRange.last / 2
+
     override val initState: CigarettesPerDayFillableInfo by lazyUnsafe {
         CigarettesPerDayFillableInfo(
-            cigarettesCountIntRange = IntRange(1, 40),
-            cigarettesPerDay = null,
-            packsPerDay = null,
+            cigarettesCountIntRange = cigarettesCountIntRange,
+            cigarettesPerDay = cigarettesPerDay,
             priceData = null,
         )
     }
@@ -26,13 +28,9 @@ internal class CigarettesPerDayInfoProvider(
     override suspend fun handleFillableInfoEvent(event: CigarettesPerDayFillableInfoEvent): CigarettesPerDayFillableInfo? {
         return when (event) {
             is CigarettesPerDayFillableInfoEvent.OnCigarettesPerDayChanged -> {
-                val valueInt = event.cigarettesPerDay.toIntOrNull()
-                val clamped = valueInt?.coerceIn(currentInfo.cigarettesCountIntRange.first, currentInfo.cigarettesCountIntRange.last)
-                currentInfo.copy(cigarettesPerDay = clamped?.toString())
-            }
-
-            is CigarettesPerDayFillableInfoEvent.OnPacksPerDayChanged -> {
-                currentInfo.copy(packsPerDay = event.packsPerDay)
+                currentInfo.copy(
+                    cigarettesPerDay = event.cigarettesPerDay.toInt()
+                )
             }
 
             is CigarettesPerDayFillableInfoEvent.OnPriceChanged -> {

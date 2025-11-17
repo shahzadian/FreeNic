@@ -90,8 +90,8 @@ internal class DataFillViewModel @Inject constructor(
                     currentPageIndex = fillableInfoHelper.currentPageIndex,
                 ),
                 cigarettesCountIntRange = info.cigarettesCountIntRange,
-                cigarettesPerDay = info.cigarettesPerDay,
-                packsPerDay = info.packsPerDay,
+                cigarettesPerDay = info.cigarettesPerDay.toString(),
+                packsPerDay = info.packsPerDay.toString(),
                 priceData = info.priceData
             )
 

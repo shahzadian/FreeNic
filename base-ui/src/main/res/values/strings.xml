@@ -15,7 +15,7 @@
 
     <string name="onboarding_3_title">You pay for your habit every day</string>
     <string name="onboarding_3_subtitle">Cigarettes quietly steal your money. Imagine how much you could save if you quit</string>
-    <string name="onboarding_3_submit">Next</string>
+    <string name="onboarding_3_submit" translatable="false">Next</string>
 
     <string name="onboarding_4_title">You can change everything. We’ll help you!</string>
     <string name="onboarding_4_subtitle">FreeNic is your first step to freedom. Support, motivation, and a smoke-free journey start here</string>
@@ -45,7 +45,7 @@
     <string name="data_fill_cigarettes_per_day_label">How many cigarettes did you smoke per day?</string>
     <string name="data_fill_cigarettes_per_day_desc">On average over the past few weeks</string>
 
-    <string name="data_fill_packs_count_label">Approximately how many packs is that?</string>
+    <string name="data_fill_cigarettes_per_day_packs_per_day_suffix">Packs per day</string>
 
     <string name="data_fill_price_label">How much does your cigarette pack cost?</string>
     <string name="data_fill_price_desc">This will help calculate how much money you save</string>

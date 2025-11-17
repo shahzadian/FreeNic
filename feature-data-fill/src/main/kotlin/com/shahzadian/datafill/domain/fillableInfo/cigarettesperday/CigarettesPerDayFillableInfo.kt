@@ -6,13 +6,18 @@ import com.shahzadian.datafill.ui.DataFillViewState.CigarettesPerDay.PriceData
 
 internal data class CigarettesPerDayFillableInfo(
     val cigarettesCountIntRange: IntRange,
-    val cigarettesPerDay: String? = null,
-    val packsPerDay: String? = null,
+    val cigarettesPerDay: Int,
     val priceData: PriceData? = null,
-) : FillableInfo
+) : FillableInfo {
+
+    val packsPerDay: Float
+        get() = cigarettesPerDay.toFloat() / 20
+}
 
 internal sealed interface CigarettesPerDayFillableInfoEvent : FillableInfoEvent {
-    data class OnCigarettesPerDayChanged(val cigarettesPerDay: String) : CigarettesPerDayFillableInfoEvent
-    data class OnPacksPerDayChanged(val packsPerDay: String) : CigarettesPerDayFillableInfoEvent
-    data class OnPriceChanged(val price: String, val currency: String) : CigarettesPerDayFillableInfoEvent
+    data class OnCigarettesPerDayChanged(val cigarettesPerDay: String) :
+        CigarettesPerDayFillableInfoEvent
+
+    data class OnPriceChanged(val price: String, val currency: String) :
+        CigarettesPerDayFillableInfoEvent
 }

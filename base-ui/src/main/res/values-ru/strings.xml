@@ -39,7 +39,7 @@
     <string name="data_fill_smoking_habits_subtitle">Мы используем эти данные, чтобы рассчитать твой прогресс и экономию</string>
     <string name="data_fill_cigarettes_per_day_label">Сколько сигарет ты курил(а) в день?</string>
     <string name="data_fill_cigarettes_per_day_desc">В среднем за последние недели</string>
-    <string name="data_fill_packs_count_label">Сколько пачек это примерно?</string>
+    <string name="data_fill_cigarettes_per_day_packs_per_day_suffix">Пачек в день</string>
     <string name="data_fill_price_label">Сколько стоит твоя пачка сигарет?</string>
     <string name="data_fill_price_desc">Это поможет рассчитать, сколько ты экономишь</string>
     <string name="data_fill_smoking_habits_title">Твои привычки курения</string>

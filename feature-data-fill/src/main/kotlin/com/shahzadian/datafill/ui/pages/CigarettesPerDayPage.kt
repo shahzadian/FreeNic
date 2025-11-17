@@ -4,9 +4,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
@@ -23,7 +25,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
@@ -48,7 +52,8 @@ internal fun DataFillCigarettesPerDayPagePage(
                 .padding(bottom = 48.dp)
         )
         CigarettesCountBlock(
-            cigarettesCount = data.cigarettesPerDay ?: "",
+            cigarettesCount = data.cigarettesPerDay,
+            packsPerDay = data.packsPerDay,
             range = data.cigarettesCountIntRange,
             onValueChange = { onCigarettesCountChanged(it.toString()) },
             modifier = Modifier.fillMaxWidth()
@@ -59,6 +64,7 @@ internal fun DataFillCigarettesPerDayPagePage(
 @Composable
 private fun CigarettesCountBlock(
     cigarettesCount: String,
+    packsPerDay: String,
     range: IntRange,
     onValueChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
@@ -88,6 +94,7 @@ private fun CigarettesCountBlock(
         }
         CigarettesCountCircle(
             cigarettesCount = sliderValue.toInt().toString(),
+            packsPerDay = packsPerDay,
             modifier = Modifier.align(Alignment.CenterHorizontally),
         )
         Slider(
@@ -122,46 +129,84 @@ private fun CigarettesCountBlock(
 @Composable
 private fun CigarettesCountCircle(
     cigarettesCount: String,
+    packsPerDay: String,
     modifier: Modifier = Modifier,
 ) {
-    val countCircleWidth = 160.dp
-    val countCircleHeight = 160.dp
-    Box(
+    Row(
         modifier = modifier
-            .width(countCircleWidth + 48.dp)
-            .height(countCircleHeight + 48.dp)
+            .fillMaxWidth(),
     ) {
+        val countCircleWidth = 160.dp
+        val countCircleHeight = 160.dp
         Box(
             modifier = Modifier
-                .width(countCircleWidth)
-                .height(countCircleHeight)
-                .clip(
-                    shape = CircleShape,
-                )
-                .background(
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-                .align(Alignment.Center)
-                .padding(16.dp),
+                .width(countCircleWidth + 48.dp)
+                .height(countCircleHeight + 48.dp)
+                .weight(2f)
         ) {
-            Text(
-                text = cigarettesCount,
-                color = MaterialTheme.colorScheme.onSecondary,
-                style = MaterialTheme.typography.displayLarge,
+            Box(
                 modifier = Modifier
-                    .align(Alignment.Center),
+                    .width(countCircleWidth)
+                    .height(countCircleHeight)
+                    .clip(
+                        shape = CircleShape,
+                    )
+                    .background(
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                    .align(Alignment.Center)
+                    .padding(16.dp),
+            ) {
+                Text(
+                    text = cigarettesCount,
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    style = MaterialTheme.typography.displayLarge,
+                    modifier = Modifier
+                        .align(Alignment.Center),
+                )
+            }
+            Image(
+                painter = painterResource(com.shahzadian.datafill.R.drawable.ic_data_fill_cigarettes_per_day_circle),
+                contentDescription = "Cigarettes count",
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .align(Alignment.BottomEnd)
+                    .padding(
+                        bottom = 10.dp,
+                        end = 24.dp,
+                    )
             )
         }
-        Image(
-            painter = painterResource(com.shahzadian.datafill.R.drawable.ic_data_fill_cigarettes_per_day_circle),
-            contentDescription = "Cigarettes count",
+
+        PacksPerDayView(
+            value = packsPerDay,
             modifier = Modifier
-                .wrapContentWidth()
-                .align(Alignment.BottomEnd)
-                .padding(
-                    bottom = 10.dp,
-                    end = 24.dp,
-                )
+                .padding(start = 16.dp)
+                .weight(1f)
+                .align(Alignment.CenterVertically),
+        )
+
+    }
+}
+
+@Composable
+private fun PacksPerDayView(
+    value: String,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            text = value,
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.primary,
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        Text(
+            text = stringResource(R.string.data_fill_cigarettes_per_day_packs_per_day_suffix),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSecondary,
         )
     }
 }
