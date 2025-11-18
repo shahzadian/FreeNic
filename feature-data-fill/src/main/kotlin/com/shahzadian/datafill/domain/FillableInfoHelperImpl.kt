@@ -61,6 +61,35 @@ internal class FillableInfoHelperImpl @Inject constructor(
             }
     }
 
+    override suspend fun getPreviousData(): DataToFill? {
+        val providers = fillableInfoProviders ?: return null
+        if (currentPageIndex <= 0) return null
+
+        currentPageIndex -= 1
+        val info = providers[currentPageIndex].fillableInfoStateFlow.value
+
+        // Emit current info of the previous provider
+        currentInfoFlow.emit(info)
+
+        // Switch collection to the previous provider
+        currentProviderCollectionJob?.cancel()
+        coroutineScope?.let { scope ->
+            currentProviderCollectionJob = scope.launch {
+                @Suppress("UNCHECKED_CAST")
+                (providers[currentPageIndex].fillableInfoStateFlow as StateFlow<FillableInfo>)
+                    .collect { newInfo ->
+                        currentInfoFlow.emit(newInfo)
+                    }
+            }
+        }
+
+        return DataToFill(
+            pagesCount = providers.size,
+            currentPageIndex = currentPageIndex,
+            info = info
+        )
+    }
+
     override fun sendEvent(event: FillableInfoEvent) {
         val provider = fillableInfoProviders?.getOrNull(currentPageIndex) ?: return
         @Suppress("UNCHECKED_CAST")

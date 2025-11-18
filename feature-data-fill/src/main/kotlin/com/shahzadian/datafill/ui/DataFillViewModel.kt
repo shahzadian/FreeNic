@@ -31,15 +31,17 @@ internal class DataFillViewModel @Inject constructor(
 
     override fun onViewEventHappened(event: DataFillViewEvent) {
         when (event) {
-            is DataFillViewEvent.OnNameChanged ->
+            is DataFillViewEvent.OnNameChanged -> {
                 fillableInfoHelper.sendEvent(
                     AboutScreenFillableInfoEvent.OnNameChanged(event.name)
                 )
+            }
 
-            is DataFillViewEvent.OnAgeChanged ->
+            is DataFillViewEvent.OnAgeChanged -> {
                 fillableInfoHelper.sendEvent(
                     AboutScreenFillableInfoEvent.OnAgeChanged(event.age.toIntOrNull())
                 )
+            }
 
             DataFillViewEvent.OnSubmitNext -> {
                 viewModelScope.launch {
@@ -47,18 +49,27 @@ internal class DataFillViewModel @Inject constructor(
                 }
             }
 
-            is DataFillViewEvent.OnCigarettesPerDayChanged ->
+            is DataFillViewEvent.OnCigarettesPerDayChanged -> {
                 fillableInfoHelper.sendEvent(
                     CigarettesPerDayFillableInfoEvent.OnCigarettesPerDayChanged(event.cigarettesPerDay)
                 )
+            }
 
-            is DataFillViewEvent.OnPackPriceChanged ->
+
+            is DataFillViewEvent.OnPackPriceChanged -> {
                 fillableInfoHelper.sendEvent(
                     PackPriceFillableInfoEvent.OnPriceChanged(
                         price = event.price,
                         currency = event.currency
                     )
                 )
+            }
+            
+            is DataFillViewEvent.OnBack -> {
+                viewModelScope.launch {
+                    fillableInfoHelper.getPreviousData()
+                }
+            }
         }
     }
 

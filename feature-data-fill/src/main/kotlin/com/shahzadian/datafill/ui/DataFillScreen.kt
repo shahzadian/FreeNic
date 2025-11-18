@@ -1,8 +1,9 @@
 package com.shahzadian.datafill.ui
 
-import androidx.compose.foundation.background
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,8 +27,8 @@ import com.freenic.ui.theme.Smoke
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.datafill.ui.pages.DataFillAboutPage
-import com.shahzadian.datafill.ui.pages.DataFillInitPage
 import com.shahzadian.datafill.ui.pages.DataFillCigarettesPerDayPagePage
+import com.shahzadian.datafill.ui.pages.DataFillInitPage
 import com.shahzadian.datafill.ui.pages.DataFillPackPricePage
 import com.shahzadian.datafill.ui.pages.result.DataFillResultPage
 
@@ -43,63 +44,11 @@ fun DataFillScreen(
     ) {
         val state by viewModel.viewStateFlow.collectAsState()
 
-        when (state) {
-            is DataFillViewState.Loading -> {}
-            is DataFillViewState.Init -> {
-                DataFillInitPage(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(24.dp)
-                )
-            }
+        ScreenByState(
+            state = state,
+            onViewEvent = viewModel::onViewEvent,
+        )
 
-            is DataFillViewState.About -> {
-                DataFillAboutPage(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(24.dp),
-                    data = state as DataFillViewState.About,
-                    onNameChanged = { viewModel.onViewEvent(DataFillViewEvent.OnNameChanged(it)) },
-                    onAgeChanged = { viewModel.onViewEvent(DataFillViewEvent.OnAgeChanged(it)) },
-                )
-            }
-
-            is DataFillViewState.CigarettesPerDay -> {
-                DataFillCigarettesPerDayPagePage(
-                    data = state as DataFillViewState.CigarettesPerDay,
-                    onCigarettesCountChanged = { viewModel.onViewEvent(DataFillViewEvent.OnCigarettesPerDayChanged(it)) },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(24.dp)
-                )
-            }
-
-            is DataFillViewState.PackPrice -> {
-                DataFillPackPricePage(
-                    data = state as DataFillViewState.PackPrice,
-                    onPriceChanged = { price, currency ->
-                        viewModel.onViewEvent(
-                            DataFillViewEvent.OnPackPriceChanged(
-                                price = price,
-                                currency = currency
-                            )
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(24.dp)
-                )
-            }
-
-            is DataFillViewState.Result -> {
-                DataFillResultPage(
-                  //  data = state as DataFillViewState.Result,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(24.dp)
-                )
-            }
-        }
         state.pagesData?.let { pagesData ->
             Footer(
                 pagesCount = pagesData.pagesCount,
@@ -110,6 +59,81 @@ fun DataFillScreen(
                 },
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
+            )
+        }
+    }
+    BackHandler(
+        enabled = true,
+    ) {
+        viewModel.onViewEvent(DataFillViewEvent.OnBack)
+    }
+}
+
+@Composable
+private fun ScreenByState(
+    state: DataFillViewState,
+    onViewEvent: (DataFillViewEvent) -> Unit,
+) {
+    when (state) {
+        is DataFillViewState.Loading -> {}
+        is DataFillViewState.Init -> {
+            DataFillInitPage(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp)
+            )
+        }
+
+        is DataFillViewState.About -> {
+            DataFillAboutPage(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp),
+                data = state as DataFillViewState.About,
+                onNameChanged = { onViewEvent(DataFillViewEvent.OnNameChanged(it)) },
+                onAgeChanged = { onViewEvent(DataFillViewEvent.OnAgeChanged(it)) },
+            )
+        }
+
+        is DataFillViewState.CigarettesPerDay -> {
+            DataFillCigarettesPerDayPagePage(
+                data = state as DataFillViewState.CigarettesPerDay,
+                onCigarettesCountChanged = {
+                    onViewEvent(
+                        DataFillViewEvent.OnCigarettesPerDayChanged(
+                            it
+                        )
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp)
+            )
+        }
+
+        is DataFillViewState.PackPrice -> {
+            DataFillPackPricePage(
+                data = state as DataFillViewState.PackPrice,
+                onPriceChanged = { price, currency ->
+                    onViewEvent(
+                        DataFillViewEvent.OnPackPriceChanged(
+                            price = price,
+                            currency = currency
+                        )
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp)
+            )
+        }
+
+        is DataFillViewState.Result -> {
+            DataFillResultPage(
+                //  data = state as DataFillViewState.Result,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp)
             )
         }
     }

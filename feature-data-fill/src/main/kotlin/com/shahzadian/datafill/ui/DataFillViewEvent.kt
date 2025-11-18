@@ -11,4 +11,5 @@ internal sealed interface DataFillViewEvent : ViewEvent {
     data class OnCigarettesPerDayChanged(val cigarettesPerDay: String) : DataFillViewEvent
     data class OnPackPriceChanged(val price: String, val currency: String) : DataFillViewEvent
     data object OnSubmitNext : DataFillViewEvent
+    data object OnBack : DataFillViewEvent
 }

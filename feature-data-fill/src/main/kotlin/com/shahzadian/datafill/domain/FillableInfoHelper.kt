@@ -21,6 +21,12 @@ internal interface FillableInfoHelper {
     suspend fun getNextData(): DataToFill?
 
     /**
+     * Moves to the previous fillable info page (if possible) and emits its current info.
+     * Returns null when already at the first page or providers are not initialized.
+     */
+    suspend fun getPreviousData(): DataToFill?
+
+    /**
      * Sends a user interaction event to the current provider.
      */
     fun sendEvent(event: FillableInfoEvent)

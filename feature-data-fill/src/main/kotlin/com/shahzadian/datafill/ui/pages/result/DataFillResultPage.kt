@@ -29,7 +29,7 @@ import com.shahzadian.datafill.ui.DataFillViewState
 private const val ANIMATION_DURATION_IMAGE_APPEARANCE: Int = 1000
 
 @Composable
-fun DataFillResultPage(
+internal fun DataFillResultPage(
     modifier: Modifier = Modifier,
 ) {
     Column(
