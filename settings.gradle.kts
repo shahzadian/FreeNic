@@ -15,6 +15,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "FreeNic"
 include(":app")
-include(":base-ui")
+include(":common")
 include(":feature-home-screen")
 include(":feature-data-fill")
+include(":data-user")

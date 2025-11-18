@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":base-ui"))
+    implementation(project(":common"))
     implementation(project(":feature-home-screen"))
     implementation(project(":feature-data-fill"))
 

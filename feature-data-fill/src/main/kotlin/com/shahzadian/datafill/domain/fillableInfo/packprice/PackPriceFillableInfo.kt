@@ -8,7 +8,7 @@ import com.shahzadian.datafill.domain.fillableInfo.FillableInfoEvent
  * the page is empty as per requirement.
  */
 internal data class PackPriceFillableInfo(
-    val price: Int? = null,
+    val price: Float? = null,
     val currency: String,
     val currencies: List<String>,
 ) : FillableInfo {

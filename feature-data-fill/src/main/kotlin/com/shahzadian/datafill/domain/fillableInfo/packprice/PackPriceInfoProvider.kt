@@ -36,9 +36,8 @@ internal class PackPriceInfoProvider(
     override suspend fun handleFillableInfoEvent(event: PackPriceFillableInfoEvent): PackPriceFillableInfo? {
         return when (event) {
             is PackPriceFillableInfoEvent.OnPriceChanged -> {
-                val priceInt = event.price.toFloatOrNull()?.toInt()
                 currentInfo.copy(
-                    price = priceInt,
+                    price = event.price.toFloatOrNull(),
                     currency = event.currency
                 )
             }
