@@ -10,6 +10,10 @@ internal data class CigarettesPerDayFillableInfo(
 
     val packsPerDay: Float
         get() = cigarettesPerDay.toFloat() / 20
+
+    override fun isValid(): Boolean {
+        return true
+    }
 }
 
 internal sealed interface CigarettesPerDayFillableInfoEvent : FillableInfoEvent {

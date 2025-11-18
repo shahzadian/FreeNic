@@ -47,6 +47,7 @@ fun MainSubmitButton(
     text: TextWrapper,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     Button(
@@ -56,6 +57,7 @@ fun MainSubmitButton(
         ),
         shape = MaterialTheme.shapes.medium,
         interactionSource = interactionSource,
+        enabled = enabled,
         modifier = modifier
             .height(56.dp)
     ) {

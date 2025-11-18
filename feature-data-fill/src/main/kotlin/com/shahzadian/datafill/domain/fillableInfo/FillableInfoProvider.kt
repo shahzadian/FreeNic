@@ -44,7 +44,9 @@ internal abstract class FillableInfoProvider<I : FillableInfo, E : FillableInfoE
 /**
  * Describes info to be filled
  */
-internal interface FillableInfo
+internal interface FillableInfo {
+    fun isValid(): Boolean
+}
 
 /**
  * Describes events that happened during the user interaction with fillable info

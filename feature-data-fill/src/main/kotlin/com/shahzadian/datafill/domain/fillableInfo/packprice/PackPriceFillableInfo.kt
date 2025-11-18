@@ -11,7 +11,12 @@ internal data class PackPriceFillableInfo(
     val price: Int? = null,
     val currency: String,
     val currencies: List<String>,
-) : FillableInfo
+) : FillableInfo {
+
+    override fun isValid(): Boolean {
+        return price != null && price > 0
+    }
+}
 
 internal sealed interface PackPriceFillableInfoEvent : FillableInfoEvent {
     data class OnPriceChanged(val price: String, val currency: String) : PackPriceFillableInfoEvent

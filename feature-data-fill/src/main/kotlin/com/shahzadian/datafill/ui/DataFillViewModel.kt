@@ -90,6 +90,7 @@ internal class DataFillViewModel @Inject constructor(
                     pagesCount = fillableInfoHelper.infoPagesCount,
                     currentPageIndex = fillableInfoHelper.currentPageIndex,
                 ),
+                submitButtonEnabled = info.isValid(),
                 name = info.name,
                 age = info.age?.toString()
             )
@@ -99,20 +100,22 @@ internal class DataFillViewModel @Inject constructor(
                     pagesCount = fillableInfoHelper.infoPagesCount,
                     currentPageIndex = fillableInfoHelper.currentPageIndex,
                 ),
+                submitButtonEnabled = info.isValid(),
                 cigarettesCountIntRange = info.cigarettesCountIntRange,
                 cigarettesPerDay = info.cigarettesPerDay.toString(),
                 packsPerDay = info.packsPerDay.toString(),
             )
 
             is PackPriceFillableInfo -> DataFillViewState.PackPrice(
+                pagesData = DataFillViewState.PagesData(
+                    pagesCount = fillableInfoHelper.infoPagesCount,
+                    currentPageIndex = fillableInfoHelper.currentPageIndex,
+                ),
+                submitButtonEnabled = info.isValid(),
                 price = DataFillViewState.PackPrice.PriceData(
                     price = info.price?.toString() ?: "",
                     currency = info.currency,
                     currencies = info.currencies,
-                ),
-                pagesData = DataFillViewState.PagesData(
-                    pagesCount = fillableInfoHelper.infoPagesCount,
-                    currentPageIndex = fillableInfoHelper.currentPageIndex,
                 ),
             )
 

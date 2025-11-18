@@ -94,6 +94,7 @@ fun DataFillScreen(
             Footer(
                 pagesCount = pagesData.pagesCount,
                 currentPageIndex = pagesData.currentPageIndex,
+                submitButtonEnabled = state.submitButtonEnabled,
                 onSubmitClick = {
                     viewModel.onViewEvent(DataFillViewEvent.OnSubmitNext)
                 },
@@ -108,6 +109,7 @@ fun DataFillScreen(
 private fun Footer(
     pagesCount: Int,
     currentPageIndex: Int,
+    submitButtonEnabled: Boolean,
     onSubmitClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -126,6 +128,7 @@ private fun Footer(
                 .padding(bottom = 24.dp)
         )
         SubmitButton(
+            enabled = submitButtonEnabled,
             onClick = onSubmitClick,
             modifier = Modifier
                 .fillMaxWidth()
@@ -135,6 +138,7 @@ private fun Footer(
 
 @Composable
 private fun SubmitButton(
+    enabled: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -144,6 +148,7 @@ private fun SubmitButton(
         ),
         onClick = onClick,
         modifier = modifier,
+        enabled = enabled,
     )
 }
 
