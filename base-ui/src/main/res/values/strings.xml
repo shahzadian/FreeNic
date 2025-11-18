@@ -52,4 +52,11 @@
     <string name="data_fill_price_label">How much does your cigarette pack cost?</string>
     <string name="data_fill_price_input_hint">Enter price</string>
 
+    <string name="data_fill_result_title">You are all set</string>
+    <string name="data_fill_result_subtitle">We have created a personalized plan for you</string>
+    <string name="data_fill_result_card_title">Your profile</string>
+    <string name="data_fill_result_card_name">Name</string>
+    <string name="data_fill_result_card_age">Age</string>
+    <string name="data_fill_result_card_daily_cigarettes">Daily cigarettes</string>
+
 </resources>

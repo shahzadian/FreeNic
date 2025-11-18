@@ -29,6 +29,7 @@ import com.shahzadian.datafill.ui.pages.DataFillAboutPage
 import com.shahzadian.datafill.ui.pages.DataFillInitPage
 import com.shahzadian.datafill.ui.pages.DataFillCigarettesPerDayPagePage
 import com.shahzadian.datafill.ui.pages.DataFillPackPricePage
+import com.shahzadian.datafill.ui.pages.result.DataFillResultPage
 
 @Composable
 fun DataFillScreen(
@@ -84,6 +85,15 @@ fun DataFillScreen(
                             )
                         )
                     },
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(24.dp)
+                )
+            }
+
+            is DataFillViewState.Result -> {
+                DataFillResultPage(
+                  //  data = state as DataFillViewState.Result,
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(24.dp)

@@ -45,5 +45,11 @@
     <string name="data_fill_price_subtitle">Это поможет рассчитать, сколько ты экономишь</string>
     <string name="data_fill_smoking_habits_title">Твои привычки курения</string>
     <string name="data_fill_price_input_hint">Введите цену</string>
+    <string name="data_fill_result_title">Готово</string>
+    <string name="data_fill_result_subtitle">Мы создали персональный план для Вас</string>
+    <string name="data_fill_result_card_title">Ваш профиль</string>
+    <string name="data_fill_result_card_name">Имя</string>
+    <string name="data_fill_result_card_age">Возраст</string>
+    <string name="data_fill_result_card_daily_cigarettes">Сигарет в день</string>
 
 </resources>

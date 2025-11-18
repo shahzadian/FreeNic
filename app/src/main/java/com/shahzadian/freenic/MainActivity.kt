@@ -4,12 +4,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import com.freenic.ui.extensions.mainGradientBackground
 import com.freenic.ui.theme.FreeNicTheme
 import com.shahzadian.datafill.ui.DataFillScreen
-import com.shahzadian.freenic.navigation.Navigation
+import com.shahzadian.datafill.ui.pages.result.DataFillResultPage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

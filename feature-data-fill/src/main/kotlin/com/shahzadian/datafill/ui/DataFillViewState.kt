@@ -10,11 +10,13 @@ internal sealed interface DataFillViewState : ViewState {
 
     val submitButtonEnabled: Boolean
 
+    @Immutable
     data object Loading : DataFillViewState {
         override val pagesData: PagesData? = null
         override val submitButtonEnabled: Boolean = true
     }
 
+    @Immutable
     data class Init(
         override val pagesData: PagesData,
     ) : DataFillViewState {
@@ -29,6 +31,7 @@ internal sealed interface DataFillViewState : ViewState {
         val age: String? = null,
     ) : DataFillViewState
 
+    @Immutable
     data class CigarettesPerDay(
         override val pagesData: PagesData,
         override val submitButtonEnabled: Boolean,
@@ -37,12 +40,14 @@ internal sealed interface DataFillViewState : ViewState {
         val packsPerDay: String,
     ) : DataFillViewState
 
+    @Immutable
     data class PackPrice(
         override val pagesData: PagesData,
         override val submitButtonEnabled: Boolean,
         val price: PriceData? = null,
     ) : DataFillViewState {
 
+        @Immutable
         data class PriceData(
             val price: String,
             val currency: String,
@@ -50,6 +55,22 @@ internal sealed interface DataFillViewState : ViewState {
         )
     }
 
+    @Immutable
+    data class Result(
+        override val pagesData: PagesData,
+        val userData: UserData,
+    ) : DataFillViewState {
+        override val submitButtonEnabled: Boolean = true
+
+        @Immutable
+        data class UserData(
+            val name: String,
+            val age: String,
+            val cigarettesPerDay: String,
+        )
+    }
+
+    @Immutable
     data class PagesData(
         val pagesCount: Int,
         val currentPageIndex: Int,

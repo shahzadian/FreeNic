@@ -157,7 +157,7 @@ private fun CigarettesCountCircle(
             ) {
                 Text(
                     text = cigarettesCount,
-                    color = MaterialTheme.colorScheme.onSecondary,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.displayLarge,
                     modifier = Modifier
                         .align(Alignment.Center),

@@ -12,6 +12,7 @@ import com.shahzadian.datafill.domain.fillableInfo.cigarettesperday.CigarettesPe
 import com.shahzadian.datafill.domain.fillableInfo.initinfo.InitScreenFillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.packprice.PackPriceFillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.packprice.PackPriceFillableInfoEvent
+import com.shahzadian.datafill.domain.fillableInfo.result.ResultFillableInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -119,7 +120,23 @@ internal class DataFillViewModel @Inject constructor(
                 ),
             )
 
+            is ResultFillableInfo -> DataFillViewState.Result(
+                pagesData = DataFillViewState.PagesData(
+                    pagesCount = fillableInfoHelper.infoPagesCount,
+                    currentPageIndex = fillableInfoHelper.currentPageIndex,
+                ),
+                userData = info.userInfo.toUserData()
+            )
+
             else -> DataFillViewState.Loading
         }
+    }
+
+    private fun ResultFillableInfo.UserInfo.toUserData(): DataFillViewState.Result.UserData {
+        return DataFillViewState.Result.UserData(
+            name = this.name,
+            age = this.age.toString(),
+            cigarettesPerDay = this.cigarettesPerDay.toString()
+        )
     }
 }
