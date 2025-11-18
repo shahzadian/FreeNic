@@ -18,7 +18,7 @@ internal class PackPriceInfoProvider(
             Currency.getInstance(Locale.UK).currencyCode,
             Currency.getInstance(Locale.FRANCE).currencyCode,
             "RUB"
-        )
+        ).sorted().plus("Other")
     }
 
     override val initState: PackPriceFillableInfo by lazyUnsafe {

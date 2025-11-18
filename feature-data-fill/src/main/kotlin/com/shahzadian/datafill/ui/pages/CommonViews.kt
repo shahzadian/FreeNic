@@ -91,9 +91,11 @@ internal fun DataFillFieldBlock(
     ) {
         DataFillInputLabel(
             text = label,
-            modifier = Modifier.padding(bottom = description?.let { 8.dp } ?: 0.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         )
-        inputField(Modifier.fillMaxWidth())
+        inputField(Modifier
+            .fillMaxWidth()
+            .padding(bottom = description?.let { 8.dp } ?: 0.dp))
         description?.let {
             DataFillInputDescription(
                 text = it,
