@@ -37,13 +37,12 @@ fun DataFillScreen(
     modifier: Modifier = Modifier,
 ) {
     val viewModel: DataFillViewModel = hiltViewModel()
+    val state by viewModel.viewStateFlow.collectAsState()
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(mainGradientBackground())
     ) {
-        val state by viewModel.viewStateFlow.collectAsState()
-
         ScreenByState(
             state = state,
             onViewEvent = viewModel::onViewEvent,
@@ -63,7 +62,7 @@ fun DataFillScreen(
         }
     }
     BackHandler(
-        enabled = true,
+        enabled = state.pagesData?.currentPageIndex?.let { it > 0 } ?: false,
     ) {
         viewModel.onViewEvent(DataFillViewEvent.OnBack)
     }
