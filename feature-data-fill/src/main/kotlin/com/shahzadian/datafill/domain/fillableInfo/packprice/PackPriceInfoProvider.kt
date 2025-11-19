@@ -2,6 +2,7 @@ package com.shahzadian.datafill.domain.fillableInfo.packprice
 
 import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProvider
+import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
 import kotlinx.coroutines.CoroutineScope
 import java.util.Currency
 import java.util.Locale
@@ -29,8 +30,14 @@ internal class PackPriceInfoProvider(
         )
     }
 
-    override fun onFillInfoSubmit() {
-        // No-op for now
+    override fun updateSharedState(
+        currentInfo: PackPriceFillableInfo,
+        currentSharedState: FillableInfoSharedState
+    ): FillableInfoSharedState {
+        return currentSharedState.copy(
+            packPrice = currentInfo.price,
+            currency = currentInfo.currency
+        )
     }
 
     override suspend fun handleFillableInfoEvent(event: PackPriceFillableInfoEvent): PackPriceFillableInfo? {

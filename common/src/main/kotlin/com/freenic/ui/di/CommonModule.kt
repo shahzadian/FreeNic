@@ -2,15 +2,19 @@ package com.freenic.ui.di
 
 import com.freenic.ui.model.CoroutineContexts
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface CommonModule {
+internal object CommonModule {
 
-    fun providerCoroutineContexts(): CoroutineContexts {
+    @Provides
+    @Singleton
+    fun provideCoroutineContexts(): CoroutineContexts {
         return CoroutineContexts(
             main = Dispatchers.Main,
             io = Dispatchers.IO,

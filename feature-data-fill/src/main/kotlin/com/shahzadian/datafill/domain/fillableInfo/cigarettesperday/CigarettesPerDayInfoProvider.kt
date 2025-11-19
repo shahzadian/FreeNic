@@ -2,6 +2,7 @@ package com.shahzadian.datafill.domain.fillableInfo.cigarettesperday
 
 import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProvider
+import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
 import kotlinx.coroutines.CoroutineScope
 
 internal class CigarettesPerDayInfoProvider(
@@ -20,8 +21,14 @@ internal class CigarettesPerDayInfoProvider(
         )
     }
 
-    override fun onFillInfoSubmit() {
-
+    override fun updateSharedState(
+        currentInfo: CigarettesPerDayFillableInfo,
+        currentSharedState: FillableInfoSharedState
+    ): FillableInfoSharedState {
+        return currentSharedState.copy(
+            cigarettesPerDay = currentInfo.cigarettesPerDay,
+            packsPerDay = currentInfo.packsPerDay,
+        )
     }
 
     override suspend fun handleFillableInfoEvent(event: CigarettesPerDayFillableInfoEvent): CigarettesPerDayFillableInfo? {

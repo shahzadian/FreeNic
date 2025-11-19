@@ -129,7 +129,7 @@ private fun ScreenByState(
 
         is DataFillViewState.Result -> {
             DataFillResultPage(
-                //  data = state as DataFillViewState.Result,
+                userData = (state as DataFillViewState.Result).userData,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(24.dp)

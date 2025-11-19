@@ -2,6 +2,7 @@ package com.shahzadian.datafill.domain.fillableInfo.initinfo
 
 import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProvider
+import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
 import kotlinx.coroutines.CoroutineScope
 
 internal class InitScreenFillableInfoProvider(
@@ -19,7 +20,10 @@ internal class InitScreenFillableInfoProvider(
         return null
     }
 
-    override fun onFillInfoSubmit() {
-//        Nothing
+    override fun updateSharedState(
+        currentInfo: InitScreenFillableInfo,
+        currentSharedState: FillableInfoSharedState
+    ): FillableInfoSharedState {
+        return currentSharedState
     }
 }

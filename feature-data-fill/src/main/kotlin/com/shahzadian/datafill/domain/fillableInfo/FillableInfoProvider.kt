@@ -1,6 +1,8 @@
 package com.shahzadian.datafill.domain.fillableInfo
 
+import androidx.annotation.CallSuper
 import com.freenic.ui.extensions.lazyUnsafe
+import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -36,9 +38,35 @@ internal abstract class FillableInfoProvider<I : FillableInfo, E : FillableInfoE
         }
     }
 
-    abstract fun onFillInfoSubmit()
+    fun validateState() {
+        validateCurrentInfo()?.let { _infoStateFlow.value = it }
+    }
+
+    fun onFillInfoSubmit(
+        sharedState: FillableInfoSharedState,
+        onSharedStateUpdated: (FillableInfoSharedState) -> Unit
+    ) {
+        val updatedSharedState = updateSharedState(
+            currentInfo = fillableInfoStateFlow.value,
+            currentSharedState = sharedState,
+        )
+        onSharedStateUpdated(updatedSharedState)
+        coroutineScope.launch {
+            onSubmit()
+        }
+    }
 
     protected abstract suspend fun handleFillableInfoEvent(event: E): I?
+
+    protected open fun validateCurrentInfo(): I? = null
+
+    @CallSuper
+    protected open suspend fun onSubmit() {}
+
+    protected abstract fun updateSharedState(
+        currentInfo: I,
+        currentSharedState: FillableInfoSharedState
+    ): FillableInfoSharedState
 }
 
 /**

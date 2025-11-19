@@ -30,6 +30,7 @@ private const val ANIMATION_DURATION_IMAGE_APPEARANCE: Int = 1000
 
 @Composable
 internal fun DataFillResultPage(
+    userData: DataFillViewState.Result.UserData,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -45,9 +46,9 @@ internal fun DataFillResultPage(
         )
         CardView(
             userData = DataFillViewState.Result.UserData(
-                name = "some name",
-                age = "20",
-                cigarettesPerDay = "20"
+                name = userData.name,
+                age = userData.age,
+                cigarettesPerDay = userData.cigarettesPerDay
             ),
         )
     }

@@ -1,9 +1,11 @@
 package com.shahzadian.datafill.domain
 
+import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoEvent
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProvider
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProviderFactory
+import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableDataSharedStateHolder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -26,9 +28,16 @@ internal class FillableInfoHelperImpl @Inject constructor(
 
     override val currentInfoFlow: MutableSharedFlow<FillableInfo> = MutableSharedFlow()
 
+    private val sharedStateHolder: FillableDataSharedStateHolder by lazyUnsafe {
+        FillableDataSharedStateHolder()
+    }
+
     override fun initialize(coroutineScope: CoroutineScope) {
         this.coroutineScope = coroutineScope
-        val factory = fillableInfoProviderFactory.getProviders(coroutineScope)
+        val factory = fillableInfoProviderFactory.getProviders(
+            coroutineScope = coroutineScope,
+            sharedStateHolder = sharedStateHolder,
+        )
         fillableInfoProviders = factory
     }
 
@@ -36,8 +45,17 @@ internal class FillableInfoHelperImpl @Inject constructor(
         if (currentPageIndex == fillableInfoProviders?.lastIndex) return null
         return fillableInfoProviders
             ?.let { providers ->
+                if (currentPageIndex in 0..providers.lastIndex) {
+                    providers[currentPageIndex].onFillInfoSubmit(
+                        sharedState = sharedStateHolder.sharedState,
+                    ) { updatedState ->
+                        sharedStateHolder.sharedState = updatedState
+                    }
+                }
                 currentPageIndex += 1
-                val info = providers[currentPageIndex].fillableInfoStateFlow.value
+                val provider = providers[currentPageIndex]
+                provider.validateState()
+                val info = provider.fillableInfoStateFlow.value
 
                 currentInfoFlow.emit(info)
 
