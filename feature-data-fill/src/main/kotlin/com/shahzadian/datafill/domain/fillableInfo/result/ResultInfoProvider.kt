@@ -33,12 +33,6 @@ internal class ResultInfoProvider(
         return currentSharedState
     }
 
-    override suspend fun onSubmit() {
-        super.onSubmit()
-        val userData = sharedStateHolder.sharedState.toUserData() ?: return
-        //   updateUserDataUseCase(userData)
-    }
-
     override suspend fun handleFillableInfoEvent(event: ResultFillableInfoEvent): ResultFillableInfo? {
         return currentInfo
     }

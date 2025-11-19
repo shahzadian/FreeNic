@@ -6,6 +6,7 @@ import com.shahzadian.datafill.domain.fillableInfo.FillableInfoEvent
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProvider
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProviderFactory
 import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableDataSharedStateHolder
+import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,6 +26,9 @@ internal class FillableInfoHelperImpl @Inject constructor(
         get() = fillableInfoProviders?.size ?: 0
 
     override var currentPageIndex: Int = -1
+
+    override val sharedState: FillableInfoSharedState
+        get() = sharedStateHolder.sharedState
 
     override val currentInfoFlow: MutableSharedFlow<FillableInfo> = MutableSharedFlow()
 

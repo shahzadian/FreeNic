@@ -13,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal interface UserDataModule {
+interface UserDataModule {
 
     @Binds
     fun bindUserDataRepository(impl: UserDataRepositoryImpl): UserDataRepository

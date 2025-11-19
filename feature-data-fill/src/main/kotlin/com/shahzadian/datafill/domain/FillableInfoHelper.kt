@@ -2,6 +2,7 @@ package com.shahzadian.datafill.domain
 
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoEvent
+import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 
@@ -10,6 +11,8 @@ internal interface FillableInfoHelper {
     val infoPagesCount: Int
 
     val currentPageIndex: Int
+
+    val sharedState: FillableInfoSharedState
 
     /**
      * Exposes current provider's info as a flow so UI can observe updates while user types.

@@ -1,5 +1,6 @@
 package com.shahzadian.datafill.ui
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -13,6 +14,11 @@ import com.shahzadian.datafill.domain.fillableInfo.initinfo.InitScreenFillableIn
 import com.shahzadian.datafill.domain.fillableInfo.packprice.PackPriceFillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.packprice.PackPriceFillableInfoEvent
 import com.shahzadian.datafill.domain.fillableInfo.result.ResultFillableInfo
+import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
+import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
+import com.shahzadian.user.model.UserCigarettesData
+import com.shahzadian.user.model.UserData
+import com.shahzadian.user.model.UserPersonalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -22,8 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class DataFillViewModel @Inject constructor(
     private val fillableInfoHelper: FillableInfoHelper,
-) :
-    BaseViewModel<DataFillViewState, DataFillViewEvent, DataFillCommand>() {
+    private val updateUserDataUseCase: UpdateUserDataUseCase
+) : BaseViewModel<DataFillViewState, DataFillViewEvent, DataFillCommand>() {
 
     override val initState: DataFillViewState by lazyUnsafe {
         DataFillViewState.Loading
@@ -45,7 +51,7 @@ internal class DataFillViewModel @Inject constructor(
 
             DataFillViewEvent.OnSubmitNext -> {
                 viewModelScope.launch {
-                    fillableInfoHelper.getNextData()
+                    fillableInfoHelper.getNextData() ?: updateUserData()
                 }
             }
 
@@ -64,7 +70,7 @@ internal class DataFillViewModel @Inject constructor(
                     )
                 )
             }
-            
+
             is DataFillViewEvent.OnBack -> {
                 viewModelScope.launch {
                     fillableInfoHelper.getPreviousData()
@@ -148,6 +154,37 @@ internal class DataFillViewModel @Inject constructor(
             name = this.name,
             age = this.age.toString(),
             cigarettesPerDay = this.cigarettesPerDay.toString()
+        )
+    }
+
+    private fun updateUserData() {
+        viewModelScope.launch {
+            fillableInfoHelper.sharedState.toSaveableUserData()?.let {
+                Log.d("LogMog", "updating user data: $it")
+                updateUserDataUseCase(it)
+            }
+        }
+    }
+
+    private fun FillableInfoSharedState.toSaveableUserData(): UserData? {
+        val userName = this.name ?: return null
+        val userAge = this.age ?: return null
+        val userCigarettesPerDay = this.cigarettesPerDay ?: return null
+        val packsPerDay = this.packsPerDay ?: return null
+        val price = this.packPrice ?: return null
+        val currency = this.currency ?: return null
+
+        return UserData(
+            personalData = UserPersonalData(
+                name = userName,
+                age = userAge,
+            ),
+            cigarettesData = UserCigarettesData(
+                cigarettesPerDay = userCigarettesPerDay,
+                packsPerDay = packsPerDay,
+                currency = currency,
+                price = price,
+            )
         )
     }
 }

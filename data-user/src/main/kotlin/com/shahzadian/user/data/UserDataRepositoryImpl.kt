@@ -15,7 +15,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import android.content.Context
 import javax.inject.Inject
 
-internal class UserDataRepositoryImpl @Inject constructor(
+class UserDataRepositoryImpl @Inject constructor(
     @param:ApplicationContext private val appContext: Context,
     private val coroutineContexts: CoroutineContexts,
 ) : UserDataRepository {

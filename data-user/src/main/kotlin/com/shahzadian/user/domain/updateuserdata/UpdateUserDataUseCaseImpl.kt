@@ -4,7 +4,7 @@ import com.shahzadian.user.data.UserDataRepository
 import com.shahzadian.user.model.UserData
 import javax.inject.Inject
 
-internal class UpdateUserDataUseCaseImpl @Inject constructor(
+class UpdateUserDataUseCaseImpl @Inject constructor(
     private val userDataRepository: UserDataRepository,
 ) : UpdateUserDataUseCase {
 
