@@ -182,8 +182,10 @@ internal class DataFillViewModel @Inject constructor(
             cigarettesData = UserCigarettesData(
                 cigarettesPerDay = userCigarettesPerDay,
                 packsPerDay = packsPerDay,
-                currency = currency,
-                price = price,
+                priceData = UserCigarettesData.PriceData(
+                    price = price,
+                    currency = currency,
+                ),
             )
         )
     }

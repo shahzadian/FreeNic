@@ -13,8 +13,7 @@ class UserPersonalData(
 class UserCigarettesData(
     val cigarettesPerDay: Int,
     val packsPerDay: Float,
-    val currency: String,
-    val price: Float,
+    val priceData: PriceData,
 ) {
 
     class PriceData(

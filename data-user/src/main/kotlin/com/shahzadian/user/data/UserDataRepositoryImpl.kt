@@ -1,18 +1,18 @@
 package com.shahzadian.user.data
 
+import android.content.Context
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
 import com.freenic.ui.model.CoroutineContexts
-import com.shahzadian.user.model.UserData
 import com.shahzadian.user.model.UserCigarettesData
+import com.shahzadian.user.model.UserData
 import com.shahzadian.user.model.UserPersonalData
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.floatPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import android.content.Context
 import javax.inject.Inject
 
 class UserDataRepositoryImpl @Inject constructor(
@@ -44,8 +44,10 @@ class UserDataRepositoryImpl @Inject constructor(
         val cigarettes = UserCigarettesData(
             cigarettesPerDay = cigsPerDay ?: 0,
             packsPerDay = packsPerDay ?: 0f,
-            currency = currency.orEmpty(),
-            price = price ?: 0f,
+            priceData = UserCigarettesData.PriceData(
+                price = price ?: 0f,
+                currency = currency.orEmpty(),
+            ),
         )
         return@withContext UserData(personalData = personal, cigarettesData = cigarettes)
     }
@@ -57,8 +59,8 @@ class UserDataRepositoryImpl @Inject constructor(
                 prefs[KEY_AGE] = userData.personalData.age
                 prefs[KEY_CPD] = userData.cigarettesData.cigarettesPerDay
                 prefs[KEY_PPD] = userData.cigarettesData.packsPerDay
-                prefs[KEY_CURRENCY] = userData.cigarettesData.currency
-                prefs[KEY_PRICE] = userData.cigarettesData.price
+                prefs[KEY_CURRENCY] = userData.cigarettesData.priceData.currency
+                prefs[KEY_PRICE] = userData.cigarettesData.priceData.price
             }
         }
     }

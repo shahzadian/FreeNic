@@ -5,9 +5,6 @@ import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProvider
 import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableDataSharedStateHolder
 import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
 import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
-import com.shahzadian.user.model.UserCigarettesData
-import com.shahzadian.user.model.UserData
-import com.shahzadian.user.model.UserPersonalData
 import kotlinx.coroutines.CoroutineScope
 
 internal class ResultInfoProvider(
@@ -35,27 +32,6 @@ internal class ResultInfoProvider(
 
     override suspend fun handleFillableInfoEvent(event: ResultFillableInfoEvent): ResultFillableInfo? {
         return currentInfo
-    }
-
-    private fun FillableInfoSharedState.toUserData(): UserData? {
-        val name = this.name ?: return null
-        val age = this.age ?: return null
-        val cigarettesPerDay = this.cigarettesPerDay ?: return null
-        val packsPerDay = this.packsPerDay ?: return null
-        val packPrice = this.packPrice ?: return null
-        val currency = this.currency ?: return null
-        return UserData(
-            personalData = UserPersonalData(
-                name = name,
-                age = age,
-            ),
-            cigarettesData = UserCigarettesData(
-                cigarettesPerDay = cigarettesPerDay,
-                packsPerDay = packsPerDay,
-                currency = currency,
-                price = packPrice
-            )
-        )
     }
 
     private fun createFillableInfo(): ResultFillableInfo {
