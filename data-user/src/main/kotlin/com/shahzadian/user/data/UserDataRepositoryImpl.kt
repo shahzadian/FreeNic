@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.freenic.ui.model.CoroutineContexts
+import com.shahzadian.user.model.QuitData
 import com.shahzadian.user.model.UserCigarettesData
 import com.shahzadian.user.model.UserData
 import com.shahzadian.user.model.UserPersonalData
@@ -31,6 +33,7 @@ class UserDataRepositoryImpl @Inject constructor(
         val packsPerDay = prefs[KEY_PPD]
         val currency = prefs[KEY_CURRENCY]
         val price = prefs[KEY_PRICE]
+        val quitDate = prefs[KEY_QUIT_DATE]
 
         // If nothing meaningful stored, return null
         if (name.isNullOrBlank() && age == null && cigsPerDay == null && packsPerDay == null && currency.isNullOrBlank() && price == null) {
@@ -49,7 +52,14 @@ class UserDataRepositoryImpl @Inject constructor(
                 currency = currency.orEmpty(),
             ),
         )
-        return@withContext UserData(personalData = personal, cigarettesData = cigarettes)
+        val quitData = QuitData(
+            quitDateMillis = quitDate ?: 0L,
+        )
+        return@withContext UserData(
+            personalData = personal,
+            cigarettesData = cigarettes,
+            quitData = quitData,
+        )
     }
 
     override suspend fun updateUserData(userData: UserData) {
@@ -73,5 +83,6 @@ class UserDataRepositoryImpl @Inject constructor(
         val KEY_PPD = floatPreferencesKey("packs_per_day")
         val KEY_CURRENCY = stringPreferencesKey("currency")
         val KEY_PRICE = floatPreferencesKey("price")
+        val KEY_QUIT_DATE = longPreferencesKey("quit_date")
     }
 }

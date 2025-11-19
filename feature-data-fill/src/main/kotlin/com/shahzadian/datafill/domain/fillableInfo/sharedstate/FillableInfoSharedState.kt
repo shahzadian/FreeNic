@@ -6,5 +6,6 @@ data class FillableInfoSharedState(
     val cigarettesPerDay: Int? = null,
     val packsPerDay: Float? = null,
     val packPrice: Float? = null,
-    val currency: String? = null
+    val currency: String? = null,
+    val quitDate: Long? = null,
 )

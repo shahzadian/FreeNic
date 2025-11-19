@@ -3,6 +3,7 @@ package com.shahzadian.user.model
 class UserData(
     val personalData: UserPersonalData,
     val cigarettesData: UserCigarettesData,
+    val quitData: QuitData,
 )
 
 class UserPersonalData(
@@ -21,3 +22,7 @@ class UserCigarettesData(
         val currency: String,
     )
 }
+
+class QuitData(
+    val quitDateMillis: Long,
+)

@@ -27,7 +27,9 @@ internal class ResultInfoProvider(
         currentInfo: ResultFillableInfo,
         currentSharedState: FillableInfoSharedState
     ): FillableInfoSharedState {
-        return currentSharedState
+        return currentSharedState.copy(
+            quitDate = System.currentTimeMillis()
+        )
     }
 
     override suspend fun handleFillableInfoEvent(event: ResultFillableInfoEvent): ResultFillableInfo? {

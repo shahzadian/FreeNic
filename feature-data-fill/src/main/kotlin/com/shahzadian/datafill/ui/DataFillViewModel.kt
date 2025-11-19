@@ -16,6 +16,7 @@ import com.shahzadian.datafill.domain.fillableInfo.packprice.PackPriceFillableIn
 import com.shahzadian.datafill.domain.fillableInfo.result.ResultFillableInfo
 import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
 import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
+import com.shahzadian.user.model.QuitData
 import com.shahzadian.user.model.UserCigarettesData
 import com.shahzadian.user.model.UserData
 import com.shahzadian.user.model.UserPersonalData
@@ -173,6 +174,7 @@ internal class DataFillViewModel @Inject constructor(
         val packsPerDay = this.packsPerDay ?: return null
         val price = this.packPrice ?: return null
         val currency = this.currency ?: return null
+        val quitDate = this.quitDate ?: return null
 
         return UserData(
             personalData = UserPersonalData(
@@ -186,6 +188,9 @@ internal class DataFillViewModel @Inject constructor(
                     price = price,
                     currency = currency,
                 ),
+            ),
+            quitData = QuitData(
+                quitDateMillis = quitDate,
             )
         )
     }
