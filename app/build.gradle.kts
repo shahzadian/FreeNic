@@ -48,6 +48,7 @@ dependencies {
     implementation(project(":feature-home-screen"))
     implementation(project(":feature-data-fill"))
     implementation(project(":data-user"))
+    implementation(project(":feature-dashboard"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

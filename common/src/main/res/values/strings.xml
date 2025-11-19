@@ -59,4 +59,10 @@
     <string name="data_fill_result_card_age">Age</string>
     <string name="data_fill_result_card_daily_cigarettes">Daily cigarettes</string>
 
+    <string name="dashboard_lungs_rec_title">Lungs recovery</string>
+    <string name="dashboard_lungs_rec_subtitle">Your lungs have restored of %d percents of their capacity</string>
+    <string name="dashboard_lungs_rec_hint">Improving daily</string>
+
+"
+
 </resources>

@@ -51,5 +51,8 @@
     <string name="data_fill_result_card_name">Имя</string>
     <string name="data_fill_result_card_age">Возраст</string>
     <string name="data_fill_result_card_daily_cigarettes">Сигарет в день</string>
+    <string name="dashboard_lungs_rec_title">Восстановление легких</string>
+    <string name="dashboard_lungs_rec_subtitle">Ваши легкие восстановлены на %d процентов</string>
+    <string name="dashboard_lungs_rec_hint">Улучшается ежедневно</string>
 
 </resources>
