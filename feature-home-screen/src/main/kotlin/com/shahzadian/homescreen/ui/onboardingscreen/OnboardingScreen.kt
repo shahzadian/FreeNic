@@ -45,7 +45,7 @@ import com.shahzadian.homescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 private const val DURATION_ANIMATION_IMAGE_SCALE: Int = 20_000
 private const val DURATION_ANIMATION_TITLE_SLIDE: Int = 800
-private const val DELAY_ANIMATION_TEXT_SLIDE: Int = 1500
+private const val DELAY_ANIMATION_TEXT_SLIDE: Int = 1000
 
 
 @Composable

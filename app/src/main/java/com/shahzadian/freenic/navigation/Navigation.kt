@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.freenic.ui.AppScreen
+import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
 import com.shahzadian.homescreen.ui.homescreen.HomeScreen
 import com.shahzadian.homescreen.ui.onboardingscreen.OnboardingScreen
@@ -44,6 +45,14 @@ fun Navigation() {
         composable(route = AppScreen.DataFillScreen.route) {
             Scaffold {
                 DataFillScreen(
+                    navController = navController,
+                    modifier = Modifier.padding(it)
+                )
+            }
+        }
+        composable(route = AppScreen.DashboardScreen.route) {
+            Scaffold {
+                DashboardScreen(
                     modifier = Modifier.padding(it)
                 )
             }

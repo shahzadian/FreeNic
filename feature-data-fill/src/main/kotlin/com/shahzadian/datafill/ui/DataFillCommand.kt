@@ -1,8 +1,11 @@
 package com.shahzadian.datafill.ui
 
 import androidx.compose.runtime.Immutable
+import com.freenic.ui.AppScreen
 import com.freenic.ui.vm.ViewCommand
 
 @Immutable
 internal sealed interface DataFillCommand : ViewCommand {
+
+    data class NavigateTo(val screen: AppScreen) : DataFillCommand
 }

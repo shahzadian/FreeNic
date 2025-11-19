@@ -1,7 +1,7 @@
 package com.shahzadian.datafill.ui
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.datafill.domain.FillableInfoHelper
@@ -52,7 +52,7 @@ internal class DataFillViewModel @Inject constructor(
 
             DataFillViewEvent.OnSubmitNext -> {
                 viewModelScope.launch {
-                    fillableInfoHelper.getNextData() ?: updateUserData()
+                    fillableInfoHelper.getNextData() ?: onAllDataFilled()
                 }
             }
 
@@ -92,6 +92,15 @@ internal class DataFillViewModel @Inject constructor(
 
         viewModelScope.launch {
             fillableInfoHelper.getNextData()
+        }
+    }
+
+    private fun onAllDataFilled() {
+        viewModelScope.launch {
+            fillableInfoHelper.sharedState.toSaveableUserData()?.let {
+                updateUserDataUseCase(it)
+            }
+            sendViewCommand(DataFillCommand.NavigateTo(AppScreen.DashboardScreen))
         }
     }
 
@@ -156,15 +165,6 @@ internal class DataFillViewModel @Inject constructor(
             age = this.age.toString(),
             cigarettesPerDay = this.cigarettesPerDay.toString()
         )
-    }
-
-    private fun updateUserData() {
-        viewModelScope.launch {
-            fillableInfoHelper.sharedState.toSaveableUserData()?.let {
-                Log.d("LogMog", "updating user data: $it")
-                updateUserDataUseCase(it)
-            }
-        }
     }
 
     private fun FillableInfoSharedState.toSaveableUserData(): UserData? {

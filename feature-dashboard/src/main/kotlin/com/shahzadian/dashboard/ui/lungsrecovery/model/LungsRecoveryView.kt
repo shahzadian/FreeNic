@@ -39,7 +39,7 @@ private const val ANIMATION_DURATION_PERCENTAGE: Int = 3000
 
 @Composable
 fun LungsRecoveryView(
-    model: LungsRecoveryUi,
+    model: LungsRecoveryUiModel,
     modifier: Modifier = Modifier,
 ) {
     DashboardCard(

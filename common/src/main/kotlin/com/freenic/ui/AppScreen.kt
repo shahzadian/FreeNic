@@ -9,4 +9,7 @@ sealed class AppScreen(val route: String) {
 
     //    Personal data fill
     object DataFillScreen : AppScreen("data_fill_screen")
+
+    // User data dashboard
+    object DashboardScreen : AppScreen("dashboard_screen")
 }
