@@ -69,6 +69,8 @@
     </plurals>
     <string name="dashboard_no_cig_days_subtitle">Your body is already healing</string>
 
-    <string name="dashboard_saved_money_title">Money saved</string>
+    <string name="dashboard_saved_money_title">Money\nsaved</string>
+
+    <string name="dashboard_cigs_avoided_title">Cigarettes\navoided</string>
 
 </resources>

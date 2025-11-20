@@ -1,5 +1,8 @@
 package com.shahzadian.dashboard.ui.nocigdays.model
 
-class NoCigDaysUiModel(
+import androidx.compose.runtime.Immutable
+
+@Immutable
+internal data class NoCigDaysUiModel(
     val days: Int,
 )

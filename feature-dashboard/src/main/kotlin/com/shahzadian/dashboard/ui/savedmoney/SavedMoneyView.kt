@@ -80,9 +80,9 @@ private fun AmountView(
     } else 0
     val displayText = currency?.let { "$currency$amountText" } ?: amountText.toString()
     Text(
-        text = displayText.toString(),
+        text = displayText,
         style = MaterialTheme.typography.headlineLarge,
         color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(bottom = 16.dp)
+        modifier = modifier.padding(bottom = 16.dp)
     )
 }

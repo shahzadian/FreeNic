@@ -39,7 +39,7 @@ import kotlin.math.max
 import kotlin.math.roundToInt
 
 @Composable
-fun LungsRecoveryView(
+internal fun LungsRecoveryView(
     model: LungsRecoveryUiModel,
     modifier: Modifier = Modifier,
 ) {
@@ -115,7 +115,7 @@ private fun LungsRecoveryCircle(
         } else 0
         Text(
             text = "$displayedPercent%",
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.align(Alignment.Center)
         )

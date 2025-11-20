@@ -1,6 +1,9 @@
 package com.shahzadian.dashboard.ui.savedmoney.model
 
-internal class SavedMoneyUiModel(
+import androidx.compose.runtime.Immutable
+
+@Immutable
+internal data class SavedMoneyUiModel(
     val savedMoney: Int,
     val currency: String,
 )
