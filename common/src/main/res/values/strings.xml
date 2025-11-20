@@ -73,4 +73,7 @@
 
     <string name="dashboard_cigs_avoided_title">Cigarettes\navoided</string>
 
+    <string name="dashboard_header_title">Welcome back, %s</string>
+    <string name="dashboard_header_subtitle">Here is your progress today</string>
+
 </resources>

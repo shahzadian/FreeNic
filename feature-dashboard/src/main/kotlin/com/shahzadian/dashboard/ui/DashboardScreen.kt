@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.shahzadian.dashboard.ui.cigsavoided.model.CigsAvoidedUiModel
 import com.shahzadian.dashboard.ui.cigsavoided.model.CigsAvoidedView
+import com.shahzadian.dashboard.ui.header.HeaderView
+import com.shahzadian.dashboard.ui.header.model.HeaderUiModel
 import com.shahzadian.dashboard.ui.lungsrecovery.LungsRecoveryView
 import com.shahzadian.dashboard.ui.lungsrecovery.model.LungsRecoveryUiModel
 import com.shahzadian.dashboard.ui.nocigdays.NoCigDaysView
@@ -25,6 +27,12 @@ fun DashboardScreen(
     Column(
         modifier = modifier.padding(16.dp),
     ) {
+        HeaderView(
+            model = HeaderUiModel(
+                userName = "David",
+            ),
+            modifier = Modifier.padding(bottom = 16.dp),
+        )
         NoCigDaysView(
             model = NoCigDaysUiModel(days = 59),
             modifier = Modifier

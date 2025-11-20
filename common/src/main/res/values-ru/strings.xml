@@ -65,4 +65,6 @@
     <string name="dashboard_saved_money_title">Экономия\nденег</string>
     <string name="dashboard_cigs_avoided_title">Брошено\nсигарет</string>
 
+    <string name="dashboard_header_title">С возвращением, %s</string>
+    <string name="dashboard_header_subtitle">Вот твой прогресс на сегодня</string>
 </resources>

@@ -34,7 +34,7 @@ internal fun CigsAvoidedView(
             modifier = it,
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_cigs_avoided),
+                painter = painterResource(R.drawable.ic_dashboard_cigs_avoided),
                 contentDescription = "Cigarettes avoided",
                 modifier = Modifier.padding(bottom = 8.dp)
             )
