@@ -40,7 +40,7 @@ internal fun CigsAvoidedView(
             )
             Text(
                 text = stringResource(com.shahzadian.baseui.R.string.dashboard_cigs_avoided_title),
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -77,7 +77,7 @@ private fun CountView(
     } else 0
     Text(
         text = countText.toString(),
-        style = MaterialTheme.typography.headlineLarge,
+        style = MaterialTheme.typography.headlineMedium,
         color = MaterialTheme.colorScheme.primary,
         modifier = modifier.padding(bottom = 16.dp)
     )

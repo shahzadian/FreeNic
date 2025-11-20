@@ -41,7 +41,7 @@ internal fun SavedMoneyView(
             )
             Text(
                 text = stringResource(com.shahzadian.baseui.R.string.dashboard_saved_money_title),
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.padding(bottom = 8.dp)
             )
@@ -81,7 +81,7 @@ private fun AmountView(
     val displayText = currency?.let { "$currency$amountText" } ?: amountText.toString()
     Text(
         text = displayText,
-        style = MaterialTheme.typography.headlineLarge,
+        style = MaterialTheme.typography.headlineMedium,
         color = MaterialTheme.colorScheme.primary,
         modifier = modifier.padding(bottom = 16.dp)
     )

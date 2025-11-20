@@ -43,7 +43,6 @@ fun DashboardScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)
-                .height(220.dp)
         ) {
             CigsAvoidedView(
                 model = CigsAvoidedUiModel(
@@ -51,8 +50,7 @@ fun DashboardScreen(
                 ),
                 modifier = Modifier
                     .weight(1f)
-                    .padding(end = 4.dp)
-                    .fillMaxHeight(),
+                    .padding(end = 4.dp),
             )
             SavedMoneyView(
                 savedMoneyUiModel = SavedMoneyUiModel(
@@ -61,8 +59,7 @@ fun DashboardScreen(
                 ),
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 4.dp)
-                    .fillMaxHeight(),
+                    .padding(start = 4.dp),
             )
         }
         LungsRecoveryView(

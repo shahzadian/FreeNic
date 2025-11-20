@@ -54,14 +54,14 @@ internal fun NoCigDaysView(
         ) {
             DaysView(
                 days = model.days,
-                modifier = Modifier.align(Alignment.CenterHorizontally),
+                modifier = Modifier.align(Alignment.CenterHorizontally).padding(bottom = 4.dp),
             )
             Text(
                 text = pluralStringResource(R.plurals.dashboard_no_cig_days_title, model.days),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier
-                    .padding(bottom = 16.dp)
+                    .padding(bottom = 8.dp)
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center,
             )
@@ -97,8 +97,7 @@ private fun DaysView(
         text = displayText.toString(),
         color = MaterialTheme.colorScheme.primary,
         style = MaterialTheme.typography.displayLarge,
-        modifier = modifier
-            .padding(bottom = 16.dp),
+        modifier = modifier,
     )
 }
 
