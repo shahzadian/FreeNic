@@ -79,7 +79,6 @@ private fun DaysView(
     val firstLaunch = remember { mutableStateOf(true) }
     LaunchedEffect(days) {
         if (firstLaunch.value) {
-            // Ensure the animation starts from 0 only on the first composition
             animatedValue.snapTo(0f)
             firstLaunch.value = false
         }
@@ -98,7 +97,7 @@ private fun DaysView(
         text = displayText.toString(),
         color = MaterialTheme.colorScheme.primary,
         style = MaterialTheme.typography.displayLarge,
-        modifier = Modifier
+        modifier = modifier
             .padding(bottom = 16.dp),
     )
 }

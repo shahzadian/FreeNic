@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.shahzadian.baseui.R
 import com.shahzadian.dashboard.ui.ANIMATION_DURATION_INCREASE_DASHBOARD
@@ -132,9 +133,9 @@ private fun LungsRecoveryText(
     ) {
         Text(
             text = stringResource(R.string.dashboard_lungs_rec_title),
-            style = MaterialTheme.typography.headlineSmall,
+            style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(bottom = 12.dp)
+            modifier = Modifier.padding(bottom = 12.dp),
         )
         Text(
             text = stringResource(R.string.dashboard_lungs_rec_subtitle, recoveryPercentage),

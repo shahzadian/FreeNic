@@ -62,5 +62,6 @@
     </plurals>
 
     <string name="dashboard_no_cig_days_subtitle">Твое тело уже восстанавливается</string>
+    <string name="dashboard_saved_money_title">Сэкономлено денег</string>
 
 </resources>
