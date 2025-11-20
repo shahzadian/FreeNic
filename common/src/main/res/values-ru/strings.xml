@@ -55,4 +55,12 @@
     <string name="dashboard_lungs_rec_subtitle">Ваши легкие восстановлены на %d процентов</string>
     <string name="dashboard_lungs_rec_hint">Улучшается ежедневно</string>
 
+    <plurals name="dashboard_no_cig_days_title">
+        <item quantity="one">день без сигарет</item>
+        <item quantity="few">дня без сигарет</item>
+        <item quantity="other">дней без сигарет</item>
+    </plurals>
+
+    <string name="dashboard_no_cig_days_subtitle">Твое тело уже восстанавливается</string>
+
 </resources>

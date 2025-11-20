@@ -1,4 +1,4 @@
-package com.shahzadian.dashboard.ui.lungsrecovery.model
+package com.shahzadian.dashboard.ui.lungsrecovery
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -31,11 +31,11 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.shahzadian.baseui.R
+import com.shahzadian.dashboard.ui.ANIMATION_DURATION_INCREASE_DASHBOARD
 import com.shahzadian.dashboard.ui.DashboardCard
+import com.shahzadian.dashboard.ui.lungsrecovery.model.LungsRecoveryUiModel
 import kotlin.math.max
 import kotlin.math.roundToInt
-
-private const val ANIMATION_DURATION_PERCENTAGE: Int = 3000
 
 @Composable
 fun LungsRecoveryView(
@@ -104,7 +104,7 @@ private fun LungsRecoveryCircle(
             animatedValue.animateTo(
                 targetValue = recoveryPercentage.toFloat(),
                 animationSpec = tween(
-                    durationMillis = ANIMATION_DURATION_PERCENTAGE,
+                    durationMillis = ANIMATION_DURATION_INCREASE_DASHBOARD,
                     easing = LinearOutSlowInEasing
                 )
             )

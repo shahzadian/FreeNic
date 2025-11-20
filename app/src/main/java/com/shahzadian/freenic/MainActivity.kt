@@ -4,7 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Scaffold
+import androidx.compose.ui.Modifier
 import com.freenic.ui.theme.FreeNicTheme
+import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.freenic.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +19,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FreeNicTheme {
-                Navigation()
+               // Navigation()
+                Scaffold() {
+                    DashboardScreen(
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
         }
     }

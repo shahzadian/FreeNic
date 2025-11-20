@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+internal const val ANIMATION_DURATION_INCREASE_DASHBOARD: Int = 3000
 
 @Composable
 internal fun DashboardCard(

@@ -4,7 +4,7 @@
     <string name="welcome_screen_desc">Your journey to a smoke-free life starts here. I am with you every step of the way</string>
     <string name="welcome_screen_button">Get started</string>
 
-<!--    Onboarding-->
+    <!--    Onboarding-->
     <string name="onboarding_1_title">Every smoky breath takes you further from life</string>
     <string name="onboarding_1_subtitle">Smoking harms your body silently, slowly, but surely. Today is the best day to stop</string>
     <string name="onboarding_1_submit">Next</string>
@@ -21,7 +21,7 @@
     <string name="onboarding_4_subtitle">FreeNic is your first step to freedom. Support, motivation, and a smoke-free journey start here</string>
     <string name="onboarding_4_submit">I am ready!</string>
 
-<!--    Data fill-->
+    <!--    Data fill-->
     <string name="data_fill_start_title">Tell us a bit about yourself</string>
     <string name="data_fill_start_subtitle">So we can help you quit more effectively</string>
     <string name="data_fill_submit_button">Continue</string>
@@ -63,6 +63,11 @@
     <string name="dashboard_lungs_rec_subtitle">Your lungs have restored of %d percents of their capacity</string>
     <string name="dashboard_lungs_rec_hint">Improving daily</string>
 
-"
+    <plurals name="dashboard_no_cig_days_title">
+        <item quantity="one">day without cigarettes</item>
+        <item quantity="other">days without cigarettes</item>
+    </plurals>
+    <string name="dashboard_no_cig_days_subtitle">Your body is already healing</string>
+
 
 </resources>
