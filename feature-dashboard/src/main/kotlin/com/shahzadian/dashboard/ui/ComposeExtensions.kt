@@ -25,6 +25,6 @@ internal fun DashboardCard(
             color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)
         )
     ) {
-        content(Modifier.padding(24.dp))
+        content(Modifier.padding(16.dp))
     }
 }
