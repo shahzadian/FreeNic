@@ -45,10 +45,11 @@ android {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":feature-home-screen"))
+    implementation(project(":feature-welcome-screen"))
     implementation(project(":feature-data-fill"))
     implementation(project(":data-user"))
     implementation(project(":feature-dashboard"))
+    implementation(project(":feature-main-screen"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

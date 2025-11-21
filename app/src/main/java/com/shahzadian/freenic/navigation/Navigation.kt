@@ -10,22 +10,13 @@ import androidx.navigation.compose.rememberNavController
 import com.freenic.ui.AppScreen
 import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
-import com.shahzadian.homescreen.ui.homescreen.HomeScreen
-import com.shahzadian.homescreen.ui.onboardingscreen.OnboardingScreen
-import com.shahzadian.homescreen.ui.welcomescreen.WelcomeScreen
+import com.shahzadian.welcomescreen.ui.onboardingscreen.OnboardingScreen
+import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = AppScreen.HomeScreen.route) {
-        composable(route = AppScreen.HomeScreen.route) {
-            Scaffold {
-                HomeScreen(
-                    navController = navController,
-                    modifier = Modifier.padding(it)
-                )
-            }
-        }
+    NavHost(navController = navController, startDestination = AppScreen.WelcomeScreen.route) {
         composable(route = AppScreen.WelcomeScreen.route) {
             Scaffold {
                 WelcomeScreen(
