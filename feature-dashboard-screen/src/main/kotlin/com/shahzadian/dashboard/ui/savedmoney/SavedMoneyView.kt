@@ -83,6 +83,6 @@ private fun AmountView(
         text = displayText,
         style = MaterialTheme.typography.headlineMedium,
         color = MaterialTheme.colorScheme.primary,
-        modifier = modifier.padding(bottom = 16.dp)
+        modifier = modifier
     )
 }

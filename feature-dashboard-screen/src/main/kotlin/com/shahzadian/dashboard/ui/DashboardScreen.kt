@@ -43,7 +43,7 @@ fun DashboardScreen(
             model = HeaderUiModel(
                 userName = "David",
             ),
-            modifier = Modifier.padding(bottom = 16.dp),
+            modifier = Modifier
         )
         NoCigDaysView(
             model = NoCigDaysUiModel(days = 59),
