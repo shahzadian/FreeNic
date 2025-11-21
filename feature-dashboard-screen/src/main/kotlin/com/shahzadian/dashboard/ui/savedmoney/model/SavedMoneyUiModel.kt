@@ -4,6 +4,6 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 internal data class SavedMoneyUiModel(
-    val savedMoney: Int,
+    val savedMoney: Float,
     val currency: String,
 )

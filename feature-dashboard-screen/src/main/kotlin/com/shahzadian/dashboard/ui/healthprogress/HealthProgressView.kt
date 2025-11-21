@@ -51,7 +51,7 @@ internal fun HealthProgressView(
 
 @Composable
 private fun ProgressItem(
-    item: HealthProgressUiModel.HealthProgressItem,
+    item: HealthProgressUiModel.HealthProgressItemUiModel,
     modifier: Modifier = Modifier,
 ) {
     Row(

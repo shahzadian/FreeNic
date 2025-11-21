@@ -6,11 +6,11 @@ import com.freenic.ui.wrapper.TextWrapper
 
 @Immutable
 internal data class HealthProgressUiModel(
-    val items: List<HealthProgressItem>,
+    val items: List<HealthProgressItemUiModel>,
 ) {
 
     @Immutable
-    data class HealthProgressItem(
+    data class HealthProgressItemUiModel(
         val label: TextWrapper,
         val progress: Int,
         val icon: ImageWrapper,

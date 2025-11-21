@@ -56,7 +56,7 @@ internal fun SavedMoneyView(
 
 @Composable
 private fun AmountView(
-    savedMoney: Int,
+    savedMoney: Float,
     modifier: Modifier = Modifier,
     currency: String? = null,
 ) {
@@ -68,7 +68,7 @@ private fun AmountView(
             firstLaunch.value = false
         }
         animatedValue.animateTo(
-            targetValue = savedMoney.toFloat(),
+            targetValue = savedMoney,
             animationSpec = tween(
                 durationMillis = ANIMATION_DURATION_INCREASE_DASHBOARD,
                 easing = LinearOutSlowInEasing
