@@ -1,19 +1,26 @@
 package com.shahzadian.mainscreen.ui
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
+import com.shahzadian.mainscreen.ui.model.MainScreenItemUiModel
 
 @Composable
 fun MainBottomBar(
@@ -22,41 +29,68 @@ fun MainBottomBar(
 ) {
     val viewModel: MainViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()
-    val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry?.destination?.route
 
     if (state is MainViewState.Default) {
         val pages = (state as MainViewState.Default).pages
-        NavigationBar(
+        Column(
             modifier = modifier,
-            containerColor = MaterialTheme.colorScheme.background,
         ) {
-            pages.forEach { item ->
-                val isSelected = currentRoute == item.route
-                NavigationBarItem(
-                    selected = isSelected,
-                    onClick = {
-                        if (!isSelected) {
-                            navController.navigate(item.route) {
-                                launchSingleTop = true
-                                restoreState = true
-                            }
+            HorizontalDivider(
+                modifier = Modifier.border(1.dp, MaterialTheme.colorScheme.outline),
+                thickness = 1.dp,
+            )
+            NavBarView(
+                pages = pages,
+                navController = navController,
+            )
+        }
+    }
+}
+
+@Composable
+private fun NavBarView(
+    pages: List<MainScreenItemUiModel>,
+    navController: NavController,
+    modifier: Modifier = Modifier,
+) {
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+    NavigationBar(
+        modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.background,
+    ) {
+        pages.forEach { item ->
+            val isSelected = currentRoute == item.route
+            NavigationBarItem(
+                selected = isSelected,
+                colors = NavigationBarItemDefaults.colors(
+                    unselectedIconColor = MaterialTheme.colorScheme.outline,
+                    unselectedTextColor = MaterialTheme.colorScheme.outline,
+                    selectedIconColor = MaterialTheme.colorScheme.primary,
+                    selectedTextColor = MaterialTheme.colorScheme.primary,
+                    indicatorColor = Color.Transparent,
+                ),
+                onClick = {
+                    if (!isSelected) {
+                        navController.navigate(item.route) {
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                    },
-                    icon = {
-                        Icon(
-                            painter = imageFromWrapper(item.icon),
-                            contentDescription = textFromWrapper(item.title),
-                        )
-                    },
-                    label = {
-                        Text(
-                            text = textFromWrapper(item.title),
-                            style = MaterialTheme.typography.labelLarge,
-                        )
                     }
-                )
-            }
+                },
+                icon = {
+                    Icon(
+                        painter = imageFromWrapper(item.icon),
+                        contentDescription = textFromWrapper(item.title),
+                    )
+                },
+                label = {
+                    Text(
+                        text = textFromWrapper(item.title),
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                }
+            )
         }
     }
 }

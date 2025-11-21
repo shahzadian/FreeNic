@@ -32,7 +32,11 @@ fun DashboardScreen(
     val scrollState = rememberScrollState()
     Column(
         modifier = modifier
-            .padding(16.dp)
+            .padding(
+                top = 16.dp,
+                start = 16.dp,
+                end = 16.dp,
+            )
             .verticalScroll(scrollState),
     ) {
         HeaderView(
