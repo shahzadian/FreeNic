@@ -32,7 +32,7 @@ internal class MainScreenPageRepositoryImpl @Inject constructor() : MainScreenPa
                 icon = ImageWrapper.FromRes(
                     com.shahzadian.mainscreen.R.drawable.ic_main_page_cravings
                 ),
-                screen = AppScreen.DataFillScreen
+                screen = AppScreen.CravingsScreen
             )
         )
     }

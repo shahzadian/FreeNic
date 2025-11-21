@@ -23,10 +23,13 @@ sealed class AppScreen {
         override val route: String = "main_screen"
     }
 
-    // User data dashboard
     object DashboardScreen : AppScreen(), NavBarScreen {
 
         override val route: String = "dashboard_screen"
+    }
+
+    object CravingsScreen : AppScreen(), NavBarScreen {
+        override val route: String = "cravings_screen"
     }
 
     companion object {
@@ -37,6 +40,7 @@ sealed class AppScreen {
                 DataFillScreen,
                 MainScreen,
                 DashboardScreen,
+                CravingsScreen,
             )
         }
     }

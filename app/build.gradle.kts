@@ -48,8 +48,9 @@ dependencies {
     implementation(project(":feature-welcome-screen"))
     implementation(project(":feature-data-fill-screen"))
     implementation(project(":data-user"))
-    implementation(project(":feature-dashboard"))
+    implementation(project(":feature-dashboard-screen"))
     implementation(project(":feature-main-screen"))
+    implementation(project(":feature-cravings-screen"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

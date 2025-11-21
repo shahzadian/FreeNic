@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.freenic.ui.AppScreen
+import com.shahzadian.cravingsscreen.ui.CravingsScreen
 import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
@@ -82,6 +83,11 @@ fun Navigation() {
             }
             composable(route = AppScreen.DashboardScreen.route) {
                 DashboardScreen(
+                    modifier = Modifier
+                )
+            }
+            composable(route = AppScreen.CravingsScreen.route) {
+                CravingsScreen(
                     modifier = Modifier
                 )
             }
