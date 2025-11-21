@@ -1,6 +1,7 @@
 package com.shahzadian.user.data
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -13,7 +14,7 @@ import com.shahzadian.user.model.UserCigarettesData
 import com.shahzadian.user.model.UserData
 import com.shahzadian.user.model.UserPersonalData
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -24,8 +25,23 @@ class UserDataRepositoryImpl @Inject constructor(
 
     private val Context.userDataStore by preferencesDataStore(name = DATA_STORE_NAME)
 
+    override suspend fun isUserRegistered(): Boolean {
+        return withContext(coroutineContexts.io) {
+            val prefs = appContext.userDataStore.data.firstOrNull() ?: return@withContext false
+            prefs[KEY_REGISTERED] ?: false
+        }
+    }
+
+    override suspend fun setUserRegistered(isRegistered: Boolean) {
+        withContext(coroutineContexts.io) {
+            appContext.userDataStore.edit { prefs ->
+                prefs[KEY_REGISTERED] = isRegistered
+            }
+        }
+    }
+
     override suspend fun getUserData(): UserData? = withContext(coroutineContexts.io) {
-        val prefs = appContext.userDataStore.data.first()
+        val prefs = appContext.userDataStore.data.firstOrNull() ?: return@withContext null
 
         val name = prefs[KEY_NAME]
         val age = prefs[KEY_AGE]
@@ -84,5 +100,6 @@ class UserDataRepositoryImpl @Inject constructor(
         val KEY_CURRENCY = stringPreferencesKey("currency")
         val KEY_PRICE = floatPreferencesKey("price")
         val KEY_QUIT_DATE = longPreferencesKey("quit_date")
+        val KEY_REGISTERED = booleanPreferencesKey("registered")
     }
 }

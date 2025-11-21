@@ -8,6 +8,10 @@ class GetUserDataUseCaseImpl @Inject constructor(
     private val userDataRepository: UserDataRepository,
 ) : GetUserDataUseCase {
 
+    override suspend fun isUserRegistered(): Boolean {
+        return userDataRepository.isUserRegistered()
+    }
+
     override suspend fun invoke(): UserData? {
         return userDataRepository.getUserData()
     }

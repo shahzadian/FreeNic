@@ -8,6 +8,10 @@ class UpdateUserDataUseCaseImpl @Inject constructor(
     private val userDataRepository: UserDataRepository,
 ) : UpdateUserDataUseCase {
 
+    override suspend fun setUserRegistered(isRegistered: Boolean) {
+        userDataRepository.setUserRegistered(isRegistered)
+    }
+
     override suspend fun invoke(userData: UserData) {
         userDataRepository.updateUserData(userData)
     }
