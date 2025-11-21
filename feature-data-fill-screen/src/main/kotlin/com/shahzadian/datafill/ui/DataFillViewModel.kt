@@ -101,7 +101,7 @@ internal class DataFillViewModel @Inject constructor(
                 updateUserDataUseCase(it)
                 updateUserDataUseCase.setUserRegistered(true)
             }
-            sendViewCommand(DataFillCommand.NavigateTo(AppScreen.DashboardScreen))
+            sendViewCommand(DataFillCommand.NavigateTo(AppScreen.MainScreen))
         }
     }
 

@@ -24,7 +24,7 @@ internal class WelcomeViewModel @Inject constructor(
             if (isUserRegistered) {
                 sendViewCommand(
                     WelcomeViewCommand.Navigate(
-                        screen = AppScreen.DashboardScreen
+                        screen = AppScreen.MainScreen
                     )
                 )
             } else {

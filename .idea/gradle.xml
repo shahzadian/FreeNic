@@ -14,7 +14,7 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/data-user" />
             <option value="$PROJECT_DIR$/feature-dashboard" />
-            <option value="$PROJECT_DIR$/feature-data-fill" />
+            <option value="$PROJECT_DIR$/feature-data-fill-screen" />
             <option value="$PROJECT_DIR$/feature-main-screen" />
             <option value="$PROJECT_DIR$/feature-welcome-screen" />
           </set>

@@ -46,7 +46,7 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":feature-welcome-screen"))
-    implementation(project(":feature-data-fill"))
+    implementation(project(":feature-data-fill-screen"))
     implementation(project(":data-user"))
     implementation(project(":feature-dashboard"))
     implementation(project(":feature-main-screen"))

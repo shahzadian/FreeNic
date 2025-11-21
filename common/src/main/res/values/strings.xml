@@ -79,4 +79,7 @@
     <string name="dashboard_health_progress_heart_label">Heart health</string>
     <string name="dashboard_health_progress_energy_label">Energy improvement</string>
 
+    <string name="main_page_home_name">Home</string>
+    <string name="main_page_cravings_name">Cravings</string>
+
 </resources>

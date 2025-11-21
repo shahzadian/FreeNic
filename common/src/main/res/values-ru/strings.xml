@@ -71,4 +71,6 @@
     <string name="dashboard_health_progress_title">Прогресс здоровья</string>
     <string name="dashboard_health_progress_heart_label">Здоровье сердца</string>
     <string name="dashboard_health_progress_energy_label">Улучшение энергии</string>
+    <string name="main_page_home_name">Главная</string>
+    <string name="main_page_cravings_name">Тяга</string>
 </resources>

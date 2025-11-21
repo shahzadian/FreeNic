@@ -3,48 +3,87 @@ package com.shahzadian.freenic.navigation
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavController
 import com.freenic.ui.AppScreen
 import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
+import com.shahzadian.mainscreen.ui.MainBottomBar
+import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.welcomescreen.ui.onboardingscreen.OnboardingScreen
 import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
 
 @Composable
 fun Navigation() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = AppScreen.WelcomeScreen.route) {
-        composable(route = AppScreen.WelcomeScreen.route) {
-            Scaffold {
+    // Keep explicit remembered state for bottom bar visibility to avoid timing issues
+    val showBottomBarState = remember { mutableStateOf(false) }
+
+    val bottomBarRoutes = remember {
+        AppScreen
+            .getAll()
+            .filter { it is AppScreen.NavBarScreen }
+            .map { it.route }
+    }
+
+    DisposableEffect(navController) {
+        val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
+            val shouldShow = destination.hierarchy.any { it.route in bottomBarRoutes }
+            showBottomBarState.value = shouldShow
+        }
+        navController.addOnDestinationChangedListener(listener)
+        onDispose {
+            navController.removeOnDestinationChangedListener(listener)
+        }
+    }
+
+    Scaffold(
+        bottomBar = {
+            if (showBottomBarState.value) {
+                MainBottomBar(navController = navController)
+            }
+        }
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = AppScreen.WelcomeScreen.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(route = AppScreen.WelcomeScreen.route) {
                 WelcomeScreen(
                     navController = navController,
-                    modifier = Modifier.padding(it)
+                    modifier = Modifier
                 )
             }
-        }
-        composable(route = AppScreen.OnboardingScreen.route) {
-            Scaffold {
+            composable(route = AppScreen.OnboardingScreen.route) {
                 OnboardingScreen(
                     navController = navController,
-                    modifier = Modifier.padding(it)
+                    modifier = Modifier
                 )
             }
-        }
-        composable(route = AppScreen.DataFillScreen.route) {
-            Scaffold {
+            composable(route = AppScreen.DataFillScreen.route) {
                 DataFillScreen(
                     navController = navController,
-                    modifier = Modifier.padding(it)
+                    modifier = Modifier
                 )
             }
-        }
-        composable(route = AppScreen.DashboardScreen.route) {
-            Scaffold {
+            composable(route = AppScreen.MainScreen.route) {
+                MainScreen(
+                    navController = navController,
+                    modifier = Modifier
+                )
+            }
+            composable(route = AppScreen.DashboardScreen.route) {
                 DashboardScreen(
-                    modifier = Modifier.padding(it)
+                    modifier = Modifier
                 )
             }
         }
