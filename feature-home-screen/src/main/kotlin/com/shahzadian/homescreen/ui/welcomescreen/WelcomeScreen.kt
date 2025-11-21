@@ -1,12 +1,12 @@
 package com.shahzadian.homescreen.ui.welcomescreen
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,13 +15,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -40,29 +40,27 @@ fun WelcomeScreen(
     modifier: Modifier = Modifier,
 ) {
     val viewModel: WelcomeViewModel = hiltViewModel()
-    val onClick: (WelcomeViewEvent) -> Unit = remember {
+    val state by viewModel.viewStateFlow.collectAsState()
+    val onEvent: (WelcomeViewEvent) -> Unit = remember {
         { event -> viewModel.onViewEvent(event) }
     }
-    var contentVisible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { contentVisible = true }
-
-    val gradient = mainGradientBackground()
-    AnimatedVisibility(
-        visible = contentVisible,
-        enter = fadeIn(
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_VISIBILITY
+    when (state) {
+        is WelcomeViewState.Loading -> {
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(mainGradientBackground()),
             )
-        ),
-        modifier = modifier
-            .fillMaxSize()
-            .background(gradient)
-    ) {
-        Content(
-            onClick = {
-                onClick(WelcomeViewEvent.OnGetStartedClicked)
-            }
-        )
+        }
+
+        is WelcomeViewState.GetStarted -> {
+            GetStartedContent(
+                onEvent = onEvent,
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(mainGradientBackground()),
+            )
+        }
     }
     LaunchedEffect(key1 = viewModel.viewCommandFlow) {
         viewModel
@@ -74,6 +72,34 @@ fun WelcomeScreen(
                     }
                 }
             }
+    }
+}
+
+@Composable
+private fun GetStartedContent(
+    onEvent: (WelcomeViewEvent) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val onClick: (WelcomeViewEvent) -> Unit = remember {
+        { event -> onEvent(event) }
+    }
+    var contentVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { contentVisible = true }
+
+    AnimatedVisibility(
+        visible = contentVisible,
+        enter = fadeIn(
+            animationSpec = tween(
+                durationMillis = DURATION_ANIMATION_VISIBILITY
+            )
+        ),
+        modifier = modifier
+    ) {
+        Content(
+            onClick = {
+                onClick(WelcomeViewEvent.OnGetStartedClicked)
+            }
+        )
     }
 }
 

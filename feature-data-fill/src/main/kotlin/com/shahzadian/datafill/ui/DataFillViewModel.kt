@@ -52,7 +52,7 @@ internal class DataFillViewModel @Inject constructor(
 
             DataFillViewEvent.OnSubmitNext -> {
                 viewModelScope.launch {
-                    fillableInfoHelper.getNextData() ?: onAllDataFilled()
+                    fillableInfoHelper.submitAndGetNext() ?: onAllDataFilled()
                 }
             }
 
@@ -91,7 +91,7 @@ internal class DataFillViewModel @Inject constructor(
             .launchIn(viewModelScope)
 
         viewModelScope.launch {
-            fillableInfoHelper.getNextData()
+            fillableInfoHelper.submitAndGetNext()
         }
     }
 
@@ -99,6 +99,7 @@ internal class DataFillViewModel @Inject constructor(
         viewModelScope.launch {
             fillableInfoHelper.sharedState.toSaveableUserData()?.let {
                 updateUserDataUseCase(it)
+                updateUserDataUseCase.setUserRegistered(true)
             }
             sendViewCommand(DataFillCommand.NavigateTo(AppScreen.DashboardScreen))
         }

@@ -21,7 +21,7 @@ internal interface FillableInfoHelper {
 
     fun initialize(coroutineScope: CoroutineScope)
 
-    suspend fun getNextData(): DataToFill?
+    suspend fun submitAndGetNext(): DataToFill?
 
     /**
      * Moves to the previous fillable info page (if possible) and emits its current info.

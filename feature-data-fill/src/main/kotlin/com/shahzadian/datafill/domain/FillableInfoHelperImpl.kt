@@ -45,17 +45,17 @@ internal class FillableInfoHelperImpl @Inject constructor(
         fillableInfoProviders = factory
     }
 
-    override suspend fun getNextData(): DataToFill? {
+    override suspend fun submitAndGetNext(): DataToFill? {
+        fillableInfoProviders?.getOrNull(currentPageIndex)?.let { provider ->
+            provider.onFillInfoSubmit(
+                sharedState = sharedStateHolder.sharedState,
+            ) { updatedState ->
+                sharedStateHolder.sharedState = updatedState
+            }
+        }
         if (currentPageIndex == fillableInfoProviders?.lastIndex) return null
         return fillableInfoProviders
             ?.let { providers ->
-                if (currentPageIndex in 0..providers.lastIndex) {
-                    providers[currentPageIndex].onFillInfoSubmit(
-                        sharedState = sharedStateHolder.sharedState,
-                    ) { updatedState ->
-                        sharedStateHolder.sharedState = updatedState
-                    }
-                }
                 currentPageIndex += 1
                 val provider = providers[currentPageIndex]
                 provider.validateState()
