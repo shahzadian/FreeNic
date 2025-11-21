@@ -1,5 +1,7 @@
 package com.shahzadian.freenic.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -55,7 +57,13 @@ fun Navigation() {
         NavHost(
             navController = navController,
             startDestination = AppScreen.WelcomeScreen.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+//            enterTransition = {
+//                EnterTransition.None
+//            },
+//            exitTransition = {
+//                ExitTransition.None
+//            }
         ) {
             composable(route = AppScreen.WelcomeScreen.route) {
                 WelcomeScreen(
@@ -75,18 +83,30 @@ fun Navigation() {
                     modifier = Modifier
                 )
             }
-            composable(route = AppScreen.MainScreen.route) {
+            composable(
+                route = AppScreen.MainScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None},
+            ) {
                 MainScreen(
                     navController = navController,
                     modifier = Modifier
                 )
             }
-            composable(route = AppScreen.DashboardScreen.route) {
+            composable(
+                route = AppScreen.DashboardScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None},
+            ) {
                 DashboardScreen(
                     modifier = Modifier
                 )
             }
-            composable(route = AppScreen.CravingsScreen.route) {
+            composable(
+                route = AppScreen.CravingsScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None},
+            ) {
                 CravingsScreen(
                     modifier = Modifier
                 )
