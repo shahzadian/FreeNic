@@ -86,6 +86,17 @@
     <string name="cravings_header_subtitle">Let\'s get through this together</string>
 
     <string name="cravings_tools_title">Try one of these quick tools</string>
-    <string name="craving_tools_title_see_more">See more</string>
+    <string name="cravings_tools_title_see_more">See more</string>
+
+    <string name="cravings_tool_breathing_title">Breathing 4-7-8</string>
+    <string name="cravings_tool_breathing_subtitle">Calm your body with a short breathing cycle</string>
+    <string name="cravings_tool_relaxation_title">1-minutes Relaxation</string>
+    <string name="cravings_tool_relaxation_subtitle">Release tension with a quick guided unwind</string>
+    <string name="cravings_tool_distraction_title">Distraction activity</string>
+    <string name="cravings_tool_distraction_subtitle">Shift your focus with a simple 30-second task</string>
+    <string name="cravings_tool_water_title">Drink water</string>
+    <string name="cravings_tool_water_subtitle">Hydrate and give your mind a reset moment.</string>
+    <string name="cravings_tool_mini_mindfulness_title">Mini mindfulness</string>
+    <string name="cravings_tool_mini_mindfulness_subtitle">Ground yourself with a brief awareness exercise</string>
 
 </resources>

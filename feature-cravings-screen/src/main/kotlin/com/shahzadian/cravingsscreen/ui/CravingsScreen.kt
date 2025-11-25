@@ -1,6 +1,5 @@
 package com.shahzadian.cravingsscreen.ui
 
-import android.util.Log
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -14,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,14 +21,31 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.freenic.ui.wrapper.ImageWrapper
-import com.freenic.ui.wrapper.TextWrapper
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.shahzadian.cravingsscreen.R
-import com.shahzadian.cravingsscreen.ui.model.CravingToolsUiModel
-import com.shahzadian.cravingsscreen.ui.model.CravingsToolUiModel
+import com.shahzadian.cravingsscreen.ui.viewmodel.CravingsViewModel
+import com.shahzadian.cravingsscreen.ui.viewmodel.CravingsViewState
 
 @Composable
 fun CravingsScreen(
+    modifier: Modifier = Modifier,
+) {
+    val viewModel: CravingsViewModel = hiltViewModel()
+    val state by viewModel.viewStateFlow.collectAsState()
+    when (state) {
+        is CravingsViewState.Loading -> {}
+        is CravingsViewState.Data -> {
+            ContentView(
+                data = (state as CravingsViewState.Data),
+                modifier = modifier,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ContentView(
+    data: CravingsViewState.Data,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -40,20 +57,7 @@ fun CravingsScreen(
                 .padding(bottom = 16.dp, top = 16.dp)
         )
         CravingsToolsView(
-            uiModel = CravingToolsUiModel(
-                tools = (1..3).map {
-                    CravingsToolUiModel(
-                        icon = ImageWrapper.FromRes(R.drawable.ic_cravings_main),
-                        title = TextWrapper.FromString("Tool $it"),
-                        subtitle = TextWrapper.FromString("Subtitle $it"),
-                        onClick = {
-                            Log.d("LogMog", "tool clicked")
-                        }
-                    )
-                },
-                showAllButton = true,
-                onAllButtonClick = {},
-            )
+            data = data,
         )
     }
 }

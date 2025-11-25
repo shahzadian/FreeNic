@@ -76,5 +76,15 @@
     <string name="cravings_header_title">Вы чувствуете тягу?</string>
     <string name="cravings_header_subtitle">Давайте пройдем через это вместе</string>
     <string name="cravings_tools_title">Попробуйте один из быстрых инструментов</string>
-    <string name="craving_tools_title_see_more">Больше</string>
+    <string name="cravings_tools_title_see_more">Больше</string>
+    <string name="cravings_tool_breathing_title">Дыхание 4–7–8</string>
+    <string name="cravings_tool_breathing_subtitle">Успокойте тело коротким дыхательным циклом</string>
+    <string name="cravings_tool_relaxation_title">Минутная релаксация</string>
+    <string name="cravings_tool_relaxation_subtitle">Снимите напряжение быстрой расслабляющей техникой</string>
+    <string name="cravings_tool_distraction_title">Отвлекающее действие</string>
+    <string name="cravings_tool_distraction_subtitle">Переключите внимание с помощью простого задания на 30 секунд</string>
+    <string name="cravings_tool_water_title">Выпить воды</string>
+    <string name="cravings_tool_water_subtitle">Сделайте глоток воды и дайте мозгу перезагрузиться</string>
+    <string name="cravings_tool_mini_mindfulness_title">Мини-осознанность</string>
+    <string name="cravings_tool_mini_mindfulness_subtitle">Сфокусируйтесь с помощью короткой практики осознанности</string>
 </resources>
