@@ -7,7 +7,7 @@
 <!--    Onboarding-->
     <string name="onboarding_1_title">Каждый вдох с дымом - шаг прочь от жизни</string>
     <string name="onboarding_1_subtitle">Курение разрушает тело медленно, незаметно, но неотвратимо. Сегодня - лучший день, чтобы остановиться</string>
-    <string name="onboarding_1_submit">Далее</string>
+    <string name="onboarding_1_submit">ДалееC</string>
 
     <string name="onboarding_2_title">Ты не держишь сигарету - она держит тебя</string>
     <string name="onboarding_2_subtitle">Курение притупляет волю и крадёт свободу. FreeNic поможет вернуть контроль над собой</string>
@@ -73,4 +73,8 @@
     <string name="dashboard_health_progress_energy_label">Улучшение энергии</string>
     <string name="main_page_home_name">Главная</string>
     <string name="main_page_cravings_name">Тяга</string>
+    <string name="cravings_header_title">Вы чувствуете тягу?</string>
+    <string name="cravings_header_subtitle">Давайте пройдем через это вместе</string>
+    <string name="cravings_tools_title">Попробуйте один из быстрых инструментов</string>
+    <string name="craving_tools_title_see_more">Больше</string>
 </resources>
