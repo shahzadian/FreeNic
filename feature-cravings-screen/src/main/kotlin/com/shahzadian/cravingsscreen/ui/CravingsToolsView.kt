@@ -82,7 +82,7 @@ private fun CravingToolView(
                 painter = imageFromWrapper(tool.icon),
                 contentDescription = title,
                 modifier = Modifier
-                    .weight(0.5f)
+                    .weight(0.6f)
 
             )
             Column(
