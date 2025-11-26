@@ -16,6 +16,9 @@ abstract class BaseViewModel<VS : ViewState, VE : ViewEvent, VC : ViewCommand> :
     val viewStateFlow: MutableStateFlow<VS>
         get() = _viewStateFlow
 
+    protected val viewState: VS
+        get() = _viewStateFlow.value
+
     private val _viewCommandFlow: MutableSharedFlow<VC> = MutableSharedFlow()
     val viewCommandFlow: MutableSharedFlow<VC>
         get() = _viewCommandFlow

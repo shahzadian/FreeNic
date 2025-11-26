@@ -93,9 +93,9 @@
     <string name="breathe_exercise_header_subtitle">Успокойте тело коротким дыхательным циклом</string>
     <string name="breathe_exercise_start_button">Начать</string>
     <string name="breathe_exercise_finish_button">Завершить</string>
-    <string name="breathe_exercise_inhale">Вдох - %с</string>
-    <string name="breathe_exercise_hold">Задержка дыхания - %с</string>
-    <string name="breathe_exercise_exhale">Выдох - %с</string>
+    <string name="breathe_exercise_inhale">Вдох</string>
+    <string name="breathe_exercise_hold">Задержка дыхания</string>
+    <string name="breathe_exercise_exhale">Выдох</string>
     <string name="breathe_exercise_cycle_of">Цикл % из %</string>
     <string name="breathe_exercise_helping_text_body_is_relaxing">Ваше тело расслабляется</string>
     <string name="breathe_exercise_helping_text_stay_with_the_rhythm">Оставайтесь в ритме</string>

@@ -24,7 +24,19 @@ internal sealed interface BreatheExerciseViewState : ViewState {
         ) : Data
 
         @Immutable
-        data class Process(
+        data class Inhale(
+            override val inhaleSeconds: Int,
+            override val holdSeconds: Int,
+            override val exhaleSeconds: Int,
+        ) : Data
+
+        data class Hold(
+            override val inhaleSeconds: Int,
+            override val holdSeconds: Int,
+            override val exhaleSeconds: Int,
+        ) : Data
+
+        data class Exhale(
             override val inhaleSeconds: Int,
             override val holdSeconds: Int,
             override val exhaleSeconds: Int,

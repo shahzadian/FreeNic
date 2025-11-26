@@ -103,9 +103,9 @@
     <string name="breathe_exercise_header_subtitle">Calm your body with a short breathing cycle</string>
     <string name="breathe_exercise_start_button">Start</string>
     <string name="breathe_exercise_finish_button">Finish</string>
-    <string name="breathe_exercise_inhale">Inhale - %ds</string>
-    <string name="breathe_exercise_hold">Hold - %ds</string>
-    <string name="breathe_exercise_exhale">Exhale - %ds</string>
+    <string name="breathe_exercise_inhale">Inhale</string>
+    <string name="breathe_exercise_hold">Hold</string>
+    <string name="breathe_exercise_exhale">Exhale</string>
     <string name="breathe_exercise_cycle_of">Cycle %d of %d</string>
     <string name="breathe_exercise_helping_text_body_is_relaxing">Your body is relaxing</string>
     <string name="breathe_exercise_helping_text_stay_with_the_rhythm">Stay with the rhythm</string>

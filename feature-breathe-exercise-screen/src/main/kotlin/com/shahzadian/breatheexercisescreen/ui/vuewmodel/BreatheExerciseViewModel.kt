@@ -31,6 +31,65 @@ internal class BreatheExerciseViewModel @Inject constructor(
     }
 
     override fun onViewEventHappened(event: BreatheExerciseViewEvent) {
-//
+        when (event) {
+            is BreatheExerciseViewEvent.OnCircleClick -> {
+                onStartClicked()
+            }
+            is BreatheExerciseViewEvent.OnInhaleFinish -> {
+                onInhaleFinished()
+            }
+            is BreatheExerciseViewEvent.OnHoldFinish -> {
+                onHoldFinished()
+            }
+            is BreatheExerciseViewEvent.OnExhaleFinish -> {
+                onExhaleFinished()
+            }
+        }
+    }
+
+    private fun onStartClicked() {
+        (viewState as? BreatheExerciseViewState.Data)?.let { state ->
+            viewModelScope.launch {
+                setViewState(
+                    BreatheExerciseViewState.Data.Inhale(
+                        inhaleSeconds = state.inhaleSeconds,
+                        holdSeconds = state.holdSeconds,
+                        exhaleSeconds = state.exhaleSeconds,
+                    )
+                )
+            }
+        }
+    }
+
+    private fun onInhaleFinished() {
+        (viewState as? BreatheExerciseViewState.Data)?.let { state ->
+            viewModelScope.launch {
+                setViewState(
+                    BreatheExerciseViewState.Data.Hold(
+                        inhaleSeconds = state.inhaleSeconds,
+                        holdSeconds = state.holdSeconds,
+                        exhaleSeconds = state.exhaleSeconds,
+                    )
+                )
+            }
+        }
+    }
+
+    private fun onHoldFinished() {
+        (viewState as? BreatheExerciseViewState.Data)?.let { state ->
+            viewModelScope.launch {
+                setViewState(
+                    BreatheExerciseViewState.Data.Exhale(
+                        inhaleSeconds = state.inhaleSeconds,
+                        holdSeconds = state.holdSeconds,
+                        exhaleSeconds = state.exhaleSeconds,
+                    )
+                )
+            }
+        }
+    }
+
+    private fun onExhaleFinished() {
+
     }
 }
