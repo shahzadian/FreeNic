@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":feature-dashboard-screen"))
     implementation(project(":feature-main-screen"))
     implementation(project(":feature-cravings-screen"))
+    implementation(project(":feature-breathe-exercise-screen"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

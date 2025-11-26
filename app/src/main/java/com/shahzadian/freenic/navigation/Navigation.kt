@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.freenic.ui.AppScreen
+import com.shahzadian.breatheexercisescreen.ui.BreatheExerciseScreen
 import com.shahzadian.cravingsscreen.ui.CravingsScreen
 import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
@@ -58,12 +59,6 @@ fun Navigation() {
             navController = navController,
             startDestination = AppScreen.WelcomeScreen.route,
             modifier = Modifier.padding(innerPadding),
-//            enterTransition = {
-//                EnterTransition.None
-//            },
-//            exitTransition = {
-//                ExitTransition.None
-//            }
         ) {
             composable(route = AppScreen.WelcomeScreen.route) {
                 WelcomeScreen(
@@ -86,7 +81,7 @@ fun Navigation() {
             composable(
                 route = AppScreen.MainScreen.route,
                 enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None},
+                exitTransition = { ExitTransition.None },
             ) {
                 MainScreen(
                     navController = navController,
@@ -96,7 +91,7 @@ fun Navigation() {
             composable(
                 route = AppScreen.DashboardScreen.route,
                 enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None},
+                exitTransition = { ExitTransition.None },
             ) {
                 DashboardScreen(
                     modifier = Modifier
@@ -105,11 +100,18 @@ fun Navigation() {
             composable(
                 route = AppScreen.CravingsScreen.route,
                 enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None},
+                exitTransition = { ExitTransition.None },
             ) {
                 CravingsScreen(
+                    navController = navController,
                     modifier = Modifier
                 )
+            }
+            composable(
+                route = AppScreen.BreatheExerciseScreen.route,
+                exitTransition = { ExitTransition.None },
+            ) {
+                BreatheExerciseScreen()
             }
         }
     }

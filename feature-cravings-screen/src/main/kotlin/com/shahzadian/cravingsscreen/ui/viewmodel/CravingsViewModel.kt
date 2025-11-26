@@ -36,7 +36,17 @@ internal class CravingsViewModel @Inject constructor(
                     title = tool.name,
                     subtitle = tool.description,
                     icon = tool.icon,
-                    onClick = {},
+                    onClick = {
+                        when (tool.behavior) {
+                            is CravingTool.Behavior.NavigateToScreen -> {
+                                viewModelScope.launch {
+                                    sendViewCommand(CravingsViewCommand.NavigateTo(tool.behavior.screen))
+                                }
+                            }
+
+                            is CravingTool.Behavior.None -> {}
+                        }
+                    },
                 )
             },
             showAllButton = this.size > 3,

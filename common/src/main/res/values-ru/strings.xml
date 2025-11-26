@@ -73,11 +73,12 @@
     <string name="dashboard_health_progress_energy_label">Улучшение энергии</string>
     <string name="main_page_home_name">Главная</string>
     <string name="main_page_cravings_name">Тяга</string>
+
     <string name="cravings_header_title">Вы чувствуете тягу?</string>
     <string name="cravings_header_subtitle">Давайте пройдем через это вместе</string>
     <string name="cravings_tools_title">Попробуйте один из быстрых инструментов</string>
     <string name="cravings_tools_title_see_more">Еще</string>
-    <string name="cravings_tool_breathing_title">Дыхание 4–7–8</string>
+    <string name="cravings_tool_breathing_title">Дыхание %-%-%</string>
     <string name="cravings_tool_breathing_subtitle">Успокойте тело коротким дыхательным циклом</string>
     <string name="cravings_tool_relaxation_title">Минутная релаксация</string>
     <string name="cravings_tool_relaxation_subtitle">Снимите напряжение быстрой расслабляющей техникой</string>
@@ -87,4 +88,18 @@
     <string name="cravings_tool_water_subtitle">Сделайте глоток воды и дайте мозгу перезагрузиться</string>
     <string name="cravings_tool_mini_mindfulness_title">Мини-осознанность</string>
     <string name="cravings_tool_mini_mindfulness_subtitle">Сфокусируйтесь с помощью короткой практики осознанности</string>
+
+    <string name="breathe_exercise_header_title">Дыхание %-%-%</string>
+    <string name="breathe_exercise_header_subtitle">Успокойте тело коротким дыхательным циклом</string>
+    <string name="breathe_exercise_start_button">Начать</string>
+    <string name="breathe_exercise_finish_button">Завершить</string>
+    <string name="breathe_exercise_inhale">Вдох - %с</string>
+    <string name="breathe_exercise_hold">Задержка дыхания - %с</string>
+    <string name="breathe_exercise_exhale">Выдох - %с</string>
+    <string name="breathe_exercise_cycle_of">Цикл % из %</string>
+    <string name="breathe_exercise_helping_text_body_is_relaxing">Ваше тело расслабляется</string>
+    <string name="breathe_exercise_helping_text_stay_with_the_rhythm">Оставайтесь в ритме</string>
+    <string name="breathe_exercise_helping_text_breathe_calmly">Дышите спокойно</string>
+    <string name="breathe_exercise_helping_text_slow_and_steady">Медленно и ровно</string>
+    <string name="breathe_exercise_helping_text_you_are_doing_great">Вы отлично справляетесь</string>
 </resources>
