@@ -15,12 +15,16 @@ internal sealed interface BreatheExerciseViewState : ViewState {
         val inhaleSeconds: Int
         val holdSeconds: Int
         val exhaleSeconds: Int
+        val cyclesCount: Int
+        val currentCycle: Int
 
         @Immutable
         data class ReadyForExercise(
             override val inhaleSeconds: Int,
             override val holdSeconds: Int,
             override val exhaleSeconds: Int,
+            override val cyclesCount: Int,
+            override val currentCycle: Int,
         ) : Data
 
         @Immutable
@@ -28,18 +32,24 @@ internal sealed interface BreatheExerciseViewState : ViewState {
             override val inhaleSeconds: Int,
             override val holdSeconds: Int,
             override val exhaleSeconds: Int,
+            override val cyclesCount: Int,
+            override val currentCycle: Int,
         ) : Data
 
         data class Hold(
             override val inhaleSeconds: Int,
             override val holdSeconds: Int,
             override val exhaleSeconds: Int,
+            override val cyclesCount: Int,
+            override val currentCycle: Int,
         ) : Data
 
         data class Exhale(
             override val inhaleSeconds: Int,
             override val holdSeconds: Int,
             override val exhaleSeconds: Int,
+            override val cyclesCount: Int,
+            override val currentCycle: Int,
         ) : Data
     }
 }

@@ -1,5 +1,6 @@
 package com.shahzadian.breatheexercisescreen.ui
 
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -202,14 +203,6 @@ private fun CircleView(
             this
                 .width(200.dp)
                 .height(200.dp)
-                .background(
-                    Brush.horizontalGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.primary,
-                            MaterialTheme.colorScheme.secondary,
-                        ),
-                    )
-                )
                 .clickable(onClick = circleClick)
         }
     }
@@ -268,6 +261,7 @@ private fun CircleView(
                 )
             }
         }
+
         is BreatheExerciseViewState.Data.Exhale -> {
             Box(
                 modifier = modifier,
@@ -369,6 +363,7 @@ private fun CircleTextView(
                 )
             }
         }
+
         is BreatheExerciseViewState.Data.Exhale -> {
             val exhaleSeconds = data.exhaleSeconds
             var currentValue by remember { mutableStateOf(0) }
@@ -423,6 +418,14 @@ private fun ReadyToStartStateCircleView(
         modifier = modifier
             .scale(scale)
             .clip(CircleShape)
+            .background(
+                Brush.horizontalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.secondary,
+                    ),
+                )
+            )
             .applyModifier()
     )
 }
@@ -450,6 +453,14 @@ private fun InhaleCircleView(
         modifier = modifier
             .scale(scale)
             .clip(CircleShape)
+            .background(
+                Brush.horizontalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.secondary,
+                    ),
+                )
+            )
             .applyModifier()
     )
 }
@@ -463,6 +474,14 @@ private fun HoldCircleView(
         modifier = modifier
             .scale(CIRCLE_TARGET_SCALE)
             .clip(CircleShape)
+            .background(
+                Brush.horizontalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.secondary,
+                    ),
+                )
+            )
             .applyModifier()
     )
 }
@@ -482,7 +501,7 @@ private fun ExhaleCircleView(
         targetValue = if (startAnimation) 1f else CIRCLE_TARGET_SCALE,
         animationSpec = tween(
             durationMillis = durationMillis,
-            easing = LinearEasing,
+            easing = FastOutSlowInEasing,
         ),
         label = "inhale circle view scale"
     )
@@ -490,6 +509,14 @@ private fun ExhaleCircleView(
         modifier = modifier
             .scale(scale)
             .clip(CircleShape)
+            .background(
+                Brush.horizontalGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.secondary,
+                    ),
+                )
+            )
             .applyModifier()
     )
 }

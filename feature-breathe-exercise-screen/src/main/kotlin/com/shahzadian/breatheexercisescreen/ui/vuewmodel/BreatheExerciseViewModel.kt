@@ -25,6 +25,8 @@ internal class BreatheExerciseViewModel @Inject constructor(
                     inhaleSeconds = settings.inhaleSeconds,
                     holdSeconds = settings.holdSeconds,
                     exhaleSeconds = settings.exhaleSeconds,
+                    cyclesCount = settings.cyclesCount,
+                    currentCycle = 1,
                 )
             )
         }
@@ -33,7 +35,7 @@ internal class BreatheExerciseViewModel @Inject constructor(
     override fun onViewEventHappened(event: BreatheExerciseViewEvent) {
         when (event) {
             is BreatheExerciseViewEvent.OnCircleClick -> {
-                onStartClicked()
+                startExercise(1)
             }
             is BreatheExerciseViewEvent.OnInhaleFinish -> {
                 onInhaleFinished()
@@ -47,7 +49,7 @@ internal class BreatheExerciseViewModel @Inject constructor(
         }
     }
 
-    private fun onStartClicked() {
+    private fun startExercise(cycle: Int) {
         (viewState as? BreatheExerciseViewState.Data)?.let { state ->
             viewModelScope.launch {
                 setViewState(
@@ -55,6 +57,8 @@ internal class BreatheExerciseViewModel @Inject constructor(
                         inhaleSeconds = state.inhaleSeconds,
                         holdSeconds = state.holdSeconds,
                         exhaleSeconds = state.exhaleSeconds,
+                        cyclesCount = state.cyclesCount,
+                        currentCycle = cycle,
                     )
                 )
             }
@@ -69,6 +73,8 @@ internal class BreatheExerciseViewModel @Inject constructor(
                         inhaleSeconds = state.inhaleSeconds,
                         holdSeconds = state.holdSeconds,
                         exhaleSeconds = state.exhaleSeconds,
+                        cyclesCount = state.cyclesCount,
+                        currentCycle = state.currentCycle + 1,
                     )
                 )
             }
@@ -83,6 +89,8 @@ internal class BreatheExerciseViewModel @Inject constructor(
                         inhaleSeconds = state.inhaleSeconds,
                         holdSeconds = state.holdSeconds,
                         exhaleSeconds = state.exhaleSeconds,
+                        cyclesCount = state.cyclesCount,
+                        currentCycle = state.currentCycle,
                     )
                 )
             }
@@ -90,6 +98,10 @@ internal class BreatheExerciseViewModel @Inject constructor(
     }
 
     private fun onExhaleFinished() {
-
+        (viewState as? BreatheExerciseViewState.Data)?.let { state ->
+            if (state.currentCycle < state.cyclesCount) {
+                startExercise(state.currentCycle + 1)
+            }
+        }
     }
 }

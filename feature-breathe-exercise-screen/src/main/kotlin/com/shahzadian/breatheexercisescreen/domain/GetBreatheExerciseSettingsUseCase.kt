@@ -14,6 +14,7 @@ internal class GetBreatheExerciseSettingsUseCaseImpl @Inject constructor() : Get
             inhaleSeconds = 4,
             holdSeconds = 7,
             exhaleSeconds = 8,
+            cyclesCount = 3,
         )
     }
 }
