@@ -41,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.breatheexercisescreen.R
 import com.shahzadian.breatheexercisescreen.ui.vuewmodel.BreatheExerciseViewEvent
 import com.shahzadian.breatheexercisescreen.ui.vuewmodel.BreatheExerciseViewModel
@@ -71,9 +72,9 @@ fun BreatheExerciseScreen(
     }
     when (state) {
         is BreatheExerciseViewState.Loading -> {}
-        is BreatheExerciseViewState.Data -> {
+        is BreatheExerciseViewState.Process -> {
             ContentView(
-                data = (state as BreatheExerciseViewState.Data),
+                data = (state as BreatheExerciseViewState.Process),
                 onCircleClick = {
                     onEvent(BreatheExerciseViewEvent.OnCircleClick)
                 },
@@ -95,7 +96,7 @@ fun BreatheExerciseScreen(
 
 @Composable
 private fun ContentView(
-    data: BreatheExerciseViewState.Data,
+    data: BreatheExerciseViewState.Process,
     onCircleClick: () -> Unit,
     onInhaleFinish: () -> Unit,
     onHoldFinish: () -> Unit,
@@ -134,12 +135,21 @@ private fun ContentView(
             modifier = Modifier
                 .align(Alignment.Center)
         )
+        if (data.exerciseState != BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE) {
+            FooterView(
+                data = data,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 64.dp)
+                    .align(Alignment.BottomCenter)
+            )
+        }
     }
 }
 
 @Composable
 private fun HeaderView(
-    data: BreatheExerciseViewState.Data,
+    data: BreatheExerciseViewState.Process,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -179,7 +189,7 @@ private fun HeaderView(
 
 @Composable
 private fun CircleView(
-    data: BreatheExerciseViewState.Data,
+    data: BreatheExerciseViewState.Process,
     onClick: () -> Unit,
     onInhaleFinish: () -> Unit,
     onHoldFinish: () -> Unit,
@@ -206,8 +216,8 @@ private fun CircleView(
                 .clickable(onClick = circleClick)
         }
     }
-    when (data) {
-        is BreatheExerciseViewState.Data.ReadyForExercise -> {
+    when (data.exerciseState) {
+        BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE -> {
             Box(
                 modifier = modifier
             ) {
@@ -225,7 +235,7 @@ private fun CircleView(
             }
         }
 
-        is BreatheExerciseViewState.Data.Inhale -> {
+        BreatheExerciseViewState.ExerciseState.INHALE -> {
             Box(
                 modifier = modifier,
             ) {
@@ -244,7 +254,7 @@ private fun CircleView(
             }
         }
 
-        is BreatheExerciseViewState.Data.Hold -> {
+        BreatheExerciseViewState.ExerciseState.HOLD -> {
             Box(
                 modifier = modifier,
             ) {
@@ -262,7 +272,7 @@ private fun CircleView(
             }
         }
 
-        is BreatheExerciseViewState.Data.Exhale -> {
+        BreatheExerciseViewState.ExerciseState.EXHALE -> {
             Box(
                 modifier = modifier,
             ) {
@@ -285,14 +295,14 @@ private fun CircleView(
 
 @Composable
 private fun CircleTextView(
-    data: BreatheExerciseViewState.Data,
+    data: BreatheExerciseViewState.Process,
     onInhaleFinish: () -> Unit,
     onHoldFinish: () -> Unit,
     onExhaleFinish: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    when (data) {
-        is BreatheExerciseViewState.Data.ReadyForExercise -> {
+    when (data.exerciseState) {
+        BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE -> {
             Text(
                 text = stringResource(com.shahzadian.baseui.R.string.breathe_exercise_start_button),
                 color = MaterialTheme.colorScheme.onPrimary,
@@ -301,7 +311,7 @@ private fun CircleTextView(
             )
         }
 
-        is BreatheExerciseViewState.Data.Inhale -> {
+        BreatheExerciseViewState.ExerciseState.INHALE -> {
             val inhaleSeconds = data.inhaleSeconds
             var currentValue by remember { mutableStateOf(0) }
             LaunchedEffect(currentValue) {
@@ -333,7 +343,7 @@ private fun CircleTextView(
             }
         }
 
-        is BreatheExerciseViewState.Data.Hold -> {
+        BreatheExerciseViewState.ExerciseState.HOLD -> {
             val holdSeconds = data.holdSeconds
             var currentValue by remember { mutableStateOf(0) }
             LaunchedEffect(currentValue) {
@@ -364,7 +374,7 @@ private fun CircleTextView(
             }
         }
 
-        is BreatheExerciseViewState.Data.Exhale -> {
+        BreatheExerciseViewState.ExerciseState.EXHALE -> {
             val exhaleSeconds = data.exhaleSeconds
             var currentValue by remember { mutableStateOf(0) }
             LaunchedEffect(currentValue) {
@@ -518,5 +528,63 @@ private fun ExhaleCircleView(
                 )
             )
             .applyModifier()
+    )
+}
+
+@Composable
+private fun FooterView(
+    data: BreatheExerciseViewState.Process,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        CycleTextView(
+            data = data,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        HelpingTextView(data = data)
+    }
+}
+
+@Composable
+private fun CycleTextView(
+    data: BreatheExerciseViewState.Process,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = stringResource(
+            com.shahzadian.baseui.R.string.breathe_exercise_cycle_of,
+            data.currentCycle,
+            data.cyclesCount
+        ),
+        color = MaterialTheme.colorScheme.onSecondary,
+        style = MaterialTheme.typography.bodyLarge,
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun HelpingTextView(
+    data: BreatheExerciseViewState.Process,
+    modifier: Modifier = Modifier,
+) {
+    val texts = data.helpingTexts
+    if (texts.isEmpty()) return
+    var currentTextIndex by remember { mutableStateOf(0) }
+    LaunchedEffect(currentTextIndex) {
+        delay(8000)
+        if (currentTextIndex < texts.size - 1) {
+            currentTextIndex += 1
+        } else {
+            currentTextIndex = 0
+        }
+    }
+    Text(
+        text = textFromWrapper(texts[currentTextIndex]),
+        color = MaterialTheme.colorScheme.onSecondary,
+        style = MaterialTheme.typography.headlineMedium,
+        modifier = modifier,
     )
 }

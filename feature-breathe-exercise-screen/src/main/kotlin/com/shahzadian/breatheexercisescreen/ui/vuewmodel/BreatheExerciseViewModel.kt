@@ -21,12 +21,14 @@ internal class BreatheExerciseViewModel @Inject constructor(
         viewModelScope.launch {
             val settings = getBreatheExerciseSettingsUseCase()
             setViewState(
-                BreatheExerciseViewState.Data.ReadyForExercise(
+                BreatheExerciseViewState.Process(
                     inhaleSeconds = settings.inhaleSeconds,
                     holdSeconds = settings.holdSeconds,
                     exhaleSeconds = settings.exhaleSeconds,
                     cyclesCount = settings.cyclesCount,
                     currentCycle = 1,
+                    helpingTexts = settings.helpingTexts,
+                    exerciseState = BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE,
                 )
             )
         }
@@ -37,12 +39,15 @@ internal class BreatheExerciseViewModel @Inject constructor(
             is BreatheExerciseViewEvent.OnCircleClick -> {
                 startExercise(1)
             }
+
             is BreatheExerciseViewEvent.OnInhaleFinish -> {
                 onInhaleFinished()
             }
+
             is BreatheExerciseViewEvent.OnHoldFinish -> {
                 onHoldFinished()
             }
+
             is BreatheExerciseViewEvent.OnExhaleFinish -> {
                 onExhaleFinished()
             }
@@ -50,55 +55,44 @@ internal class BreatheExerciseViewModel @Inject constructor(
     }
 
     private fun startExercise(cycle: Int) {
-        (viewState as? BreatheExerciseViewState.Data)?.let { state ->
+        (viewState as? BreatheExerciseViewState.Process)?.let { state ->
             viewModelScope.launch {
                 setViewState(
-                    BreatheExerciseViewState.Data.Inhale(
-                        inhaleSeconds = state.inhaleSeconds,
-                        holdSeconds = state.holdSeconds,
-                        exhaleSeconds = state.exhaleSeconds,
-                        cyclesCount = state.cyclesCount,
+                    state.copy(
                         currentCycle = cycle,
-                    )
+                        exerciseState = BreatheExerciseViewState.ExerciseState.INHALE,
+                    ),
                 )
             }
         }
     }
 
     private fun onInhaleFinished() {
-        (viewState as? BreatheExerciseViewState.Data)?.let { state ->
+        (viewState as? BreatheExerciseViewState.Process)?.let { state ->
             viewModelScope.launch {
                 setViewState(
-                    BreatheExerciseViewState.Data.Hold(
-                        inhaleSeconds = state.inhaleSeconds,
-                        holdSeconds = state.holdSeconds,
-                        exhaleSeconds = state.exhaleSeconds,
-                        cyclesCount = state.cyclesCount,
-                        currentCycle = state.currentCycle + 1,
-                    )
+                    state.copy(
+                        exerciseState = BreatheExerciseViewState.ExerciseState.HOLD,
+                    ),
                 )
             }
         }
     }
 
     private fun onHoldFinished() {
-        (viewState as? BreatheExerciseViewState.Data)?.let { state ->
+        (viewState as? BreatheExerciseViewState.Process)?.let { state ->
             viewModelScope.launch {
                 setViewState(
-                    BreatheExerciseViewState.Data.Exhale(
-                        inhaleSeconds = state.inhaleSeconds,
-                        holdSeconds = state.holdSeconds,
-                        exhaleSeconds = state.exhaleSeconds,
-                        cyclesCount = state.cyclesCount,
-                        currentCycle = state.currentCycle,
-                    )
+                    state.copy(
+                        exerciseState = BreatheExerciseViewState.ExerciseState.EXHALE,
+                    ),
                 )
             }
         }
     }
 
     private fun onExhaleFinished() {
-        (viewState as? BreatheExerciseViewState.Data)?.let { state ->
+        (viewState as? BreatheExerciseViewState.Process)?.let { state ->
             if (state.currentCycle < state.cyclesCount) {
                 startExercise(state.currentCycle + 1)
             }
