@@ -27,7 +27,7 @@ internal class BreatheExerciseViewModel @Inject constructor(
                     exhaleSeconds = settings.exhaleSeconds,
                     cyclesCount = settings.cyclesCount,
                     currentCycle = 1,
-                    helpingTexts = settings.helpingTexts,
+                    helpingTexts = settings.helpingTexts.shuffled(),
                     exerciseState = BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE,
                 )
             )
