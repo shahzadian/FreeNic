@@ -36,6 +36,14 @@ sealed class AppScreen {
         override val route: String = "breathe_exercise_screen"
     }
 
+    object DistractionActivityScreen : AppScreen(), NavBarScreen {
+        override val route: String = "distraction_activity_screen"
+    }
+
+    object GuessShapeScreen : AppScreen(), NavBarScreen {
+        override val route: String = "guess_shape_screen"
+    }
+
     companion object {
         fun getAll(): List<AppScreen> {
             return listOf(

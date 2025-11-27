@@ -53,6 +53,9 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
                 ),
                 icon = ImageWrapper.FromRes(
                     com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_distraction
+                ),
+                behavior = CravingTool.Behavior.NavigateToScreen(
+                    screen = AppScreen.DistractionActivityScreen,
                 )
             ),
             CravingTool(

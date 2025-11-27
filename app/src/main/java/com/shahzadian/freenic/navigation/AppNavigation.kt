@@ -19,13 +19,15 @@ import com.shahzadian.breatheexercisescreen.ui.BreatheExerciseScreen
 import com.shahzadian.cravingsscreen.ui.CravingsScreen
 import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
+import com.shahzadian.distractionactivityscreen.guessshape.ui.GuessShapeScreen
+import com.shahzadian.distractionactivityscreen.ui.DistractionActivityScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.welcomescreen.ui.onboardingscreen.OnboardingScreen
 import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
 
 @Composable
-fun Navigation() {
+fun AppNavigation() {
     val navController = rememberNavController()
     // Keep explicit remembered state for bottom bar visibility to avoid timing issues
     val showBottomBarState = remember { mutableStateOf(false) }
@@ -113,6 +115,24 @@ fun Navigation() {
             ) {
                 BreatheExerciseScreen(
                     navController = navController,
+                    modifier = Modifier
+                )
+            }
+            composable(
+                route = AppScreen.DistractionActivityScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                DistractionActivityScreen(
+                    navController = navController,
+                )
+            }
+            composable(
+                route = AppScreen.GuessShapeScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                GuessShapeScreen(
                     modifier = Modifier
                 )
             }
