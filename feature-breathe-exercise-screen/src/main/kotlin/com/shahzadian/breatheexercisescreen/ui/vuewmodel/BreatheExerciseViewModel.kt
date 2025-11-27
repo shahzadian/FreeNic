@@ -51,6 +51,12 @@ internal class BreatheExerciseViewModel @Inject constructor(
             is BreatheExerciseViewEvent.OnExhaleFinish -> {
                 onExhaleFinished()
             }
+
+            is BreatheExerciseViewEvent.OnFinishClick -> {
+                viewModelScope.launch {
+                    sendViewCommand(BreatheExerciseViewCommand.NavigateBack)
+                }
+            }
         }
     }
 

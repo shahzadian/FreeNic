@@ -13,4 +13,6 @@ internal sealed interface BreatheExerciseViewEvent : ViewEvent {
     data object OnHoldFinish : BreatheExerciseViewEvent
 
     data object OnExhaleFinish : BreatheExerciseViewEvent
+
+    data object OnFinishClick : BreatheExerciseViewEvent
 }

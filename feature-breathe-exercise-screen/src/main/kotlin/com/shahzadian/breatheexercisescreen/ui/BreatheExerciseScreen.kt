@@ -41,8 +41,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.freenic.ui.extensions.MainSubmitButton
+import com.freenic.ui.extensions.screenHeight
 import com.freenic.ui.extensions.textFromWrapper
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.breatheexercisescreen.R
+import com.shahzadian.breatheexercisescreen.ui.vuewmodel.BreatheExerciseViewCommand
 import com.shahzadian.breatheexercisescreen.ui.vuewmodel.BreatheExerciseViewEvent
 import com.shahzadian.breatheexercisescreen.ui.vuewmodel.BreatheExerciseViewModel
 import com.shahzadian.breatheexercisescreen.ui.vuewmodel.BreatheExerciseViewState
@@ -63,6 +68,7 @@ internal fun breatheExerciseBackground(): Brush {
 
 @Composable
 fun BreatheExerciseScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: BreatheExerciseViewModel = hiltViewModel()
@@ -87,10 +93,24 @@ fun BreatheExerciseScreen(
                 onExhaleFinish = {
                     onEvent(BreatheExerciseViewEvent.OnExhaleFinish)
                 },
+                onFinishClick = {
+                    onEvent(BreatheExerciseViewEvent.OnFinishClick)
+                },
                 modifier = modifier
                     .fillMaxSize(),
             )
         }
+    }
+    LaunchedEffect(viewModel) {
+        viewModel
+            .viewCommandFlow
+            .collect { command ->
+                when (command) {
+                    is BreatheExerciseViewCommand.NavigateBack -> {
+                        navController.navigateUp()
+                    }
+                }
+            }
     }
 }
 
@@ -101,6 +121,7 @@ private fun ContentView(
     onInhaleFinish: () -> Unit,
     onHoldFinish: () -> Unit,
     onExhaleFinish: () -> Unit,
+    onFinishClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val click: () -> Unit = remember(data) {
@@ -136,12 +157,21 @@ private fun ContentView(
                 .align(Alignment.Center)
         )
         if (data.exerciseState != BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE) {
-            FooterView(
+            val padding = screenHeight.dp / 3
+            HelpingTextView(
                 data = data,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 64.dp)
+                    .padding(top = padding)
+                    .align(Alignment.Center)
+            )
+            FooterView(
+                data = data,
+                onFinishClick = onFinishClick,
+                modifier = Modifier
+                    .fillMaxWidth()
                     .align(Alignment.BottomCenter)
+                    .padding(bottom = 64.dp)
             )
         }
     }
@@ -534,17 +564,22 @@ private fun ExhaleCircleView(
 @Composable
 private fun FooterView(
     data: BreatheExerciseViewState.Process,
+    onFinishClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        FinishButtonView(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .padding(bottom = 16.dp),
+            onClick = onFinishClick,
+        )
         CycleTextView(
             data = data,
-            modifier = Modifier.padding(bottom = 8.dp)
         )
-        HelpingTextView(data = data)
     }
 }
 
@@ -559,9 +594,23 @@ private fun CycleTextView(
             data.currentCycle,
             data.cyclesCount
         ),
-        color = MaterialTheme.colorScheme.onSecondary,
+        color = MaterialTheme.colorScheme.background,
         style = MaterialTheme.typography.bodyLarge,
         modifier = modifier,
+        textAlign = TextAlign.Center,
+    )
+}
+
+@Composable
+private fun FinishButtonView(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val click = remember(Unit) { { onClick() } }
+    MainSubmitButton(
+        text = TextWrapper.FromRes(com.shahzadian.baseui.R.string.breathe_exercise_finish_button),
+        onClick = click,
+        modifier = modifier.fillMaxWidth(),
     )
 }
 
@@ -583,8 +632,9 @@ private fun HelpingTextView(
     }
     Text(
         text = textFromWrapper(texts[currentTextIndex]),
-        color = MaterialTheme.colorScheme.onSecondary,
-        style = MaterialTheme.typography.headlineMedium,
+        color = MaterialTheme.colorScheme.background,
+        style = MaterialTheme.typography.headlineSmall,
         modifier = modifier,
+        textAlign = TextAlign.Center,
     )
 }

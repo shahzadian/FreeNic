@@ -111,7 +111,10 @@ fun Navigation() {
                 route = AppScreen.BreatheExerciseScreen.route,
                 exitTransition = { ExitTransition.None },
             ) {
-                BreatheExerciseScreen()
+                BreatheExerciseScreen(
+                    navController = navController,
+                    modifier = Modifier
+                )
             }
         }
     }
