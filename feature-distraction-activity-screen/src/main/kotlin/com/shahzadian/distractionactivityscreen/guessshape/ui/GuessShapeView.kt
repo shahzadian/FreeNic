@@ -67,7 +67,7 @@ private fun HeaderView(
         text = stringResource(R.string.guess_shape_guessing_title),
         color = MaterialTheme.colorScheme.onPrimary,
         style = MaterialTheme.typography.headlineSmall,
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         textAlign = TextAlign.Center,
     )
 }
