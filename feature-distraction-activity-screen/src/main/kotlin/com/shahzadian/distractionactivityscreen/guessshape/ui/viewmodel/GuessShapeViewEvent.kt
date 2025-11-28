@@ -7,4 +7,8 @@ import com.freenic.ui.vm.ViewEvent
 internal sealed interface GuessShapeViewEvent : ViewEvent {
 
     data object OnShapeShowTimeExpired : GuessShapeViewEvent
+
+    data class OnShapeGuessed(val shapeId: String) : GuessShapeViewEvent
+
+    data object OnRestartClicked : GuessShapeViewEvent
 }

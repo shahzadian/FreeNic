@@ -133,6 +133,7 @@ fun AppNavigation() {
                 exitTransition = { ExitTransition.None },
             ) {
                 GuessShapeScreen(
+                    navController = navController,
                     modifier = Modifier
                 )
             }

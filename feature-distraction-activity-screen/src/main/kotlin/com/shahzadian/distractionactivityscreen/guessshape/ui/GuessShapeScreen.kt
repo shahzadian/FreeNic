@@ -12,12 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.shahzadian.distractionactivityscreen.guessshape.ui.viewmodel.GuessShapeViewEvent
 import com.shahzadian.distractionactivityscreen.guessshape.ui.viewmodel.GuessShapeViewModel
 import com.shahzadian.distractionactivityscreen.guessshape.ui.viewmodel.GuessShapeViewState
 
 @Composable
 fun GuessShapeScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: GuessShapeViewModel = hiltViewModel()
@@ -44,8 +46,33 @@ fun GuessShapeScreen(
                         .align(Alignment.Center),
                 )
             }
-            is GuessShapeViewState.GuessShape -> {}
-            is GuessShapeViewState.Result -> {}
+
+            is GuessShapeViewState.GuessShape -> {
+                GuessShapeView(
+                    shapes = (state as GuessShapeViewState.GuessShape).shapes,
+                    onShapeSelected = {
+                        onEvent(GuessShapeViewEvent.OnShapeGuessed(it))
+                    },
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center)
+                )
+            }
+
+            is GuessShapeViewState.Result -> {
+                GuessShapeResultView(
+                    didUserWin = (state as GuessShapeViewState.Result).didUserWin,
+                    onRestartClicked = {
+                        onEvent(GuessShapeViewEvent.OnRestartClicked)
+                    },
+                    onCloseClicked = {
+                        navController.popBackStack()
+                    },
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center)
+                )
+            }
         }
     }
 }

@@ -115,8 +115,11 @@
 
     <string name="guess_shape_showing_title">Remember the shapes</string>
     <string name="guess_shape_guessing_title">Which shape was missing?</string>
+    <string name="guess_shape_guessing_submit">Confirm</string>
     <string name="guess_shape_result_correct">Correct!</string>
     <string name="guess_shape_result_incorrect">Incorrect!</string>
+    <string name="guess_shape_result_restart">Restart</string>
+    <string name="guess_shape_result_close">Close</string>
 
 
 </resources>

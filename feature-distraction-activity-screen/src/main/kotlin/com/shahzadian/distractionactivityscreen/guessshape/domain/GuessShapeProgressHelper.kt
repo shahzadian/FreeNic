@@ -67,6 +67,6 @@ internal class GuessShapeProgressHelperImpl @Inject constructor(
     }
 
     companion object {
-        private const val SHAPE_SHOW_TIME_SECONDS: Int = 5
+        private const val SHAPE_SHOW_TIME_SECONDS: Int = 3
     }
 }

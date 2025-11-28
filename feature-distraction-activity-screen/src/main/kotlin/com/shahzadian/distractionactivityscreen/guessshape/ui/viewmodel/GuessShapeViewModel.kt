@@ -5,8 +5,10 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.distractionactivityscreen.guessshape.domain.GuessShapeModel
 import com.shahzadian.distractionactivityscreen.guessshape.domain.GuessShapeProgress
+import com.shahzadian.distractionactivityscreen.guessshape.domain.GuessShapeProgressHelper
 import com.shahzadian.distractionactivityscreen.guessshape.domain.GuessShapeProgressHelperFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -20,17 +22,35 @@ internal class GuessShapeViewModel @Inject constructor(
         GuessShapeViewState.Loading
     }
 
+    private var progressHelper: GuessShapeProgressHelper? = null
+
+    private var currentProgressJob: Job? = null
+
     init {
         startActivity()
     }
 
     override fun onViewEventHappened(event: GuessShapeViewEvent) {
+        when (event) {
+            is GuessShapeViewEvent.OnShapeShowTimeExpired -> {
+                progressHelper?.onShowTimeExpired()
+            }
 
+            is GuessShapeViewEvent.OnShapeGuessed -> {
+                progressHelper?.onShapeGuessed(event.shapeId)
+            }
+
+            is GuessShapeViewEvent.OnRestartClicked -> {
+                startActivity()
+            }
+        }
     }
 
     private fun startActivity() {
+        currentProgressJob?.cancel()
         val progressHelper = guessShapeProgressHelperFactory.create(viewModelScope)
-        progressHelper
+        this.progressHelper = progressHelper
+        currentProgressJob = progressHelper
             .progressStateFlow
             .onEach { state ->
                 val viewState = state.toUiState()

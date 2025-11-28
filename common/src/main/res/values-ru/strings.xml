@@ -104,6 +104,9 @@
     <string name="breathe_exercise_helping_text_you_are_doing_great">Вы отлично справляетесь...</string>
     <string name="guess_shape_showing_title">Запомните фигуры</string>
     <string name="guess_shape_guessing_title">Какая фигура была пропущена?</string>
+    <string name="guess_shape_guessing_submit">Подтвердить</string>
     <string name="guess_shape_result_correct">Правильно!</string>
     <string name="guess_shape_result_incorrect">Неправильно!</string>
+    <string name="guess_shape_result_restart">Начать заново</string>
+    <string name="guess_shape_result_close">Закрыть</string>
 </resources>

@@ -10,11 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
@@ -48,12 +50,14 @@ fun MainSubmitButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    containerColor: Color = MaterialTheme.colorScheme.primary,
+    style: TextStyle = MaterialTheme.typography.titleLarge,
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = containerColor,
         ),
         shape = MaterialTheme.shapes.medium,
         interactionSource = interactionSource,
@@ -64,7 +68,7 @@ fun MainSubmitButton(
         Text(
             text = textFromWrapper(text),
             color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.titleLarge,
+            style = style,
         )
     }
 }
