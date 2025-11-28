@@ -113,5 +113,10 @@
     <string name="breathe_exercise_helping_text_slow_and_steady">Slow and steady...</string>
     <string name="breathe_exercise_helping_text_you_are_doing_great">You are doing great...</string>
 
+    <string name="guess_shape_showing_title">Remember the shapes</string>
+    <string name="guess_shape_guessing_title">Which shape was missing?</string>
+    <string name="guess_shape_result_correct">Correct!</string>
+    <string name="guess_shape_result_incorrect">Incorrect!</string>
+
 
 </resources>

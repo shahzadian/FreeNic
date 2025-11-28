@@ -102,4 +102,8 @@
     <string name="breathe_exercise_helping_text_breathe_calmly">Дышите спокойно...</string>
     <string name="breathe_exercise_helping_text_slow_and_steady">Медленно и ровно...</string>
     <string name="breathe_exercise_helping_text_you_are_doing_great">Вы отлично справляетесь...</string>
+    <string name="guess_shape_showing_title">Запомните фигуры</string>
+    <string name="guess_shape_guessing_title">Какая фигура была пропущена?</string>
+    <string name="guess_shape_result_correct">Правильно!</string>
+    <string name="guess_shape_result_incorrect">Неправильно!</string>
 </resources>
