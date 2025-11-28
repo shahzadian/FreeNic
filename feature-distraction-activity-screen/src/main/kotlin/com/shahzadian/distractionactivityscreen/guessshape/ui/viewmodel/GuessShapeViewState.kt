@@ -10,21 +10,25 @@ internal sealed interface GuessShapeViewState : ViewState {
     @Immutable
     data object Loading : GuessShapeViewState
 
+    @Immutable
     data class ShowShapes(
+        val shapes: List<ShapeUiModel>,
+        val showTimeSeconds: Int,
+    ) : GuessShapeViewState
+
+    @Immutable
+    data class GuessShape(
         val shapes: List<ShapeUiModel>,
     ) : GuessShapeViewState
 
-    data class GuessShape(
-        val shapes: List<ShapeUiModel>,
-    )
-
+    @Immutable
     data class Result(
         val didUserWin: Boolean,
     ) : GuessShapeViewState
 
     @Immutable
     data class ShapeUiModel(
-        val name: String,
+        val id: String,
         val icon: ImageWrapper,
     )
 }

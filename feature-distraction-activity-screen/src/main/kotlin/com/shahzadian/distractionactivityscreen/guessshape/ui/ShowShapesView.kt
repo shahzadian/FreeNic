@@ -51,7 +51,8 @@ internal fun ShowShapesView(
         )
         ShapesView(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
             shapes = shapes,
         )
         ProgressView(
@@ -83,6 +84,7 @@ private fun ShapesView(
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         shapes.forEachIndexed { index, shape ->
             var imageVisible by remember { mutableStateOf(false) }
@@ -99,11 +101,12 @@ private fun ShapesView(
             ) {
                 Image(
                     painter = imageFromWrapper(shape.icon),
-                    contentDescription = shape.name,
+                    contentDescription = shape.id,
                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary),
                     modifier = Modifier
                         .weight(1f)
-                        .size(60.dp),
+                        .align(Alignment.CenterVertically)
+                        .padding(horizontal = 8.dp)
                 )
             }
         }
@@ -150,7 +153,7 @@ private fun ProgressView(
             progress = {
                 progressAnimation / 100
             },
-            modifier = modifier.height(2.dp),
+            modifier = modifier.height(2.dp).padding(horizontal = 8.dp),
             color = MaterialTheme.colorScheme.secondary,
         )
     }

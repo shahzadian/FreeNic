@@ -5,4 +5,6 @@ import com.freenic.ui.vm.ViewEvent
 
 @Immutable
 internal sealed interface GuessShapeViewEvent : ViewEvent {
+
+    data object OnShapeShowTimeExpired : GuessShapeViewEvent
 }
