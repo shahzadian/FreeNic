@@ -1,6 +1,7 @@
 package com.shahzadian.profilescreen.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -39,7 +40,13 @@ private fun ContentView(
     ) {
         ProfileHeaderView(
             userNameLetter = data.userNameLetter,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(bottom = 16.dp)
+        )
+        ProfilePersonalDataBlockView(
+            data = data.personalData,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }

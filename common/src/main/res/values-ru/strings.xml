@@ -112,4 +112,13 @@
     <string name="guess_shape_result_close">Закрыть</string>
     <string name="profile_header_title">Профиль и настройки</string>
     <string name="profile_header_subtitle">Управление профилем</string>
+    <string name="profile_title_personal_info">Личные данные</string>
+    <string name="profile_label_name">Имя</string>
+    <plurals name="profile_age_postfix">
+        <item quantity="one">год</item>
+        <item quantity="few">года</item>
+        <item quantity="other">лет</item>
+    </plurals>
+    <string name="profile_label_age">Возраст</string>
+    <string name="profile_quit_date">Дата отказа</string>
 </resources>

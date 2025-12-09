@@ -124,5 +124,13 @@
 
     <string name="profile_header_title">Profile &amp; settings</string>
     <string name="profile_header_subtitle">Manage your account</string>
+    <string name="profile_title_personal_info">Personal information</string>
+    <string name="profile_label_name">Name</string>
+    <plurals name="profile_age_postfix">
+        <item quantity="one">year</item>
+        <item quantity="other">years</item>
+    </plurals>
+    <string name="profile_label_age">Age</string>
+    <string name="profile_quit_date">Quit date</string>
 
 </resources>
