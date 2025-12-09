@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":data-user"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
