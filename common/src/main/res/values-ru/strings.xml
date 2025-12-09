@@ -130,4 +130,8 @@
     </plurals>
     <string name="profile_cigs_price">Цена за пачку</string>
     <string name="profile_cigs_currency">Валюта</string>
+    <string name="profile_subscription_title">Премиум</string>
+    <string name="profile_subscription_desc">Откройте доступ к подробной аналитике и расширенной статистике</string>
+    <string name="profile_subscription_badge">ПРЕМИУМ</string>
+    <string name="profile_subscription_submit_button">Перейти на премиум</string>
 </resources>

@@ -67,6 +67,13 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
+        if (data.isPremiumActive.not()) {
+            ProfileSubscriptionView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
+        }
         AppVersionTextView(
             appVersion = data.appVersion,
             modifier = Modifier

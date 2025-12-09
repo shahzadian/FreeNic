@@ -143,4 +143,9 @@
     <string name="profile_cigs_price">Price per pack</string>
     <string name="profile_cigs_currency">Currency</string>
 
+    <string name="profile_subscription_title">Premium</string>
+    <string name="profile_subscription_desc">Unlock detailed insights and advanced statistics</string>
+    <string name="profile_subscription_badge">PREMIUM</string>
+    <string name="profile_subscription_submit_button">Upgrade to premium</string>
+
 </resources>

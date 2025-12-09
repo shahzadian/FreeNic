@@ -52,6 +52,8 @@ internal class ProfileViewModel @Inject constructor(
                 ProfileViewState.Data(
                     userNameLetter = userNameLetter,
                     appVersion = displayableVersion,
+//                    TODO
+                    isPremiumActive = false,
                     personalData = ProfileViewState.Data.PersonalData(
                         name = userData.personalData.name,
                         age = userData.personalData.age,
