@@ -4,26 +4,25 @@ sealed class AppScreen {
 
     abstract val route: String
 
-    object WelcomeScreen : AppScreen() {
+    object WelcomeScreen : AppScreen(), NoNavBarScreen {
         override val route = "welcome_screen"
     }
 
-    object OnboardingScreen : AppScreen() {
+    object OnboardingScreen : AppScreen(), NoNavBarScreen {
         override val route = "onboarding_screen"
     }
 
     //    Personal data fill
-    object DataFillScreen : AppScreen() {
+    object DataFillScreen : AppScreen(), NoNavBarScreen {
         override val route: String = "data_fill_screen"
     }
 
-    //    Main screen with nav bar
     object MainScreen : AppScreen(), NavBarScreen {
 
         override val route: String = "main_screen"
     }
 
-    object DashboardScreen : AppScreen(), NavBarScreen {
+    object DashboardScreen : AppScreen() {
 
         override val route: String = "dashboard_screen"
     }
@@ -32,16 +31,20 @@ sealed class AppScreen {
         override val route: String = "cravings_screen"
     }
 
-    object BreatheExerciseScreen : AppScreen(), NavBarScreen {
+    object BreatheExerciseScreen : AppScreen() {
         override val route: String = "breathe_exercise_screen"
     }
 
-    object DistractionActivityScreen : AppScreen(), NavBarScreen {
+    object DistractionActivityScreen : AppScreen() {
         override val route: String = "distraction_activity_screen"
     }
 
-    object GuessShapeScreen : AppScreen(), NavBarScreen {
+    object GuessShapeScreen : AppScreen() {
         override val route: String = "guess_shape_screen"
+    }
+
+    object ProfileScreen : AppScreen(), NavBarScreen {
+        override val route: String = "profile_screen"
     }
 
     companion object {
@@ -53,9 +56,12 @@ sealed class AppScreen {
                 MainScreen,
                 DashboardScreen,
                 CravingsScreen,
+                ProfileScreen,
             )
         }
     }
+
+    interface NoNavBarScreen
 
     interface NavBarScreen
 }

@@ -33,6 +33,15 @@ internal class MainScreenPageRepositoryImpl @Inject constructor() : MainScreenPa
                     com.shahzadian.mainscreen.R.drawable.ic_main_page_cravings
                 ),
                 screen = AppScreen.CravingsScreen
+            ),
+            MainScreenPage(
+                name = TextWrapper.FromRes(
+                    R.string.main_page_profile_name
+                ),
+                icon = ImageWrapper.FromRes(
+                    com.shahzadian.mainscreen.R.drawable.ic_main_page_profile
+                ),
+                screen = AppScreen.ProfileScreen
             )
         )
     }

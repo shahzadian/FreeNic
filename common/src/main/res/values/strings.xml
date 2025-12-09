@@ -81,6 +81,7 @@
 
     <string name="main_page_home_name">Home</string>
     <string name="main_page_cravings_name">Cravings</string>
+    <string name="main_page_profile_name">Profile</string>
 
     <string name="cravings_header_title">You feel an Urge?</string>
     <string name="cravings_header_subtitle">Let\'s get through this together</string>
@@ -121,5 +122,7 @@
     <string name="guess_shape_result_restart">Restart</string>
     <string name="guess_shape_result_close">Close</string>
 
+    <string name="profile_header_title">Profile &amp; settings</string>
+    <string name="profile_header_subtitle">Manage your account</string>
 
 </resources>

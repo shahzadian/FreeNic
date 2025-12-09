@@ -23,6 +23,7 @@ import com.shahzadian.distractionactivityscreen.guessshape.ui.GuessShapeScreen
 import com.shahzadian.distractionactivityscreen.ui.DistractionActivityScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
+import com.shahzadian.profilescreen.ui.ProfileScreen
 import com.shahzadian.welcomescreen.ui.onboardingscreen.OnboardingScreen
 import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
 
@@ -35,7 +36,7 @@ fun AppNavigation() {
     val bottomBarRoutes = remember {
         AppScreen
             .getAll()
-            .filter { it is AppScreen.NavBarScreen }
+            .filterNot { it is AppScreen.NoNavBarScreen }
             .map { it.route }
     }
 
@@ -99,6 +100,8 @@ fun AppNavigation() {
                     modifier = Modifier
                 )
             }
+
+//            Cravings screen
             composable(
                 route = AppScreen.CravingsScreen.route,
                 enterTransition = { EnterTransition.None },
@@ -136,6 +139,14 @@ fun AppNavigation() {
                     navController = navController,
                     modifier = Modifier
                 )
+            }
+
+            composable(
+                route = AppScreen.ProfileScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                ProfileScreen()
             }
         }
     }

@@ -74,6 +74,7 @@
     <string name="main_page_home_name">Главная</string>
     <string name="main_page_cravings_name">Тяга</string>
 
+    <string name="main_page_profile_name">Профиль</string>
     <string name="cravings_header_title">Вы чувствуете тягу?</string>
     <string name="cravings_header_subtitle">Давайте пройдем через это вместе</string>
     <string name="cravings_tools_title">Попробуйте один из быстрых инструментов</string>
@@ -109,4 +110,6 @@
     <string name="guess_shape_result_incorrect">Неправильно!</string>
     <string name="guess_shape_result_restart">Начать заново</string>
     <string name="guess_shape_result_close">Закрыть</string>
+    <string name="profile_header_title">Профиль и настройки</string>
+    <string name="profile_header_subtitle">Управление профилем</string>
 </resources>
