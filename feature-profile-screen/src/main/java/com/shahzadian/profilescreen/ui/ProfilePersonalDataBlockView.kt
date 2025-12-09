@@ -20,6 +20,7 @@ internal fun ProfilePersonalDataBlockView(
 ) {
     ProfileSettingsBlockView(
         title = stringResource(R.string.profile_title_block_personal_info),
+        iconRes = com.shahzadian.profilescreen.R.drawable.ic_profile_personal_info,
         modifier = modifier,
     ) {
         ProfileSettingsFieldView(

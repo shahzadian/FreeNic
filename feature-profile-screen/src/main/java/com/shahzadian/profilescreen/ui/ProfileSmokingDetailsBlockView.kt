@@ -20,6 +20,7 @@ internal fun ProfileSmokingDetailsBlockView(
 ) {
     ProfileSettingsBlockView(
         title = stringResource(R.string.profile_title_block_smoking_details),
+        iconRes = com.shahzadian.profilescreen.R.drawable.ic_profile_smoking_details,
         modifier = modifier,
     ) {
         val cigsPerDay = data.cigarettesPerDay

@@ -1,5 +1,6 @@
 package com.shahzadian.profilescreen.ui.common
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -18,6 +19,7 @@ import com.shahzadian.profilescreen.R
 @Composable
 internal fun ProfileSettingsBlockView(
     title: String,
+    @DrawableRes iconRes: Int,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -29,12 +31,21 @@ internal fun ProfileSettingsBlockView(
             )
             .padding(16.dp),
     ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onBackground,
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(bottom = 16.dp)
-        )
+        ) {
+            Image(
+                painter = painterResource(iconRes),
+                contentDescription = title,
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        }
         content()
     }
 }
