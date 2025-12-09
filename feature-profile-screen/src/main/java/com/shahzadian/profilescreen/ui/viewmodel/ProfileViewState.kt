@@ -12,7 +12,8 @@ internal sealed interface ProfileViewState : ViewState {
 
     @Immutable
     data class Data(
-        val userNameLetter: TextWrapper,
+        val userNameLetter: String,
+        val appVersion: String,
         val personalData: PersonalData,
         val smokingDetails: SmokingDetails,
     ) : ProfileViewState {

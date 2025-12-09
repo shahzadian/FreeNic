@@ -1,12 +1,15 @@
 package com.shahzadian.profilescreen.ui.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.freenic.ui.appinfo.AppInfoHelper
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
-import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.model.QuitData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
@@ -17,7 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ProfileViewModel @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val getUserDataUseCase: GetUserDataUseCase,
+    private val appInfoHelper: AppInfoHelper,
 ) : BaseViewModel<ProfileViewState, ProfileViewEvent, ProfileViewCommand>() {
 
     override val initState: ProfileViewState by lazyUnsafe { ProfileViewState.Loading }
@@ -40,9 +45,13 @@ internal class ProfileViewModel @Inject constructor(
                     return@launch
                 }
             val userNameLetter = userData.personalData.name.first().toString()
+            val appName = context.getString(R.string.app_name)
+            val appVersion = appInfoHelper.getAppVersion()
+            val displayableVersion = "$appName v${appVersion.versionName}"
             setViewState(
                 ProfileViewState.Data(
-                    userNameLetter = TextWrapper.FromString(userNameLetter),
+                    userNameLetter = userNameLetter,
+                    appVersion = displayableVersion,
                     personalData = ProfileViewState.Data.PersonalData(
                         name = userData.personalData.name,
                         age = userData.personalData.age,

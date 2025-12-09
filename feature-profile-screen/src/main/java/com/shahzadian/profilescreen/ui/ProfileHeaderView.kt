@@ -14,13 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.freenic.ui.extensions.textFromWrapper
-import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 
 @Composable
 internal fun ProfileHeaderView(
-    userNameLetter: TextWrapper,
+    userNameLetter: String,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -38,7 +36,7 @@ internal fun ProfileHeaderView(
 
 @Composable
 private fun HeaderIconView(
-    userNameLetter: TextWrapper,
+    userNameLetter: String,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -50,7 +48,7 @@ private fun HeaderIconView(
             .size(50.dp)
     ) {
         Text(
-            text = textFromWrapper(userNameLetter),
+            text = userNameLetter,
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier.align(Alignment.Center),
             style = MaterialTheme.typography.headlineSmall,

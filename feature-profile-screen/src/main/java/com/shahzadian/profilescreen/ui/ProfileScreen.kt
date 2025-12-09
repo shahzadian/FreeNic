@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -61,7 +63,27 @@ private fun ContentView(
         )
         ProfileSmokingDetailsBlockView(
             data = data.smokingDetails,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        AppVersionTextView(
+            appVersion = data.appVersion,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
         )
     }
+}
+
+@Composable
+private fun AppVersionTextView(
+    appVersion: String,
+    modifier: Modifier = Modifier,
+) {
+    Text(
+        text = appVersion,
+        color = MaterialTheme.colorScheme.onSecondary,
+        modifier = modifier,
+        style = MaterialTheme.typography.bodySmall
+    )
 }
