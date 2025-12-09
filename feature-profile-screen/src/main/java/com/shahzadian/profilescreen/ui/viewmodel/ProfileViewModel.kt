@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Currency
 import java.util.Locale
 import javax.inject.Inject
 
@@ -43,9 +44,16 @@ internal class ProfileViewModel @Inject constructor(
                 ProfileViewState.Data(
                     userNameLetter = TextWrapper.FromString(userNameLetter),
                     personalData = ProfileViewState.Data.PersonalData(
-                        name = TextWrapper.FromString(userData.personalData.name),
-                        age = TextWrapper.FromString(userData.personalData.age.toString()),
-                        quitDate = TextWrapper.FromString(userData.quitData.extractDisplayableQuitDate())
+                        name = userData.personalData.name,
+                        age = userData.personalData.age,
+                        quitDate = userData.quitData.extractDisplayableQuitDate()
+                    ),
+                    smokingDetails = ProfileViewState.Data.SmokingDetails(
+                        cigarettesPerDay = userData.cigarettesData.cigarettesPerDay,
+                        price = userData.cigarettesData.priceData.price,
+                        currency = if (userData.cigarettesData.priceData.isValidCurrency()) Currency.getInstance(
+                            userData.cigarettesData.priceData.currency
+                        ).symbol else null
                     )
                 )
             )

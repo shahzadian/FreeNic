@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -14,13 +13,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.freenic.ui.extensions.textFromWrapper
-import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.profilescreen.R
 
 @Composable
 internal fun ProfileSettingsBlockView(
-    title: TextWrapper,
+    title: String,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -33,7 +30,7 @@ internal fun ProfileSettingsBlockView(
             .padding(16.dp),
     ) {
         Text(
-            text = textFromWrapper(title),
+            text = title,
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -43,9 +40,9 @@ internal fun ProfileSettingsBlockView(
 }
 
 @Composable
-internal fun ProfileSettingsField(
-    label: TextWrapper,
-    value: TextWrapper,
+internal fun ProfileSettingsFieldView(
+    label: String,
+    value: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -74,21 +71,21 @@ internal fun ProfileSettingsField(
 
 @Composable
 private fun FieldText(
-    label: TextWrapper,
-    value: TextWrapper,
+    label: String,
+    value: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
     ) {
         Text(
-            text = textFromWrapper(label),
+            text = label,
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSecondary,
             modifier = Modifier.padding(bottom = 8.dp),
         )
         Text(
-            text = textFromWrapper(value),
+            text = value,
             style = MaterialTheme.typography.bodyLarge,
         )
     }

@@ -69,7 +69,7 @@ private fun HeaderTitleView(
             text = stringResource(R.string.profile_header_title),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(bottom = 8.dp),
+            modifier = Modifier.padding(bottom = 4.dp),
         )
         Text(
             text = stringResource(R.string.profile_header_subtitle),

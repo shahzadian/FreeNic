@@ -14,13 +14,21 @@ internal sealed interface ProfileViewState : ViewState {
     data class Data(
         val userNameLetter: TextWrapper,
         val personalData: PersonalData,
+        val smokingDetails: SmokingDetails,
     ) : ProfileViewState {
 
         @Immutable
         data class PersonalData(
-            val name: TextWrapper,
-            val age: TextWrapper,
-            val quitDate: TextWrapper,
+            val name: String,
+            val age: Int,
+            val quitDate: String,
+        )
+
+        @Immutable
+        data class SmokingDetails(
+            val cigarettesPerDay: Int,
+            val price: Float,
+            val currency: String?,
         )
     }
 }

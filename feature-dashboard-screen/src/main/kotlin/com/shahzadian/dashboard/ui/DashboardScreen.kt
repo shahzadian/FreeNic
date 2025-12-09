@@ -56,7 +56,7 @@ private fun ContentView(
     ) {
         HeaderView(
             model = uiModel.headerUiModel,
-            modifier = Modifier
+            modifier = Modifier.padding(bottom = 16.dp),
         )
         NoCigDaysView(
             model = uiModel.noCigDaysUiModel,
