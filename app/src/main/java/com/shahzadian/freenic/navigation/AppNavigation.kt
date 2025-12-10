@@ -25,6 +25,7 @@ import com.shahzadian.insightsscreen.ui.InsightsScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.profilescreen.ui.ProfileScreen
+import com.shahzadian.subscription.paywall.ui.PaywallScreen
 import com.shahzadian.welcomescreen.ui.onboardingscreen.OnboardingScreen
 import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
 
@@ -156,6 +157,14 @@ fun AppNavigation() {
                 exitTransition = { ExitTransition.None },
             ) {
                 ProfileScreen()
+            }
+
+            composable(
+                route = AppScreen.PaywallScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                PaywallScreen()
             }
         }
     }

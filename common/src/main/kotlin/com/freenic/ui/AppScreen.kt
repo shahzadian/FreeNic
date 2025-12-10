@@ -57,6 +57,10 @@ sealed class AppScreen {
         override val route: String = "profile_screen"
     }
 
+    object PaywallScreen : AppScreen() {
+        override val route: String = "paywall_screen"
+    }
+
     companion object {
         fun getAll(): List<AppScreen> {
             return listOf(

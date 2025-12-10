@@ -135,4 +135,6 @@
     <string name="profile_subscription_desc">Откройте доступ к подробной аналитике и расширенной статистике</string>
     <string name="profile_subscription_badge">ПРЕМИУМ</string>
     <string name="profile_subscription_submit_button">Перейти на премиум</string>
+    <string name="paywall_header_title">Откройте премиум-доступ</string>
+    <string name="paywall_header_subtitle">Получите полный функционал FreeNic</string>
 </resources>
