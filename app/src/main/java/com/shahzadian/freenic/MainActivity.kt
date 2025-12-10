@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.freenic.ui.theme.FreeNicTheme
 import com.shahzadian.freenic.navigation.AppNavigation
-import com.shahzadian.subscription.paywall.ui.PaywallScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,8 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FreeNicTheme {
-                //AppNavigation()
-                PaywallScreen()
+                AppNavigation()
             }
         }
     }

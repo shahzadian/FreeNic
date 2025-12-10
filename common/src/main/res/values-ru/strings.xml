@@ -137,4 +137,15 @@
     <string name="profile_subscription_submit_button">Перейти на премиум</string>
     <string name="paywall_header_title">Откройте полный доступ</string>
     <string name="paywall_header_subtitle">Получите полный функционал FreeNic</string>
+    <string name="paywall_features_title">Премиум-возможности</string>
+    <string name="paywall_feature_goal_tracker_title">Копилка и цели</string>
+    <string name="paywall_feature_widget_title">Виджет прогресса</string>
+    <string name="paywall_feature_motivation_notes_title">Личные мотивирующие заметки</string>
+    <string name="paywall_feature_analytics_title">Детальная аналитика</string>
+    <string name="paywall_feature_goal_tracker_subtitle">Поставьте финансовую цель и отслеживайте, как быстро вы приближаетесь к ней</string>
+    <string name="paywall_feature_widget_subtitle">Добавьте виджет прогресса на главный экран и сохраняйте мотивацию каждый день</string>
+    <string name="paywall_feature_motivation_notes_subtitle">Добавьте свои мотивирующие фразы, которые будут появляться в моменты тяги</string>
+    <string name="paywall_feature_analytics_subtitle">Получите доступ к детальным графикам, динамике прогресса и анализу поведения</string>
+    <string name="paywall_feature_no_ads_title">Без рекламы</string>
+    <string name="paywall_feature_no_ads_subtitle">Уберите всю рекламу для более комфортного использования</string>
 </resources>

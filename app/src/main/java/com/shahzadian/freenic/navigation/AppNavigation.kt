@@ -62,7 +62,7 @@ fun AppNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = AppScreen.WelcomeScreen.route,
+            startDestination = AppScreen.PaywallScreen.route,
             modifier = Modifier.padding(innerPadding),
         ) {
             composable(route = AppScreen.WelcomeScreen.route) {

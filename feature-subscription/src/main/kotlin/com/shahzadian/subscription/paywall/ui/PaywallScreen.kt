@@ -2,42 +2,57 @@ package com.shahzadian.subscription.paywall.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.ui.extensions.mainGradientBackground
 import com.shahzadian.baseui.R
+import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewModel
+import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewState
 
 @Composable
 fun PaywallScreen(
     modifier: Modifier = Modifier,
 ) {
-    ContentView(
-        modifier = modifier
-            .fillMaxSize()
-            .background(mainGradientBackground())
-            .padding(16.dp),
-    )
+    val viewModel: PaywallViewModel = hiltViewModel()
+    val state by viewModel.viewStateFlow.collectAsState()
+    when (state) {
+        is PaywallViewState.Loading -> {}
+        is PaywallViewState.Data -> {
+            ContentView(
+                data = state as PaywallViewState.Data,
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(mainGradientBackground())
+            )
+        }
+    }
 }
 
 @Composable
 private fun ContentView(
+    data: PaywallViewState.Data,
     modifier: Modifier = Modifier,
 ) {
+    val scrollState = rememberScrollState()
     Column(
-        modifier = modifier,
+        modifier = modifier.verticalScroll(scrollState).padding(16.dp),
     ) {
         HeaderView(
             modifier = Modifier
@@ -47,8 +62,14 @@ private fun ContentView(
         Image(
             painter = painterResource(com.shahzadian.subscription.R.drawable.ic_paywall_banner),
             contentDescription = "paywall banner",
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 32.dp),
             contentScale = ContentScale.FillWidth
+        )
+        PaidFeaturesBlock(
+            paidFeatures = data.paidFeatures,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -61,26 +82,47 @@ private fun HeaderView(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(bottom = 16.dp),
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            Image(
-                painter = painterResource(com.shahzadian.subscription.R.drawable.ic_paywall_header),
-                contentDescription = "paywall header",
-                modifier = Modifier.padding(end = 8.dp)
-            )
-            Text(
-                text = stringResource(R.string.paywall_header_title),
-                color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.headlineSmall,
-            )
-        }
+        Image(
+            painter = painterResource(com.shahzadian.subscription.R.drawable.ic_paywall_header),
+            contentDescription = "paywall header",
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        Text(
+            text = stringResource(R.string.paywall_header_title),
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.headlineLarge,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
         Text(
             text = stringResource(R.string.paywall_header_subtitle),
             color = MaterialTheme.colorScheme.onSecondary,
             style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.padding(bottom = 16.dp)
         )
+    }
+}
+
+@Composable
+private fun PaidFeaturesBlock(
+    paidFeatures: List<PaywallViewState.PaidFeatureUiModel>,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            text = stringResource(R.string.paywall_features_title),
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        paidFeatures.forEach { feature ->
+            PaidFeatureView(
+                uiModel = feature,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+        }
     }
 }

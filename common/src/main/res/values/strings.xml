@@ -151,5 +151,16 @@
 
     <string name="paywall_header_title">Unlock Full Access</string>
     <string name="paywall_header_subtitle">Get the complete FreeNic experience</string>
+    <string name="paywall_features_title">Premium features</string>
+    <string name="paywall_feature_goal_tracker_title">Saving goal tracker</string>
+    <string name="paywall_feature_widget_title">Home screen widget</string>
+    <string name="paywall_feature_motivation_notes_title">Personal motivation notes</string>
+    <string name="paywall_feature_analytics_title">Advanced analytics</string>
+    <string name="paywall_feature_goal_tracker_subtitle">Set a money-saving goal and track your progress toward a purchase or amount</string>
+    <string name="paywall_feature_widget_subtitle">Add a live progress widget to your home screen and stay motivated every day</string>
+    <string name="paywall_feature_motivation_notes_subtitle">Create your own motivational notes that appear during cravings</string>
+    <string name="paywall_feature_analytics_subtitle">Unlock detailed charts, progress trends, and behavioral insights</string>
+    <string name="paywall_feature_no_ads_title">No ads</string>
+    <string name="paywall_feature_no_ads_subtitle">Remove all ads for a cleaner and more focused experience</string>
 
 </resources>
