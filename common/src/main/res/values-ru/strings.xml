@@ -74,6 +74,7 @@
     <string name="main_page_home_name">Главная</string>
     <string name="main_page_cravings_name">Тяга</string>
 
+    <string name="main_page_insights_name">Аналитика</string>
     <string name="main_page_profile_name">Профиль</string>
     <string name="cravings_header_title">Вы чувствуете тягу?</string>
     <string name="cravings_header_subtitle">Давайте пройдем через это вместе</string>

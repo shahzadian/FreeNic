@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":feature-breathe-exercise-screen"))
     implementation(project(":feature-distraction-activity-screen"))
     implementation(project(":feature-profile-screen"))
+    implementation(project(":feature-insights-screen"))
 
 
     implementation(libs.androidx.core.ktx)

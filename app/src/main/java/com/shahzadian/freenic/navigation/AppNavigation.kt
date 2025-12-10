@@ -21,6 +21,7 @@ import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
 import com.shahzadian.distractionactivityscreen.guessshape.ui.GuessShapeScreen
 import com.shahzadian.distractionactivityscreen.ui.DistractionActivityScreen
+import com.shahzadian.insightsscreen.ui.InsightsScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.profilescreen.ui.ProfileScreen
@@ -147,6 +148,14 @@ fun AppNavigation() {
                 exitTransition = { ExitTransition.None },
             ) {
                 ProfileScreen()
+            }
+
+            composable(
+                route = AppScreen.InsightsScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                InsightsScreen()
             }
         }
     }

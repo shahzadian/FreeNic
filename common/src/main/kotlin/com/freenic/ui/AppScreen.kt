@@ -43,6 +43,10 @@ sealed class AppScreen {
         override val route: String = "guess_shape_screen"
     }
 
+    object InsightsScreen : AppScreen(), NavBarScreen {
+        override val route: String = "insights_screen"
+    }
+
     object ProfileScreen : AppScreen(), NavBarScreen {
         override val route: String = "profile_screen"
     }
@@ -56,6 +60,7 @@ sealed class AppScreen {
                 MainScreen,
                 DashboardScreen,
                 CravingsScreen,
+                InsightsScreen,
                 ProfileScreen,
             )
         }
