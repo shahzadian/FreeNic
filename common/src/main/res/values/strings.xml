@@ -149,7 +149,7 @@
     <string name="profile_subscription_badge">PREMIUM</string>
     <string name="profile_subscription_submit_button">Upgrade to premium</string>
 
-    <string name="paywall_header_title">Unlock Premium</string>
+    <string name="paywall_header_title">Unlock Full Access</string>
     <string name="paywall_header_subtitle">Get the complete FreeNic experience</string>
 
 </resources>

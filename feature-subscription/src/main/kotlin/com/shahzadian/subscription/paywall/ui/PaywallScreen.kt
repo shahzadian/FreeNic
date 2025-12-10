@@ -3,7 +3,6 @@ package com.shahzadian.subscription.paywall.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,11 +24,31 @@ import com.shahzadian.baseui.R
 fun PaywallScreen(
     modifier: Modifier = Modifier,
 ) {
-    Box(
-        modifier = modifier.fillMaxSize().background(mainGradientBackground()),
+    ContentView(
+        modifier = modifier
+            .fillMaxSize()
+            .background(mainGradientBackground())
+            .padding(16.dp),
+    )
+}
+
+@Composable
+private fun ContentView(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
     ) {
         HeaderView(
-            modifier = Modifier.fillMaxWidth().align(Alignment.Center)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        Image(
+            painter = painterResource(com.shahzadian.subscription.R.drawable.ic_paywall_banner),
+            contentDescription = "paywall banner",
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = ContentScale.FillWidth
         )
     }
 }
