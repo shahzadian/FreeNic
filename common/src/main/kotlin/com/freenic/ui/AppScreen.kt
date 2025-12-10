@@ -4,6 +4,8 @@ sealed class AppScreen {
 
     abstract val route: String
 
+    open fun isPaid(): Boolean = false
+
     object WelcomeScreen : AppScreen(), NoNavBarScreen {
         override val route = "welcome_screen"
     }
@@ -45,6 +47,10 @@ sealed class AppScreen {
 
     object InsightsScreen : AppScreen(), NavBarScreen {
         override val route: String = "insights_screen"
+
+        override fun isPaid(): Boolean {
+            return true
+        }
     }
 
     object ProfileScreen : AppScreen(), NavBarScreen {

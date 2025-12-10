@@ -13,4 +13,5 @@ internal data class MainScreenItemUiModel(
     val title: TextWrapper,
     val icon: ImageWrapper,
     val route: String,
+    val isPaid: Boolean,
 )

@@ -143,19 +143,19 @@ fun AppNavigation() {
             }
 
             composable(
-                route = AppScreen.ProfileScreen.route,
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None },
-            ) {
-                ProfileScreen()
-            }
-
-            composable(
                 route = AppScreen.InsightsScreen.route,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
             ) {
                 InsightsScreen()
+            }
+
+            composable(
+                route = AppScreen.ProfileScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                ProfileScreen()
             }
         }
     }

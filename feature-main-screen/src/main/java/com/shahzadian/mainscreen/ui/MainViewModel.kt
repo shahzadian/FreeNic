@@ -1,11 +1,11 @@
 package com.shahzadian.mainscreen.ui
 
+import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.mainscreen.domain.GetMainScreenPagesUseCase
 import com.shahzadian.mainscreen.ui.model.MainScreenItemUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,6 +28,7 @@ internal class MainViewModel @Inject constructor(
                     title = it.name,
                     icon = it.icon,
                     route = it.screen.route,
+                    isPaid = it.screen.isPaid()
                 )
             }
             setViewState(MainViewState.Default(pages = items))
