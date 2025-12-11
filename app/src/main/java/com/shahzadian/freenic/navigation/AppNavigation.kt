@@ -190,6 +190,7 @@ fun AppNavigation() {
                 exitTransition = { ExitTransition.None },
             ) {
                 GoalsScreen(
+                    navController = navController,
                     modifier = BaseModifier,
                 )
             }
