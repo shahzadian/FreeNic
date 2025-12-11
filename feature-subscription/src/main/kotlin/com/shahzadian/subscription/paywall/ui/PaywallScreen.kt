@@ -13,6 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -21,7 +24,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.mainGradientBackground
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewModel
 import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewState
@@ -52,24 +57,26 @@ private fun ContentView(
 ) {
     val scrollState = rememberScrollState()
     Column(
-        modifier = modifier.verticalScroll(scrollState).padding(16.dp),
+        modifier = modifier
+            .verticalScroll(scrollState)
+            .padding(16.dp),
     ) {
         HeaderView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-        Image(
-            painter = painterResource(com.shahzadian.subscription.R.drawable.ic_paywall_banner),
-            contentDescription = "paywall banner",
+        SubscriptionPlansView(
+            plans = data.subscriptionPlans,
+            defaultPlanIndex = data.defaultSelectedPlanIndex,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp),
-            contentScale = ContentScale.FillWidth
+                .padding(bottom = 16.dp)
         )
         PaidFeaturesBlock(
             paidFeatures = data.paidFeatures,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         )
     }
 }
@@ -124,5 +131,40 @@ private fun PaidFeaturesBlock(
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }
+    }
+}
+
+@Composable
+private fun SubscriptionPlansView(
+    plans: List<PaywallViewState.SubscriptionPlanUiModel>,
+    defaultPlanIndex: Int,
+    modifier: Modifier = Modifier,
+) {
+    var selectedPlanIndex by remember { mutableStateOf(defaultPlanIndex) }
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            text = stringResource(R.string.subscription_plan_title),
+            color = MaterialTheme.colorScheme.onPrimary,
+            style = MaterialTheme.typography.titleLarge,
+            modifier = Modifier.padding(bottom = 8.dp)
+        )
+        plans.forEachIndexed { index, plan ->
+            SubscriptionPlanView(
+                plan = plan,
+                modifier = Modifier.padding(bottom = if (index == plans.size - 1) 16.dp else 8.dp),
+                selected = selectedPlanIndex == index,
+                onClick = {
+                    selectedPlanIndex = index
+                }
+            )
+        }
+        MainSubmitButton(
+            text = TextWrapper.FromRes(R.string.profile_subscription_submit_button),
+            onClick = {},
+            modifier = Modifier
+                .fillMaxWidth()
+        )
     }
 }
