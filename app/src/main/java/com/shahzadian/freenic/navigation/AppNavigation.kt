@@ -1,7 +1,14 @@
 package com.shahzadian.freenic.navigation
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -57,7 +64,19 @@ fun AppNavigation() {
 
     Scaffold(
         bottomBar = {
-            if (showBottomBarState.value) {
+            AnimatedVisibility(
+                visible = showBottomBarState.value,
+                enter = fadeIn(animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing)) +
+                        slideInVertically(
+                            animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing),
+                            initialOffsetY = { it / 3 } // slight slide from below
+                        ),
+                exit = fadeOut(animationSpec = tween(durationMillis = 180, easing = FastOutSlowInEasing)) +
+                        slideOutVertically(
+                            animationSpec = tween(durationMillis = 180, easing = FastOutSlowInEasing),
+                            targetOffsetY = { it / 3 }
+                        )
+            ) {
                 MainBottomBar(navController = navController)
             }
         }
