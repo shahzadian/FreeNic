@@ -172,4 +172,7 @@
     <string name="subscription_plan_price_per_month_postfix">%.1f/month</string>
     <string name="subscription_plan_price_per_month">per month</string>
 
+    <string name="goals_header_title">Goals</string>
+    <string name="goals_header_subtitle">Achievements and progress</string>
+
 </resources>

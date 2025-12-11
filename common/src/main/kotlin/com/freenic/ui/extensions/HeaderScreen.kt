@@ -25,6 +25,46 @@ fun HeaderScreen(
     modifier: Modifier = Modifier,
     title: TextWrapper,
     subtitle: TextWrapper,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    HeaderScreen(
+        modifier = modifier,
+        title = title,
+        subtitle = subtitle,
+        image = null,
+        content = content
+    )
+}
+
+@Composable
+fun HeaderScreen(
+    modifier: Modifier = Modifier,
+    title: TextWrapper,
+    subtitle: TextWrapper,
+    icon: ImageWrapper? = null,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    HeaderScreen(
+        modifier = modifier,
+        title = title,
+        subtitle = subtitle,
+        image = {
+            icon?.let {
+                Image(
+                    painter = imageFromWrapper(it),
+                    contentDescription = "Header image",
+                )
+            }
+        },
+        content = content
+    )
+}
+
+@Composable
+fun HeaderScreen(
+    modifier: Modifier = Modifier,
+    title: TextWrapper,
+    subtitle: TextWrapper,
     image: @Composable (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -65,7 +105,7 @@ internal fun HeaderView(
         TitleView(
             title = title,
             subtitle = subtitle,
-            modifier = Modifier.weight(2f)
+            modifier = Modifier.weight(1f)
         )
         image?.let {
             image()
@@ -92,26 +132,6 @@ private fun TitleView(
             text = textFromWrapper(subtitle),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSecondary,
-        )
-    }
-}
-
-@Composable
-private fun HeaderIconView(
-    image: ImageWrapper,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.primary,
-                shape = CircleShape,
-            )
-            .size(50.dp)
-    ) {
-        Image(
-            painter = imageFromWrapper(image),
-            contentDescription = "Header image"
         )
     }
 }
