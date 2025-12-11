@@ -84,6 +84,13 @@ fun mainGradientBackground(): Brush {
     )
 }
 
+val screenWidth: Int
+    @Composable
+    get() {
+        val configuration = LocalConfiguration.current
+        return configuration.screenWidthDp
+    }
+
 val screenHeight: Int
     @Composable
     get() {
