@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":feature-distraction-activity-screen"))
     implementation(project(":feature-profile-screen"))
     implementation(project(":feature-subscription"))
+    implementation(project(":feature-goals-screen"))
 
 
     implementation(libs.androidx.core.ktx)

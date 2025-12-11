@@ -30,6 +30,7 @@ import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
 import com.shahzadian.distractionactivityscreen.guessshape.ui.GuessShapeScreen
 import com.shahzadian.distractionactivityscreen.ui.DistractionActivityScreen
+import com.shahzadian.goalsscreen.ui.GoalsScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.profilescreen.ui.ProfileScreen
@@ -179,6 +180,16 @@ fun AppNavigation() {
                 exitTransition = { ExitTransition.None },
             ) {
                 PaywallScreen(
+                    modifier = BaseModifier,
+                )
+            }
+
+            composable(
+                route = AppScreen.GoalsScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                GoalsScreen(
                     modifier = BaseModifier,
                 )
             }

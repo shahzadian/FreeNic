@@ -81,7 +81,7 @@
 
     <string name="main_page_home_name">Home</string>
     <string name="main_page_cravings_name">Cravings</string>
-    <string name="main_page_insights_name">Insights</string>
+    <string name="main_page_goals_name">Goals</string>
     <string name="main_page_profile_name">Profile</string>
 
     <string name="cravings_header_title">You feel an Urge?</string>

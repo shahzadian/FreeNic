@@ -53,6 +53,14 @@ sealed class AppScreen {
         override val route: String = "paywall_screen"
     }
 
+    object GoalsScreen : AppScreen(), NavBarScreen {
+        override val route: String = "goals_screen"
+
+        override fun shouldShowWithPremiumIcon(): Boolean {
+            return true
+        }
+    }
+
     companion object {
         fun getAll(): List<AppScreen> {
             return listOf(
@@ -65,7 +73,8 @@ sealed class AppScreen {
                 BreatheExerciseScreen,
                 GuessShapeScreen,
                 ProfileScreen,
-                PaywallScreen
+                PaywallScreen,
+                GoalsScreen,
             )
         }
     }

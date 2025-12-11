@@ -36,6 +36,15 @@ internal class MainScreenPageRepositoryImpl @Inject constructor() : MainScreenPa
             ),
             MainScreenPage(
                 name = TextWrapper.FromRes(
+                    R.string.main_page_goals_name
+                ),
+                icon = ImageWrapper.FromRes(
+                    com.shahzadian.mainscreen.R.drawable.ic_main_page_goals
+                ),
+                screen = AppScreen.GoalsScreen
+            ),
+            MainScreenPage(
+                name = TextWrapper.FromRes(
                     R.string.main_page_profile_name
                 ),
                 icon = ImageWrapper.FromRes(
