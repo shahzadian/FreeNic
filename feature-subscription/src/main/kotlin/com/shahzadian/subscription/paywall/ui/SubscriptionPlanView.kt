@@ -78,7 +78,7 @@ internal fun SubscriptionPlanView(
                 Text(
                     text = textFromWrapper(plan.priceDetails),
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onPrimary,
+                    color = MaterialTheme.colorScheme.onSecondary,
                 )
             }
         }

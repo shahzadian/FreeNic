@@ -33,7 +33,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.ui.extensions.MainSubmitButton
-import com.freenic.ui.extensions.mainGradientBackground
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewModel
@@ -50,9 +49,7 @@ fun PaywallScreen(
         is PaywallViewState.Data -> {
             ContentView(
                 data = state as PaywallViewState.Data,
-                modifier = modifier
-                    .fillMaxSize()
-                    .background(mainGradientBackground())
+                modifier = modifier.fillMaxSize()
             )
         }
     }
@@ -67,6 +64,7 @@ private fun ContentView(
     Column(
         modifier = modifier
             .verticalScroll(scrollState)
+            .background(MaterialTheme.colorScheme.background)
             .padding(16.dp),
     ) {
         HeaderView(

@@ -38,7 +38,7 @@ fun AppNavigation() {
     val bottomBarRoutes = remember {
         AppScreen
             .getAll()
-            .filterNot { it is AppScreen.NoNavBarScreen }
+            .filter { it is AppScreen.NavBarScreen }
             .map { it.route }
     }
 
@@ -62,7 +62,7 @@ fun AppNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = AppScreen.PaywallScreen.route,
+            startDestination = AppScreen.WelcomeScreen.route,
             modifier = Modifier.padding(innerPadding),
         ) {
             composable(route = AppScreen.WelcomeScreen.route) {
@@ -156,7 +156,9 @@ fun AppNavigation() {
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
             ) {
-                ProfileScreen()
+                ProfileScreen(
+                    navController = navController,
+                )
             }
 
             composable(

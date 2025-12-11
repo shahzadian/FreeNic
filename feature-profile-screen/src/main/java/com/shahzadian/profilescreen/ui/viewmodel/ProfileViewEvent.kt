@@ -5,4 +5,7 @@ import com.freenic.ui.vm.ViewEvent
 
 @Immutable
 internal sealed interface ProfileViewEvent : ViewEvent {
+
+    @Immutable
+    data object OnPremiumClicked : ProfileViewEvent
 }

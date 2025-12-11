@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -22,8 +23,12 @@ import com.shahzadian.profilescreen.R
 
 @Composable
 internal fun ProfileSubscriptionView(
+    onPremiumClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val onPremiumClick = remember {
+        { onPremiumClicked() }
+    }
     Column(
         modifier = modifier
             .background(
@@ -50,7 +55,7 @@ internal fun ProfileSubscriptionView(
         )
         MainSubmitButton(
             text = TextWrapper.FromRes(com.shahzadian.baseui.R.string.profile_subscription_submit_button),
-            onClick = {},
+            onClick = onPremiumClick,
             modifier = Modifier.fillMaxWidth(),
         )
     }

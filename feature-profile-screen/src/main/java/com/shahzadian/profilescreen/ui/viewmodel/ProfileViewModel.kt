@@ -2,6 +2,7 @@ package com.shahzadian.profilescreen.ui.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.freenic.ui.AppScreen
 import com.freenic.ui.appinfo.AppInfoHelper
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -32,7 +33,13 @@ internal class ProfileViewModel @Inject constructor(
     }
 
     override fun onViewEventHappened(event: ProfileViewEvent) {
-
+        when (event) {
+            is ProfileViewEvent.OnPremiumClicked -> {
+                viewModelScope.launch {
+                    sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.PaywallScreen))
+                }
+            }
+        }
     }
 
     private fun updateProfileData() {

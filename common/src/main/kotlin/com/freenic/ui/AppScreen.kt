@@ -6,16 +6,16 @@ sealed class AppScreen {
 
     open fun isPaid(): Boolean = false
 
-    object WelcomeScreen : AppScreen(), NoNavBarScreen {
+    object WelcomeScreen : AppScreen() {
         override val route = "welcome_screen"
     }
 
-    object OnboardingScreen : AppScreen(), NoNavBarScreen {
+    object OnboardingScreen : AppScreen() {
         override val route = "onboarding_screen"
     }
 
     //    Personal data fill
-    object DataFillScreen : AppScreen(), NoNavBarScreen {
+    object DataFillScreen : AppScreen() {
         override val route: String = "data_fill_screen"
     }
 
@@ -24,7 +24,7 @@ sealed class AppScreen {
         override val route: String = "main_screen"
     }
 
-    object DashboardScreen : AppScreen() {
+    object DashboardScreen : AppScreen(), NavBarScreen {
 
         override val route: String = "dashboard_screen"
     }
@@ -70,13 +70,14 @@ sealed class AppScreen {
                 MainScreen,
                 DashboardScreen,
                 CravingsScreen,
+                BreatheExerciseScreen,
+                GuessShapeScreen,
                 InsightsScreen,
                 ProfileScreen,
+                PaywallScreen
             )
         }
     }
-
-    interface NoNavBarScreen
 
     interface NavBarScreen
 }
