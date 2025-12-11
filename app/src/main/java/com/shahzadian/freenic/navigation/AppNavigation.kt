@@ -2,7 +2,9 @@ package com.shahzadian.freenic.navigation
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -68,19 +70,19 @@ fun AppNavigation() {
             composable(route = AppScreen.WelcomeScreen.route) {
                 WelcomeScreen(
                     navController = navController,
-                    modifier = Modifier
+                    modifier = BaseModifier,
                 )
             }
             composable(route = AppScreen.OnboardingScreen.route) {
                 OnboardingScreen(
                     navController = navController,
-                    modifier = Modifier
+                    modifier = BaseModifier,
                 )
             }
             composable(route = AppScreen.DataFillScreen.route) {
                 DataFillScreen(
                     navController = navController,
-                    modifier = Modifier
+                    modifier = BaseModifier,
                 )
             }
             composable(
@@ -90,7 +92,7 @@ fun AppNavigation() {
             ) {
                 MainScreen(
                     navController = navController,
-                    modifier = Modifier
+                    modifier = BaseModifier,
                 )
             }
             composable(
@@ -99,7 +101,7 @@ fun AppNavigation() {
                 exitTransition = { ExitTransition.None },
             ) {
                 DashboardScreen(
-                    modifier = Modifier
+                    modifier = BaseModifier,
                 )
             }
 
@@ -111,7 +113,7 @@ fun AppNavigation() {
             ) {
                 CravingsScreen(
                     navController = navController,
-                    modifier = Modifier
+                    modifier = BaseModifier,
                 )
             }
             composable(
@@ -120,7 +122,6 @@ fun AppNavigation() {
             ) {
                 BreatheExerciseScreen(
                     navController = navController,
-                    modifier = Modifier
                 )
             }
             composable(
@@ -139,7 +140,7 @@ fun AppNavigation() {
             ) {
                 GuessShapeScreen(
                     navController = navController,
-                    modifier = Modifier
+                    modifier = BaseModifier,
                 )
             }
 
@@ -148,7 +149,9 @@ fun AppNavigation() {
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
             ) {
-                InsightsScreen()
+                InsightsScreen(
+                    modifier = BaseModifier,
+                )
             }
 
             composable(
@@ -158,6 +161,7 @@ fun AppNavigation() {
             ) {
                 ProfileScreen(
                     navController = navController,
+                    modifier = BaseModifier,
                 )
             }
 
@@ -166,8 +170,14 @@ fun AppNavigation() {
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
             ) {
-                PaywallScreen()
+                PaywallScreen(
+                    modifier = BaseModifier,
+                )
             }
         }
     }
 }
+
+private val BaseModifier: Modifier
+    @Composable
+    get() = Modifier.background(MaterialTheme.colorScheme.background)

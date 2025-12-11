@@ -69,7 +69,6 @@ internal fun breatheExerciseBackground(): Brush {
 @Composable
 fun BreatheExerciseScreen(
     navController: NavController,
-    modifier: Modifier = Modifier,
 ) {
     val viewModel: BreatheExerciseViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()
@@ -96,7 +95,7 @@ fun BreatheExerciseScreen(
                 onFinishClick = {
                     onEvent(BreatheExerciseViewEvent.OnFinishClick)
                 },
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize(),
             )
         }
