@@ -28,7 +28,7 @@ internal class MainViewModel @Inject constructor(
                     title = it.name,
                     icon = it.icon,
                     route = it.screen.route,
-                    isPaid = it.screen.isPaid()
+                    isPaid = it.screen.shouldShowWithPremiumIcon()
                 )
             }
             setViewState(MainViewState.Default(pages = items))

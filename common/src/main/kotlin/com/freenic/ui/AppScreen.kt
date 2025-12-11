@@ -4,7 +4,7 @@ sealed class AppScreen {
 
     abstract val route: String
 
-    open fun isPaid(): Boolean = false
+    open fun shouldShowWithPremiumIcon(): Boolean = false
 
     object WelcomeScreen : AppScreen() {
         override val route = "welcome_screen"
@@ -45,14 +45,6 @@ sealed class AppScreen {
         override val route: String = "guess_shape_screen"
     }
 
-    object InsightsScreen : AppScreen(), NavBarScreen {
-        override val route: String = "insights_screen"
-
-        override fun isPaid(): Boolean {
-            return true
-        }
-    }
-
     object ProfileScreen : AppScreen(), NavBarScreen {
         override val route: String = "profile_screen"
     }
@@ -72,7 +64,6 @@ sealed class AppScreen {
                 CravingsScreen,
                 BreatheExerciseScreen,
                 GuessShapeScreen,
-                InsightsScreen,
                 ProfileScreen,
                 PaywallScreen
             )
