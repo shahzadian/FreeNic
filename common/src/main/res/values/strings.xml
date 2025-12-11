@@ -173,7 +173,7 @@
     <string name="subscription_plan_price_per_month">per month</string>
 
     <string name="goals_header_title">Goals</string>
-    <string name="goals_header_subtitle">Achievements and progress</string>
+    <string name="goals_header_subtitle">Goals and achievements</string>
 
     <string name="goals_locked_view_title">Savings goal</string>
     <string name="goals_locked_premium_warning">Premium feature</string>

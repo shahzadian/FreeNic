@@ -158,7 +158,7 @@
     <string name="subscription_plan_price_per_month_postfix">%.1f/месяц</string>
     <string name="subscription_plan_price_per_month">в месяц</string>
     <string name="goals_header_title">Цели</string>
-    <string name="goals_header_subtitle">Достижения и прогресс</string>
+    <string name="goals_header_subtitle">Цели и достижения</string>
     <string name="goals_locked_view_title">Копилка / цель</string>
     <string name="goals_locked_premium_warning">Премиум функция</string>
     <string name="goals_locked_view_subtitle">Откройте доступ, чтобы отслеживать проресс к вашей финансовой цели</string>
