@@ -18,13 +18,15 @@ internal class SubscriptionPlansRepositoryImpl @Inject constructor() : Subscript
             SubscriptionPlan(
                 id = ID_MONTHLY,
                 paymentFrequency = SubscriptionPlan.PaymentFrequency.MONTHLY,
-                priceForPeriod = BigDecimal.valueOf(4.99),
+                totalPrice = BigDecimal.valueOf(PRICE_MONTHLY_PER_MONTH),
+                pricePerMonth = BigDecimal.valueOf(PRICE_MONTHLY_PER_MONTH),
                 currency = Currency.getInstance("USD")
             ),
             SubscriptionPlan(
                 id = ID_YEARLY,
                 paymentFrequency = SubscriptionPlan.PaymentFrequency.YEARLY,
-                priceForPeriod = BigDecimal.valueOf(42),
+                totalPrice = BigDecimal.valueOf(PRICE_YEARLY_PER_MONTH * 12),
+                pricePerMonth = BigDecimal.valueOf(PRICE_YEARLY_PER_MONTH),
                 currency = Currency.getInstance("USD")
             )
         )
@@ -33,5 +35,8 @@ internal class SubscriptionPlansRepositoryImpl @Inject constructor() : Subscript
     companion object {
         private const val ID_MONTHLY: String = "MONTHLY_PLAN"
         private const val ID_YEARLY: String = "YEARLY_PLAN"
+
+        private const val PRICE_MONTHLY_PER_MONTH: Double = 5.0
+        private const val PRICE_YEARLY_PER_MONTH: Double = 3.0
     }
 }

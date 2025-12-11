@@ -1,10 +1,12 @@
 package com.shahzadian.subscription.paywall.ui
 
+import android.content.Context
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.subscription.domain.SubscriptionPlan
+import com.shahzadian.subscription.domain.getPriceForYear
 import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewState
-import java.math.BigDecimal
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 internal interface SubscriptionPlanMapper {
@@ -15,7 +17,9 @@ internal interface SubscriptionPlanMapper {
     ): PaywallViewState.SubscriptionPlanUiModel
 }
 
-internal class SubscriptionPlanMapperImpl @Inject constructor() : SubscriptionPlanMapper {
+internal class SubscriptionPlanMapperImpl @Inject constructor(
+    @param:ApplicationContext private val context: Context,
+) : SubscriptionPlanMapper {
 
     override fun map(
         plan: SubscriptionPlan,
@@ -24,7 +28,9 @@ internal class SubscriptionPlanMapperImpl @Inject constructor() : SubscriptionPl
         val title = getTitle(plan)
         return PaywallViewState.SubscriptionPlanUiModel(
             title = title,
-            price = plan.priceForPeriod,
+            priceDetails = getPriceDetails(plan),
+            totalPrice = plan.totalPrice.toFloat(),
+            pricePerMonth = plan.pricePerMonth.toFloat(),
             currency = plan.currency.symbol,
             savingPercents = getSavingPercents(plan, allPlans),
         )
@@ -42,6 +48,22 @@ internal class SubscriptionPlanMapperImpl @Inject constructor() : SubscriptionPl
         }
     }
 
+    private fun getPriceDetails(plan: SubscriptionPlan): TextWrapper {
+        return when (plan.paymentFrequency) {
+            SubscriptionPlan.PaymentFrequency.MONTHLY -> {
+                TextWrapper.FromRes(R.string.subscription_plan_price_per_month)
+            }
+
+            SubscriptionPlan.PaymentFrequency.YEARLY -> {
+                val textFromRes = context.getString(
+                    R.string.subscription_plan_price_per_month_postfix,
+                    plan.pricePerMonth.toFloat()
+                )
+                TextWrapper.FromString("${plan.currency.symbol}$textFromRes")
+            }
+        }
+    }
+
     private fun getSavingPercents(
         plan: SubscriptionPlan,
         allPlans: List<SubscriptionPlan>
@@ -49,15 +71,15 @@ internal class SubscriptionPlanMapperImpl @Inject constructor() : SubscriptionPl
         var mostExpensivePlan: SubscriptionPlan? = null
         allPlans.forEach { item ->
             if (item.id == plan.id) return@forEach
-            if (item.priceForPeriod > plan.priceForPeriod) {
-                if (mostExpensivePlan == null || item.priceForPeriod > mostExpensivePlan.priceForPeriod) {
+            if (item.getPriceForYear() > plan.getPriceForYear()) {
+                if (mostExpensivePlan == null || item.getPriceForYear() > mostExpensivePlan.getPriceForYear()) {
                     mostExpensivePlan = item
                 }
             }
         }
         if (mostExpensivePlan == null) return null
-        val saving =
-            (plan.priceForPeriod / mostExpensivePlan.priceForPeriod) * BigDecimal.valueOf(100)
-        return saving.intValueExact()
+        val percents =
+            (plan.getPriceForYear().toFloat() / mostExpensivePlan.getPriceForYear().toFloat()) * 100
+        return 100 - percents.toInt()
     }
 }

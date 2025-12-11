@@ -169,5 +169,7 @@
     <string name="subscription_plan_saving_percents">Save %d%%</string>
     <string name="subscription_plan_submit">Upgrade</string>
     <string name="subscription_plan_cancel_info_text">Cancel anytime. Subscription renews automatically</string>
+    <string name="subscription_plan_price_per_month_postfix">%.1f/month</string>
+    <string name="subscription_plan_price_per_month">per month</string>
 
 </resources>

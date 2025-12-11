@@ -6,7 +6,8 @@ import java.util.Currency
 class SubscriptionPlan(
     val id: String,
     val paymentFrequency: PaymentFrequency,
-    val priceForPeriod: BigDecimal,
+    val totalPrice: BigDecimal,
+    val pricePerMonth: BigDecimal,
     val currency: Currency,
 ) {
 
@@ -18,7 +19,7 @@ class SubscriptionPlan(
 
 fun SubscriptionPlan.getPriceForYear(): BigDecimal {
     return  when (this.paymentFrequency) {
-        SubscriptionPlan.PaymentFrequency.MONTHLY -> this.priceForPeriod.multiply(BigDecimal(12))
-        SubscriptionPlan.PaymentFrequency.YEARLY -> this.priceForPeriod
+        SubscriptionPlan.PaymentFrequency.MONTHLY -> this.totalPrice.multiply(BigDecimal(12))
+        SubscriptionPlan.PaymentFrequency.YEARLY -> this.totalPrice
     }
 }

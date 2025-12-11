@@ -154,4 +154,6 @@
     <string name="subscription_plan_saving_percents">Экономия %d%%</string>
     <string name="subscription_plan_submit">Перейти</string>
     <string name="subscription_plan_cancel_info_text">Отменить можно в любой момент. Подписка продлевается автоматически</string>
+    <string name="subscription_plan_price_per_month_postfix">%.1f/месяц</string>
+    <string name="subscription_plan_price_per_month">в месяц</string>
 </resources>

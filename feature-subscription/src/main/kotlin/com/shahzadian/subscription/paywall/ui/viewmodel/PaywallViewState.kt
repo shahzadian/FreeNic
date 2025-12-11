@@ -29,7 +29,9 @@ internal sealed interface PaywallViewState : ViewState {
     @Immutable
     data class SubscriptionPlanUiModel(
         val title: TextWrapper,
-        val price: BigDecimal,
+        val priceDetails: TextWrapper,
+        val totalPrice: Float,
+        val pricePerMonth: Float,
         val currency: String,
         val savingPercents: Int? = null,
     )

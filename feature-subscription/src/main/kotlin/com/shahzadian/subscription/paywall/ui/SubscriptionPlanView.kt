@@ -2,7 +2,6 @@ package com.shahzadian.subscription.paywall.ui
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,31 +46,39 @@ internal fun SubscriptionPlanView(
         ),
         onClick = cardClick,
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+            Column(
+                modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = textFromWrapper(plan.title),
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                plan.savingPercents?.let { savePercents ->
+                    SaveMoneyView(
+                        savePercents = savePercents,
+                    )
+                }
+            }
+            Column(
+                horizontalAlignment = Alignment.End
+            ) {
+                Text(
+                    text = "${plan.currency}${plan.totalPrice}",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
                 Text(
-                    text = "${plan.currency}${plan.price}",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-            plan.savingPercents?.let { savePercents ->
-                SaveMoneyView(
-                    savePercents = savePercents,
+                    text = textFromWrapper(plan.priceDetails),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onPrimary,
                 )
             }
         }
