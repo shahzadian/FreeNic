@@ -1,0 +1,117 @@
+package com.freenic.ui.extensions
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.freenic.ui.wrapper.ImageWrapper
+import com.freenic.ui.wrapper.TextWrapper
+
+@Composable
+fun HeaderScreen(
+    modifier: Modifier = Modifier,
+    title: TextWrapper,
+    subtitle: TextWrapper,
+    image: @Composable (() -> Unit)? = null,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = modifier
+            .padding(
+                top = 16.dp,
+                start = 16.dp,
+                end = 16.dp,
+            )
+    ) {
+        HeaderView(
+            title = title,
+            subtitle = subtitle,
+            image = image,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        Column(
+            modifier = Modifier.verticalScroll(scrollState)
+        ) {
+            content()
+        }
+    }
+}
+
+@Composable
+internal fun HeaderView(
+    title: TextWrapper,
+    subtitle: TextWrapper,
+    image: @Composable (() -> Unit)?,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        TitleView(
+            title = title,
+            subtitle = subtitle,
+            modifier = Modifier.weight(2f)
+        )
+        image?.let {
+            image()
+        }
+    }
+}
+
+@Composable
+private fun TitleView(
+    title: TextWrapper,
+    subtitle: TextWrapper,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            text = textFromWrapper(title),
+            style = MaterialTheme.typography.headlineSmall,
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.padding(bottom = 4.dp),
+        )
+        Text(
+            text = textFromWrapper(subtitle),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSecondary,
+        )
+    }
+}
+
+@Composable
+private fun HeaderIconView(
+    image: ImageWrapper,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+            .background(
+                color = MaterialTheme.colorScheme.primary,
+                shape = CircleShape,
+            )
+            .size(50.dp)
+    ) {
+        Image(
+            painter = imageFromWrapper(image),
+            contentDescription = "Header image"
+        )
+    }
+}

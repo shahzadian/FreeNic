@@ -12,6 +12,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.freenic.ui.extensions.HeaderScreen
+import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
 import com.shahzadian.dashboard.ui.cigsavoided.model.CigsAvoidedView
 import com.shahzadian.dashboard.ui.header.HeaderView
 import com.shahzadian.dashboard.ui.healthprogress.HealthProgressView
@@ -44,20 +47,14 @@ private fun ContentView(
     uiModel: DashboardUiModel,
     modifier: Modifier = Modifier,
 ) {
-    val scrollState = rememberScrollState()
-    Column(
+    HeaderScreen(
+        title = TextWrapper.FromRes(
+            R.string.dashboard_header_title,
+            arrayListOf(uiModel.headerUiModel.userName)
+        ),
+        subtitle = TextWrapper.FromRes(R.string.dashboard_header_subtitle),
         modifier = modifier
-            .padding(
-                top = 16.dp,
-                start = 16.dp,
-                end = 16.dp,
-            )
-            .verticalScroll(scrollState),
     ) {
-        HeaderView(
-            model = uiModel.headerUiModel,
-            modifier = Modifier.padding(bottom = 16.dp),
-        )
         NoCigDaysView(
             model = uiModel.noCigDaysUiModel,
             modifier = Modifier

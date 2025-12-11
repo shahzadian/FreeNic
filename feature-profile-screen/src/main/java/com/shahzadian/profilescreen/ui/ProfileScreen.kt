@@ -1,9 +1,13 @@
 package com.shahzadian.profilescreen.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,6 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.freenic.ui.extensions.HeaderScreen
+import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
 import com.shahzadian.profilescreen.ui.viewmodel.ProfileViewCommand
 import com.shahzadian.profilescreen.ui.viewmodel.ProfileViewEvent
 import com.shahzadian.profilescreen.ui.viewmodel.ProfileViewModel
@@ -63,22 +70,27 @@ private fun ContentView(
             onViewEvent(event)
         }
     }
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = modifier
-            .padding(
-                top = 16.dp,
-                start = 16.dp,
-                end = 16.dp,
-            )
-            .verticalScroll(scrollState)
+    HeaderScreen(
+        title = TextWrapper.FromRes(R.string.profile_header_title),
+        subtitle = TextWrapper.FromRes(R.string.profile_header_subtitle),
+        image = {
+            Box(
+                modifier = modifier
+                    .background(
+                        color = MaterialTheme.colorScheme.primary,
+                        shape = CircleShape,
+                    )
+                    .size(50.dp)
+            ) {
+                Text(
+                    text = data.userNameLetter,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.align(Alignment.Center),
+                    style = MaterialTheme.typography.headlineSmall,
+                )
+            }
+        }
     ) {
-        ProfileHeaderView(
-            userNameLetter = data.userNameLetter,
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
-        )
         ProfilePersonalDataBlockView(
             data = data.personalData,
             modifier = Modifier
@@ -108,6 +120,7 @@ private fun ContentView(
                 .padding(bottom = 16.dp)
         )
     }
+
 }
 
 @Composable
