@@ -176,7 +176,6 @@
     <string name="goals_header_subtitle">Goals and achievements</string>
 
     <string name="goals_locked_view_title">Savings goal</string>
-    <string name="goals_locked_premium_warning">Premium feature</string>
     <string name="goals_locked_view_subtitle">Unlock to track your progress toward personal savings goals</string>
     <string name="goals_locked_view_button">Upgrade to premium</string>
 

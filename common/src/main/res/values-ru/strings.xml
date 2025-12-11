@@ -160,7 +160,6 @@
     <string name="goals_header_title">Цели</string>
     <string name="goals_header_subtitle">Цели и достижения</string>
     <string name="goals_locked_view_title">Копилка / цель</string>
-    <string name="goals_locked_premium_warning">Премиум функция</string>
     <string name="goals_locked_view_subtitle">Откройте доступ, чтобы отслеживать проресс к вашей финансовой цели</string>
     <string name="goals_locked_view_button">Перейти на премиум</string>
 </resources>

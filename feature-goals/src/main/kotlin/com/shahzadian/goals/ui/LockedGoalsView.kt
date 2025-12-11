@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -39,45 +38,10 @@ fun LockedGoalsView(
             color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)
         )
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            HeaderView(
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
-                    .alpha(0.3f)
-            )
-            PremiumWarningView(
-                onUpgradeClicked = onUpgradeClicked,
-            )
-        }
-    }
-}
-
-@Composable
-private fun HeaderView(
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier,
-    ) {
-        Row(
-            modifier = Modifier.padding(bottom = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Image(
-                painter = painterResource(R.drawable.ic_goals_locked),
-                contentDescription = "locked goals",
-                modifier = Modifier.padding(end = 8.dp)
-            )
-            Text(
-                text = stringResource(com.shahzadian.baseui.R.string.goals_locked_view_title),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onPrimary,
-            )
-        }
+        PremiumWarningView(
+            onUpgradeClicked = onUpgradeClicked,
+            modifier = Modifier.padding(16.dp)
+        )
     }
 }
 
@@ -106,7 +70,7 @@ private fun PremiumWarningView(
                 modifier = Modifier.padding(end = 8.dp)
             )
             Text(
-                text = stringResource(com.shahzadian.baseui.R.string.goals_locked_premium_warning),
+                text = stringResource(com.shahzadian.baseui.R.string.goals_locked_view_title),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier
@@ -117,7 +81,7 @@ private fun PremiumWarningView(
         Text(
             text = stringResource(com.shahzadian.baseui.R.string.goals_locked_view_subtitle),
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.onSecondary,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(bottom = 8.dp),
