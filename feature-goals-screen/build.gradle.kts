@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":feature-goals"))
+    implementation(project(":feature-achievements"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
