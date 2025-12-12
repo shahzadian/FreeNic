@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":feature-subscription"))
     implementation(project(":feature-goals-screen"))
     implementation(project(":feature-goals"))
+    implementation(project(":feature-achievements"))
 
 
     implementation(libs.androidx.core.ktx)

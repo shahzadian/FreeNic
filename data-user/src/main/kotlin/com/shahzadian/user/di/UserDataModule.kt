@@ -4,6 +4,8 @@ import com.shahzadian.user.data.UserDataRepository
 import com.shahzadian.user.data.UserDataRepositoryImpl
 import com.shahzadian.user.datastore.UserDataStoreProvider
 import com.shahzadian.user.datastore.UserDataStoreProviderImpl
+import com.shahzadian.user.domain.UserDataHelperFactory
+import com.shahzadian.user.domain.UserDataHelperFactoryImpl
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCaseImpl
 import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
@@ -30,4 +32,7 @@ internal interface UserDataModule {
     @Binds
     @Singleton
     fun bindUserDataStoreProvider(impl: UserDataStoreProviderImpl): UserDataStoreProvider
+
+    @Binds
+    fun bindUserDataHelperFactory(impl: UserDataHelperFactoryImpl): UserDataHelperFactory
 }
