@@ -19,7 +19,7 @@ internal class AchievementStateProviderImpl(
         when (val item = achievement.achievementItem) {
             is AchievementItem.Cigs -> {
                 val skippedCigs = userDataHelper.getSkippedCigsCount()
-                if (item.necessaryCount >= skippedCigs) {
+                if (skippedCigs >= item.necessaryCount) {
                     return AchievementState.Unlocked
                 } else {
                     val percents = skippedCigs.toFloat() / item.necessaryCount.toFloat() * 100f
@@ -31,7 +31,7 @@ internal class AchievementStateProviderImpl(
 
             is AchievementItem.Days -> {
                 val skippedDays = userDataHelper.getSkippedDaysCount()
-                if (item.necessaryCount >= skippedDays) {
+                if (skippedDays >= item.necessaryCount) {
                     return AchievementState.Unlocked
                 } else {
                     val percents = skippedDays.toFloat() / item.necessaryCount.toFloat() * 100f
