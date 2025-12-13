@@ -37,11 +37,16 @@ internal fun AchievementView(
     minHeight: Int,
     modifier: Modifier = Modifier,
 ) {
+    val isAchievementUnlocked = achievement.state is GoalsViewState.AchievementUiModel.AchievementStateUiModel.Unlocked
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor = if (isAchievementUnlocked) {
+                MaterialTheme.colorScheme.primaryContainer
+            } else {
+                MaterialTheme.colorScheme.outline
+            }
         ),
     ) {
         Column(
