@@ -42,6 +42,7 @@ internal class DashboardViewModel @Inject constructor(
         val user = getUserDataUseCase()
             ?: throw IllegalStateException("Couldn't get user data")
         val dashboard = getUserDashboardUseCase()
+            ?: throw IllegalStateException("Couldn't get user dashboard data")
         return DashboardViewState.Data(
             uiModel = DashboardUiModel(
                 headerUiModel = HeaderUiModel(
@@ -52,7 +53,7 @@ internal class DashboardViewModel @Inject constructor(
                 ),
                 savedMoneyUiModel = SavedMoneyUiModel(
                     savedMoney = dashboard.savedMoney,
-                    currency = dashboard.currency.symbol,
+                    currency = dashboard.currency?.symbol,
                 ),
                 healthProgressUiModel = HealthProgressUiModel(
                     items = dashboard.healthProgressItems.map { item ->

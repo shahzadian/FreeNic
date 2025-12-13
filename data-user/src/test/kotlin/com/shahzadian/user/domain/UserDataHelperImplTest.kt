@@ -36,9 +36,25 @@ class UserDataHelperImplTest {
         assert(skippedCigs == cigsPerDay * quitDays)
     }
 
+    @Test
+    fun testGetSavedMoney() {
+        val quitDays = 10
+        val cigsPerDay = 20
+        val price = 10f
+        val userData = getUserData(
+            quitDays = quitDays,
+            cigsPerDay = cigsPerDay,
+            price = price
+        )
+        val userDataHelper = UserDataHelperImpl(userData)
+        val savedMoney = userDataHelper.getSavedMoney()
+        assert(savedMoney == cigsPerDay.toFloat() / 20 * price * quitDays)
+    }
+
     private fun getUserData(
         quitDays: Int = 10,
         cigsPerDay: Int = 20,
+        price: Float = 10f,
     ): UserData {
         return UserData(
             personalData = UserPersonalData(
@@ -47,14 +63,14 @@ class UserDataHelperImplTest {
             ),
             cigarettesData = UserCigarettesData(
                 cigarettesPerDay = cigsPerDay,
-                packsPerDay = 1.5f,
+                packsPerDay = cigsPerDay / 20f,
                 priceData = UserCigarettesData.PriceData(
-                    price = 10f,
+                    price = price,
                     currency = "USD",
                 ),
             ),
             quitData = QuitData(
-                quitDateMillis = System.currentTimeMillis() - (60 * 60 * 24 * quitDays.toLong())
+                quitDateMillis = System.currentTimeMillis() - (60 * 60 * 24 * 1000 * quitDays.toLong())
             )
         )
     }

@@ -8,7 +8,7 @@ internal class UserDashboard(
     val noCigDays: Int,
     val lungHealthPercents: Int,
     val savedMoney: Float,
-    val currency: Currency,
+    val currency: Currency?,
     val cigsAvoided: Int,
     val healthProgressItems: List<HealthProgressItem>,
 )
