@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Currency
@@ -37,6 +38,20 @@ internal class ProfileViewModel @Inject constructor(
             is ProfileViewEvent.OnPremiumClicked -> {
                 viewModelScope.launch {
                     sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.PaywallScreen))
+                }
+            }
+            is ProfileViewEvent.OnQuitDateSelected -> {
+                viewModelScope.launch {
+                    val currentState = viewStateFlow.value
+                    if (currentState is ProfileViewState.Data) {
+                        val formatted = extractDisplayableQuitDate(event.millis)
+                        val updated = currentState.copy(
+                            personalData = currentState.personalData.copy(
+                                quitDate = formatted
+                            )
+                        )
+                        setViewState(updated)
+                    }
                 }
             }
         }
@@ -64,7 +79,7 @@ internal class ProfileViewModel @Inject constructor(
                     personalData = ProfileViewState.Data.PersonalData(
                         name = userData.personalData.name,
                         age = userData.personalData.age,
-                        quitDate = userData.quitData.extractDisplayableQuitDate()
+                        quitDate = extractDisplayableQuitDate(userData.quitData.quitDateMillis)
                     ),
                     smokingDetails = ProfileViewState.Data.SmokingDetails(
                         cigarettesPerDay = userData.cigarettesData.cigarettesPerDay,
@@ -78,7 +93,7 @@ internal class ProfileViewModel @Inject constructor(
         }
     }
 
-    private fun QuitData.extractDisplayableQuitDate(): String {
+    private fun extractDisplayableQuitDate(quitDateMillis: Long): String {
         val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.getDefault())
         return Instant.ofEpochMilli(quitDateMillis)
             .atZone(ZoneId.systemDefault())

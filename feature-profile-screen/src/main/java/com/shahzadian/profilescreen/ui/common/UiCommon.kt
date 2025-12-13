@@ -2,6 +2,7 @@ package com.shahzadian.profilescreen.ui.common
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -55,6 +56,7 @@ internal fun ProfileSettingsFieldView(
     label: String,
     value: String,
     modifier: Modifier = Modifier,
+    onIconClick: () -> Unit = {},
 ) {
     Column(
         modifier = modifier,
@@ -71,6 +73,9 @@ internal fun ProfileSettingsFieldView(
             Image(
                 painter = painterResource(R.drawable.ic_profile_edit),
                 contentDescription = "edit",
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .clickable { onIconClick() }
             )
         }
         HorizontalDivider(

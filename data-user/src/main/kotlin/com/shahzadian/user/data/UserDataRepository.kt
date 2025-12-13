@@ -8,6 +8,8 @@ interface UserDataRepository {
 
     suspend fun setUserRegistered(isRegistered: Boolean)
 
+    suspend fun updateQuidDate(quitDateMillis: Long)
+
     suspend fun getUserData(): UserData?
 
     suspend fun updateUserData(userData: UserData)

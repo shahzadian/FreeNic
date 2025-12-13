@@ -198,4 +198,7 @@
     <string name="achievement_desc_fifty_victories">50 avoided cigarettes!</string>
     <string name="main_page_insights_name">Insights</string>
 
+    <string name="date_picker_dialog_cancel">Cancel</string>
+    <string name="date_picker_dialog_ok">OK</string>
+
 </resources>

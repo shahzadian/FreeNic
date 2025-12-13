@@ -180,4 +180,6 @@
     <string name="achievement_desc_first_skipped_pack">Ты избежал первую пачку!</string>
     <string name="achievement_title_fifty_victories">Пятьдесят побед</string>
     <string name="achievement_desc_fifty_victories">Ты отказался 50 раз!</string>
+    <string name="date_picker_dialog_cancel">Отмена</string>
+    <string name="date_picker_dialog_ok">ОК</string>
 </resources>

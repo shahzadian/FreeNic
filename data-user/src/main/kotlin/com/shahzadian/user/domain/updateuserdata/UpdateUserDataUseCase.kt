@@ -6,5 +6,7 @@ interface UpdateUserDataUseCase {
 
     suspend fun setUserRegistered(isRegistered: Boolean)
 
+    suspend fun updateQuidDate(quitDateMillis: Long)
+
     suspend operator fun invoke(userData: UserData)
 }

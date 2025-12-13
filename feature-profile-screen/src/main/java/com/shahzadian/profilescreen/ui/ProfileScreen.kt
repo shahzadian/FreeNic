@@ -93,6 +93,7 @@ private fun ContentView(
     ) {
         ProfilePersonalDataBlockView(
             data = data.personalData,
+            onViewEvent = onEvent,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)

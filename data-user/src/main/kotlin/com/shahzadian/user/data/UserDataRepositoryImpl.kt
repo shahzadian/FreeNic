@@ -39,6 +39,14 @@ class UserDataRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateQuidDate(quitDateMillis: Long) {
+        withContext(coroutineContexts.io) {
+            userDataStore.edit { prefs ->
+                prefs[KEY_QUIT_DATE] = quitDateMillis
+            }
+        }
+    }
+
     override suspend fun getUserData(): UserData? = withContext(coroutineContexts.io) {
         val prefs = userDataStore.data.firstOrNull() ?: return@withContext null
 

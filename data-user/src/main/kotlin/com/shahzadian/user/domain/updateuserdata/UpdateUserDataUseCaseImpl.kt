@@ -12,6 +12,10 @@ class UpdateUserDataUseCaseImpl @Inject constructor(
         userDataRepository.setUserRegistered(isRegistered)
     }
 
+    override suspend fun updateQuidDate(quitDateMillis: Long) {
+        userDataRepository.updateQuidDate(quitDateMillis)
+    }
+
     override suspend fun invoke(userData: UserData) {
         userDataRepository.updateUserData(userData)
     }
