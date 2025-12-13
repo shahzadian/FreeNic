@@ -13,8 +13,16 @@ internal sealed interface GoalsViewState : ViewState {
 
     @Immutable
     data class Data(
-        val achievements: List<AchievementUiModel>,
-    ) : GoalsViewState
+        val achievementsData: AchievementsData,
+    ) : GoalsViewState {
+
+        @Immutable
+        data class AchievementsData(
+            val achievements: List<AchievementUiModel>,
+            val shouldShowMoreAchievementsButton: Boolean,
+            val achievementsPerRow: Int,
+        )
+    }
 
     @Immutable
     data class AchievementUiModel(

@@ -178,6 +178,7 @@
     <string name="goals_locked_view_title">Savings goal</string>
     <string name="goals_locked_view_subtitle">Unlock to track your progress toward personal savings goals</string>
     <string name="goals_locked_view_button">Upgrade to premium</string>
+    <string name="goals_achievements_block_title">Your achievements</string>
 
     <string name="achievement_title_first_step">First step</string>
     <string name="achievement_desc_first_step">You took the first step toward change</string>
@@ -195,5 +196,6 @@
     <string name="achievement_desc_first_skipped_pack">You avoided your first full pack</string>
     <string name="achievement_title_fifty_victories">Fifty victories</string>
     <string name="achievement_desc_fifty_victories">You resisted fifty times!</string>
+    <string name="main_page_insights_name">Insights</string>
 
 </resources>

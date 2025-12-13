@@ -38,7 +38,11 @@ internal class GoalsViewModel @Inject constructor(
                 .mapNotNull { achievementMapper.map(it) }
             setViewState(
                 GoalsViewState.Data(
-                    achievements = achievements,
+                    achievementsData = GoalsViewState.Data.AchievementsData(
+                        achievements = achievements,
+                        shouldShowMoreAchievementsButton = achievements.size > 4,
+                        achievementsPerRow = 2,
+                    )
                 )
             )
         }

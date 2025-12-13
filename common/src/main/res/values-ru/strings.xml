@@ -162,6 +162,7 @@
     <string name="goals_locked_view_title">Копилка / цель</string>
     <string name="goals_locked_view_subtitle">Откройте доступ, чтобы отслеживать проресс к вашей финансовой цели</string>
     <string name="goals_locked_view_button">Перейти на премиум</string>
+    <string name="goals_achievements_block_title">Ваши достижения</string>
     <string name="achievement_title_first_step">Первый шаг</string>
     <string name="achievement_desc_first_step">Ты сделал первый шаг к переменам</string>
     <string name="achievement_title_stability">Стабильность</string>
