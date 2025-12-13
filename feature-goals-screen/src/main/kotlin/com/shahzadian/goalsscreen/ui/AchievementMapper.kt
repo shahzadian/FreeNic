@@ -25,7 +25,7 @@ internal class AchievementMapperImpl @Inject constructor(
             state = when (state) {
                 is AchievementState.Unlocked -> GoalsViewState.AchievementUiModel.AchievementStateUiModel.Unlocked
                 is AchievementState.Locked -> GoalsViewState.AchievementUiModel.AchievementStateUiModel.Locked(
-                    state.percentsReached
+                    progressPercents = state.percentsReached
                 )
             }
         )

@@ -26,7 +26,8 @@ internal class UserDataHelperImpl(
         val quitMillis = userData.quitData.quitDateMillis
         val todayMillis = System.currentTimeMillis()
         val delta = todayMillis - quitMillis
-        return (delta / 60 / 60 / 24).toInt()
+        return (delta / (1000 * 60 * 60 * 24)).toInt().apply {
+        }
     }
 }
 

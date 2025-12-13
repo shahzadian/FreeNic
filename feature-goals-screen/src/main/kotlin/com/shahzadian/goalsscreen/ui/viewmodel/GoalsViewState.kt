@@ -35,11 +35,20 @@ internal sealed interface GoalsViewState : ViewState {
         @Immutable
         sealed interface AchievementStateUiModel {
 
-            @Immutable
-            object Unlocked : AchievementStateUiModel
+            val progressPercents: Float
 
             @Immutable
-            data class Locked(val percents: Float) : AchievementStateUiModel
+            object Unlocked : AchievementStateUiModel {
+
+                override val progressPercents: Float
+                    get() = 100f
+            }
+
+            @Immutable
+            data class Locked(
+                override val progressPercents: Float
+            ) : AchievementStateUiModel {
+            }
         }
     }
 }
