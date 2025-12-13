@@ -182,4 +182,8 @@
     <string name="achievement_desc_fifty_victories">Ты отказался 50 раз!</string>
     <string name="date_picker_dialog_cancel">Отмена</string>
     <string name="date_picker_dialog_ok">ОК</string>
+
+    <!-- Validation messages -->
+    <string name="validation_age_min">Возраст должен быть не меньше 10</string>
+    <string name="validation_price_min">Цена должна быть не меньше 0.1</string>
 </resources>

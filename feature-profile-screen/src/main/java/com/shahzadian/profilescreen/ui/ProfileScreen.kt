@@ -100,6 +100,7 @@ private fun ContentView(
         )
         ProfileSmokingDetailsBlockView(
             data = data.smokingDetails,
+            onViewEvent = onEvent,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)

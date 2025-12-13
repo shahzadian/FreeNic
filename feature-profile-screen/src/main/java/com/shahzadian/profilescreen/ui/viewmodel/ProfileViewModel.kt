@@ -10,6 +10,9 @@ import com.shahzadian.baseui.R
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
 import com.shahzadian.user.model.QuitData
+import com.shahzadian.user.model.UserCigarettesData
+import com.shahzadian.user.model.UserData
+import com.shahzadian.user.model.UserPersonalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
@@ -45,6 +48,10 @@ internal class ProfileViewModel @Inject constructor(
             is ProfileViewEvent.OnQuitDateSelected -> {
                 onQuitDateUpdated(event)
             }
+            is ProfileViewEvent.OnNameEdited -> onNameEdited(event.name)
+            is ProfileViewEvent.OnAgeEdited -> onAgeEdited(event.age)
+            is ProfileViewEvent.OnCigsPerDayEdited -> onCigsPerDayEdited(event.cigarettesPerDay)
+            is ProfileViewEvent.OnPriceEdited -> onPriceEdited(event.price)
         }
     }
 
@@ -105,5 +112,94 @@ internal class ProfileViewModel @Inject constructor(
         return Instant.ofEpochMilli(quitDateMillis)
             .atZone(ZoneId.systemDefault())
             .format(formatter)
+    }
+
+    private fun onNameEdited(name: String) {
+        viewModelScope.launch {
+            // Update UI state
+            val current = viewStateFlow.value
+            if (current is ProfileViewState.Data) {
+                setViewState(current.copy(personalData = current.personalData.copy(name = name)))
+            }
+            // Persist
+            val userData = getUserDataUseCase() ?: return@launch
+            val updated = UserData(
+                personalData = UserPersonalData(name = name, age = userData.personalData.age),
+                cigarettesData = userData.cigarettesData,
+                quitData = userData.quitData,
+            )
+            updateUserDataUseCase(updated)
+        }
+    }
+
+    private fun onAgeEdited(age: Int) {
+        viewModelScope.launch {
+            val current = viewStateFlow.value
+            if (current is ProfileViewState.Data) {
+                val plural = age // formatting kept in UI via pluralStringResource; here store raw
+                setViewState(current.copy(personalData = current.personalData.copy(age = age)))
+            }
+            val userData = getUserDataUseCase() ?: return@launch
+            val updated = UserData(
+                personalData = UserPersonalData(name = userData.personalData.name, age = age),
+                cigarettesData = userData.cigarettesData,
+                quitData = userData.quitData,
+            )
+            updateUserDataUseCase(updated)
+        }
+    }
+
+    private fun onCigsPerDayEdited(cigsPerDay: Int) {
+        viewModelScope.launch {
+            val current = viewStateFlow.value
+            if (current is ProfileViewState.Data) {
+                setViewState(
+                    current.copy(
+                        smokingDetails = current.smokingDetails.copy(cigarettesPerDay = cigsPerDay)
+                    )
+                )
+            }
+            val userData = getUserDataUseCase() ?: return@launch
+            val updatedCigs = UserCigarettesData(
+                cigarettesPerDay = cigsPerDay,
+                packsPerDay = userData.cigarettesData.packsPerDay,
+                priceData = userData.cigarettesData.priceData,
+            )
+            val updated = UserData(
+                personalData = userData.personalData,
+                cigarettesData = updatedCigs,
+                quitData = userData.quitData,
+            )
+            updateUserDataUseCase(updated)
+        }
+    }
+
+    private fun onPriceEdited(price: Float) {
+        viewModelScope.launch {
+            val current = viewStateFlow.value
+            if (current is ProfileViewState.Data) {
+                setViewState(
+                    current.copy(
+                        smokingDetails = current.smokingDetails.copy(price = price)
+                    )
+                )
+            }
+            val userData = getUserDataUseCase() ?: return@launch
+            val updatedPriceData = UserCigarettesData.PriceData(
+                price = price,
+                currency = userData.cigarettesData.priceData.currency,
+            )
+            val updatedCigs = UserCigarettesData(
+                cigarettesPerDay = userData.cigarettesData.cigarettesPerDay,
+                packsPerDay = userData.cigarettesData.packsPerDay,
+                priceData = updatedPriceData,
+            )
+            val updated = UserData(
+                personalData = userData.personalData,
+                cigarettesData = updatedCigs,
+                quitData = userData.quitData,
+            )
+            updateUserDataUseCase(updated)
+        }
     }
 }

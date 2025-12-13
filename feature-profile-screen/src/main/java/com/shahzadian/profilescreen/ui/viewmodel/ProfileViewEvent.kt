@@ -14,4 +14,16 @@ internal sealed interface ProfileViewEvent : ViewEvent {
     data class OnQuitDateSelected(
         val millis: Long,
     ) : ProfileViewEvent
+
+    @Immutable
+    data class OnNameEdited(val name: String) : ProfileViewEvent
+
+    @Immutable
+    data class OnAgeEdited(val age: Int) : ProfileViewEvent
+
+    @Immutable
+    data class OnCigsPerDayEdited(val cigarettesPerDay: Int) : ProfileViewEvent
+
+    @Immutable
+    data class OnPriceEdited(val price: Float) : ProfileViewEvent
 }
