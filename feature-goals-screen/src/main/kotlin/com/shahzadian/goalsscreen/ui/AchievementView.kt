@@ -5,8 +5,10 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -25,10 +27,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
+import com.shahzadian.goalsscreen.R
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
 
 @Composable
@@ -49,47 +54,62 @@ internal fun AchievementView(
             }
         ),
     ) {
-        Column(
-            modifier = Modifier
-                .padding(8.dp)
-                .defaultMinSize(
-                    minHeight = minHeight.dp
-                ),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            modifier = Modifier.fillMaxSize(),
         ) {
-            Image(
-                painter = imageFromWrapper(achievement.icon),
-                contentDescription = "Achievement",
+            if (!isAchievementUnlocked) {
+                Image(
+                    painter = painterResource(R.drawable.ic_achievement_lock),
+                    contentDescription = "Premium lock",
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp)
+                        .size(20.dp),
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer)
+                )
+            }
+            Column(
                 modifier = Modifier
-                    .padding(bottom = 8.dp)
-                    .size(35.dp)
-                    .align(Alignment.CenterHorizontally),
-            )
-            Text(
-                text = textFromWrapper(achievement.title),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 4.dp)
-                    .align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center
-            )
-            Text(
-                text = textFromWrapper(achievement.description),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSecondary,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp)
-                    .align(Alignment.CenterHorizontally),
-                textAlign = TextAlign.Center
-            )
-            AchievementProgressView(
-                progressPercents = achievement.state.progressPercents,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+                    .padding(8.dp)
+                    .defaultMinSize(
+                        minHeight = minHeight.dp
+                    ),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = imageFromWrapper(achievement.icon),
+                    contentDescription = "Achievement",
+                    modifier = Modifier
+                        .padding(bottom = 8.dp)
+                        .size(35.dp)
+                        .align(Alignment.CenterHorizontally),
+                )
+                Text(
+                    text = textFromWrapper(achievement.title),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 4.dp)
+                        .align(Alignment.CenterHorizontally),
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    text = textFromWrapper(achievement.description),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp)
+                        .align(Alignment.CenterHorizontally),
+                    textAlign = TextAlign.Center
+                )
+                AchievementProgressView(
+                    progressPercents = achievement.state.progressPercents,
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                )
+            }
         }
     }
 }
