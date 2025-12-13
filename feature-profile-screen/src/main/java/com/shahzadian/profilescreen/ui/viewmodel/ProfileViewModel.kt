@@ -8,6 +8,7 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.baseui.R
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
+import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
 import com.shahzadian.user.model.QuitData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,6 +25,7 @@ import javax.inject.Inject
 internal class ProfileViewModel @Inject constructor(
     @param:ApplicationContext private val context: Context,
     private val getUserDataUseCase: GetUserDataUseCase,
+    private val updateUserDataUseCase: UpdateUserDataUseCase,
     private val appInfoHelper: AppInfoHelper,
 ) : BaseViewModel<ProfileViewState, ProfileViewEvent, ProfileViewCommand>() {
 
@@ -41,18 +43,7 @@ internal class ProfileViewModel @Inject constructor(
                 }
             }
             is ProfileViewEvent.OnQuitDateSelected -> {
-                viewModelScope.launch {
-                    val currentState = viewStateFlow.value
-                    if (currentState is ProfileViewState.Data) {
-                        val formatted = extractDisplayableQuitDate(event.millis)
-                        val updated = currentState.copy(
-                            personalData = currentState.personalData.copy(
-                                quitDate = formatted
-                            )
-                        )
-                        setViewState(updated)
-                    }
-                }
+                onQuitDateUpdated(event)
             }
         }
     }
@@ -90,6 +81,22 @@ internal class ProfileViewModel @Inject constructor(
                     )
                 )
             )
+        }
+    }
+
+    private fun onQuitDateUpdated(event: ProfileViewEvent.OnQuitDateSelected) {
+        viewModelScope.launch {
+            val currentState = viewStateFlow.value
+            if (currentState is ProfileViewState.Data) {
+                val formatted = extractDisplayableQuitDate(event.millis)
+                val updated = currentState.copy(
+                    personalData = currentState.personalData.copy(
+                        quitDate = formatted
+                    )
+                )
+                setViewState(updated)
+            }
+            updateUserDataUseCase.updateQuidDate(event.millis)
         }
     }
 
