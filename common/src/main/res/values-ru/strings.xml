@@ -163,20 +163,21 @@
     <string name="goals_locked_view_subtitle">Откройте доступ, чтобы отслеживать проресс к вашей финансовой цели</string>
     <string name="goals_locked_view_button">Перейти на премиум</string>
     <string name="goals_achievements_block_title">Ваши достижения</string>
+
     <string name="achievement_title_first_step">Первый шаг</string>
-    <string name="achievement_desc_first_step">Ты сделал первый шаг к переменам</string>
+    <string name="achievement_desc_first_step">1 день без сигарет!</string>
     <string name="achievement_title_stability">Стабильность</string>
-    <string name="achievement_desc_stability">Несколько дней без сигарет — стабильность!</string>
+    <string name="achievement_desc_stability">3 дня без сигарет!</string>
     <string name="achievement_title_week_of_freedom">Неделя свободы</string>
-    <string name="achievement_desc_week_of_freedom">Неделя без сигарет — крутой результат!</string>
+    <string name="achievement_desc_week_of_freedom">Неделя без сигарет!</string>
     <string name="achievement_title_two_weeks_of_strength">Две недели силы</string>
-    <string name="achievement_desc_two_weeks_of_strength">Организм уже чувствует изменения</string>
+    <string name="achievement_desc_two_weeks_of_strength">2 недели без сигарет!</string>
     <string name="achievement_title_habit_forming">Формируется привычка</string>
-    <string name="achievement_desc_habit_forming">Ты формируешь новую привычку</string>
+    <string name="achievement_desc_habit_forming">3 недели без сигарет!</string>
     <string name="achievement_title_month_of_victory">Месяц победы</string>
-    <string name="achievement_desc_month_of_victory">Полный месяц - впечатляет!</string>
+    <string name="achievement_desc_month_of_victory">Месяц без сигарет!</string>
     <string name="achievement_title_first_skipped_pack">Первая пачка</string>
-    <string name="achievement_desc_first_skipped_pack">Ты избежал первую пачку</string>
+    <string name="achievement_desc_first_skipped_pack">Ты избежал первую пачку!</string>
     <string name="achievement_title_fifty_victories">Пятьдесят побед</string>
     <string name="achievement_desc_fifty_victories">Ты отказался 50 раз!</string>
 </resources>

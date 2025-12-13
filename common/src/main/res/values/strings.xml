@@ -181,21 +181,21 @@
     <string name="goals_achievements_block_title">Your achievements</string>
 
     <string name="achievement_title_first_step">First step</string>
-    <string name="achievement_desc_first_step">You took the first step toward change</string>
+    <string name="achievement_desc_first_step">1 day without cigarettes!</string>
     <string name="achievement_title_stability">Stability</string>
-    <string name="achievement_desc_stability">You stayed smoke-free for several days!</string>
+    <string name="achievement_desc_stability">3 days without cigarettes!</string>
     <string name="achievement_title_week_of_freedom">Week of freedom</string>
-    <string name="achievement_desc_week_of_freedom">One whole week without cigarettes!</string>
+    <string name="achievement_desc_week_of_freedom">1 week without cigarettes!</string>
     <string name="achievement_title_two_weeks_of_strength">Two weeks of strength</string>
-    <string name="achievement_desc_two_weeks_of_strength">Your body already feels the difference.</string>
+    <string name="achievement_desc_two_weeks_of_strength">2 weeks without cigarettes!</string>
     <string name="achievement_title_habit_forming">Habit forming</string>
-    <string name="achievement_desc_habit_forming">You’re building a healthier routine</string>
+    <string name="achievement_desc_habit_forming">3 weeks without cigarettes!</string>
     <string name="achievement_title_month_of_victory">Month of victory</string>
-    <string name="achievement_desc_month_of_victory">A full month smoke-free - impressive!</string>
+    <string name="achievement_desc_month_of_victory">1 month without cigarettes!</string>
     <string name="achievement_title_first_skipped_pack">First avoided pack</string>
-    <string name="achievement_desc_first_skipped_pack">You avoided your first full pack</string>
+    <string name="achievement_desc_first_skipped_pack">First avoided pack!</string>
     <string name="achievement_title_fifty_victories">Fifty victories</string>
-    <string name="achievement_desc_fifty_victories">You resisted fifty times!</string>
+    <string name="achievement_desc_fifty_victories">50 avoided cigarettes!</string>
     <string name="main_page_insights_name">Insights</string>
 
 </resources>
