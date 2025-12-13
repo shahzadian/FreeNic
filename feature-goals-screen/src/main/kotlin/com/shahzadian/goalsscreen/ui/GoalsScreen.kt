@@ -83,7 +83,9 @@ private fun ContentView(
         )
         AchievementsBlockView(
             data = data,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
         )
 
     }
