@@ -3,7 +3,7 @@ package com.shahzadian.goalsscreen.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,6 +23,7 @@ import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
 @Composable
 internal fun AchievementView(
     achievement: GoalsViewState.AchievementUiModel,
+    minHeight: Int,
     modifier: Modifier = Modifier,
 ) {
     Card(
@@ -30,13 +31,16 @@ internal fun AchievementView(
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
+        ),
     ) {
         Column(
             modifier = Modifier
                 .padding(8.dp)
-                .fillMaxHeight(),
+                .defaultMinSize(
+                    minHeight = minHeight.dp
+                ),
             verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 painter = imageFromWrapper(achievement.icon),

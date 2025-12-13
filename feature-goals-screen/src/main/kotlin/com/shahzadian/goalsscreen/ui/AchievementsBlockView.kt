@@ -49,12 +49,14 @@ internal fun AchievementsBlockView(
                             modifier = Modifier
                                 .weight(1f)
                         ) {
+                            val minHeight = 150
                             AchievementView(
                                 achievement = achievement,
+                                minHeight = minHeight,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .defaultMinSize(
-                                        minHeight = 150.dp
+                                        minHeight = minHeight.dp
                                     )
                             )
                         }
