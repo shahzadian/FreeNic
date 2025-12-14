@@ -1,8 +1,8 @@
 package com.shahzadian.profilescreen.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -11,24 +11,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.AppDatePickerDialog
-import com.freenic.ui.wrapper.TextWrapper
+import com.freenic.ui.AppInputDialog
 import com.shahzadian.baseui.R
 import com.shahzadian.profilescreen.ui.common.ProfileSettingsBlockView
 import com.shahzadian.profilescreen.ui.common.ProfileSettingsFieldView
 import com.shahzadian.profilescreen.ui.viewmodel.ProfileViewEvent
 import com.shahzadian.profilescreen.ui.viewmodel.ProfileViewState
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.graphics.Color
-import com.freenic.ui.AppInputDialog
 
 @Composable
 internal fun ProfilePersonalDataBlockView(
@@ -97,7 +88,10 @@ internal fun ProfilePersonalDataBlockView(
             initialValue = data.age.toString(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             valueFilter = { it.filter { ch -> ch.isDigit() } },
-            isConfirmEnabled = { it.toIntOrNull()?.let { v -> v in UserDataValidator.MIN_AGE..UserDataValidator.MAX_AGE } == true },
+            isConfirmEnabled = {
+                it.toIntOrNull()
+                    ?.let { v -> v in UserDataValidator.MIN_AGE..UserDataValidator.MAX_AGE } == true
+            },
             validate = { txt ->
                 UserDataValidator.validateAgeText(txt)
             },
@@ -106,6 +100,7 @@ internal fun ProfilePersonalDataBlockView(
     if (isDateDialogShown) {
         AppDatePickerDialog(
             maxDateMillis = System.currentTimeMillis(),
+            initialDateMillis = data.quitDateMillis,
             onDismissRequest = { isDateDialogShown = false },
             onDateConfirmed = { result ->
                 onViewEvent(ProfileViewEvent.OnQuitDateSelected(result.millis))

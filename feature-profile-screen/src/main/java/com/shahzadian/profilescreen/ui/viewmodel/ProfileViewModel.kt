@@ -9,7 +9,6 @@ import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.baseui.R
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
-import com.shahzadian.user.model.QuitData
 import com.shahzadian.user.model.UserCigarettesData
 import com.shahzadian.user.model.UserData
 import com.shahzadian.user.model.UserPersonalData
@@ -17,7 +16,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Currency
@@ -77,7 +75,8 @@ internal class ProfileViewModel @Inject constructor(
                     personalData = ProfileViewState.Data.PersonalData(
                         name = userData.personalData.name,
                         age = userData.personalData.age,
-                        quitDate = extractDisplayableQuitDate(userData.quitData.quitDateMillis)
+                        quitDate = extractDisplayableQuitDate(userData.quitData.quitDateMillis),
+                        quitDateMillis = userData.quitData.quitDateMillis,
                     ),
                     smokingDetails = ProfileViewState.Data.SmokingDetails(
                         cigarettesPerDay = userData.cigarettesData.cigarettesPerDay,
@@ -98,7 +97,8 @@ internal class ProfileViewModel @Inject constructor(
                 val formatted = extractDisplayableQuitDate(event.millis)
                 val updated = currentState.copy(
                     personalData = currentState.personalData.copy(
-                        quitDate = formatted
+                        quitDate = formatted,
+                        quitDateMillis = event.millis
                     )
                 )
                 setViewState(updated)

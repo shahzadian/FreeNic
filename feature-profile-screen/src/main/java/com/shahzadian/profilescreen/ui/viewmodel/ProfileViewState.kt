@@ -2,7 +2,6 @@ package com.shahzadian.profilescreen.ui.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
-import com.freenic.ui.wrapper.TextWrapper
 
 @Immutable
 internal sealed interface ProfileViewState : ViewState {
@@ -24,6 +23,7 @@ internal sealed interface ProfileViewState : ViewState {
             val name: String,
             val age: Int,
             val quitDate: String,
+            val quitDateMillis: Long,
         )
 
         @Immutable
