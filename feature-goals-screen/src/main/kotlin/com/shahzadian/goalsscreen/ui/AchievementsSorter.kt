@@ -17,8 +17,8 @@ internal class AchievementsSorterImpl @Inject constructor(
     }
 
     private fun sortByUnlockedFirst(achievements: List<GoalsViewState.AchievementUiModel>): List<GoalsViewState.AchievementUiModel> {
-        return achievements.sortedBy {
-            if (it.state is GoalsViewState.AchievementUiModel.AchievementStateUiModel.Unlocked) 0 else 1
+        return achievements.sortedByDescending {
+            it.state.progressPercents
         }
     }
 

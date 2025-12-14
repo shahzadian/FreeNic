@@ -24,6 +24,20 @@ internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepo
                 achievementItem = AchievementItem.Days(1),
             ),
             Achievement(
+                id = "First skipped pack",
+                name = TextWrapper.FromRes(R.string.achievement_title_first_skipped_pack),
+                description = TextWrapper.FromRes(R.string.achievement_desc_first_skipped_pack),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_first_avoided_pack),
+                achievementItem = AchievementItem.Cigs(20),
+            ),
+            Achievement(
+                id = "Fifty victories",
+                name = TextWrapper.FromRes(R.string.achievement_title_fifty_victories),
+                description = TextWrapper.FromRes(R.string.achievement_desc_fifty_victories),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_fifty_victories),
+                achievementItem = AchievementItem.Cigs(50),
+            ),
+            Achievement(
                 id = "Stability",
                 name = TextWrapper.FromRes(R.string.achievement_title_stability),
                 description = TextWrapper.FromRes(R.string.achievement_desc_stability),
@@ -58,20 +72,6 @@ internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepo
                 icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_month_of_victory),
                 achievementItem = AchievementItem.Days(30),
             ),
-            Achievement(
-                id = "First skipped pack",
-                name = TextWrapper.FromRes(R.string.achievement_title_first_skipped_pack),
-                description = TextWrapper.FromRes(R.string.achievement_desc_first_skipped_pack),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_first_avoided_pack),
-                achievementItem = AchievementItem.Cigs(20),
-            ),
-            Achievement(
-                id = "Fifty victories",
-                name = TextWrapper.FromRes(R.string.achievement_title_fifty_victories),
-                description = TextWrapper.FromRes(R.string.achievement_desc_fifty_victories),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_fifty_victories),
-                achievementItem = AchievementItem.Cigs(50),
-            )
         )
     }
 }
