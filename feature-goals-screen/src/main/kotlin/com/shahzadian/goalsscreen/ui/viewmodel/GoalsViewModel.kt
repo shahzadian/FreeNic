@@ -6,6 +6,8 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
 import com.shahzadian.goalsscreen.ui.AchievementMapper
+import com.shahzadian.goalsscreen.ui.AchievementsConst
+import com.shahzadian.goalsscreen.ui.AchievementsSorter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class GoalsViewModel @Inject constructor(
     private val getAchievementsUseCase: GetAchievementsUseCase,
-    private val achievementMapper: AchievementMapper
+    private val achievementMapper: AchievementMapper,
+    private val achievementsSorter: AchievementsSorter,
 ) : BaseViewModel<GoalsViewState, GoalsViewEvent, GoalsViewCommand>() {
 
     override val initState: GoalsViewState by lazyUnsafe { GoalsViewState.Loading }
@@ -29,6 +32,7 @@ internal class GoalsViewModel @Inject constructor(
                     sendViewCommand(GoalsViewCommand.NavigateTo(AppScreen.PaywallScreen))
                 }
             }
+
             is GoalsViewEvent.OnShowMoreAchievementsClicked -> {
 //                TODO
             }
@@ -39,15 +43,12 @@ internal class GoalsViewModel @Inject constructor(
         viewModelScope.launch {
             val achievements = getAchievementsUseCase()
                 .mapNotNull { achievementMapper.map(it) }
-                .sortedByDescending { achievementUiModel ->
-                    achievementUiModel.state.progressPercents
-                }
             setViewState(
                 GoalsViewState.Data(
                     achievementsData = GoalsViewState.Data.AchievementsData(
-                        achievements = achievements,
-                        shouldShowMoreAchievementsButton = achievements.size > 4,
-                        achievementsPerRow = 2,
+                        achievements = achievementsSorter.sort(achievements),
+                        shouldShowMoreAchievementsButton = achievements.size > AchievementsConst.MAX_ACHIEVEMENTS_ON_SCREEN,
+                        achievementsPerRow = AchievementsConst.MAX_ACHIEVEMENTS_PER_ROW,
                     )
                 )
             )

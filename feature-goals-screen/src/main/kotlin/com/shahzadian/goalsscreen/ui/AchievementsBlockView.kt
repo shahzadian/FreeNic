@@ -33,7 +33,11 @@ internal fun AchievementsBlockView(
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 16.dp),
         )
-        Column {
+        Column(
+            modifier = Modifier.padding(
+                bottom = if (data.achievementsData.shouldShowMoreAchievementsButton) 16.dp else 0.dp
+            )
+        ) {
             val items = data.achievementsData.achievements
             val itemsPerRowRaw = data.achievementsData.achievementsPerRow
             val itemsPerRow = if (itemsPerRowRaw > 0) itemsPerRowRaw else 1
@@ -82,7 +86,6 @@ internal fun AchievementsBlockView(
                         enabled = true,
                         onClick = onMoreClick,
                     )
-                    .padding(top = 16.dp)
             )
         }
     }
