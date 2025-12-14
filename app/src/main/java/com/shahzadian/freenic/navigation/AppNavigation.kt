@@ -31,6 +31,7 @@ import com.shahzadian.datafill.ui.DataFillScreen
 import com.shahzadian.distractionactivityscreen.guessshape.ui.GuessShapeScreen
 import com.shahzadian.distractionactivityscreen.ui.DistractionActivityScreen
 import com.shahzadian.goalsscreen.ui.GoalsScreen
+import com.shahzadian.goalsscreen.ui.achievementsscreen.AchievementsScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.profilescreen.ui.ProfileScreen
@@ -66,14 +67,30 @@ fun AppNavigation() {
         bottomBar = {
             AnimatedVisibility(
                 visible = showBottomBarState.value,
-                enter = fadeIn(animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing)) +
+                enter = fadeIn(
+                    animationSpec = tween(
+                        durationMillis = 220,
+                        easing = FastOutSlowInEasing
+                    )
+                ) +
                         slideInVertically(
-                            animationSpec = tween(durationMillis = 220, easing = FastOutSlowInEasing),
+                            animationSpec = tween(
+                                durationMillis = 220,
+                                easing = FastOutSlowInEasing
+                            ),
                             initialOffsetY = { it / 3 } // slight slide from below
                         ),
-                exit = fadeOut(animationSpec = tween(durationMillis = 180, easing = FastOutSlowInEasing)) +
+                exit = fadeOut(
+                    animationSpec = tween(
+                        durationMillis = 180,
+                        easing = FastOutSlowInEasing
+                    )
+                ) +
                         slideOutVertically(
-                            animationSpec = tween(durationMillis = 180, easing = FastOutSlowInEasing),
+                            animationSpec = tween(
+                                durationMillis = 180,
+                                easing = FastOutSlowInEasing
+                            ),
                             targetOffsetY = { it / 3 }
                         )
             ) {
@@ -191,6 +208,16 @@ fun AppNavigation() {
             ) {
                 GoalsScreen(
                     navController = navController,
+                    modifier = BaseModifier,
+                )
+            }
+
+            composable(
+                route = AppScreen.AchievementsScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                AchievementsScreen(
                     modifier = BaseModifier,
                 )
             }

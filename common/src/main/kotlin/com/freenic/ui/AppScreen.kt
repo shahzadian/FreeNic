@@ -61,6 +61,10 @@ sealed class AppScreen {
         }
     }
 
+    object AchievementsScreen : AppScreen() {
+        override val route: String = "achievements_screen"
+    }
+
     companion object {
         fun getAll(): List<AppScreen> {
             return listOf(

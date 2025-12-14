@@ -6,9 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,11 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.shahzadian.baseui.R
-import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
+import com.shahzadian.goalsscreen.ui.viewmodel.AchievementsData
 
 @Composable
 internal fun AchievementsBlockView(
-    data: GoalsViewState.Data,
+    data: AchievementsData,
     onMoreClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -35,11 +35,11 @@ internal fun AchievementsBlockView(
         )
         Column(
             modifier = Modifier.padding(
-                bottom = if (data.achievementsData.shouldShowMoreAchievementsButton) 16.dp else 0.dp
+                bottom = if (data.shouldShowMoreAchievementsButton) 16.dp else 0.dp
             )
         ) {
-            val items = data.achievementsData.achievements
-            val itemsPerRowRaw = data.achievementsData.achievementsPerRow
+            val items = data.achievements
+            val itemsPerRowRaw = data.achievementsPerRow
             val itemsPerRow = if (itemsPerRowRaw > 0) itemsPerRowRaw else 1
 
             val rows = items.chunked(itemsPerRow)
@@ -55,15 +55,11 @@ internal fun AchievementsBlockView(
                             modifier = Modifier
                                 .weight(1f)
                         ) {
-                            val minHeight = 150
                             AchievementView(
                                 achievement = achievement,
-                                minHeight = minHeight,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .defaultMinSize(
-                                        minHeight = minHeight.dp
-                                    )
+                                    .wrapContentHeight()
                             )
                         }
                     }
@@ -76,7 +72,7 @@ internal fun AchievementsBlockView(
                 }
             }
         }
-        if (data.achievementsData.shouldShowMoreAchievementsButton) {
+        if (data.shouldShowMoreAchievementsButton) {
             Text(
                 text = stringResource(R.string.achievement_show_more),
                 style = MaterialTheme.typography.titleMedium,

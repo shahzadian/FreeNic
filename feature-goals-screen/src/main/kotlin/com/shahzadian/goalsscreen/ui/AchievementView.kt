@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -34,15 +33,15 @@ import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.goalsscreen.R
-import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
+import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 
 @Composable
 internal fun AchievementView(
-    achievement: GoalsViewState.AchievementUiModel,
-    minHeight: Int,
+    achievement: AchievementUiModel,
     modifier: Modifier = Modifier,
 ) {
-    val isAchievementUnlocked = achievement.state is GoalsViewState.AchievementUiModel.AchievementStateUiModel.Unlocked
+    val isAchievementUnlocked =
+        achievement.state is AchievementUiModel.AchievementStateUiModel.Unlocked
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
@@ -55,7 +54,7 @@ internal fun AchievementView(
         ),
     ) {
         Box(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier,
         ) {
             if (!isAchievementUnlocked) {
                 Image(
@@ -72,7 +71,7 @@ internal fun AchievementView(
                 modifier = Modifier
                     .padding(8.dp)
                     .defaultMinSize(
-                        minHeight = minHeight.dp
+                        minHeight = 150.dp
                     ),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally

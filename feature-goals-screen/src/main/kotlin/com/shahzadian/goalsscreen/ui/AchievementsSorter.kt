@@ -1,40 +1,49 @@
 package com.shahzadian.goalsscreen.ui
 
-import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
+import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 import javax.inject.Inject
 
 internal interface AchievementsSorter {
 
-    fun sort(achievements: List<GoalsViewState.AchievementUiModel>): List<GoalsViewState.AchievementUiModel>
+    fun sort(
+        achievements: List<AchievementUiModel>,
+        maxCountOnScreen: Int?,
+    ): List<AchievementUiModel>
 }
 
 internal class AchievementsSorterImpl @Inject constructor(
 ) : AchievementsSorter {
 
-    override fun sort(achievements: List<GoalsViewState.AchievementUiModel>): List<GoalsViewState.AchievementUiModel> {
+    override fun sort(
+        achievements: List<AchievementUiModel>,
+        maxCountOnScreen: Int?,
+    ): List<AchievementUiModel> {
         val sortedByState = sortByUnlockedFirst(achievements)
-        return sortByCount(sortedByState)
+        return maxCountOnScreen
+            ?.let { sortByCount(sortedByState, maxCountOnScreen) }
+            ?: sortedByState
     }
 
-    private fun sortByUnlockedFirst(achievements: List<GoalsViewState.AchievementUiModel>): List<GoalsViewState.AchievementUiModel> {
+    private fun sortByUnlockedFirst(achievements: List<AchievementUiModel>): List<AchievementUiModel> {
         return achievements.sortedByDescending {
             it.state.progressPercents
         }
     }
 
     private fun sortByCount(
-        achievements: List<GoalsViewState.AchievementUiModel>
-    ): List<GoalsViewState.AchievementUiModel> {
-        if (achievements.size <= AchievementsConst.MAX_ACHIEVEMENTS_ON_SCREEN) return achievements
+        achievements: List<AchievementUiModel>,
+        maxCountOnScreen: Int,
+    ): List<AchievementUiModel> {
+        if (achievements.size <= maxCountOnScreen) return achievements
         val firstLockedAchievementIndex =
-            achievements.indexOfFirst { it.state is GoalsViewState.AchievementUiModel.AchievementStateUiModel.Locked }
+            achievements.indexOfFirst { it.state is AchievementUiModel.AchievementStateUiModel.Locked }
         if (firstLockedAchievementIndex == -1) {
-            return achievements.takeLast(AchievementsConst.MAX_ACHIEVEMENTS_ON_SCREEN)
+            return achievements.takeLast(maxCountOnScreen)
         }
         if (firstLockedAchievementIndex <= 1) {
-            return achievements.take(AchievementsConst.MAX_ACHIEVEMENTS_ON_SCREEN)
+            return achievements.take(maxCountOnScreen)
         }
         val sublist = achievements.subList(firstLockedAchievementIndex - 2, achievements.size)
-        return sublist.take(AchievementsConst.MAX_ACHIEVEMENTS_ON_SCREEN)
+        return sublist.take(maxCountOnScreen)
     }
 }

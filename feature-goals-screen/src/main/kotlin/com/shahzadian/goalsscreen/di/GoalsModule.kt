@@ -4,6 +4,8 @@ import com.shahzadian.goalsscreen.ui.AchievementMapper
 import com.shahzadian.goalsscreen.ui.AchievementMapperImpl
 import com.shahzadian.goalsscreen.ui.AchievementsSorter
 import com.shahzadian.goalsscreen.ui.AchievementsSorterImpl
+import com.shahzadian.goalsscreen.ui.AchievementsUiModelFetcher
+import com.shahzadian.goalsscreen.ui.AchievementsUiModelFetcherImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -22,4 +24,9 @@ internal interface GoalsModule {
     fun bindAchievementsSorter(
         impl: AchievementsSorterImpl
     ): AchievementsSorter
+
+    @Binds
+    fun bindAchievementsUiModelFetcher(
+        impl: AchievementsUiModelFetcherImpl
+    ): AchievementsUiModelFetcher
 }
