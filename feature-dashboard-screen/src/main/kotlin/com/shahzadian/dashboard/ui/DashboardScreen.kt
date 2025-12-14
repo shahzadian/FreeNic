@@ -1,11 +1,8 @@
 package com.shahzadian.dashboard.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,7 +13,6 @@ import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.dashboard.ui.cigsavoided.model.CigsAvoidedView
-import com.shahzadian.dashboard.ui.header.HeaderView
 import com.shahzadian.dashboard.ui.healthprogress.HealthProgressView
 import com.shahzadian.dashboard.ui.lungsrecovery.LungsRecoveryView
 import com.shahzadian.dashboard.ui.nocigdays.NoCigDaysView
