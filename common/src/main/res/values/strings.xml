@@ -204,5 +204,6 @@
     <!-- Validation messages -->
     <string name="validation_age_min">Age must be at least 10</string>
     <string name="validation_price_min">Price must be at least 0.1</string>
+    <string name="achievement_show_more">More</string>
 
 </resources>

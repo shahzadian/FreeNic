@@ -8,4 +8,6 @@ internal sealed interface GoalsViewEvent : ViewEvent {
 
     @Immutable
     data object OnSavingGoalsUpgradeClicked : GoalsViewEvent
+
+    data object OnShowMoreAchievementsClicked : GoalsViewEvent
 }

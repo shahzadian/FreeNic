@@ -29,6 +29,9 @@ internal class GoalsViewModel @Inject constructor(
                     sendViewCommand(GoalsViewCommand.NavigateTo(AppScreen.PaywallScreen))
                 }
             }
+            is GoalsViewEvent.OnShowMoreAchievementsClicked -> {
+//                TODO
+            }
         }
     }
 

@@ -67,6 +67,9 @@ private fun ContentView(
     val onSavingGoalsViewEvent = remember {
         { onEvent(GoalsViewEvent.OnSavingGoalsUpgradeClicked) }
     }
+    val onShowMoreAchievementsClickedEvent = remember {
+        { onEvent(GoalsViewEvent.OnShowMoreAchievementsClicked) }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.goals_header_title),
         subtitle = TextWrapper.FromRes(R.string.goals_header_subtitle),
@@ -81,6 +84,7 @@ private fun ContentView(
         )
         AchievementsBlockView(
             data = data,
+            onMoreClick = onShowMoreAchievementsClickedEvent,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
