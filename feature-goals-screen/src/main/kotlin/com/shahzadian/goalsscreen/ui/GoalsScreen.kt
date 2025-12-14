@@ -9,6 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -28,6 +29,7 @@ fun GoalsScreen(
     navController: NavController,
     modifier: Modifier = Modifier,
 ) {
+    LocalView.current
     val viewModel: GoalsViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()
     when (state) {
@@ -70,6 +72,9 @@ private fun ContentView(
     val onShowMoreAchievementsClickedEvent = remember {
         { onEvent(GoalsViewEvent.OnShowMoreAchievementsClicked) }
     }
+    val onAchievementShareClick: (content: @Composable () -> Unit) -> Unit = remember {
+        { onEvent(GoalsViewEvent.OnAchievementShareClicked(it)) }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.goals_header_title),
         subtitle = TextWrapper.FromRes(R.string.goals_header_subtitle),
@@ -87,7 +92,8 @@ private fun ContentView(
             onMoreClick = onShowMoreAchievementsClickedEvent,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = 16.dp),
+            onAchievementShareClicked = onAchievementShareClick
         )
 
     }

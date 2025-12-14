@@ -65,6 +65,10 @@ sealed class AppScreen {
         override val route: String = "achievements_screen"
     }
 
+    object ShareImageScreen : AppScreen() {
+        override val route: String = "share_image_screen"
+    }
+
     companion object {
         fun getAll(): List<AppScreen> {
             return listOf(

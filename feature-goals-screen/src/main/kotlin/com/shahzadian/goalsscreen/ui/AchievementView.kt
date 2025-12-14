@@ -4,6 +4,7 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.LinearProgressIndicator
@@ -39,9 +42,13 @@ import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 internal fun AchievementView(
     achievement: AchievementUiModel,
     modifier: Modifier = Modifier,
+    shouldShowShareButton: Boolean = true,
+    shouldShowProgress: Boolean = true,
+    onAchievementShareClicked: () -> Unit = {},
 ) {
     val isAchievementUnlocked =
         achievement.state is AchievementUiModel.AchievementStateUiModel.Unlocked
+    val achievementShareClick = remember { { onAchievementShareClicked() } }
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
@@ -56,7 +63,22 @@ internal fun AchievementView(
         Box(
             modifier = Modifier,
         ) {
-            if (!isAchievementUnlocked) {
+            if (isAchievementUnlocked) {
+                if (shouldShowShareButton) {
+                    Image(
+                        imageVector = Icons.Rounded.Share,
+                        contentDescription = "Share",
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .padding(8.dp)
+                            .size(20.dp)
+                            .clickable {
+                                achievementShareClick()
+                            },
+                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onPrimaryContainer),
+                    )
+                }
+            } else {
                 Image(
                     painter = painterResource(R.drawable.ic_achievement_lock),
                     contentDescription = "Premium lock",
@@ -100,14 +122,17 @@ internal fun AchievementView(
                     color = MaterialTheme.colorScheme.onSecondary,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 8.dp)
                         .align(Alignment.CenterHorizontally),
                     textAlign = TextAlign.Center
                 )
-                AchievementProgressView(
-                    progressPercents = achievement.state.progressPercents,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
-                )
+                if (shouldShowProgress) {
+                    AchievementProgressView(
+                        progressPercents = achievement.state.progressPercents,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 8.dp)
+                    )
+                }
             }
         }
     }

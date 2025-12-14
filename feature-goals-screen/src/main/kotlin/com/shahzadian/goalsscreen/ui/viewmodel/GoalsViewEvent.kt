@@ -1,5 +1,6 @@
 package com.shahzadian.goalsscreen.ui.viewmodel
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewEvent
 
@@ -10,4 +11,8 @@ internal sealed interface GoalsViewEvent : ViewEvent {
     data object OnSavingGoalsUpgradeClicked : GoalsViewEvent
 
     data object OnShowMoreAchievementsClicked : GoalsViewEvent
+
+    data class OnAchievementShareClicked(
+        val achievementShareContent: @Composable () -> Unit,
+    ) : GoalsViewEvent
 }
