@@ -36,6 +36,9 @@ internal class GoalsViewModel @Inject constructor(
         viewModelScope.launch {
             val achievements = getAchievementsUseCase()
                 .mapNotNull { achievementMapper.map(it) }
+                .sortedByDescending { achievementUiModel ->
+                    achievementUiModel.state.progressPercents
+                }
             setViewState(
                 GoalsViewState.Data(
                     achievementsData = GoalsViewState.Data.AchievementsData(
