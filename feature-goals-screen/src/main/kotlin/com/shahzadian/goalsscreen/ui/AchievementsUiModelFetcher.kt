@@ -1,6 +1,5 @@
 package com.shahzadian.goalsscreen.ui
 
-import android.util.Log
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 import javax.inject.Inject
@@ -33,7 +32,6 @@ internal class AchievementsUiModelFetcherImpl @Inject constructor(
         val initialAchievements = getAchievementsUseCase()
         val achievements = initialAchievements
             .mapNotNull { achievementMapper.map(it) }
-        Log.w("LogMog", "ach size: ${achievements.size}")
         return AchievementsUiModelFetcher.AchievementsUiModelFetchResult(
             achievements = achievementsSorter.sort(
                 achievements = achievements,
