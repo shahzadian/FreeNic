@@ -218,7 +218,7 @@
 
     <plurals name="achievement_share_minimal_title">
         <item quantity="one">Day smoke-free!</item>
-        <item quantity="other">Day smoke-free!</item>
+        <item quantity="other">Days smoke-free!</item>
     </plurals>
     <string name="achievement_share_minimal_subtitle">One step closer to smoke-free life</string>
 
