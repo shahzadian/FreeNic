@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
@@ -55,6 +56,10 @@ fun GoalsScreen(
                     is GoalsViewCommand.NavigateTo -> {
                         navController.navigate(command.appScreen.route)
                     }
+
+                    is GoalsViewCommand.NavigateToAchievementShareScreen -> {
+                        navController.navigate(AppScreen.AchievementShareScreen.composeRoute(command.id))
+                    }
                 }
             }
     }
@@ -72,7 +77,7 @@ private fun ContentView(
     val onShowMoreAchievementsClickedEvent = remember {
         { onEvent(GoalsViewEvent.OnShowMoreAchievementsClicked) }
     }
-    val onAchievementShareClick: (content: @Composable () -> Unit) -> Unit = remember {
+    val onAchievementShareClick: (id: String) -> Unit = remember {
         { onEvent(GoalsViewEvent.OnAchievementShareClicked(it)) }
     }
     HeaderScreen(

@@ -44,7 +44,6 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":feature-goals"))
     implementation(project(":feature-achievements"))
-    implementation(project(":feature-share-image-screen"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

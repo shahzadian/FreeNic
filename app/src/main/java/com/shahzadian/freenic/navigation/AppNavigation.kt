@@ -20,9 +20,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.freenic.ui.AppScreen
 import com.shahzadian.breatheexercisescreen.ui.BreatheExerciseScreen
 import com.shahzadian.cravingsscreen.ui.CravingsScreen
@@ -31,11 +33,11 @@ import com.shahzadian.datafill.ui.DataFillScreen
 import com.shahzadian.distractionactivityscreen.guessshape.ui.GuessShapeScreen
 import com.shahzadian.distractionactivityscreen.ui.DistractionActivityScreen
 import com.shahzadian.goalsscreen.ui.GoalsScreen
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.AchievementShareScreen
 import com.shahzadian.goalsscreen.ui.achievementsscreen.AchievementsScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.profilescreen.ui.ProfileScreen
-import com.shahzadian.shareimagescreen.ui.ShareImageScreen
 import com.shahzadian.subscription.paywall.ui.PaywallScreen
 import com.shahzadian.welcomescreen.ui.onboardingscreen.OnboardingScreen
 import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
@@ -224,11 +226,16 @@ fun AppNavigation() {
             }
 
             composable(
-                route = AppScreen.ShareImageScreen.route,
+                route = AppScreen.AchievementShareScreen.route,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
-            ) {
-                ShareImageScreen(
+                arguments = listOf(
+                    navArgument(AppScreen.AchievementShareScreen.ARG_ACHIEVEMENT_ID) {
+                        type = NavType.StringType
+                    }
+                )
+            ) { backStackEntry ->
+                AchievementShareScreen(
                     navController = navController,
                     modifier = BaseModifier,
                 )

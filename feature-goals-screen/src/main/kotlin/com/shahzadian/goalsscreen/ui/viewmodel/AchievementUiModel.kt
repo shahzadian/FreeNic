@@ -6,10 +6,12 @@ import com.freenic.ui.wrapper.TextWrapper
 
 @Immutable
 internal data class AchievementUiModel(
+    val id: String,
     val title: TextWrapper,
     val description: TextWrapper,
     val icon: ImageWrapper,
     val state: AchievementStateUiModel,
+    val item: AchievementItemUiModel,
 ) {
 
     @Immutable
@@ -29,5 +31,15 @@ internal data class AchievementUiModel(
             override val progressPercents: Float
         ) : AchievementStateUiModel {
         }
+    }
+
+    @Immutable
+    sealed interface AchievementItemUiModel {
+
+        @Immutable
+        data class Cigs(val count: Int) : AchievementItemUiModel
+
+        @Immutable
+        data class Days(val count: Int) : AchievementItemUiModel
     }
 }

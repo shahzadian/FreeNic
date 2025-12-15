@@ -1,5 +1,6 @@
 package com.freenic.ui.extensions
 
+import android.content.Context
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
@@ -38,6 +39,16 @@ fun textFromWrapper(wrapper: TextWrapper): String {
                 id = wrapper.resId,
                 formatArgs = wrapper.args.toTypedArray()
             )
+        }
+
+        is TextWrapper.FromString -> wrapper.text
+    }
+}
+
+fun Context.textFromWrapper(wrapper: TextWrapper): String {
+    return when (wrapper) {
+        is TextWrapper.FromRes -> {
+            getString(wrapper.resId, wrapper.args)
         }
 
         is TextWrapper.FromString -> wrapper.text

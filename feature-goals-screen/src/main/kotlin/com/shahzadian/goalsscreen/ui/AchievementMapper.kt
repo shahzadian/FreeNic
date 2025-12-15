@@ -1,6 +1,7 @@
 package com.shahzadian.goalsscreen.ui
 
 import com.shahzadian.achievements.domain.Achievement
+import com.shahzadian.achievements.domain.AchievementItem
 import com.shahzadian.achievements.domain.AchievementState
 import com.shahzadian.achievements.domain.AchievementStateProviderFactory
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
@@ -19,6 +20,7 @@ internal class AchievementMapperImpl @Inject constructor(
         val achievementStateProvider = achievementStateProviderFactory.create() ?: return null
         val state = achievementStateProvider.getAchievementState(achievement)
         return AchievementUiModel(
+            id = achievement.id,
             title = achievement.name,
             description = achievement.description,
             icon = achievement.icon,
@@ -27,6 +29,18 @@ internal class AchievementMapperImpl @Inject constructor(
                 is AchievementState.Locked -> AchievementUiModel.AchievementStateUiModel.Locked(
                     progressPercents = state.percentsReached
                 )
+            },
+            item = when (achievement.achievementItem) {
+                is AchievementItem.Cigs -> {
+                    AchievementUiModel.AchievementItemUiModel.Cigs(
+                        count = (achievement.achievementItem as AchievementItem.Cigs).necessaryCount
+                    )
+                }
+                is AchievementItem.Days -> {
+                    AchievementUiModel.AchievementItemUiModel.Days(
+                        count = (achievement.achievementItem as AchievementItem.Days).necessaryCount
+                    )
+                }
             }
         )
     }

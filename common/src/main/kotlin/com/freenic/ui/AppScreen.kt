@@ -65,8 +65,16 @@ sealed class AppScreen {
         override val route: String = "achievements_screen"
     }
 
-    object ShareImageScreen : AppScreen() {
-        override val route: String = "share_image_screen"
+    object AchievementShareScreen : AppScreen() {
+
+        override val route: String = "$BASE_ROUTE/{$ARG_ACHIEVEMENT_ID}"
+
+        fun composeRoute(achievementId: String): String {
+            return "${BASE_ROUTE}/$achievementId"
+        }
+
+        const val ARG_ACHIEVEMENT_ID = "achievement_id"
+        private const val BASE_ROUTE: String = "achievement_share_screen"
     }
 
     companion object {
@@ -83,6 +91,8 @@ sealed class AppScreen {
                 ProfileScreen,
                 PaywallScreen,
                 GoalsScreen,
+                AchievementsScreen,
+                AchievementShareScreen,
             )
         }
     }

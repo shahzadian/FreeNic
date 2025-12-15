@@ -9,4 +9,6 @@ internal sealed interface GoalsViewCommand : ViewCommand {
 
     @Immutable
     data class NavigateTo(val appScreen: AppScreen) : GoalsViewCommand
+
+    data class NavigateToAchievementShareScreen(val id: String) : GoalsViewCommand
 }

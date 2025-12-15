@@ -131,6 +131,21 @@
         <item quantity="few">сигареты</item>
         <item quantity="other">сигарет</item>
     </plurals>
+
+    <plurals name="quantity_days">
+        <item quantity="one">день</item>
+        <item quantity="few">дня</item>
+        <item quantity="many">дней</item>
+        <item quantity="other">дней</item>
+    </plurals>
+
+    <plurals name="quantity_cigarettes">
+        <item quantity="one">сигарета</item>
+        <item quantity="few">сигареты</item>
+        <item quantity="many">сигарет</item>
+        <item quantity="other">сигарет</item>
+    </plurals>
+
     <string name="profile_cigs_price">Цена за пачку</string>
     <string name="profile_cigs_currency">Валюта</string>
     <string name="profile_subscription_title">Премиум</string>
@@ -186,5 +201,19 @@
     <string name="date_picker_dialog_cancel">Отмена</string>
     <string name="date_picker_dialog_ok">ОК</string>
     <string name="validation_age_min">Возраст должен быть не менее 10</string>
+
+
+    <plurals name="achievement_share_minimal_title">
+        <item quantity="one">День без сигарет!</item>
+        <item quantity="few">Дня без сигарет!</item>
+        <item quantity="other">Дней без сигарет!</item>
+    </plurals>
+
+    <string name="achievement_share_minimal_subtitle">На шаг ближе к жизни без сигарет</string>
+    <string name="achievement_share_celebratory_title">Без сигарет!</string>
+    <string name="achievement_share_celebratory_subtitle">Праздную свой прогресс</string>
+    <string name="achievement_share_motivational_title">уверенно!</string>
+    <string name="achievement_share_motivational_subtitle">Каждый день - победа. Так держать!</string>
+    <string name="achievement_share_error">Не удалось поделиться достижением</string>
 
 </resources>
