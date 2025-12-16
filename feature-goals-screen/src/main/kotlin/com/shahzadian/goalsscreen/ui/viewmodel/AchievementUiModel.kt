@@ -39,14 +39,14 @@ internal data class AchievementUiModel(
         @Immutable
         data class Cigs(
             override val count: Int
-        ) : AchievementItemUiModel, DayBasedUiModel
+        ) : AchievementItemUiModel, CountBasedUiModel
 
         @Immutable
         data class Days(
             override val count: Int
-        ) : AchievementItemUiModel, DayBasedUiModel
+        ) : AchievementItemUiModel, CountBasedUiModel
 
-        interface DayBasedUiModel {
+        interface CountBasedUiModel {
             val count: Int
         }
     }

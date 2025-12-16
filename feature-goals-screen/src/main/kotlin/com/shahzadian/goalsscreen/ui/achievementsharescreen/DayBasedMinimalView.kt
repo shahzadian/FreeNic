@@ -65,7 +65,7 @@ internal fun DayBasedMinimalView(
 
 @Composable
 private fun CountCircleView(
-    item: AchievementUiModel.AchievementItemUiModel.DayBasedUiModel,
+    item: AchievementUiModel.AchievementItemUiModel.CountBasedUiModel,
     modifier: Modifier = Modifier,
 ) {
     Box(
