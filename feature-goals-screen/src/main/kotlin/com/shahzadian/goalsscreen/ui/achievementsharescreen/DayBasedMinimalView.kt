@@ -26,6 +26,7 @@ import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 internal fun DayBasedMinimalView(
     achievementUiModel: AchievementUiModel,
     isSelected: Boolean,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val achievementItem = achievementUiModel.item as? AchievementUiModel.AchievementItemUiModel.Days
@@ -38,6 +39,7 @@ internal fun DayBasedMinimalView(
                 MaterialTheme.colorScheme.background,
             )
         ),
+        onCardClick = onClick,
         modifier = modifier,
     ) {
         Column(

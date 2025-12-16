@@ -14,6 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -81,23 +84,30 @@ private fun ContentView(
     ) {
         when (data.achievementToShare.item) {
             is AchievementUiModel.AchievementItemUiModel.Days -> {
+                val minimalViewTag = "minimalViewTag"
+                val celebratoryViewTag = "celebratoryViewTag"
+                val motivationalViewTag = "motivationalViewTag"
+                var selectedItemTag: String by remember { mutableStateOf(minimalViewTag) }
                 DayBasedMinimalView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = true,
+                    isSelected = selectedItemTag == minimalViewTag,
+                    onClick = { selectedItemTag = minimalViewTag },
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
                 )
                 DayBasedCelebratoryView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = true,
+                    isSelected = selectedItemTag == celebratoryViewTag,
+                    onClick = { selectedItemTag = celebratoryViewTag },
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
                 )
                 DayBasedMotivationalView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = true,
+                    isSelected = selectedItemTag == motivationalViewTag,
+                    onClick = { selectedItemTag = motivationalViewTag },
                     modifier = modifier
                         .fillMaxWidth()
                 )

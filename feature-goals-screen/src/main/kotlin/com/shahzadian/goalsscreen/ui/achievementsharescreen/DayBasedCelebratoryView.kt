@@ -26,6 +26,7 @@ import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 internal fun DayBasedCelebratoryView(
     achievementUiModel: AchievementUiModel,
     isSelected: Boolean,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ShareAchievementCard(
@@ -37,6 +38,7 @@ internal fun DayBasedCelebratoryView(
                 MaterialTheme.colorScheme.primary,
             )
         ),
+        onCardClick = onClick,
         modifier = modifier,
     ) {
         Column(

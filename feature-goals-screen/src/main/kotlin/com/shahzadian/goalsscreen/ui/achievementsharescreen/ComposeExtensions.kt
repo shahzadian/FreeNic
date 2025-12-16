@@ -12,6 +12,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -50,9 +51,11 @@ internal fun ShareAchievementAppLogo(
 fun ShareAchievementCard(
     isSelected: Boolean,
     containerBrush: Brush,
+    onCardClick: () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit,
 ) {
+    val cardClick = remember(Unit) { { onCardClick() } }
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
@@ -63,7 +66,8 @@ fun ShareAchievementCard(
             )
         } else {
             null
-        }
+        },
+        onClick = cardClick
     ) {
         Box(
             modifier = Modifier
