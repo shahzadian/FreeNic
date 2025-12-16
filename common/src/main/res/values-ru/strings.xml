@@ -209,18 +209,53 @@
         <item quantity="other">Дней без сигарет!</item>
     </plurals>
 
-    <string name="achievement_share_minimal_days_subtitle">На шаг ближе к жизни без сигарет</string>
-    <string name="achievement_share_celebratory_days_title">Без сигарет!</string>
-    <string name="achievement_share_celebratory_subtitle">Праздную свой прогресс</string>
+    <plurals name="achievement_share_minimal_cigs_title">
+        <item quantity="one">невыкуренной сигареты</item>
+        <item quantity="few">невыкуренных сигарет</item>
+        <item quantity="other">невыкуренных сигарет</item>
+    </plurals>
 
-    <plurals name="achievement_share_motivational_title">
+    <string name="achievement_share_minimal_days_subtitle">На шаг ближе к жизни без сигарет</string>
+    <plurals name="achievement_share_minimal_cigs_subtitle">
+        <item quantity="one">%d осознанный шаг к жизни без сигарет</item>
+        <item quantity="few">%d осознанных шага к жизни без сигарет</item>
+        <item quantity="other">%d осознанных шагов к жизни без сигарет</item>
+    </plurals>
+
+    <string name="achievement_share_celebratory_days_title">Без сигарет!</string>
+    <plurals name="achievement_share_celebratory_cigs_title">
+        <item quantity="one">невыкуренной сигареты</item>
+        <item quantity="few">невыкуренных сигарет</item>
+        <item quantity="other">невыкуренных сигарет</item>
+    </plurals>
+
+    <string name="achievement_share_celebratory_days_subtitle">Праздную свой прогресс</string>
+    <plurals name="achievement_share_celebratory_cigs_subtitle">
+        <item quantity="one">%d осознанный шаг к жизни без сигарет</item>
+        <item quantity="few">%d осознанных шага к жизни без сигарет</item>
+        <item quantity="other">%d осознанных шагов к жизни без сигарет</item>
+    </plurals>
+
+    <plurals name="achievement_share_motivational_days_title">
         <item quantity="one">%d день уверенно!</item>"
         <item quantity="few">%d дня уверенно!</item>
         <item quantity="other">%d дней уверенно!</item>
     </plurals>
 
-    <string name="achievement_share_motivational_subtitle">Каждый день - победа. Так держать!</string>
+    <plurals name="achievement_share_motivational_cigs_title">
+        <item quantity="one">невыкуренной сигареты</item>
+        <item quantity="few">невыкуренных сигарет</item>
+        <item quantity="other">невыкуренных сигарет</item>
+    </plurals>
+
+    <string name="achievement_share_motivational_days_subtitle">Каждый день - победа. Так держать!</string>
     <string name="achievement_share_error">Не удалось поделиться достижением</string>
     <string name="ic_achievement_share_submit_button">Поделиться</string>
+
+    <plurals name="achievement_share_motivational_cigs_subtitle">
+        <item quantity="one">%d осознанный шаг к жизни без сигарет</item>
+        <item quantity="few">%d осознанных шага к жизни без сигарет</item>
+        <item quantity="other">%d осознанных шагов к жизни без сигарет</item>
+    </plurals>
 
 </resources>

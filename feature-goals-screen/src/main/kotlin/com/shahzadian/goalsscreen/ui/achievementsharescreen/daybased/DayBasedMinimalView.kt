@@ -1,13 +1,13 @@
-package com.shahzadian.goalsscreen.ui.achievementsharescreen
+package com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased
 
 import android.graphics.Bitmap
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,17 +15,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.freenic.ui.theme.Smoke
-import com.shahzadian.goalsscreen.R
+import com.freenic.ui.theme.Success
+import com.shahzadian.baseui.R
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 
 @Composable
-internal fun DayBasedMotivationalView(
+internal fun DayBasedMinimalView(
     achievementUiModel: AchievementUiModel,
     isSelected: Boolean,
     shouldRecord: Boolean,
@@ -33,15 +32,15 @@ internal fun DayBasedMotivationalView(
     modifier: Modifier = Modifier,
     onRecorded: (Bitmap) -> Unit = {},
 ) {
-    ShareAchievementCard(
+    val achievementItem = achievementUiModel.item as? AchievementUiModel.AchievementItemUiModel.Days
+        ?: throw IllegalArgumentException("Achievement item is not of type Days")
+    _root_ide_package_.com.shahzadian.goalsscreen.ui.achievementsharescreen.ShareAchievementCard(
         isSelected = isSelected,
         shouldRecord = shouldRecord,
         containerBrush = Brush.linearGradient(
-            listOf(
-                MaterialTheme.colorScheme.background,
-                Smoke,
-                MaterialTheme.colorScheme.surface,
+            colors = listOf(
                 MaterialTheme.colorScheme.primaryContainer,
+                MaterialTheme.colorScheme.background,
             )
         ),
         onCardClick = onClick,
@@ -53,71 +52,71 @@ internal fun DayBasedMotivationalView(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            IconView(
-                modifier = Modifier
-                    .padding(bottom = 16.dp),
+            CountCircleView(
+                item = achievementItem,
             )
             TextView(
-                achievementUiModel = achievementUiModel,
-                modifier = Modifier
-                    .padding(bottom = 16.dp),
-            )
-            ShareAchievementAppLogo(
-                backgroundColor = null,
-                textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                daysCount = achievementItem.count,
+                modifier = Modifier,
             )
         }
     }
 }
 
 @Composable
-private fun IconView(
+private fun CountCircleView(
+    item: AchievementUiModel.AchievementItemUiModel.CountBasedUiModel,
     modifier: Modifier = Modifier,
 ) {
     Box(
         modifier = modifier
+            .padding(bottom = 16.dp)
+            .size(80.dp)
             .background(
-                color = Color.White.copy(alpha = 0.1f),
-                shape = MaterialTheme.shapes.medium
+                brush = Brush.linearGradient(
+                    colors = listOf(
+                        Success,
+                        MaterialTheme.colorScheme.onPrimaryContainer,
+                        MaterialTheme.colorScheme.primary,
+                    )
+                ),
+                shape = CircleShape,
             )
-            .padding(16.dp),
     ) {
-        Image(
-            painter = painterResource(R.drawable.ic_share_achievement_motivational),
-            contentDescription = "motivational",
+        Text(
+            text = item.count.toString(),
+            color = Color.Black,
+            style = MaterialTheme.typography.displaySmall,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.align(Alignment.Center)
         )
     }
 }
 
 @Composable
 private fun TextView(
-    achievementUiModel: AchievementUiModel,
+    daysCount: Int,
     modifier: Modifier = Modifier,
 ) {
-    val days = (achievementUiModel.item as? AchievementUiModel.AchievementItemUiModel.Days)
-        ?.count ?: throw IllegalArgumentException("Achievement item is not of type Days")
-    val title = pluralStringResource(
-        com.shahzadian.baseui.R.plurals.achievement_share_motivational_title,
-        days,
-        days
-    )
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = title,
+            text = pluralStringResource(R.plurals.achievement_share_minimal_days_title, daysCount),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(bottom = 8.dp),
         )
         Text(
-            text = stringResource(com.shahzadian.baseui.R.string.achievement_share_motivational_subtitle),
+            text = stringResource(R.string.achievement_share_minimal_days_subtitle),
             color = MaterialTheme.colorScheme.onSecondary,
             style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.padding(bottom = 16.dp),
+        )
+        _root_ide_package_.com.shahzadian.goalsscreen.ui.achievementsharescreen.ShareAchievementAppLogo(
+            backgroundColor = null
         )
     }
 }

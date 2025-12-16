@@ -31,6 +31,7 @@ import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedMotivationalView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewCommand
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewModel
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewState

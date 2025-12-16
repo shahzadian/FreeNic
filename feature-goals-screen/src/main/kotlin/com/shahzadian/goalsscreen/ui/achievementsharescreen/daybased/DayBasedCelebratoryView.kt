@@ -1,4 +1,4 @@
-package com.shahzadian.goalsscreen.ui.achievementsharescreen
+package com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
@@ -33,7 +33,7 @@ internal fun DayBasedCelebratoryView(
     modifier: Modifier = Modifier,
     onRecorded: (Bitmap) -> Unit = {},
 ) {
-    ShareAchievementCard(
+    _root_ide_package_.com.shahzadian.goalsscreen.ui.achievementsharescreen.ShareAchievementCard(
         isSelected = isSelected,
         shouldRecord = shouldRecord,
         containerBrush = Brush.linearGradient(
@@ -61,7 +61,7 @@ internal fun DayBasedCelebratoryView(
                 modifier = Modifier
                     .padding(bottom = 16.dp),
             )
-            ShareAchievementAppLogo(
+            _root_ide_package_.com.shahzadian.goalsscreen.ui.achievementsharescreen.ShareAchievementAppLogo(
                 backgroundColor = MaterialTheme.colorScheme.primaryContainer,
                 textColor = MaterialTheme.colorScheme.onPrimary
             )
@@ -139,7 +139,7 @@ private fun TextView(
             modifier = Modifier.padding(bottom = 8.dp),
         )
         Text(
-            text = stringResource(com.shahzadian.baseui.R.string.achievement_share_celebratory_subtitle),
+            text = stringResource(com.shahzadian.baseui.R.string.achievement_share_celebratory_days_subtitle),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.bodyMedium,
         )

@@ -221,17 +221,46 @@
         <item quantity="other">Days smoke-free!</item>
     </plurals>
 
+    <plurals name="achievement_share_minimal_cigs_title">
+        <item quantity="one">Cigarette avoided</item>
+        <item quantity="other">Cigarettes avoided</item>
+    </plurals>
+
     <string name="achievement_share_minimal_days_subtitle">One step closer to smoke-free life</string>
 
-    <string name="achievement_share_celebratory_days_title">Smoke-Free!</string>
-    <string name="achievement_share_celebratory_subtitle">Celebrating my progress</string>
+    <plurals name="achievement_share_minimal_cigs_subtitle">
+        <item quantity="one">%d conscious choice toward a smoke-free life</item>
+        <item quantity="other">%d conscious choices toward a smoke-free life</item>
+    </plurals>
 
-    <plurals name="achievement_share_motivational_title">
+    <string name="achievement_share_celebratory_days_title">Smoke-Free!</string>
+    <plurals name="achievement_share_celebratory_cigs_title">
+        <item quantity="one">Cigarette avoided</item>
+        <item quantity="other">Cigarettes avoided</item>
+    </plurals>
+
+
+    <string name="achievement_share_celebratory_days_subtitle">Celebrating my progress</string>
+    <plurals name="achievement_share_celebratory_cigs_subtitle">
+        <item quantity="one">%d conscious choice toward a smoke-free life</item>
+        <item quantity="other">%d conscious choices toward a smoke-free life</item>
+    </plurals>
+
+    <plurals name="achievement_share_motivational_days_title">
         <item quantity="one">%d day strong!</item>"
         <item quantity="other">%d days strong!</item>
     </plurals>
 
-    <string name="achievement_share_motivational_subtitle">Every day is a victory. Keep moving forward!</string>
+    <plurals name="achievement_share_motivational_cigs_title">
+        <item quantity="one">Cigarette avoided</item>
+        <item quantity="other">Cigarettes avoided</item>
+    </plurals>
+
+    <string name="achievement_share_motivational_days_subtitle">Every day is a victory. Keep moving forward!</string>
+    <plurals name="achievement_share_motivational__cigs_subtitle">
+        <item quantity="one">%d conscious choice toward a smoke-free life</item>
+        <item quantity="other">%d conscious choices toward a smoke-free life</item>
+    </plurals>
 
     <string name="achievement_share_error">Couldn\'t share the achievement</string>
     <string name="ic_achievement_share_submit_button">Share</string>
