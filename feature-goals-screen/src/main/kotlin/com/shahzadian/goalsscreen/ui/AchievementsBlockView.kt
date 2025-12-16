@@ -22,8 +22,8 @@ import com.shahzadian.goalsscreen.ui.viewmodel.AchievementsData
 @Composable
 internal fun AchievementsBlockView(
     data: AchievementsData,
-    onMoreClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onMoreClick: () -> Unit = {},
     onAchievementShareClicked: (id: String) -> Unit = {},
 ) {
     val achievementShareClick: (id: String) -> Unit =

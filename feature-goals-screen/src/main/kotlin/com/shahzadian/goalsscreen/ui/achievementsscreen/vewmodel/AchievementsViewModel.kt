@@ -20,7 +20,19 @@ internal class AchievementsViewModel @Inject constructor(
         setDataState()
     }
 
-    override fun onViewEventHappened(event: AchievementsViewEvent) {}
+    override fun onViewEventHappened(event: AchievementsViewEvent) {
+        when (event) {
+            is AchievementsViewEvent.OnAchievementShareClicked -> {
+                viewModelScope.launch {
+                    sendViewCommand(
+                        AchievementsViewCommand.NavigateToAchievementShareScreen(
+                            id = event.achievementId
+                        )
+                    )
+                }
+            }
+        }
+    }
 
     private fun setDataState() {
         viewModelScope.launch {

@@ -221,6 +221,7 @@ fun AppNavigation() {
                 exitTransition = { ExitTransition.None },
             ) {
                 AchievementsScreen(
+                    navController = navController,
                     modifier = BaseModifier,
                 )
             }
