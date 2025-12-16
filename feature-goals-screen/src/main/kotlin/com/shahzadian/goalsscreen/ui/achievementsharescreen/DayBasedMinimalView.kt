@@ -1,5 +1,6 @@
 package com.shahzadian.goalsscreen.ui.achievementsharescreen
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,13 +27,16 @@ import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 internal fun DayBasedMinimalView(
     achievementUiModel: AchievementUiModel,
     isSelected: Boolean,
+    shouldRecord: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onRecorded: (Bitmap) -> Unit = {},
 ) {
     val achievementItem = achievementUiModel.item as? AchievementUiModel.AchievementItemUiModel.Days
         ?: throw IllegalArgumentException("Achievement item is not of type Days")
     ShareAchievementCard(
         isSelected = isSelected,
+        shouldRecord = shouldRecord,
         containerBrush = Brush.linearGradient(
             colors = listOf(
                 MaterialTheme.colorScheme.primaryContainer,
@@ -41,6 +45,7 @@ internal fun DayBasedMinimalView(
         ),
         onCardClick = onClick,
         modifier = modifier,
+        onRecorded = onRecorded,
     ) {
         Column(
             modifier = Modifier.align(Alignment.Center),

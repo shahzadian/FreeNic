@@ -2,6 +2,7 @@ package com.shahzadian.goalsscreen.ui.achievementsharescreen
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.content.FileProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
@@ -33,6 +35,8 @@ import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.Achievemen
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewModel
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewState
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
+import java.io.File
+import java.io.FileOutputStream
 
 @Composable
 fun AchievementShareScreen(
@@ -82,19 +86,26 @@ private fun ContentView(
     data: AchievementShareViewState.Data,
     modifier: Modifier = Modifier,
 ) {
+    var shouldRecord by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
             .padding(16.dp)
     ) {
         AchievementShareContentView(
             data = data,
+            shouldRecord = shouldRecord,
+            onImageShared = {
+                shouldRecord = false
+            },
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = 64.dp),
         )
         MainSubmitButton(
             text = TextWrapper.FromRes(R.string.ic_achievement_share_submit_button),
-            onClick = {},
+            onClick = {
+                shouldRecord = true
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
@@ -105,8 +116,18 @@ private fun ContentView(
 @Composable
 private fun AchievementShareContentView(
     data: AchievementShareViewState.Data,
+    shouldRecord: Boolean,
+    onImageShared: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val context = LocalContext.current
+    val onBitmapRecord = remember {
+        { bitmap: Bitmap ->
+            val uri = bitmapToUri(context, bitmap)
+            context.shareImageByUri(uri)
+            onImageShared()
+        }
+    }
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState()),
@@ -120,25 +141,31 @@ private fun AchievementShareContentView(
                 DayBasedMinimalView(
                     achievementUiModel = data.achievementToShare,
                     isSelected = selectedItemTag == minimalViewTag,
+                    shouldRecord = shouldRecord && selectedItemTag == minimalViewTag,
                     onClick = { selectedItemTag = minimalViewTag },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
+                    onRecorded = onBitmapRecord
                 )
                 DayBasedCelebratoryView(
                     achievementUiModel = data.achievementToShare,
                     isSelected = selectedItemTag == celebratoryViewTag,
+                    shouldRecord = shouldRecord && selectedItemTag == celebratoryViewTag,
                     onClick = { selectedItemTag = celebratoryViewTag },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
+                    onRecorded = onBitmapRecord
                 )
                 DayBasedMotivationalView(
                     achievementUiModel = data.achievementToShare,
                     isSelected = selectedItemTag == motivationalViewTag,
+                    shouldRecord = shouldRecord && selectedItemTag == motivationalViewTag,
                     onClick = { selectedItemTag = motivationalViewTag },
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
+                    onRecorded = onBitmapRecord
                 )
             }
 
@@ -156,4 +183,22 @@ private fun Context.shareImageByUri(uri: Uri) {
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
     startActivity(Intent.createChooser(intent, null))
+}
+
+private fun bitmapToUri(
+    context: Context,
+    bitmap: Bitmap,
+): Uri {
+    val cacheDir = File(context.cacheDir, "images").apply { mkdirs() }
+    val file = File(cacheDir, "shared_image.png")
+
+    FileOutputStream(file).use { out ->
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
+    }
+
+    return FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.fileprovider",
+        file
+    )
 }

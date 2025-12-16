@@ -1,5 +1,6 @@
 package com.shahzadian.goalsscreen.ui.achievementsharescreen
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,11 +27,14 @@ import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 internal fun DayBasedCelebratoryView(
     achievementUiModel: AchievementUiModel,
     isSelected: Boolean,
+    shouldRecord: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onRecorded: (Bitmap) -> Unit = {},
 ) {
     ShareAchievementCard(
         isSelected = isSelected,
+        shouldRecord = shouldRecord,
         containerBrush = Brush.linearGradient(
             colors = listOf(
                 Success,
@@ -40,6 +44,7 @@ internal fun DayBasedCelebratoryView(
         ),
         onCardClick = onClick,
         modifier = modifier,
+        onRecorded = onRecorded,
     ) {
         Column(
             modifier = Modifier.align(Alignment.Center),
