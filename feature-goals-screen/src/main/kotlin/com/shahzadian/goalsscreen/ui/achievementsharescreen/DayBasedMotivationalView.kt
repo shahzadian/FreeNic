@@ -79,7 +79,6 @@ internal fun DayBasedMotivationalView(
                 ShareAchievementAppLogo(
                     backgroundColor = null,
                     textColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    style = MaterialTheme.typography.bodyLarge,
                 )
             }
         }

@@ -128,6 +128,8 @@ private fun TextView(
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 16.dp),
         )
-        ShareAchievementAppLogo()
+        ShareAchievementAppLogo(
+            backgroundColor = null
+        )
     }
 }
