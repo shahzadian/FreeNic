@@ -31,6 +31,9 @@ import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.cigsbased.CigsBasedMinimalView
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedCelebratoryView
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedMinimalView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedMotivationalView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewCommand
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewModel
@@ -171,7 +174,22 @@ private fun AchievementShareContentView(
             }
 
             is AchievementUiModel.AchievementItemUiModel.Cigs -> {
-                TODO()
+                val minimalViewTag = "minimalViewTag"
+                val celebratoryViewTag = "celebratoryViewTag"
+                val motivationalViewTag = "motivationalViewTag"
+                var selectedItemTag: String by remember { mutableStateOf(minimalViewTag) }
+                CigsBasedMinimalView(
+                    achievementUiModel = data.achievementToShare,
+                    isSelected = selectedItemTag == minimalViewTag,
+                    shouldRecord = shouldRecord,
+                    onCardClicked = {
+                        selectedItemTag = minimalViewTag
+                    },
+                    onRecorded = onBitmapRecord,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                )
             }
         }
     }
