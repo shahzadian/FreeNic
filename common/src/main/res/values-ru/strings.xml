@@ -133,10 +133,10 @@
     </plurals>
 
     <plurals name="quantity_days">
-        <item quantity="one">день</item>
-        <item quantity="few">дня</item>
-        <item quantity="many">дней</item>
-        <item quantity="other">дней</item>
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дня</item>
+        <item quantity="many">%d дней</item>
+        <item quantity="other">%d дней</item>
     </plurals>
 
     <plurals name="quantity_cigarettes">
@@ -203,14 +203,14 @@
     <string name="validation_age_min">Возраст должен быть не менее 10</string>
 
 
-    <plurals name="achievement_share_minimal_title">
+    <plurals name="achievement_share_minimal_days_title">
         <item quantity="one">День без сигарет!</item>
         <item quantity="few">Дня без сигарет!</item>
         <item quantity="other">Дней без сигарет!</item>
     </plurals>
 
-    <string name="achievement_share_minimal_subtitle">На шаг ближе к жизни без сигарет</string>
-    <string name="achievement_share_celebratory_title">Без сигарет!</string>
+    <string name="achievement_share_minimal_days_subtitle">На шаг ближе к жизни без сигарет</string>
+    <string name="achievement_share_celebratory_days_title">Без сигарет!</string>
     <string name="achievement_share_celebratory_subtitle">Праздную свой прогресс</string>
 
     <plurals name="achievement_share_motivational_title">

@@ -202,8 +202,8 @@
     <string name="date_picker_dialog_ok">OK</string>
 
     <plurals name="quantity_days">
-        <item quantity="one">day</item>
-        <item quantity="other">days</item>
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
     </plurals>
 
     <plurals name="quantity_cigarettes">
@@ -216,13 +216,14 @@
     <string name="validation_price_min">Price must be at least 0.1</string>
     <string name="achievement_show_more">More</string>
 
-    <plurals name="achievement_share_minimal_title">
+    <plurals name="achievement_share_minimal_days_title">
         <item quantity="one">Day smoke-free!</item>
         <item quantity="other">Days smoke-free!</item>
     </plurals>
-    <string name="achievement_share_minimal_subtitle">One step closer to smoke-free life</string>
 
-    <string name="achievement_share_celebratory_title">Smoke-Free!</string>
+    <string name="achievement_share_minimal_days_subtitle">One step closer to smoke-free life</string>
+
+    <string name="achievement_share_celebratory_days_title">Smoke-Free!</string>
     <string name="achievement_share_celebratory_subtitle">Celebrating my progress</string>
 
     <plurals name="achievement_share_motivational_title">

@@ -52,7 +52,7 @@ internal fun DayBasedMinimalView(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            DaysCountCircleView(
+            CountCircleView(
                 item = achievementItem,
             )
             TextView(
@@ -64,8 +64,8 @@ internal fun DayBasedMinimalView(
 }
 
 @Composable
-private fun DaysCountCircleView(
-    item: AchievementUiModel.AchievementItemUiModel.Days,
+private fun CountCircleView(
+    item: AchievementUiModel.AchievementItemUiModel.DayBasedUiModel,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -104,13 +104,13 @@ private fun TextView(
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = pluralStringResource(R.plurals.achievement_share_minimal_title, daysCount),
+            text = pluralStringResource(R.plurals.achievement_share_minimal_days_title, daysCount),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(bottom = 8.dp),
         )
         Text(
-            text = stringResource(R.string.achievement_share_minimal_subtitle),
+            text = stringResource(R.string.achievement_share_minimal_days_subtitle),
             color = MaterialTheme.colorScheme.onSecondary,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 16.dp),

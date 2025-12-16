@@ -37,9 +37,17 @@ internal data class AchievementUiModel(
     sealed interface AchievementItemUiModel {
 
         @Immutable
-        data class Cigs(val count: Int) : AchievementItemUiModel
+        data class Cigs(
+            override val count: Int
+        ) : AchievementItemUiModel, DayBasedUiModel
 
         @Immutable
-        data class Days(val count: Int) : AchievementItemUiModel
+        data class Days(
+            override val count: Int
+        ) : AchievementItemUiModel, DayBasedUiModel
+
+        interface DayBasedUiModel {
+            val count: Int
+        }
     }
 }

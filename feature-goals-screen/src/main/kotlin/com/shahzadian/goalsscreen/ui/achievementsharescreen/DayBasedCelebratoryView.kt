@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.theme.Success
@@ -124,14 +125,15 @@ private fun TextView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
+        val daysPlural = pluralStringResource(com.shahzadian.baseui.R.plurals.quantity_days, days, days)
         Text(
-            text = days.toString(),
+            text = daysPlural,
             color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.displayLarge,
+            style = MaterialTheme.typography.headlineLarge,
             modifier = Modifier.padding(bottom = 8.dp),
         )
         Text(
-            text = stringResource(com.shahzadian.baseui.R.string.achievement_share_celebratory_title),
+            text = stringResource(com.shahzadian.baseui.R.string.achievement_share_celebratory_days_title),
             color = MaterialTheme.colorScheme.onPrimary,
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.padding(bottom = 8.dp),
