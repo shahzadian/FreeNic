@@ -33,6 +33,7 @@ import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.cigsbased.CigsBasedCelebratoryView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.cigsbased.CigsBasedMinimalView
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.cigsbased.CigsBasedMotivationalView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedCelebratoryView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedMinimalView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedMotivationalView
@@ -197,6 +198,18 @@ private fun AchievementShareContentView(
                     shouldRecord = shouldRecord,
                     onCardClicked = {
                         selectedItemTag = celebratoryViewTag
+                    },
+                    onRecorded = onBitmapRecord,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                )
+                CigsBasedMotivationalView(
+                    achievementUiModel = data.achievementToShare,
+                    isSelected = selectedItemTag == motivationalViewTag,
+                    shouldRecord = shouldRecord,
+                    onCardClicked = {
+                        selectedItemTag = motivationalViewTag
                     },
                     onRecorded = onBitmapRecord,
                     modifier = Modifier

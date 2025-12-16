@@ -257,7 +257,7 @@
     </plurals>
 
     <string name="achievement_share_motivational_days_subtitle">Every day is a victory. Keep moving forward!</string>
-    <plurals name="achievement_share_motivational__cigs_subtitle">
+    <plurals name="achievement_share_motivational_cigs_subtitle">
         <item quantity="one">%d conscious choice toward a smoke-free life</item>
         <item quantity="other">%d conscious choices toward a smoke-free life</item>
     </plurals>
