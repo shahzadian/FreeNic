@@ -31,6 +31,7 @@ import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.cigsbased.CigsBasedCelebratoryView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.cigsbased.CigsBasedMinimalView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedCelebratoryView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedMinimalView
@@ -184,6 +185,18 @@ private fun AchievementShareContentView(
                     shouldRecord = shouldRecord,
                     onCardClicked = {
                         selectedItemTag = minimalViewTag
+                    },
+                    onRecorded = onBitmapRecord,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                )
+                CigsBasedCelebratoryView(
+                    achievementUiModel = data.achievementToShare,
+                    isSelected = selectedItemTag == celebratoryViewTag,
+                    shouldRecord = shouldRecord,
+                    onCardClicked = {
+                        selectedItemTag = celebratoryViewTag
                     },
                     onRecorded = onBitmapRecord,
                     modifier = Modifier

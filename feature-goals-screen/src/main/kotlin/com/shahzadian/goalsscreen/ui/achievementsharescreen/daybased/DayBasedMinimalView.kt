@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.theme.Success
 import com.shahzadian.baseui.R
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.ShareAchievementCard
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 
 @Composable
@@ -34,7 +35,7 @@ internal fun DayBasedMinimalView(
 ) {
     val achievementItem = achievementUiModel.item as? AchievementUiModel.AchievementItemUiModel.Days
         ?: throw IllegalArgumentException("Achievement item is not of type Days")
-    _root_ide_package_.com.shahzadian.goalsscreen.ui.achievementsharescreen.ShareAchievementCard(
+    ShareAchievementCard(
         isSelected = isSelected,
         shouldRecord = shouldRecord,
         containerBrush = Brush.linearGradient(

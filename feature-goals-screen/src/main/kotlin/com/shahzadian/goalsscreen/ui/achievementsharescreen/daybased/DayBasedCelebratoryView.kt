@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.theme.Success
 import com.shahzadian.goalsscreen.R
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.ShareAchievementCard
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 
 @Composable
@@ -33,7 +34,7 @@ internal fun DayBasedCelebratoryView(
     modifier: Modifier = Modifier,
     onRecorded: (Bitmap) -> Unit = {},
 ) {
-    _root_ide_package_.com.shahzadian.goalsscreen.ui.achievementsharescreen.ShareAchievementCard(
+    ShareAchievementCard(
         isSelected = isSelected,
         shouldRecord = shouldRecord,
         containerBrush = Brush.linearGradient(
