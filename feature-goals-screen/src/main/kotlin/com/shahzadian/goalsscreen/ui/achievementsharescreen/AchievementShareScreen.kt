@@ -80,7 +80,15 @@ private fun ContentView(
                 DayBasedMinimalView(
                     achievementUiModel = data.achievementToShare,
                     isSelected = true,
-                    modifier = modifier.fillMaxWidth(),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                )
+                DayBasedCelebratoryView(
+                    achievementUiModel = data.achievementToShare,
+                    isSelected = true,
+                    modifier = modifier
+                        .fillMaxWidth()
                 )
             }
 
