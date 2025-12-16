@@ -233,5 +233,6 @@
     <string name="achievement_share_motivational_subtitle">Every day is a victory. Keep moving forward!</string>
 
     <string name="achievement_share_error">Couldn\'t share the achievement</string>
+    <string name="ic_achievement_share_submit_button">Share</string>
 
 </resources>

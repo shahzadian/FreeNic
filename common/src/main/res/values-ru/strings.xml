@@ -221,5 +221,6 @@
 
     <string name="achievement_share_motivational_subtitle">Каждый день - победа. Так держать!</string>
     <string name="achievement_share_error">Не удалось поделиться достижением</string>
+    <string name="ic_achievement_share_submit_button">Поделиться</string>
 
 </resources>
