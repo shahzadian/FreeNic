@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.res.painterResource
@@ -79,14 +80,19 @@ fun ShareAchievementCard(
                     it
                 }
             },
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        border = if (isSelected) {
+        elevation = CardDefaults.cardElevation(defaultElevation = if (shouldRecord) 0.dp else 4.dp),
+        border = if (isSelected && !shouldRecord) {
             BorderStroke(
                 width = 2.dp,
                 color = MaterialTheme.colorScheme.primary,
             )
         } else {
             null
+        },
+        shape = if (shouldRecord) {
+            RectangleShape
+        } else {
+            MaterialTheme.shapes.small
         },
         onClick = cardClick
     ) {
@@ -95,12 +101,11 @@ fun ShareAchievementCard(
                 .fillMaxWidth()
                 .background(
                     brush = containerBrush,
-                    shape = MaterialTheme.shapes.small
                 )
                 .padding(16.dp)
         ) {
             content()
-            if (isSelected) {
+            if (isSelected && !shouldRecord) {
                 Image(
                     painter = painterResource(com.shahzadian.goalsscreen.R.drawable.ic_share_achievement_check),
                     contentDescription = "check",
