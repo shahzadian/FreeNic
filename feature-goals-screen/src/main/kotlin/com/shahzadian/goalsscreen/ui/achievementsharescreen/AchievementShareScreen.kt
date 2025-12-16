@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -73,7 +75,9 @@ private fun ContentView(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
     ) {
         when (data.achievementToShare.item) {
             is AchievementUiModel.AchievementItemUiModel.Days -> {
@@ -85,6 +89,13 @@ private fun ContentView(
                         .padding(bottom = 16.dp),
                 )
                 DayBasedCelebratoryView(
+                    achievementUiModel = data.achievementToShare,
+                    isSelected = true,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                )
+                DayBasedMotivationalView(
                     achievementUiModel = data.achievementToShare,
                     isSelected = true,
                     modifier = modifier

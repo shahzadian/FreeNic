@@ -9,19 +9,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.shahzadian.baseui.R
 
 @Composable
 internal fun ShareAchievementAppLogo(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = MaterialTheme.colorScheme.primary,
-    textColor: Color = MaterialTheme.colorScheme.onPrimary
+    backgroundColor: Color? = MaterialTheme.colorScheme.primary,
+    textColor: Color = MaterialTheme.colorScheme.onPrimary,
+    style: TextStyle = MaterialTheme.typography.bodySmall
 ) {
     Box(
         modifier = modifier
             .background(
-                color = backgroundColor,
+                color = backgroundColor ?: Color.Transparent,
                 shape = MaterialTheme.shapes.small
             )
             .padding(8.dp)
@@ -30,7 +32,7 @@ internal fun ShareAchievementAppLogo(
             text = stringResource(R.string.app_name),
             color = textColor,
             modifier = modifier,
-            style = MaterialTheme.typography.bodySmall
+            style = style,
         )
     }
 

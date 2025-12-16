@@ -95,6 +95,11 @@ fun mainGradientBackground(): Brush {
     )
 }
 
+@Composable
+fun colorFromHex(hex: String): Color {
+    return Color(android.graphics.Color.parseColor(hex))
+}
+
 val screenWidth: Int
     @Composable
     get() {
