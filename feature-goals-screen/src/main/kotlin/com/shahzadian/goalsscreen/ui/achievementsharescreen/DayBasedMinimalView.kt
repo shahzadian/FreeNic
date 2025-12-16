@@ -1,16 +1,12 @@
 package com.shahzadian.goalsscreen.ui.achievementsharescreen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,44 +30,28 @@ internal fun DayBasedMinimalView(
 ) {
     val achievementItem = achievementUiModel.item as? AchievementUiModel.AchievementItemUiModel.Days
         ?: throw IllegalArgumentException("Achievement item is not of type Days")
-    Card(
-        modifier = modifier,
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        border = if (isSelected) {
-            BorderStroke(
-                width = 2.dp,
-                color = MaterialTheme.colorScheme.primary,
+    ShareAchievementCard(
+        isSelected = isSelected,
+        containerBrush = Brush.linearGradient(
+            colors = listOf(
+                MaterialTheme.colorScheme.primaryContainer,
+                MaterialTheme.colorScheme.background,
             )
-        } else {
-            null
-        }
+        ),
+        modifier = modifier,
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    brush = Brush.horizontalGradient(
-                        colors = listOf(
-                            MaterialTheme.colorScheme.primaryContainer,
-                            MaterialTheme.colorScheme.background,
-                        )
-                    )
-                )
-                .padding(16.dp)
+        Column(
+            modifier = Modifier.align(Alignment.Center),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                DaysCountCircleView(
-                    item = achievementItem,
-                )
-                TextView(
-                    daysCount = achievementItem.count,
-                    modifier = Modifier,
-                )
-            }
+            DaysCountCircleView(
+                item = achievementItem,
+            )
+            TextView(
+                daysCount = achievementItem.count,
+                modifier = Modifier,
+            )
         }
     }
 }

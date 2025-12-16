@@ -1,17 +1,13 @@
 package com.shahzadian.goalsscreen.ui.achievementsharescreen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,65 +28,48 @@ internal fun DayBasedCelebratoryView(
     isSelected: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    Card(
+    ShareAchievementCard(
+        isSelected = isSelected,
+        containerBrush = Brush.linearGradient(
+            colors = listOf(
+                Success,
+                MaterialTheme.colorScheme.secondary,
+                MaterialTheme.colorScheme.primary,
+            )
+        ),
         modifier = modifier,
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        border = if (isSelected) {
-            BorderStroke(
-                width = 2.dp,
-                color = MaterialTheme.colorScheme.primary,
-            )
-        } else {
-            null
-        }
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(
-                    brush = Brush.linearGradient(
-                        listOf(
-                            Success,
-                            MaterialTheme.colorScheme.secondary,
-                            MaterialTheme.colorScheme.primary,
-                        )
-                    ),
-                    shape = MaterialTheme.shapes.small
-                )
-                .padding(16.dp)
+        Column(
+            modifier = Modifier.align(Alignment.Center),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                modifier = Modifier.align(Alignment.Center),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                IconCircleView(
-                    modifier = Modifier
-                        .padding(bottom = 8.dp),
-                )
-                TextView(
-                    achievementUiModel = achievementUiModel,
-                    modifier = Modifier
-                        .padding(bottom = 16.dp),
-                )
-                ShareAchievementAppLogo(
-                    backgroundColor = MaterialTheme.colorScheme.primaryContainer,
-                    textColor = MaterialTheme.colorScheme.onPrimary
-                )
-            }
-            TopStartEmoji(
-                modifier = Modifier.align(Alignment.TopStart)
+            IconCircleView(
+                modifier = Modifier
+                    .padding(bottom = 8.dp),
             )
-            TopEndEmoji(
-                modifier = Modifier.align(Alignment.TopEnd)
+            TextView(
+                achievementUiModel = achievementUiModel,
+                modifier = Modifier
+                    .padding(bottom = 16.dp),
             )
-            BottomStartEmoji(
-                modifier = Modifier.align(Alignment.BottomStart)
-            )
-            BottomEndEmoji(
-                modifier = Modifier.align(Alignment.BottomEnd)
+            ShareAchievementAppLogo(
+                backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+                textColor = MaterialTheme.colorScheme.onPrimary
             )
         }
+        TopStartEmoji(
+            modifier = Modifier.align(Alignment.TopStart)
+        )
+        TopEndEmoji(
+            modifier = Modifier.align(Alignment.TopEnd)
+        )
+        BottomStartEmoji(
+            modifier = Modifier.align(Alignment.BottomStart)
+        )
+        BottomEndEmoji(
+            modifier = Modifier.align(Alignment.BottomEnd)
+        )
     }
 }
 
