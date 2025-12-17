@@ -77,6 +77,10 @@ sealed class AppScreen {
         private const val BASE_ROUTE: String = "achievement_share_screen"
     }
 
+    object InsightsScreen : AppScreen(), NavBarScreen {
+        override val route: String = "insights_screen"
+    }
+
     companion object {
         fun getAll(): List<AppScreen> {
             return listOf(
@@ -93,6 +97,7 @@ sealed class AppScreen {
                 GoalsScreen,
                 AchievementsScreen,
                 AchievementShareScreen,
+                InsightsScreen
             )
         }
     }

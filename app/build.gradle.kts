@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":feature-goals-screen"))
     implementation(project(":feature-goals"))
     implementation(project(":feature-achievements"))
+    implementation(project(":feature-insights-screen"))
 
 
     implementation(libs.androidx.core.ktx)

@@ -35,6 +35,7 @@ import com.shahzadian.distractionactivityscreen.ui.DistractionActivityScreen
 import com.shahzadian.goalsscreen.ui.GoalsScreen
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.AchievementShareScreen
 import com.shahzadian.goalsscreen.ui.achievementsscreen.AchievementsScreen
+import com.shahzadian.insightsscreen.ui.InsightsScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.profilescreen.ui.ProfileScreen
@@ -238,6 +239,16 @@ fun AppNavigation() {
             ) { backStackEntry ->
                 AchievementShareScreen(
                     navController = navController,
+                    modifier = BaseModifier,
+                )
+            }
+
+            composable(
+                route = AppScreen.InsightsScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) { _ ->
+                InsightsScreen(
                     modifier = BaseModifier,
                 )
             }

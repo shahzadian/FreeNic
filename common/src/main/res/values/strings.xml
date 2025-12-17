@@ -265,4 +265,7 @@
     <string name="achievement_share_error">Couldn\'t share the achievement</string>
     <string name="ic_achievement_share_submit_button">Share</string>
 
+    <string name="insights_header_title">Health insights</string>
+    <string name="insights_header_subtitle">Your recovery progress, based on medical research</string>
+
 </resources>
