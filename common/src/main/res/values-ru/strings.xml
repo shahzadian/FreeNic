@@ -259,5 +259,8 @@
     </plurals>
     <string name="insights_header_title">Инсайты о здоровье</string>
     <string name="insights_header_subtitle">Ваш прогресс восстановления на основе медицинских данных</string>
+    <string name="insights_hint_medical">Основано на медицинских исследованиях</string>
+    <string name="insights_medical_oxygen_title">Нормализация кислорода и CO</string>
+    <string name="insights_medical_oxygen_subtitle">Уровень угарного газа обычно нормализуется в течение 24–48 часов</string>
 
 </resources>
