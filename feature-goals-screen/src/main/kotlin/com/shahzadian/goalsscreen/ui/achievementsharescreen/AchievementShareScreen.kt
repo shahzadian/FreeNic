@@ -183,7 +183,7 @@ private fun AchievementShareContentView(
                 CigsBasedMinimalView(
                     achievementUiModel = data.achievementToShare,
                     isSelected = selectedItemTag == minimalViewTag,
-                    shouldRecord = shouldRecord,
+                    shouldRecord = shouldRecord && selectedItemTag == minimalViewTag,
                     onCardClicked = {
                         selectedItemTag = minimalViewTag
                     },
@@ -195,7 +195,7 @@ private fun AchievementShareContentView(
                 CigsBasedCelebratoryView(
                     achievementUiModel = data.achievementToShare,
                     isSelected = selectedItemTag == celebratoryViewTag,
-                    shouldRecord = shouldRecord,
+                    shouldRecord = shouldRecord && selectedItemTag == celebratoryViewTag,
                     onCardClicked = {
                         selectedItemTag = celebratoryViewTag
                     },
@@ -207,7 +207,7 @@ private fun AchievementShareContentView(
                 CigsBasedMotivationalView(
                     achievementUiModel = data.achievementToShare,
                     isSelected = selectedItemTag == motivationalViewTag,
-                    shouldRecord = shouldRecord,
+                    shouldRecord = shouldRecord && selectedItemTag == motivationalViewTag,
                     onCardClicked = {
                         selectedItemTag = motivationalViewTag
                     },

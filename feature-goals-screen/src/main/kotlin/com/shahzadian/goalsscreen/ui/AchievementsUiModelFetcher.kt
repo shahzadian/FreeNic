@@ -1,6 +1,5 @@
 package com.shahzadian.goalsscreen.ui
 
-import android.util.Log
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 import javax.inject.Inject
@@ -52,7 +51,6 @@ internal class AchievementsUiModelFetcherImpl @Inject constructor(
     }
 
     override suspend fun getAchievementById(id: String): AchievementUiModel? {
-        Log.w("LogMog", "getAchievementById: $id, cachedAchievements: ${cachedAchievements?.map { it.id }}")
         cachedAchievements?.firstOrNull { it.id == id }?.let { return it }
         val achievement = getAchievementsUseCase().firstOrNull { it.id == id } ?: return null
         return achievementMapper.map(achievement)
