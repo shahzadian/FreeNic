@@ -2,6 +2,7 @@ package com.shahzadian.insightsscreen.ui.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
+import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 
 @Immutable
@@ -29,6 +30,7 @@ internal sealed interface InsightsViewState : ViewState {
             val id: String,
             val title: TextWrapper,
             val subtitle: TextWrapper,
+            val icon: ImageWrapper,
             val percents: Int,
             val badge: BadgeUiModel,
         ) : ChartUiModel {

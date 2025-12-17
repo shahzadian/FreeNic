@@ -26,7 +26,7 @@ internal fun ChartBadgeView(
     ) {
         Box(
             modifier = Modifier
-                .padding(12.dp)
+                .padding(4.dp)
         ) {
             Text(
                 text = textFromWrapper(badgeUiModel.text),

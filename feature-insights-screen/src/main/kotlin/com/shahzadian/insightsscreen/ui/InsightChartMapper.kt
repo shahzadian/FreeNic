@@ -29,6 +29,7 @@ internal class InsightChartMapperImpl @Inject constructor() : InsightChartMapper
                 id = this.id,
                 title = this.title,
                 subtitle = this.description,
+                icon = this.icon,
                 percents = this.percents,
                 badge = InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel.BadgeUiModel(
                     text = this.badge.text

@@ -281,13 +281,13 @@
     <string name="insights_energy_level_subtitle">Many people report increased energy levels in the weeks and months after quitting</string>
     <string name="insights_breathing_comfort_title">Breathing comfort</string>
     <string name="insights_breathing_comfort_subtitle">Breathing often becomes easier as airways recover over time</string>
-    <string name="insights_endurance_title">Физическая выносливость</string>
+    <string name="insights_endurance_title">Physical endurance</string>
     <string name="insights_endurance_subtitle">Physical endurance typically improves as oxygen delivery and circulation recover</string>
     <string name="insights_minutes_regained_title">Life time regained</string>
     <string name="insights_minutes_regained_subtitle">Quitting smoking is associated with regaining time otherwise lost to smoking</string>
-    <string name="insights_badge_medical">Medical evidence</string>
-    <string name="insights_badge_who">Based on WHO data</string>
-    <string name="insights_badge_studies">Population studies</string>
+    <string name="insights_badge_medical">Medical</string>
+    <string name="insights_badge_who">WHO</string>
+    <string name="insights_badge_studies">Studies</string>
     <string name="insights_badge_estimated">Estimated</string>
     <string name="insights_footer_info_subtitle">These insights are based on medical research and population studies. They are informational only and do not replace professional medical advice.</string>
     <string name="insights_footer_info_title">About this data</string>
