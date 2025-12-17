@@ -279,8 +279,8 @@
     <string name="insights_badge_who">По данным ВОЗ</string>
     <string name="insights_badge_studies">Популяционные исследования</string>
     <string name="insights_badge_estimated">Оценка</string>
-    <string name="insights_footer_info_subtitle">Эти инсайты основаны на медицинских и популяционных исследованиях и носят информационный характер. Они не заменяют консультацию врача.</string>
-    <string name="insights_footer_info_title">Про данные</string>
+    <string name="insights_disclaimer_description">Эти инсайты основаны на медицинских и популяционных исследованиях и носят информационный характер. Они не заменяют консультацию врача.</string>
+    <string name="insights_disclaimer_title">Про данные</string>
     <string name="insights_chart_medical">Медицинское</string>
     <string name="insights_chart_health">Восстановление</string>
     <string name="insights_chart_long_term_risk">Долгосрочные риски</string>

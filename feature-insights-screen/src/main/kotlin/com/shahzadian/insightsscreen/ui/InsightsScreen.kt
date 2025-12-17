@@ -21,6 +21,7 @@ import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.insightsscreen.ui.chart.ChartTabView
+import com.shahzadian.insightsscreen.ui.chart.DisclaimerView
 import com.shahzadian.insightsscreen.ui.chart.TitleAndPercentsChart
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewModel
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState
@@ -75,6 +76,10 @@ private fun ContentView(
         ChartsView(
             charts = data.chartBlocks.firstOrNull { it.id == selectedChartTabId }?.charts
                 ?: throw IllegalStateException("No charts found for selected block id: $selectedChartTabId"),
+            modifier = Modifier.padding(bottom = 16.dp),
+        )
+        DisclaimerView(
+            modifier = Modifier.padding(bottom = 16.dp)
         )
     }
 

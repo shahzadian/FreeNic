@@ -289,8 +289,8 @@
     <string name="insights_badge_who">WHO</string>
     <string name="insights_badge_studies">Studies</string>
     <string name="insights_badge_estimated">Estimated</string>
-    <string name="insights_footer_info_subtitle">These insights are based on medical research and population studies. They are informational only and do not replace professional medical advice.</string>
-    <string name="insights_footer_info_title">About this data</string>
+    <string name="insights_disclaimer_description">These insights are based on medical research and population studies. They are informational only and do not replace professional medical advice.</string>
+    <string name="insights_disclaimer_title">About this data</string>
     <string name="insights_chart_medical">Medical</string>
     <string name="insights_chart_health">Health progress</string>
     <string name="insights_chart_long_term_risk">Long-term risks</string>
