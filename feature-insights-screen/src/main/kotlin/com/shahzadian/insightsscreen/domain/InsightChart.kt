@@ -8,6 +8,7 @@ import com.shahzadian.baseui.R
 class InsightChartsBlock(
     val id: String,
     val title: TextWrapper,
+    val icon: ImageWrapper,
     val charts: List<InsightChart>,
 )
 

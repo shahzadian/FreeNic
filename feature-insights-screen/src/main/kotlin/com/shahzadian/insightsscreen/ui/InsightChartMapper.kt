@@ -16,6 +16,7 @@ internal class InsightChartMapperImpl @Inject constructor() : InsightChartMapper
         return InsightsViewState.ChartBlockUiModel(
             id = insightChartsBlock.id,
             title = insightChartsBlock.title,
+            icon = insightChartsBlock.icon,
             charts = insightChartsBlock.charts
                 .map { chart ->
                     chart.toUiModel()

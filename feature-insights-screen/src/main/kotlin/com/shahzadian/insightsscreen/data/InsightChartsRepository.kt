@@ -35,6 +35,7 @@ internal class InsightChartsRepositoryImpl(
         return InsightChartsBlock(
             id = "Medical",
             title = TextWrapper.FromRes(R.string.insights_chart_medical),
+            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_tab_medical),
             charts = listOf(
                 InsightChart.TitleAndPercentsChart(
                     id = "Oxygen & CO normalization",
@@ -68,6 +69,7 @@ internal class InsightChartsRepositoryImpl(
         return InsightChartsBlock(
             id = "Health progress",
             title = TextWrapper.FromRes(R.string.insights_chart_health),
+            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_tab_health),
             charts = listOf(
                 InsightChart.TitleAndPercentsChart(
                     id = "Energy level",
@@ -101,6 +103,7 @@ internal class InsightChartsRepositoryImpl(
         return InsightChartsBlock(
             id = "Long-term risks",
             title = TextWrapper.FromRes(R.string.insights_chart_long_term_risk),
+            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_tab_long_term),
             charts = listOf(
                 InsightChart.TitleAndPercentsChart(
                     id = "Long-term risk reduction",

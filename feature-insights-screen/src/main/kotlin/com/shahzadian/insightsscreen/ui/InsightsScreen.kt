@@ -104,6 +104,7 @@ private fun ChartBlockTabsView(
                 blocks.forEachIndexed { blockIndex, block ->
                     ChartTabView(
                         title = block.title,
+                        icon = block.icon,
                         isSelected = selectedChartTabId == block.id,
                         modifier = Modifier
                             .padding(

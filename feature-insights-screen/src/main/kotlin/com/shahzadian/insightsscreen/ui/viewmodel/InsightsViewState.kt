@@ -21,6 +21,7 @@ internal sealed interface InsightsViewState : ViewState {
     data class ChartBlockUiModel(
         val id: String,
         val title: TextWrapper,
+        val icon: ImageWrapper,
         val charts: List<ChartUiModel>,
     )
 
