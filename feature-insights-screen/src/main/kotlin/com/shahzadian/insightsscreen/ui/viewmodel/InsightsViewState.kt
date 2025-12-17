@@ -29,8 +29,10 @@ internal sealed interface InsightsViewState : ViewState {
     sealed interface ChartUiModel {
         @Immutable
         data class TitleAndPercentsChartUiModel(
+            val id: String,
             val title: TextWrapper,
             val subtitle: TextWrapper,
+            val percents: Float,
             val hintUiModel: HintUiModel,
         ) : ChartUiModel {
 

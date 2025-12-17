@@ -134,8 +134,7 @@ private fun ChartsView(
             when (chart) {
                 is InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel -> {
                     TitleAndPercentsChart(
-                        title = chart.title,
-                        subtitle = chart.subtitle,
+                        chart = chart,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
