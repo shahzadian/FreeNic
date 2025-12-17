@@ -267,7 +267,7 @@
 
     <string name="insights_header_title">Health insights</string>
     <string name="insights_header_subtitle">Your recovery progress, based on medical research</string>
-    <string name="insights_hint_medical">Based on medical research</string>
+    <string name="insights_hint_medical">Medical evidence</string>
 
     <string name="insights_medical_oxygen_title">Oxygen &amp; CO normalization</string>
     <string name="insights_medical_oxygen_subtitle">Carbon monoxide levels typically normalize within 24–48 hours</string>

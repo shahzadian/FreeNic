@@ -62,6 +62,7 @@ dependencies {
     implementation(project(":feature-goals"))
     implementation(project(":feature-achievements"))
     implementation(project(":feature-insights-screen"))
+    implementation(project(":feature-recovery-calculator"))
 
 
     implementation(libs.androidx.core.ktx)
