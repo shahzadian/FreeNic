@@ -23,31 +23,33 @@ internal sealed interface InsightsViewState : ViewState {
     data class ChartBlockUiModel(
         val id: String,
         val title: TextWrapper,
-        val charts: List<TitleAndPercentsChartUiModel>,
+        val charts: List<ChartUiModel>,
     )
 
-    @Immutable
-    data class TitleAndPercentsChartUiModel(
-        val title: TextWrapper,
-        val subtitle: TextWrapper,
-        val hintUiModel: HintUiModel,
-    ) {
-
+    sealed interface ChartUiModel {
         @Immutable
-        sealed interface HintUiModel {
-
-            val icon: ImageWrapper
-            val text: TextWrapper
+        data class TitleAndPercentsChartUiModel(
+            val title: TextWrapper,
+            val subtitle: TextWrapper,
+            val hintUiModel: HintUiModel,
+        ) : ChartUiModel {
 
             @Immutable
-            data object MedicalResearch : HintUiModel {
+            sealed interface HintUiModel {
 
-                override val icon: ImageWrapper by lazyUnsafe {
-                    ImageWrapper.FromRes(R.drawable.ic_insights_title_and_percents_chart_hint_medical)
-                }
+                val icon: ImageWrapper
+                val text: TextWrapper
 
-                override val text: TextWrapper by lazyUnsafe {
-                    TextWrapper.FromRes(com.shahzadian.baseui.R.string.insights_hint_medical)
+                @Immutable
+                data object MedicalResearch : HintUiModel {
+
+                    override val icon: ImageWrapper by lazyUnsafe {
+                        ImageWrapper.FromRes(R.drawable.ic_insights_title_and_percents_chart_hint_medical)
+                    }
+
+                    override val text: TextWrapper by lazyUnsafe {
+                        TextWrapper.FromRes(com.shahzadian.baseui.R.string.insights_hint_medical)
+                    }
                 }
             }
         }

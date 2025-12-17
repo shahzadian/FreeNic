@@ -31,10 +31,10 @@ internal class InsightsViewModel @Inject constructor() :
                             id = "chartBlock1",
                             title = TextWrapper.FromString("some chart 1"),
                             charts = listOf(
-                                InsightsViewState.TitleAndPercentsChartUiModel(
+                                InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel(
                                     title = TextWrapper.FromString("title and percents 1"),
                                     subtitle = TextWrapper.FromString("subtitle 1"),
-                                    hintUiModel = InsightsViewState.TitleAndPercentsChartUiModel.HintUiModel.MedicalResearch
+                                    hintUiModel = InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel.HintUiModel.MedicalResearch
                                 )
                             )
                         ),
@@ -42,10 +42,10 @@ internal class InsightsViewModel @Inject constructor() :
                             id = "chartBlock2",
                             title = TextWrapper.FromString("some chart 2"),
                             charts = listOf(
-                                InsightsViewState.TitleAndPercentsChartUiModel(
+                                InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel(
                                     title = TextWrapper.FromString("title and percents 2"),
                                     subtitle = TextWrapper.FromString("subtitle 2"),
-                                    hintUiModel = InsightsViewState.TitleAndPercentsChartUiModel.HintUiModel.MedicalResearch
+                                    hintUiModel = InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel.HintUiModel.MedicalResearch
                                 )
                             )
                         ),
@@ -53,10 +53,10 @@ internal class InsightsViewModel @Inject constructor() :
                             id = "chartBlock3",
                             title = TextWrapper.FromString("some chart 3"),
                             charts = listOf(
-                                InsightsViewState.TitleAndPercentsChartUiModel(
+                                InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel(
                                     title = TextWrapper.FromString("title and percents 3"),
                                     subtitle = TextWrapper.FromString("subtitle 3"),
-                                    hintUiModel = InsightsViewState.TitleAndPercentsChartUiModel.HintUiModel.MedicalResearch
+                                    hintUiModel = InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel.HintUiModel.MedicalResearch
                                 )
                             )
                         )

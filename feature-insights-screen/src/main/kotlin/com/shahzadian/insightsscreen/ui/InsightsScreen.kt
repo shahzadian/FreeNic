@@ -21,6 +21,7 @@ import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.insightsscreen.ui.chart.ChartTabView
+import com.shahzadian.insightsscreen.ui.chart.TitleAndPercentsChart
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewModel
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState
 
@@ -59,21 +60,38 @@ private fun ContentView(
     data: InsightsViewState.Data,
     modifier: Modifier = Modifier,
 ) {
-    ChartBlocksView(
-        blocks = data.chartBlocks,
-        selectedBlockId = data.selectedBlockId,
+    var selectedChartTabId by remember { mutableStateOf(data.selectedBlockId) }
+    Column(
         modifier = modifier,
-    )
+    ) {
+        ChartBlockTabsView(
+            blocks = data.chartBlocks,
+            selectedBlockId = data.selectedBlockId,
+            onChartSelected = { id ->
+                selectedChartTabId = id
+            },
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        ChartsView(
+            charts = data.chartBlocks.firstOrNull { it.id == selectedChartTabId }?.charts
+                ?: throw IllegalStateException("No charts found for selected block id: $selectedChartTabId"),
+        )
+    }
+
 }
 
 @Composable
-private fun ChartBlocksView(
+private fun ChartBlockTabsView(
     blocks: List<InsightsViewState.ChartBlockUiModel>,
     selectedBlockId: String,
+    onChartSelected: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val chunkedBlocks = blocks.chunked(2)
     var selectedChartTabId: String? by remember { mutableStateOf(selectedBlockId) }
+    val chartClick = remember {
+        { onChartSelected(requireNotNull(selectedChartTabId)) }
+    }
     Column(
         modifier = modifier,
     ) {
@@ -95,7 +113,30 @@ private fun ChartBlocksView(
                             .weight(1f)
                             .clickable {
                                 selectedChartTabId = block.id
+                                chartClick()
                             }
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChartsView(
+    charts: List<InsightsViewState.ChartUiModel>,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        charts.forEach { chart ->
+            when (chart) {
+                is InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel -> {
+                    TitleAndPercentsChart(
+                        title = chart.title,
+                        subtitle = chart.subtitle,
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
                 }
             }

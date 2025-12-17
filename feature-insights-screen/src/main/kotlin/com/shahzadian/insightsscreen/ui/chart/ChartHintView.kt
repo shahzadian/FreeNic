@@ -18,7 +18,7 @@ import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState
 
 @Composable
 internal fun ChartHintView(
-    hintUiModel: InsightsViewState.TitleAndPercentsChartUiModel.HintUiModel,
+    hintUiModel: InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel.HintUiModel,
     modifier: Modifier = Modifier,
 ) {
     Box(
