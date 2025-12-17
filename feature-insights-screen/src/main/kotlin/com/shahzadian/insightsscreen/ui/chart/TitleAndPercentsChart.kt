@@ -15,10 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -65,8 +62,8 @@ internal fun TitleAndPercentsChart(
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
-        ChartHintView(
-            hintUiModel = InsightsViewState.ChartUiModel.TitleAndPercentsChartUiModel.HintUiModel.MedicalResearch,
+        ChartBadgeView(
+            badgeUiModel = chart.badge,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -75,15 +72,14 @@ internal fun TitleAndPercentsChart(
 @Composable
 private fun PercentsIndicatorView(
     chartId: String,
-    percents: Float,
+    percents: Int,
     modifier: Modifier = Modifier,
 ) {
-    var progress by remember(chartId) { mutableStateOf(0F) }
     val animatable = remember { Animatable(0f) }
     LaunchedEffect(chartId) {
         animatable.snapTo(0f)
         animatable.animateTo(
-            percents,
+            percents.toFloat(),
             animationSpec = tween(1000)
         )
     }

@@ -1,0 +1,21 @@
+package com.shahzadian.insightsscreen.domain
+
+import com.shahzadian.insightsscreen.data.InsightChartsRepository
+import com.shahzadian.recoverycalculator.domain.factory.HealthRecoveryCalculatorFactory
+import javax.inject.Inject
+
+internal interface GetInsightChartsBlocksUseCase {
+
+    suspend operator fun invoke(): List<InsightChartsBlock>
+}
+
+internal class GetInsightChartsBlocksUseCaseImpl @Inject constructor(
+    private val recoveryCalculatorFactory: HealthRecoveryCalculatorFactory,
+) : GetInsightChartsBlocksUseCase {
+
+    override suspend fun invoke(): List<InsightChartsBlock> {
+        val recoveryCalculator = recoveryCalculatorFactory.create()
+        val repository = InsightChartsRepository(recoveryCalculator)
+        return repository.getAllBlocks()
+    }
+}

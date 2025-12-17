@@ -1,0 +1,54 @@
+package com.shahzadian.insightsscreen.domain
+
+import com.freenic.ui.extensions.lazyUnsafe
+import com.freenic.ui.wrapper.ImageWrapper
+import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
+
+class InsightChartsBlock(
+    val id: String,
+    val title: TextWrapper,
+    val charts: List<InsightChart>,
+)
+
+sealed interface InsightChart {
+
+    class TitleAndPercentsChart(
+        val id: String,
+        val title: TextWrapper,
+        val description: TextWrapper,
+        val icon: ImageWrapper,
+        val badge: InsightChartBadge,
+        val percents: Int,
+    ) : InsightChart
+}
+
+sealed interface InsightChartBadge {
+
+    val text: TextWrapper
+
+    object MedicalEvidence : InsightChartBadge {
+
+        override val text: TextWrapper by lazyUnsafe {
+            TextWrapper.FromRes(R.string.insights_badge_medical)
+        }
+    }
+
+    object Who : InsightChartBadge {
+        override val text: TextWrapper by lazyUnsafe {
+            TextWrapper.FromRes(R.string.insights_badge_who)
+        }
+    }
+
+    object Studies : InsightChartBadge {
+        override val text: TextWrapper by lazyUnsafe {
+            TextWrapper.FromRes(R.string.insights_badge_studies)
+        }
+    }
+
+    object Estimated : InsightChartBadge {
+        override val text: TextWrapper by lazyUnsafe {
+            TextWrapper.FromRes(R.string.insights_badge_estimated)
+        }
+    }
+}

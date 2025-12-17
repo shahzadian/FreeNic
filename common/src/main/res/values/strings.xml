@@ -267,9 +267,35 @@
 
     <string name="insights_header_title">Health insights</string>
     <string name="insights_header_subtitle">Your recovery progress, based on medical research</string>
-    <string name="insights_hint_medical">Medical evidence</string>
 
-    <string name="insights_medical_oxygen_title">Oxygen &amp; CO normalization</string>
-    <string name="insights_medical_oxygen_subtitle">Carbon monoxide levels typically normalize within 24–48 hours</string>
+    <string name="insights_oxygen_title">Oxygen &amp; CO normalization</string>
+    <string name="insights_oxygen_subtitle">Carbon monoxide levels typically normalize within 24–48 hours</string>
+
+    <string name="insights_circulation_title">Circulation &amp; heart recovery</string>
+    <string name="insights_circulation_subtitle">Circulation improves and cardiovascular risk begins to decrease weeks after quitting</string>
+    <string name="insights_lung_self_cleaning_title">Lung self-cleaning</string>
+    <string name="insights_lung_self_cleaning_subtitle">The lungs gradually regain their natural cleaning ability over months after quitting</string>
+    <string name="insights_risk_reduction_title">Long-term risk reduction</string>
+    <string name="insights_risk_reduction_subtitle">Long-term risks decrease over years compared to continued smoking</string>
+    <string name="insights_energy_level_title">Energy level</string>
+    <string name="insights_energy_level_subtitle">Many people report increased energy levels in the weeks and months after quitting</string>
+    <string name="insights_breathing_comfort_title">Breathing comfort</string>
+    <string name="insights_breathing_comfort_subtitle">Breathing often becomes easier as airways recover over time</string>
+    <string name="insights_endurance_title">Физическая выносливость</string>
+    <string name="insights_endurance_subtitle">Physical endurance typically improves as oxygen delivery and circulation recover</string>
+    <string name="insights_minutes_regained_title">Life time regained</string>
+    <string name="insights_minutes_regained_subtitle">Quitting smoking is associated with regaining time otherwise lost to smoking</string>
+    <string name="insights_badge_medical">Medical evidence</string>
+    <string name="insights_badge_who">Based on WHO data</string>
+    <string name="insights_badge_studies">Population studies</string>
+    <string name="insights_badge_estimated">Estimated</string>
+    <string name="insights_footer_info_subtitle">These insights are based on medical research and population studies. They are informational only and do not replace professional medical advice.</string>
+    <string name="insights_footer_info_title">About this data</string>
+    <string name="insights_chart_medical">Medical</string>
+    <string name="insights_chart_health">Health progress</string>
+    <string name="insights_chart_long_term_risk">Long-term risks</string>
+    <string name="insights_tab_premium">Premium insights</string>
+    <string name="insights_long_term_risk_reduction_title">Long-term risk reduction</string>
+    <string name="insights_long_term_risk_reduction_subtitle">Long-term risks decrease over years compared to continued smoking</string>
 
 </resources>
