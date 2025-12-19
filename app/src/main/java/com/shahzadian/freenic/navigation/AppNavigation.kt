@@ -30,6 +30,7 @@ import com.shahzadian.breatheexercisescreen.ui.BreatheExerciseScreen
 import com.shahzadian.cravingsscreen.ui.CravingsScreen
 import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
+import com.shahzadian.debugpanelscreen.ui.DebugPanelScreen
 import com.shahzadian.distractionactivityscreen.guessshape.ui.GuessShapeScreen
 import com.shahzadian.distractionactivityscreen.ui.DistractionActivityScreen
 import com.shahzadian.goalsscreen.ui.GoalsScreen
@@ -249,6 +250,16 @@ fun AppNavigation() {
                 exitTransition = { ExitTransition.None },
             ) { _ ->
                 InsightsScreen(
+                    modifier = BaseModifier,
+                )
+            }
+
+            composable(
+                route = AppScreen.DebugPanelScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                DebugPanelScreen(
                     modifier = BaseModifier,
                 )
             }

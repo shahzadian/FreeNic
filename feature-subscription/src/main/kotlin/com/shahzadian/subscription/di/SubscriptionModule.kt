@@ -8,6 +8,8 @@ import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
 import com.shahzadian.subscription.domain.GetPaidFeaturesUseCaseImpl
 import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCase
 import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCaseImpl
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCaseImpl
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapper
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapperImpl
 import dagger.Binds
@@ -33,4 +35,9 @@ internal interface SubscriptionModule {
 
     @Binds
     fun bindSubscriptionPlanMapper(impl: SubscriptionPlanMapperImpl): SubscriptionPlanMapper
+
+    @Binds
+    fun bindGetUserCurrentSubscriptionUseCase(
+        impl: GetUserCurrentSubscriptionUseCaseImpl
+    ): GetUserCurrentSubscriptionUseCase
 }

@@ -52,7 +52,7 @@ internal class ProfileViewModel @Inject constructor(
             is ProfileViewEvent.OnAgeEdited -> onAgeEdited(event.age)
             is ProfileViewEvent.OnCigsPerDayEdited -> onCigsPerDayEdited(event.cigarettesPerDay)
             is ProfileViewEvent.OnPriceEdited -> onPriceEdited(event.price)
-            is ProfileViewEvent.OnDebugPanelOpenClicked -> {}
+            is ProfileViewEvent.OnDebugPanelOpenClicked -> onDebugPanelClicked()
         }
     }
 
@@ -203,6 +203,12 @@ internal class ProfileViewModel @Inject constructor(
                 quitData = userData.quitData,
             )
             updateUserDataUseCase(updated)
+        }
+    }
+
+    private fun onDebugPanelClicked() {
+        viewModelScope.launch {
+            sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.DebugPanelScreen))
         }
     }
 }
