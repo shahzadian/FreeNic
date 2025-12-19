@@ -16,6 +16,7 @@ internal sealed interface ProfileViewState : ViewState {
         val isPremiumActive: Boolean,
         val personalData: PersonalData,
         val smokingDetails: SmokingDetails,
+        val isDebugBuild: Boolean,
     ) : ProfileViewState {
 
         @Immutable

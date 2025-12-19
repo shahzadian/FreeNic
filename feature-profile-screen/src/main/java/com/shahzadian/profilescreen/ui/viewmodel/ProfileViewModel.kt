@@ -43,13 +43,16 @@ internal class ProfileViewModel @Inject constructor(
                     sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.PaywallScreen))
                 }
             }
+
             is ProfileViewEvent.OnQuitDateSelected -> {
                 onQuitDateUpdated(event)
             }
+
             is ProfileViewEvent.OnNameEdited -> onNameEdited(event.name)
             is ProfileViewEvent.OnAgeEdited -> onAgeEdited(event.age)
             is ProfileViewEvent.OnCigsPerDayEdited -> onCigsPerDayEdited(event.cigarettesPerDay)
             is ProfileViewEvent.OnPriceEdited -> onPriceEdited(event.price)
+            is ProfileViewEvent.OnDebugPanelOpenClicked -> {}
         }
     }
 
@@ -84,7 +87,8 @@ internal class ProfileViewModel @Inject constructor(
                         currency = if (userData.cigarettesData.priceData.isValidCurrency()) Currency.getInstance(
                             userData.cigarettesData.priceData.currency
                         ).symbol else null
-                    )
+                    ),
+                    isDebugBuild = appInfoHelper.isDebugBuild(),
                 )
             )
         }
@@ -136,7 +140,6 @@ internal class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             val current = viewStateFlow.value
             if (current is ProfileViewState.Data) {
-                val plural = age // formatting kept in UI via pluralStringResource; here store raw
                 setViewState(current.copy(personalData = current.personalData.copy(age = age)))
             }
             val userData = getUserDataUseCase() ?: return@launch

@@ -1,11 +1,16 @@
 package com.shahzadian.profilescreen.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -112,6 +118,17 @@ private fun ContentView(
                     .padding(bottom = 16.dp)
             )
         }
+        if (data.isDebugBuild) {
+            DebugBuildView(
+                onDebugClicked = {
+                    onEvent(ProfileViewEvent.OnDebugPanelOpenClicked)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+                    .padding(bottom = 16.dp),
+            )
+        }
         AppVersionTextView(
             appVersion = data.appVersion,
             modifier = Modifier
@@ -133,4 +150,39 @@ private fun AppVersionTextView(
         modifier = modifier,
         style = MaterialTheme.typography.bodySmall
     )
+}
+
+@Composable
+private fun DebugBuildView(
+    onDebugClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Button(
+        modifier = modifier,
+        onClick = onDebugClicked,
+        shape = MaterialTheme.shapes.medium,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = 4.dp
+        )
+    ) {
+        Row(
+            modifier = Modifier.padding(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Image(
+                painter = painterResource(com.shahzadian.profilescreen.R.drawable.ic_profile_debug),
+                contentDescription = "debug",
+                modifier = Modifier.padding(end = 8.dp),
+            )
+            Text(
+                text = "Debug panel",
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.titleLarge,
+            )
+        }
+    }
 }

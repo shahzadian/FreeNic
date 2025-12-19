@@ -13,4 +13,8 @@ internal class AppInfoHelperImpl @Inject constructor() : AppInfoHelper {
             buildNumber = BuildConfig.VERSION_CODE
         )
     }
+
+    override fun isDebugBuild(): Boolean {
+        return BuildConfig.DEBUG
+    }
 }

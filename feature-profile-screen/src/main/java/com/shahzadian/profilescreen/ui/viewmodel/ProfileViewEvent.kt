@@ -2,7 +2,6 @@ package com.shahzadian.profilescreen.ui.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewEvent
-import java.time.LocalDate
 
 @Immutable
 internal sealed interface ProfileViewEvent : ViewEvent {
@@ -26,4 +25,7 @@ internal sealed interface ProfileViewEvent : ViewEvent {
 
     @Immutable
     data class OnPriceEdited(val price: Float) : ProfileViewEvent
+
+    @Immutable
+    data object OnDebugPanelOpenClicked : ProfileViewEvent
 }
