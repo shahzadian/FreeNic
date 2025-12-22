@@ -16,4 +16,7 @@ internal sealed interface GoalsViewEvent : ViewEvent {
     data class OnAchievementShareClicked(
         val id: String,
     ) : GoalsViewEvent
+
+    @Immutable
+    data object OnSavingGoalCreateClicked : GoalsViewEvent
 }

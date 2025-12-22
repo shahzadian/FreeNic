@@ -14,7 +14,7 @@
     <string name="onboarding_2_submit">Next</string>
 
     <string name="onboarding_3_title">You pay for your habit every day</string>
-    <string name="onboarding_3_subtitle">Cigarettes quietly steal your money. Imagine how much you could save if you quit</string>
+    <string name="onboarding_3_subtitle" translatable="false">Cigarettes quietly steal your money. Imagine how much you could save if you quit</string>
     <string name="onboarding_3_submit">Next</string>
 
     <string name="onboarding_4_title">You can change everything. We’ll help you!</string>
@@ -297,9 +297,10 @@
     <string name="insights_tab_premium">Premium insights</string>
     <string name="insights_long_term_risk_reduction_title">Long-term risk reduction</string>
     <string name="insights_long_term_risk_reduction_subtitle">Long-term risks decrease over years compared to continued smoking</string>
-    <string name="saving_goal_title">Turn your savings into a goal</string>
-    <string name="saving_goal_subtitle">You\\’re already saving money by not smoking</string>
-    <string name="saving_goal_create_button">Create a savings goal</string>
-    <string name="saving_goal_premium_info">Premium feature</string>
+    <string name="goals_saving_goal_title">Turn your savings into a goal</string>
+    <string name="goals_saving_goal_subtitle">You\\’re already saving money by not smoking</string>
+    <string name="goals_saving_goal_create_button">Create a savings goal</string>
+    <string name="goals_saving_goal_premium_info">Premium feature</string>
+    <string name="saving_goal_header_title">Set a savings goal</string>
 
 </resources>

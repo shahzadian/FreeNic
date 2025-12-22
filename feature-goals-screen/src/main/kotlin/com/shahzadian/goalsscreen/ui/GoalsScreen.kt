@@ -81,6 +81,9 @@ private fun ContentView(
     val onAchievementShareClick: (id: String) -> Unit = remember {
         { onEvent(GoalsViewEvent.OnAchievementShareClicked(it)) }
     }
+    val onSavingGoalCreateClick: () -> Unit = remember {
+        { onEvent(GoalsViewEvent.OnSavingGoalCreateClicked) }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.goals_header_title),
         subtitle = TextWrapper.FromRes(R.string.goals_header_subtitle),
@@ -89,7 +92,7 @@ private fun ContentView(
     ) {
         if (data.hasPaidSubscription) {
             SavingGoalViewNew(
-                onCreateButtonClicked = {},
+                onCreateButtonClicked = onSavingGoalCreateClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)

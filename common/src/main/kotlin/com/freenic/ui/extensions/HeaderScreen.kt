@@ -21,7 +21,7 @@ import com.freenic.ui.wrapper.TextWrapper
 fun HeaderScreen(
     modifier: Modifier = Modifier,
     title: TextWrapper,
-    subtitle: TextWrapper,
+    subtitle: TextWrapper? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     HeaderScreen(
@@ -61,7 +61,7 @@ fun HeaderScreen(
 fun HeaderScreen(
     modifier: Modifier = Modifier,
     title: TextWrapper,
-    subtitle: TextWrapper,
+    subtitle: TextWrapper? = null,
     image: @Composable (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -93,7 +93,7 @@ fun HeaderScreen(
 @Composable
 internal fun HeaderView(
     title: TextWrapper,
-    subtitle: TextWrapper,
+    subtitle: TextWrapper? = null,
     image: @Composable (() -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
@@ -117,7 +117,7 @@ internal fun HeaderView(
 @Composable
 private fun TitleView(
     title: TextWrapper,
-    subtitle: TextWrapper,
+    subtitle: TextWrapper? = null,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -129,10 +129,13 @@ private fun TitleView(
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier.padding(bottom = 4.dp),
         )
-        Text(
-            text = textFromWrapper(subtitle),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSecondary,
-        )
+        subtitle?.let { subtitle ->
+            Text(
+                text = textFromWrapper(subtitle),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSecondary,
+            )
+        }
+
     }
 }
