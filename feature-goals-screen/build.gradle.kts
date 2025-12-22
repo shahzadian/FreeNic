@@ -44,6 +44,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":feature-goals"))
     implementation(project(":feature-achievements"))
+    implementation(project(":feature-subscription"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

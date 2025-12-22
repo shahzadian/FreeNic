@@ -6,6 +6,7 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.goalsscreen.ui.AchievementsConst
 import com.shahzadian.goalsscreen.ui.AchievementsUiModelFetcher
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -13,6 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class GoalsViewModel @Inject constructor(
     private val achievementsUiModelFetcher: AchievementsUiModelFetcher,
+    private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
 ) : BaseViewModel<GoalsViewState, GoalsViewEvent, GoalsViewCommand>() {
 
     override val initState: GoalsViewState by lazyUnsafe { GoalsViewState.Loading }
@@ -52,6 +54,7 @@ internal class GoalsViewModel @Inject constructor(
             val achievementsResult = achievementsUiModelFetcher.fetch()
             setViewState(
                 GoalsViewState.Data(
+                    hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null,
                     achievementsData = AchievementsData(
                         achievements = achievementsResult.achievements,
                         shouldShowMoreAchievementsButton = achievementsResult.initialAchievementsCount > AchievementsConst.MAX_ACHIEVEMENTS_ON_SCREEN,

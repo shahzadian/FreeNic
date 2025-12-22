@@ -11,6 +11,7 @@ internal sealed interface GoalsViewState : ViewState {
 
     @Immutable
     data class Data(
+        val hasPaidSubscription: Boolean,
         val achievementsData: AchievementsData,
     ) : GoalsViewState {
 

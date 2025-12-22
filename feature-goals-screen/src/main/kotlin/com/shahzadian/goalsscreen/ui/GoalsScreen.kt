@@ -86,12 +86,16 @@ private fun ContentView(
         modifier = modifier,
         icon = ImageWrapper.FromRes(com.shahzadian.goalsscreen.R.drawable.ic_goals_header)
     ) {
-        LockedGoalsView(
-            onUpgradeClicked = onSavingGoalsViewEvent,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
+        if (data.hasPaidSubscription) {
+
+        } else {
+            LockedGoalsView(
+                onUpgradeClicked = onSavingGoalsViewEvent,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
+        }
         AchievementsBlockView(
             data = data.achievementsData,
             onMoreClick = onShowMoreAchievementsClickedEvent,
