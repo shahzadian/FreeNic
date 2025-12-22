@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -64,6 +65,13 @@ dependencies {
     implementation(project(":feature-insights-screen"))
     implementation(project(":feature-recovery-calculator"))
     implementation(project(":feature-debug-panel-screen"))
+
+//    Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
 
 
     implementation(libs.androidx.core.ktx)
