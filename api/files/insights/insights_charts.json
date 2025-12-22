@@ -1,0 +1,85 @@
+{
+  "id": "health_recovery",
+  "title": {
+    "type": "text",
+    "value": "Восстановление здоровья"
+  },
+  "icon": {
+    "type": "asset",
+    "value": "ic_health_recovery"
+  },
+  "charts": [
+    {
+      "type": "title_and_percents",
+      "id": "lungs_recovery",
+      "title": {
+        "type": "text",
+        "value": "Лёгкие"
+      },
+      "description": {
+        "type": "text",
+        "value": "Через 2 недели после отказа от курения функция лёгких начинает улучшаться"
+      },
+      "icon": {
+        "type": "asset",
+        "value": "ic_lungs"
+      },
+      "badge": {
+        "type": "medical_evidence",
+        "text": {
+          "type": "text",
+          "value": "Медицинские данные"
+        }
+      },
+      "percents": 35
+    },
+    {
+      "type": "title_and_percents",
+      "id": "heart_recovery",
+      "title": {
+        "type": "text",
+        "value": "Сердце"
+      },
+      "description": {
+        "type": "text",
+        "value": "Риск сердечно-сосудистых заболеваний постепенно снижается"
+      },
+      "icon": {
+        "type": "asset",
+        "value": "ic_heart"
+      },
+      "badge": {
+        "type": "who",
+        "text": {
+          "type": "text",
+          "value": "ВОЗ"
+        }
+      },
+      "percents": 48
+    },
+    {
+      "type": "title_and_percents",
+      "id": "blood_pressure",
+      "title": {
+        "type": "text",
+        "value": "Давление"
+      },
+      "description": {
+        "type": "text",
+        "value": "Артериальное давление приходит в норму"
+      },
+      "icon": {
+        "type": "asset",
+        "value": "ic_blood_pressure"
+      },
+      "badge": {
+        "type": "studies",
+        "text": {
+          "type": "text",
+          "value": "Исследования"
+        }
+      },
+      "percents": 60
+    }
+  ]
+}
