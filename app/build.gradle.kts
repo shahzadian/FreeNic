@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":feature-insights-screen"))
     implementation(project(":feature-recovery-calculator"))
     implementation(project(":feature-debug-panel-screen"))
+    implementation(project(":feature-debug-params"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))

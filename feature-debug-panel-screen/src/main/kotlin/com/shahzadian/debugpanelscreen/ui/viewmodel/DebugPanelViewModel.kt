@@ -1,6 +1,5 @@
 package com.shahzadian.debugpanelscreen.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -24,7 +23,6 @@ internal class DebugPanelViewModel @Inject constructor(
     override fun onViewEventHappened(event: DebugPanelViewEvent) {
         when (event) {
             is DebugPanelViewEvent.OnHasPaidSubscriptionSwitched -> {
-                Log.d("LogMog", "onHasPaidSubscriptionSwitched: ${event.isSwitchOn}")
                 viewModelScope.launch {
                     val panel =
                         debugPanelParamsHelper.onHasPaidSubscriptionSwitched(event.isSwitchOn)
@@ -40,7 +38,6 @@ internal class DebugPanelViewModel @Inject constructor(
         viewModelScope.launch {
             val params = debugPanelParams ?: debugPanelParamsHelper.getParams() ?: return@launch
             val hasPaidSubscription = params.hasPaidSubscription
-            Log.d("LogMog", "currentSubscriptionPlan: $hasPaidSubscription")
             setViewState(
                 DebugPanelViewState.Data(
                     hasPaidSubscription = hasPaidSubscription

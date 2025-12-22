@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":feature-subscription"))
+    implementation(project(":feature-debug-params"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -58,9 +59,9 @@ dependencies {
 
 //    hilt
     implementation(libs.hilt.android)
-    implementation(libs.androidx.datastore.core)
     ksp(libs.hilt.compiler)
 
+    implementation(libs.androidx.datastore.core)
     implementation(libs.androidx.datastore.preferences)
 
     testImplementation(libs.junit)

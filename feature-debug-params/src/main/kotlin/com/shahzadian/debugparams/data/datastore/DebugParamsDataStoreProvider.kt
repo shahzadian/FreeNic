@@ -1,4 +1,4 @@
-package com.shahzadian.debugpanelscreen.data.datastore
+package com.shahzadian.debugparams.data.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,14 +7,14 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-internal interface DebugDataStoreProvider {
+internal interface DebugParamsDataStoreProvider {
 
     fun provide(): DataStore<Preferences>
 }
 
-internal class DebugDataStoreProviderImpl @Inject constructor(
+internal class DebugParamsDataStoreProviderImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
-) : DebugDataStoreProvider {
+) : DebugParamsDataStoreProvider {
 
     private val Context.userDataStore by preferencesDataStore(name = DATA_STORE_NAME)
 
@@ -23,6 +23,6 @@ internal class DebugDataStoreProviderImpl @Inject constructor(
     }
 
     companion object {
-        private const val DATA_STORE_NAME = "debug_data_store"
+        private const val DATA_STORE_NAME = "debug_params_data_store"
     }
 }
