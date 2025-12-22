@@ -60,7 +60,6 @@ dependencies {
     implementation(project(":feature-profile-screen"))
     implementation(project(":feature-subscription"))
     implementation(project(":feature-goals-screen"))
-    implementation(project(":feature-goals"))
     implementation(project(":feature-achievements"))
     implementation(project(":feature-insights-screen"))
     implementation(project(":feature-recovery-calculator"))

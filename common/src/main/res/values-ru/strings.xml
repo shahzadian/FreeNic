@@ -287,5 +287,9 @@
     <string name="insights_tab_premium">Премиум аналитика</string>
     <string name="insights_long_term_risk_reduction_title">Долгосрочное снижение рисков</string>
     <string name="insights_long_term_risk_reduction_subtitle">Долгосрочные риски снижаются в течение лет по сравнению с продолжением курения</string>
+    <string name="saving_goal_title">Превратите свои накопления в цель</string>
+    <string name="saving_goal_subtitle">Вы уже экономите деньги, не куря</string>
+    <string name="saving_goal_create_button">Создать копилку</string>
+    <string name="saving_goal_premium_info">Премиум функция</string>
 
 </resources>

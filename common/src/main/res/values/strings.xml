@@ -297,5 +297,9 @@
     <string name="insights_tab_premium">Premium insights</string>
     <string name="insights_long_term_risk_reduction_title">Long-term risk reduction</string>
     <string name="insights_long_term_risk_reduction_subtitle">Long-term risks decrease over years compared to continued smoking</string>
+    <string name="saving_goal_title">Turn your savings into a goal</string>
+    <string name="saving_goal_subtitle">You\\’re already saving money by not smoking</string>
+    <string name="saving_goal_create_button">Create a savings goal</string>
+    <string name="saving_goal_premium_info">Premium feature</string>
 
 </resources>

@@ -19,7 +19,8 @@ import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.goals.ui.LockedGoalsView
+import com.shahzadian.goalsscreen.ui.savinggoal.SavingGoalViewLocked
+import com.shahzadian.goalsscreen.ui.savinggoal.SavingGoalViewNew
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewCommand
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewEvent
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewModel
@@ -87,9 +88,14 @@ private fun ContentView(
         icon = ImageWrapper.FromRes(com.shahzadian.goalsscreen.R.drawable.ic_goals_header)
     ) {
         if (data.hasPaidSubscription) {
-
+            SavingGoalViewNew(
+                onCreateButtonClicked = {},
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
         } else {
-            LockedGoalsView(
+            SavingGoalViewLocked(
                 onUpgradeClicked = onSavingGoalsViewEvent,
                 modifier = Modifier
                     .fillMaxWidth()

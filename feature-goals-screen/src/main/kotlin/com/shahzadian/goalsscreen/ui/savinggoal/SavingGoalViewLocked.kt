@@ -1,4 +1,4 @@
-package com.shahzadian.goals.ui
+package com.shahzadian.goalsscreen.ui.savinggoal
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -21,10 +21,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.wrapper.TextWrapper
-import com.shahzadian.goals.R
+import com.shahzadian.goalsscreen.R
 
 @Composable
-fun LockedGoalsView(
+fun SavingGoalViewLocked(
     onUpgradeClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -65,7 +65,7 @@ private fun PremiumWarningView(
             horizontalArrangement = Arrangement.Center,
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_premium_feature_lock),
+                painter = painterResource(R.drawable.ic_saving_goal_premium),
                 contentDescription = "premium lock",
                 modifier = Modifier.padding(end = 8.dp)
             )
