@@ -16,10 +16,10 @@ internal class DebugParamsDataStoreProviderImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
 ) : DebugParamsDataStoreProvider {
 
-    private val Context.userDataStore by preferencesDataStore(name = DATA_STORE_NAME)
+    private val Context.dataStore by preferencesDataStore(name = DATA_STORE_NAME)
 
     override fun provide(): DataStore<Preferences> {
-        return context.userDataStore
+        return context.dataStore
     }
 
     companion object {
