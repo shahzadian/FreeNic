@@ -302,5 +302,7 @@
     <string name="goals_saving_goal_create_button">Create a savings goal</string>
     <string name="goals_saving_goal_premium_info">Premium feature</string>
     <string name="saving_goal_header_title">Set a savings goal</string>
+    <string name="saving_goal_hint_title">Your future awaits</string>
+    <string name="saving_goal_hint_desc">Turn every smoke-free day into something meaningful. Set a goal and watch your savings grow.</string>
 
 </resources>

@@ -292,5 +292,7 @@
     <string name="goals_saving_goal_create_button">Создать копилку</string>
     <string name="goals_saving_goal_premium_info">Премиум функция</string>
     <string name="saving_goal_header_title">Задайте цель накоплений</string>
+    <string name="saving_goal_hint_title">Твое будущее впереди!</string>
+    <string name="saving_goal_hint_desc">Превратите каждый день без сигарет во что-то значимое. Задайте цель и наблюдайте, как растут ваши накопления</string>
 
 </resources>
