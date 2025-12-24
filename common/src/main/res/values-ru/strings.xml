@@ -294,5 +294,10 @@
     <string name="savings_goal_header_title">Задайте цель накоплений</string>
     <string name="savings_goal_create_hint_title">Твое будущее впереди!</string>
     <string name="savings_goal_create_hint_desc">Превратите каждый день без сигарет во что-то значимое. Задайте цель и наблюдайте, как растут ваши накопления</string>
+    <string name="savings_goal_create_label_name">Название цели</string>
+    <string name="savings_goal_create_label_amount">Нужная сумма</string>
+    <string name="savings_goal_create_input_hint_name">Новый ноутбук, отпуск на пляже</string>
+    <string name="savings_goal_create_label_category">Категория</string>
+    <string name="savings_goal_create_hint_amount">100</string>
 
 </resources>

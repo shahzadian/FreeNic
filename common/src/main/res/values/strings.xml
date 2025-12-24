@@ -304,5 +304,10 @@
     <string name="savings_goal_header_title">Set a savings goal</string>
     <string name="savings_goal_create_hint_title">Your future awaits</string>
     <string name="savings_goal_create_hint_desc">Turn every smoke-free day into something meaningful. Set a goal and watch your savings grow.</string>
+    <string name="savings_goal_create_label_name">Goal name</string>
+    <string name="savings_goal_create_label_amount">Goal price</string>
+    <string name="savings_goal_create_input_hint_name">New Laptop, Beach vacation</string>
+    <string name="savings_goal_create_label_category">Category</string>
+    <string name="savings_goal_create_hint_amount">100</string>
 
 </resources>
