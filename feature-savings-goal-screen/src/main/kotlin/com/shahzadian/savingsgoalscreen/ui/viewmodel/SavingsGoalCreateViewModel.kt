@@ -3,7 +3,6 @@ package com.shahzadian.savingsgoalscreen.ui.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
-import com.shahzadian.savingsgoal.domain.SavingsGoal
 import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -70,8 +69,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
 
     private fun onSavingsGoalSubmitted() {
         viewModelScope.launch {
-            val goal = composeSavingGoalOrThrow()
-            savingsGoalHelper.onSavingsGoalChanged(goal)
+            saveGoal()
             sendViewCommand(SavingsGoalCreateViewCommand.NavigateBack)
         }
     }
@@ -92,16 +90,16 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
         }
     }
 
-    private fun composeSavingGoalOrThrow(): SavingsGoal {
+    private suspend fun saveGoal() {
         val name = goalName ?: throw IllegalStateException("Goal name is empty")
         val amount = goalAmount ?: throw IllegalStateException("Goal amount is empty")
         val category = categories
             ?.firstOrNull { it.id == currentCategoryId }
             ?: throw IllegalStateException("No category selected")
-        return SavingsGoal(
+        savingsGoalHelper.createSavingsGoal(
             name = name,
-            necessaryAmount = amount.toFloat(),
-            categoryId = category.id
+            amount = amount.toDouble(),
+            categoryId = category.id,
         )
     }
 }

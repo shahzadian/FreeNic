@@ -2,6 +2,7 @@ package com.shahzadian.goalsscreen.ui.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
+import com.freenic.ui.wrapper.TextWrapper
 
 @Immutable
 internal sealed interface GoalsViewState : ViewState {
@@ -13,8 +14,13 @@ internal sealed interface GoalsViewState : ViewState {
     data class Data(
         val hasPaidSubscription: Boolean,
         val achievementsData: AchievementsData,
-    ) : GoalsViewState {
-
-    }
-
+        val savingsGoal: SavingsGoalUiModel?,
+    ) : GoalsViewState
+    data class SavingsGoalUiModel(
+        val name: String,
+        val necessaryAmount: Float,
+        val currentAmount: Float,
+        val achievedPercents: Float,
+        val category: TextWrapper,
+    )
 }

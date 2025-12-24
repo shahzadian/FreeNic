@@ -8,6 +8,8 @@ import com.shahzadian.savingsgoal.data.datastore.SavingsGoalDataStoreProvider
 import com.shahzadian.savingsgoal.data.datastore.SavingsGoalDataStoreProviderImpl
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelperImpl
+import com.shahzadian.savingsgoal.mapper.SavingsGoalMapper
+import com.shahzadian.savingsgoal.mapper.SavingsGoalMapperImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -32,4 +34,7 @@ internal interface SavingsGoalModule {
 
     @Binds
     fun bindSavingsGoalCategoryRepository(impl: SavingsGoalCategoryRepositoryImpl): SavingsGoalCategoryRepository
+
+    @Binds
+    fun bindSavingsGoalMapper(impl: SavingsGoalMapperImpl): SavingsGoalMapper
 }

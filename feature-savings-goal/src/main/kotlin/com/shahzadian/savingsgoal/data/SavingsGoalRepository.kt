@@ -5,16 +5,15 @@ import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.freenic.ui.model.CoroutineContexts
 import com.shahzadian.savingsgoal.data.datastore.SavingsGoalDataStoreProvider
-import com.shahzadian.savingsgoal.domain.SavingsGoal
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 internal interface SavingsGoalRepository {
 
-    suspend fun getActiveSavingsGoal(): SavingsGoal?
+    suspend fun getActiveSavingsGoal(): SavingsGoalData?
 
-    suspend fun onSavingsGoalsChanged(savingsGoal: SavingsGoal)
+    suspend fun onSavingsGoalsChanged(savingsGoal: SavingsGoalData)
 }
 
 internal class SavingsGoalRepositoryImpl @Inject constructor(
@@ -22,7 +21,7 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
     private val coroutineContexts: CoroutineContexts,
 ) : SavingsGoalRepository {
 
-    override suspend fun getActiveSavingsGoal(): SavingsGoal? {
+    override suspend fun getActiveSavingsGoal(): SavingsGoalData? {
         return withContext(coroutineContexts.io) {
             val dataStore = savingsGoalDataStoreProvider.provide()
             val prefs = dataStore.data.firstOrNull() ?: return@withContext null
@@ -30,7 +29,7 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
             val necessaryAmount =
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] ?: return@withContext null
             val categoryId = prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] ?: return@withContext null
-            SavingsGoal(
+            SavingsGoalData(
                 name = name,
                 necessaryAmount = necessaryAmount,
                 categoryId = categoryId,
@@ -38,7 +37,7 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun onSavingsGoalsChanged(savingsGoal: SavingsGoal) {
+    override suspend fun onSavingsGoalsChanged(savingsGoal: SavingsGoalData) {
         withContext(coroutineContexts.io) {
             savingsGoalDataStoreProvider.provide().edit { prefs ->
                 prefs[stringPreferencesKey(PREF_KEY_NAME)] = savingsGoal.name
