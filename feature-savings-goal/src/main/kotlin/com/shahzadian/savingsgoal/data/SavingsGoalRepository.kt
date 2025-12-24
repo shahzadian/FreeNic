@@ -29,9 +29,11 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
             val name = prefs[stringPreferencesKey(PREF_KEY_NAME)] ?: return@withContext null
             val necessaryAmount =
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] ?: return@withContext null
+            val categoryId = prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] ?: return@withContext null
             SavingsGoal(
                 name = name,
-                necessaryAmount = necessaryAmount
+                necessaryAmount = necessaryAmount,
+                categoryId = categoryId,
             )
         }
     }
@@ -48,5 +50,6 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
     private companion object {
         private const val PREF_KEY_NAME: String = "name"
         private const val PREF_KEY_NECESSARY_AMOUNT: String = "necessary_amount"
+        private const val PREF_KEY_GOAL_CATEGORY_ID: String = "goal_category_id"
     }
 }

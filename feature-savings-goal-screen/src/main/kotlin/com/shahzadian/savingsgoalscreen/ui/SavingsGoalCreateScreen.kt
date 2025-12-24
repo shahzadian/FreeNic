@@ -38,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
@@ -46,6 +47,7 @@ import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.savingsgoalscreen.ui.viewmodel.SavingsGoalCreateViewCommand
 import com.shahzadian.savingsgoalscreen.ui.viewmodel.SavingsGoalCreateViewEvent
 import com.shahzadian.savingsgoalscreen.ui.viewmodel.SavingsGoalCreateViewModel
 import com.shahzadian.savingsgoalscreen.ui.viewmodel.SavingsGoalCreateViewState
@@ -55,6 +57,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SavingsGoalCreateScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: SavingsGoalCreateViewModel = hiltViewModel()
@@ -73,6 +76,17 @@ fun SavingsGoalCreateScreen(
                 modifier = modifier.fillMaxSize()
             )
         }
+    }
+    LaunchedEffect(viewModel.viewCommandFlow) {
+        viewModel
+            .viewCommandFlow
+            .collect { command ->
+                when (command) {
+                    is SavingsGoalCreateViewCommand.NavigateBack -> {
+                        navController.popBackStack()
+                    }
+                }
+            }
     }
 }
 

@@ -1,4 +1,4 @@
-package com.shahzadian.savingsgoalscreen.domain
+package com.shahzadian.savingsgoal.domain
 
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper

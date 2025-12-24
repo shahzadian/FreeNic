@@ -1,9 +1,9 @@
-package com.shahzadian.savingsgoalscreen.data
+package com.shahzadian.savingsgoal.data.category
 
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.savingsgoalscreen.domain.SavingsGoalCategory
+import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
 import javax.inject.Inject
 
 internal interface SavingsGoalCategoryRepository {
@@ -18,22 +18,22 @@ internal class SavingsGoalCategoryRepositoryImpl @Inject constructor(): SavingsG
             SavingsGoalCategory(
                 id = CATEGORY_TECH,
                 name = TextWrapper.FromRes(R.string.savings_create_category_tech),
-                icon = ImageWrapper.FromRes(com.shahzadian.savingsgoalscreen.R.drawable.ic_savings_goal_create_category_tech)
+                icon = ImageWrapper.FromRes(com.shahzadian.savingsgoal.R.drawable.ic_savings_goal_create_category_tech)
             ),
             SavingsGoalCategory(
                 id = CATEGORY_TRAVEL,
                 name = TextWrapper.FromRes(R.string.savings_create_category_travel),
-                icon = ImageWrapper.FromRes(com.shahzadian.savingsgoalscreen.R.drawable.ic_savings_goal_create_category_travel)
+                icon = ImageWrapper.FromRes(com.shahzadian.savingsgoal.R.drawable.ic_savings_goal_create_category_travel)
             ),
             SavingsGoalCategory(
                 id = CATEGORY_HEALTH,
                 name = TextWrapper.FromRes(R.string.savings_create_category_health),
-                icon = ImageWrapper.FromRes(com.shahzadian.savingsgoalscreen.R.drawable.ic_savings_goal_create_category_health)
+                icon = ImageWrapper.FromRes(com.shahzadian.savingsgoal.R.drawable.ic_savings_goal_create_category_health)
             ),
             SavingsGoalCategory(
                 id = CATEGORY_OTHER,
                 name = TextWrapper.FromRes(R.string.savings_create_category_other),
-                icon = ImageWrapper.FromRes(com.shahzadian.savingsgoalscreen.R.drawable.ic_savings_goal_create_category_other)
+                icon = ImageWrapper.FromRes(com.shahzadian.savingsgoal.R.drawable.ic_savings_goal_create_category_other)
             ),
         )
     }

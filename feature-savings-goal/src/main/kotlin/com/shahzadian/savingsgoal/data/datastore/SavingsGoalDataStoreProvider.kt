@@ -23,6 +23,6 @@ internal class SavingsGoalDataStoreProviderImpl @Inject constructor(
     }
 
     companion object {
-        private const val DATA_STORE_NAME = "user_data_store"
+        private const val DATA_STORE_NAME = "savings_goal_data_store"
     }
 }

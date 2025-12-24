@@ -2,6 +2,8 @@ package com.shahzadian.savingsgoal.di
 
 import com.shahzadian.savingsgoal.data.SavingsGoalRepository
 import com.shahzadian.savingsgoal.data.SavingsGoalRepositoryImpl
+import com.shahzadian.savingsgoal.data.category.SavingsGoalCategoryRepository
+import com.shahzadian.savingsgoal.data.category.SavingsGoalCategoryRepositoryImpl
 import com.shahzadian.savingsgoal.data.datastore.SavingsGoalDataStoreProvider
 import com.shahzadian.savingsgoal.data.datastore.SavingsGoalDataStoreProviderImpl
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
@@ -27,4 +29,7 @@ internal interface SavingsGoalModule {
 
     @Binds
     fun bindGetSavingsGoalUseCase(impl: SavingsGoalHelperImpl): SavingsGoalHelper
+
+    @Binds
+    fun bindSavingsGoalCategoryRepository(impl: SavingsGoalCategoryRepositoryImpl): SavingsGoalCategoryRepository
 }
