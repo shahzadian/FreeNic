@@ -14,4 +14,6 @@ internal sealed interface SavingsGoalCreateViewEvent : ViewEvent {
 
     @Immutable
     data class OnCategoryChanged(val categoryId: String) : SavingsGoalCreateViewEvent
+
+    data object OnSubmitClicked : SavingsGoalCreateViewEvent
 }

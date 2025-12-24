@@ -16,6 +16,7 @@ internal sealed interface SavingsGoalCreateViewState : ViewState {
         val goalAmount: String?,
         val categories: List<SavingsGoalCategoryUiModel>,
         val selectedCategoryId: String?,
+        val isSubmitButtonEnabled: Boolean,
     ): SavingsGoalCreateViewState
 
     data class SavingsGoalCategoryUiModel(

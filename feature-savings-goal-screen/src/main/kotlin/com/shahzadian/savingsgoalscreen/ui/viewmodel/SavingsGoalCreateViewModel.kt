@@ -40,6 +40,9 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                 currentCategoryId = event.categoryId
                 setData()
             }
+            is SavingsGoalCreateViewEvent.OnSubmitClicked -> {
+//                TODO
+            }
         }
     }
 
@@ -51,7 +54,10 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                     goalName = goalName,
                     goalAmount = goalAmount,
                     categories = getSavingsGoalCategoryUseCase().map { it.toUiModel() },
-                    selectedCategoryId = currentCategoryId
+                    selectedCategoryId = currentCategoryId,
+                    isSubmitButtonEnabled = goalName?.isNotBlank() == true &&
+                            goalAmount?.isNotBlank() == true &&
+                            currentCategoryId != null
                 )
             )
         }

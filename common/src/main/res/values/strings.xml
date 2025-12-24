@@ -313,5 +313,6 @@
     <string name="savings_create_category_travel">Travel</string>
     <string name="savings_create_category_health">Health</string>
     <string name="savings_create_category_other">Other</string>
+    <string name="savings_goal_create_submit">Save goal</string>
 
 </resources>

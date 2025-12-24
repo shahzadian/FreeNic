@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
+import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
@@ -81,12 +82,21 @@ private fun ContentView(
     onEvent: (SavingsGoalCreateViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val onGoalNameChange: (String) -> Unit =
+    val onGoalNameChange: (String) -> Unit = remember {
         { onEvent(SavingsGoalCreateViewEvent.OnGoalNameChanged(it)) }
-    val onAmountChange: (String) -> Unit =
+    }
+
+    val onAmountChange: (String) -> Unit = remember {
         { onEvent(SavingsGoalCreateViewEvent.OnAmountChanged(it)) }
-    val onCategoryClick: (String) -> Unit =
+    }
+
+    val onCategoryClick: (String) -> Unit = remember {
         { onEvent(SavingsGoalCreateViewEvent.OnCategoryChanged(it)) }
+    }
+
+    val onSubmitClick = remember {
+        { onEvent(SavingsGoalCreateViewEvent.OnSubmitClicked) }
+    }
     val keyboardController = LocalSoftwareKeyboardController.current
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.savings_goal_header_title),
@@ -128,7 +138,16 @@ private fun ContentView(
             categories = data.categories,
             selectedCategoryId = data.selectedCategoryId,
             onClick = onCategoryClick,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+
+        )
+        MainSubmitButton(
+            text = TextWrapper.FromRes(R.string.savings_goal_create_submit),
+            onClick = onSubmitClick,
+            enabled = data.isSubmitButtonEnabled,
+            modifier = modifier,
         )
     }
 }
