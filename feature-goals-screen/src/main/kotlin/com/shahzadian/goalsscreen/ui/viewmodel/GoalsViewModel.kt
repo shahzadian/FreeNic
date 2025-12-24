@@ -25,7 +25,7 @@ internal class GoalsViewModel @Inject constructor(
 
     override fun onViewEventHappened(event: GoalsViewEvent) {
         when (event) {
-            is GoalsViewEvent.OnSavingGoalsUpgradeClicked -> {
+            is GoalsViewEvent.OnSavingsGoalsUpgradeClicked -> {
                 viewModelScope.launch {
                     sendViewCommand(GoalsViewCommand.NavigateTo(AppScreen.PaywallScreen))
                 }
@@ -47,11 +47,11 @@ internal class GoalsViewModel @Inject constructor(
                 }
             }
 
-            is GoalsViewEvent.OnSavingGoalCreateClicked -> {
+            is GoalsViewEvent.OnSavingsGoalCreateClicked -> {
                 viewModelScope.launch {
                     sendViewCommand(
                         GoalsViewCommand.NavigateTo(
-                            appScreen = AppScreen.SavingsGoalScreen,
+                            appScreen = AppScreen.SavingsGoalCreateScreen,
                         )
                     )
                 }

@@ -1,4 +1,4 @@
-package com.shahzadian.goalsscreen.ui.savinggoal
+package com.shahzadian.goalsscreen.ui.savingsgoal
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -24,7 +24,7 @@ import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.goalsscreen.R
 
 @Composable
-fun SavingGoalViewLocked(
+fun SavingsGoalViewLocked(
     onUpgradeClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {

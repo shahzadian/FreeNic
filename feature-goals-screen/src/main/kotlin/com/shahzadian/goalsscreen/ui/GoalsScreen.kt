@@ -19,8 +19,8 @@ import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.goalsscreen.ui.savinggoal.SavingGoalViewLocked
-import com.shahzadian.goalsscreen.ui.savinggoal.SavingGoalViewNew
+import com.shahzadian.goalsscreen.ui.savingsgoal.SavingsGoalViewLocked
+import com.shahzadian.goalsscreen.ui.savingsgoal.SavingsGoalViewNew
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewCommand
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewEvent
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewModel
@@ -72,8 +72,8 @@ private fun ContentView(
     onEvent: (GoalsViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val onSavingGoalsViewEvent = remember {
-        { onEvent(GoalsViewEvent.OnSavingGoalsUpgradeClicked) }
+    val onSavingsGoalsViewEvent = remember {
+        { onEvent(GoalsViewEvent.OnSavingsGoalsUpgradeClicked) }
     }
     val onShowMoreAchievementsClickedEvent = remember {
         { onEvent(GoalsViewEvent.OnShowMoreAchievementsClicked) }
@@ -81,8 +81,8 @@ private fun ContentView(
     val onAchievementShareClick: (id: String) -> Unit = remember {
         { onEvent(GoalsViewEvent.OnAchievementShareClicked(it)) }
     }
-    val onSavingGoalCreateClick: () -> Unit = remember {
-        { onEvent(GoalsViewEvent.OnSavingGoalCreateClicked) }
+    val onSavingsGoalCreateClick: () -> Unit = remember {
+        { onEvent(GoalsViewEvent.OnSavingsGoalCreateClicked) }
     }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.goals_header_title),
@@ -91,15 +91,15 @@ private fun ContentView(
         icon = ImageWrapper.FromRes(com.shahzadian.goalsscreen.R.drawable.ic_goals_header)
     ) {
         if (data.hasPaidSubscription) {
-            SavingGoalViewNew(
-                onCreateButtonClicked = onSavingGoalCreateClick,
+            SavingsGoalViewNew(
+                onCreateButtonClicked = onSavingsGoalCreateClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             )
         } else {
-            SavingGoalViewLocked(
-                onUpgradeClicked = onSavingGoalsViewEvent,
+            SavingsGoalViewLocked(
+                onUpgradeClicked = onSavingsGoalsViewEvent,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)

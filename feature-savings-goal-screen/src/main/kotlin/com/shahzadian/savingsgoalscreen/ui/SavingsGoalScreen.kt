@@ -1,4 +1,4 @@
-package com.shahzadian.savinggoalscreen.ui
+package com.shahzadian.savingsgoalscreen.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,11 +17,11 @@ import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 
 @Composable
-fun SavingGoalScreen(
+fun SavingsGoalCreateScreen(
     modifier: Modifier = Modifier,
 ) {
     HeaderScreen(
-        title = TextWrapper.FromRes(R.string.saving_goal_header_title),
+        title = TextWrapper.FromRes(R.string.savings_goal_header_title),
         modifier = modifier
     ) {
         HintView(
@@ -43,7 +43,7 @@ private fun HintView(
             .padding(16.dp),
     ) {
         Image(
-            painter = painterResource(com.shahzadian.savinggoalscreen.R.drawable.ic_saving_goal_hint),
+            painter = painterResource(com.shahzadian.savingsgoalscreen.R.drawable.ic_saving_goal_hint),
             contentDescription = "Hint",
             modifier = Modifier.padding(end = 8.dp)
         )
@@ -51,13 +51,13 @@ private fun HintView(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = stringResource(R.string.saving_goal_hint_title),
+                text = stringResource(R.string.savings_goal_create_hint_title),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 8.dp),
             )
             Text(
-                text = stringResource(R.string.saving_goal_hint_desc),
+                text = stringResource(R.string.savings_goal_create_hint_desc),
                 color = MaterialTheme.colorScheme.onSecondary,
                 style = MaterialTheme.typography.bodyMedium,
             )

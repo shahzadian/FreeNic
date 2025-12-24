@@ -1,4 +1,4 @@
-package com.shahzadian.goalsscreen.ui.savinggoal
+package com.shahzadian.goalsscreen.ui.savingsgoal
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,7 @@ import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.goalsscreen.R
 
 @Composable
-fun SavingGoalViewNew(
+fun SavingsGoalViewNew(
     onCreateButtonClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -71,13 +71,13 @@ private fun HeaderView(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = stringResource(com.shahzadian.baseui.R.string.goals_saving_goal_title),
+                text = stringResource(com.shahzadian.baseui.R.string.goals_savings_goal_title),
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 8.dp),
             )
             Text(
-                text = stringResource(com.shahzadian.baseui.R.string.goals_saving_goal_subtitle),
+                text = stringResource(com.shahzadian.baseui.R.string.goals_savings_goal_subtitle),
                 color = MaterialTheme.colorScheme.onSecondary,
                 style = MaterialTheme.typography.bodyMedium,
             )
@@ -92,7 +92,7 @@ private fun SubmitButtonView(
 ) {
     val onButtonClick = remember { { onCreateButtonClicked() } }
     MainSubmitButton(
-        text = TextWrapper.FromRes(com.shahzadian.baseui.R.string.goals_saving_goal_create_button),
+        text = TextWrapper.FromRes(com.shahzadian.baseui.R.string.goals_savings_goal_create_button),
         onClick = onButtonClick,
         modifier = modifier,
     )
@@ -113,7 +113,7 @@ private fun FooterInfoView(
             modifier = Modifier.padding(end = 8.dp)
         )
         Text(
-            text = stringResource(com.shahzadian.baseui.R.string.goals_saving_goal_premium_info),
+            text = stringResource(com.shahzadian.baseui.R.string.goals_savings_goal_premium_info),
             color = MaterialTheme.colorScheme.onSecondary,
             style = MaterialTheme.typography.bodyMedium,
         )

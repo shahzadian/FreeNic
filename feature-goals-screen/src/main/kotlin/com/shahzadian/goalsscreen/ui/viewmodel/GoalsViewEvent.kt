@@ -7,7 +7,7 @@ import com.freenic.ui.vm.ViewEvent
 internal sealed interface GoalsViewEvent : ViewEvent {
 
     @Immutable
-    data object OnSavingGoalsUpgradeClicked : GoalsViewEvent
+    data object OnSavingsGoalsUpgradeClicked : GoalsViewEvent
 
     @Immutable
     data object OnShowMoreAchievementsClicked : GoalsViewEvent
@@ -18,5 +18,5 @@ internal sealed interface GoalsViewEvent : ViewEvent {
     ) : GoalsViewEvent
 
     @Immutable
-    data object OnSavingGoalCreateClicked : GoalsViewEvent
+    data object OnSavingsGoalCreateClicked : GoalsViewEvent
 }

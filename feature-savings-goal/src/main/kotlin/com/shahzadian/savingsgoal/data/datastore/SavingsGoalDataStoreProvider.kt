@@ -1,4 +1,4 @@
-package com.shahzadian.savinggoal.data.datastore
+package com.shahzadian.savingsgoal.data.datastore
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -7,14 +7,14 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-internal interface SavingGoalDataStoreProvider {
+internal interface SavingsGoalDataStoreProvider {
 
     fun provide(): DataStore<Preferences>
 }
 
-internal class SavingGoalDataStoreProviderImpl @Inject constructor(
+internal class SavingsGoalDataStoreProviderImpl @Inject constructor(
     @param:ApplicationContext private val context: Context,
-) : SavingGoalDataStoreProvider {
+) : SavingsGoalDataStoreProvider {
 
     private val Context.dataStore by preferencesDataStore(name = DATA_STORE_NAME)
 
