@@ -87,9 +87,15 @@ private fun ContentView(
         { onEvent(SavingsGoalCreateViewEvent.OnAmountChanged(it)) }
     val onCategoryClick: (String) -> Unit =
         { onEvent(SavingsGoalCreateViewEvent.OnCategoryChanged(it)) }
+    val keyboardController = LocalSoftwareKeyboardController.current
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.savings_goal_header_title),
         modifier = modifier
+            .clickable(
+                interactionSource = null,
+                indication = null,
+                onClick = { keyboardController?.hide() }
+            )
     ) {
         HintView(
             modifier = Modifier.padding(bottom = 16.dp)
