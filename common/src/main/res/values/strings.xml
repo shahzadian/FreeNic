@@ -309,5 +309,9 @@
     <string name="savings_goal_create_input_hint_name">New Laptop, Beach vacation</string>
     <string name="savings_goal_create_label_category">Category</string>
     <string name="savings_goal_create_hint_amount">100</string>
+    <string name="savings_create_category_tech">Tech</string>
+    <string name="savings_create_category_travel">Travel</string>
+    <string name="savings_create_category_health">Health</string>
+    <string name="savings_create_category_other">Other</string>
 
 </resources>

@@ -2,6 +2,8 @@ package com.shahzadian.savingsgoalscreen.ui.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
+import com.freenic.ui.wrapper.ImageWrapper
+import com.freenic.ui.wrapper.TextWrapper
 
 @Immutable
 internal sealed interface SavingsGoalCreateViewState : ViewState {
@@ -12,5 +14,13 @@ internal sealed interface SavingsGoalCreateViewState : ViewState {
     data class Data(
         val goalName: String?,
         val goalAmount: String?,
+        val categories: List<SavingsGoalCategoryUiModel>,
+        val selectedCategoryId: String?,
     ): SavingsGoalCreateViewState
+
+    data class SavingsGoalCategoryUiModel(
+        val id: String,
+        val name: TextWrapper,
+        val icon: ImageWrapper,
+    )
 }

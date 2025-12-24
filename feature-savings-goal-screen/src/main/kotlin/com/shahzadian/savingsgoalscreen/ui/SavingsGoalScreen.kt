@@ -2,11 +2,16 @@ package com.shahzadian.savingsgoalscreen.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
@@ -21,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
@@ -34,6 +40,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
+import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.textFromWrapper
+import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.viewmodel.SavingsGoalCreateViewEvent
@@ -72,8 +81,12 @@ private fun ContentView(
     onEvent: (SavingsGoalCreateViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val onGoalNameChange: (String) -> Unit = { onEvent(SavingsGoalCreateViewEvent.OnGoalNameChanged(it)) }
-    val onAmountChange: (String) -> Unit = { onEvent(SavingsGoalCreateViewEvent.OnAmountChanged(it)) }
+    val onGoalNameChange: (String) -> Unit =
+        { onEvent(SavingsGoalCreateViewEvent.OnGoalNameChanged(it)) }
+    val onAmountChange: (String) -> Unit =
+        { onEvent(SavingsGoalCreateViewEvent.OnAmountChanged(it)) }
+    val onCategoryClick: (String) -> Unit =
+        { onEvent(SavingsGoalCreateViewEvent.OnCategoryChanged(it)) }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.savings_goal_header_title),
         modifier = modifier
@@ -95,6 +108,7 @@ private fun ContentView(
         }
         InputView(
             label = stringResource(R.string.savings_goal_create_label_amount),
+            modifier = Modifier.padding(bottom = 16.dp),
         ) {
             InputField(
                 value = data.goalAmount,
@@ -104,6 +118,12 @@ private fun ContentView(
                 modifier = Modifier.fillMaxWidth()
             )
         }
+        CategoriesView(
+            categories = data.categories,
+            selectedCategoryId = data.selectedCategoryId,
+            onClick = onCategoryClick,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
@@ -155,7 +175,7 @@ private fun InputView(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground,
-            modifier = modifier.padding(bottom = 8.dp),
+            modifier = Modifier.padding(bottom = 8.dp),
         )
         input()
     }
@@ -227,4 +247,78 @@ internal fun InputField(
         ),
         singleLine = true,
     )
+}
+
+@Composable
+private fun CategoriesView(
+    categories: List<SavingsGoalCreateViewState.SavingsGoalCategoryUiModel>,
+    selectedCategoryId: String?,
+    onClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val onCategoryClick: (String) -> Unit = remember { { onClick(it) } }
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            text = stringResource(R.string.savings_goal_create_label_category),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onBackground,
+            modifier = modifier.padding(bottom = 8.dp),
+        )
+        Row(
+            modifier = Modifier.horizontalScroll(rememberScrollState())
+        ) {
+            categories.forEachIndexed { index, category ->
+                CategoryView(
+                    name = category.name,
+                    icon = category.icon,
+                    onClicked = { onCategoryClick(category.id) },
+                    isSelected = selectedCategoryId == category.id,
+                    modifier = Modifier
+                        .padding(end = if (index == categories.lastIndex) 0.dp else 8.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun CategoryView(
+    name: TextWrapper,
+    icon: ImageWrapper,
+    isSelected: Boolean,
+    onClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val onCategoryClick = remember { { onClicked() } }
+    Column(
+        modifier = modifier
+            .clickable {
+                onCategoryClick()
+            }
+            .background(
+                color = MaterialTheme.colorScheme.primaryContainer,
+                shape = MaterialTheme.shapes.medium,
+            )
+            .border(
+                width = 1.dp,
+                color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
+                shape = MaterialTheme.shapes.medium,
+            )
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Image(
+            painter = imageFromWrapper(icon),
+            contentDescription = "Category",
+            modifier = Modifier.padding(bottom = 4.dp)
+        )
+        Text(
+            text = textFromWrapper(name),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSecondary,
+        )
+    }
 }

@@ -299,5 +299,9 @@
     <string name="savings_goal_create_input_hint_name">Новый ноутбук, отпуск на пляже</string>
     <string name="savings_goal_create_label_category">Категория</string>
     <string name="savings_goal_create_hint_amount">100</string>
+    <string name="savings_create_category_tech">Техника</string>
+    <string name="savings_create_category_travel">Путешествие</string>
+    <string name="savings_create_category_health">Здоровье</string>
+    <string name="savings_create_category_other">Другое</string>
 
 </resources>
