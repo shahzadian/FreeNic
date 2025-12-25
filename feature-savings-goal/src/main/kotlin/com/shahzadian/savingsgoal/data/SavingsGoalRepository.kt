@@ -13,7 +13,7 @@ internal interface SavingsGoalRepository {
 
     suspend fun getActiveSavingsGoal(): SavingsGoalData?
 
-    suspend fun onSavingsGoalsChanged(savingsGoal: SavingsGoalData)
+    suspend fun createSavingsGoal(savingsGoal: SavingsGoalData)
 }
 
 internal class SavingsGoalRepositoryImpl @Inject constructor(
@@ -28,7 +28,8 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
             val name = prefs[stringPreferencesKey(PREF_KEY_NAME)] ?: return@withContext null
             val necessaryAmount =
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] ?: return@withContext null
-            val categoryId = prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] ?: return@withContext null
+            val categoryId =
+                prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] ?: return@withContext null
             SavingsGoalData(
                 name = name,
                 necessaryAmount = necessaryAmount,
@@ -37,11 +38,12 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun onSavingsGoalsChanged(savingsGoal: SavingsGoalData) {
+    override suspend fun createSavingsGoal(savingsGoal: SavingsGoalData) {
         withContext(coroutineContexts.io) {
             savingsGoalDataStoreProvider.provide().edit { prefs ->
                 prefs[stringPreferencesKey(PREF_KEY_NAME)] = savingsGoal.name
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] = savingsGoal.necessaryAmount
+                prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] = savingsGoal.categoryId
             }
         }
     }

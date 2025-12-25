@@ -12,11 +12,11 @@ interface SavingsGoalMapper {
 
     suspend fun fromDataToDomain(savingsGoalData: SavingsGoalData): SavingsGoal
 
-    suspend fun createDomain(
+    suspend fun createDataModel(
         name: String,
         amount: Double,
         categoryId: String
-    ): SavingsGoal
+    ): SavingsGoalData
 }
 
 internal class SavingsGoalMapperImpl @Inject constructor(
@@ -40,22 +40,20 @@ internal class SavingsGoalMapperImpl @Inject constructor(
             name = savingsGoalData.name,
             necessaryAmount = savingsGoalData.necessaryAmount,
             currentAmount = savedMoney,
-            achievedPercents = 100 - percents,
+            achievedPercents = minOf(percents, 100f),
             categoryId = savingsGoalData.categoryId
         )
     }
 
-    override suspend fun createDomain(
+    override suspend fun createDataModel(
         name: String,
         amount: Double,
         categoryId: String
-    ): SavingsGoal {
-        return SavingsGoal(
+    ): SavingsGoalData {
+        return SavingsGoalData(
             name = name,
             necessaryAmount = amount.toFloat(),
             categoryId = categoryId,
-            currentAmount = getSavedMoney(),
-            achievedPercents = 0f,
         )
     }
 

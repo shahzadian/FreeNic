@@ -16,8 +16,6 @@ interface SavingsGoalHelper {
         amount: Double,
         categoryId: String,
     )
-
-    suspend fun onSavingsGoalChanged(savingsGoal: SavingsGoal)
 }
 
 internal class SavingsGoalHelperImpl @Inject constructor(
@@ -41,10 +39,7 @@ internal class SavingsGoalHelperImpl @Inject constructor(
         amount: Double,
         categoryId: String
     ) {
-        savingsGoalMapper.createDomain(name, amount, categoryId)
-    }
-
-    override suspend fun onSavingsGoalChanged(savingsGoal: SavingsGoal) {
-        savingsGoalRepository.onSavingsGoalsChanged(savingsGoalMapper.fromDomainToData(savingsGoal))
+        val goal = savingsGoalMapper.createDataModel(name, amount, categoryId)
+        savingsGoalRepository.createSavingsGoal(goal)
     }
 }

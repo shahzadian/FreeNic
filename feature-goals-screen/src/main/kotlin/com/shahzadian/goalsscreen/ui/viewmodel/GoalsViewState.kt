@@ -16,11 +16,13 @@ internal sealed interface GoalsViewState : ViewState {
         val achievementsData: AchievementsData,
         val savingsGoal: SavingsGoalUiModel?,
     ) : GoalsViewState
+
+    @Immutable
     data class SavingsGoalUiModel(
         val name: String,
         val necessaryAmount: Float,
         val currentAmount: Float,
-        val achievedPercents: Float,
+        val achievedPercents: Int,
         val category: TextWrapper,
     )
 }

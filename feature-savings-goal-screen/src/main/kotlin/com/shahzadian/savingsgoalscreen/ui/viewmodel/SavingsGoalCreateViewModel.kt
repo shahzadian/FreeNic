@@ -52,7 +52,6 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
 
     private fun setData() {
         viewModelScope.launch {
-//            TODO
             setViewState(
                 SavingsGoalCreateViewState.Data(
                     goalName = goalName,

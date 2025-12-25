@@ -87,7 +87,7 @@ internal class GoalsViewModel @Inject constructor(
             ?: throw IllegalStateException("No category found for id ${this.categoryId}")
         return GoalsViewState.SavingsGoalUiModel(
             name = this.name,
-            achievedPercents = this.achievedPercents,
+            achievedPercents = this.achievedPercents.toInt(),
             category = category,
             necessaryAmount = this.necessaryAmount,
             currentAmount = this.currentAmount
