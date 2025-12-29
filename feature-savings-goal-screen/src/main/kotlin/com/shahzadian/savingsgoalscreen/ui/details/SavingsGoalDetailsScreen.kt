@@ -2,10 +2,12 @@ package com.shahzadian.savingsgoalscreen.ui.details
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
@@ -47,7 +49,12 @@ private fun ContentView(
     ) {
         SavingsGoalDetailsHeaderView(
             dataUiModel = data.uiModel,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        SavingsGoalDetailsCardView(
+            dataUiModel = data.uiModel,
         )
     }
 }

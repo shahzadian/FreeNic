@@ -4,7 +4,9 @@ import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.savingsgoal.domain.SavingsGoal
+import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
+import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -50,7 +52,16 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
             achievedPercents = this.achievedPercents.toInt(),
             category = savingsGoalHelper.getAllCategories().firstOrNull { category ->
                 category.id == this.categoryId
-            }?.name ?: throw IllegalStateException("No category found for id ${this.categoryId}")
+            }?.toUiModel()
+                ?: throw IllegalStateException("No category found for id ${this.categoryId}")
+        )
+    }
+
+    private fun SavingsGoalCategory.toUiModel(): SavingsGoalCategoryUiModel {
+        return SavingsGoalCategoryUiModel(
+            id = this.id,
+            name = this.name,
+            icon = this.icon
         )
     }
 }

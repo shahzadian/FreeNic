@@ -1,10 +1,14 @@
 package com.shahzadian.savingsgoalscreen.ui.details
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,6 +21,13 @@ internal fun SavingsGoalDetailsHeaderView(
     dataUiModel: SavingsGoalDetailsViewState.SavingsGoalDataUiModel,
     modifier: Modifier = Modifier,
 ) {
+    val amountAnimatable = remember { Animatable(0f) }
+    LaunchedEffect(dataUiModel.necessaryAmount) {
+        amountAnimatable.animateTo(
+            targetValue = dataUiModel.currentAmount,
+            animationSpec = tween(durationMillis = 1500),
+        )
+    }
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -28,8 +39,13 @@ internal fun SavingsGoalDetailsHeaderView(
             modifier = Modifier.padding(bottom = 4.dp)
         )
         val displayableCurrency = dataUiModel.currency ?: ""
+        val displayableAmount = if (amountAnimatable.value == dataUiModel.currentAmount) {
+            amountAnimatable.value
+        } else {
+            amountAnimatable.value.toInt().toFloat()
+        }
         Text(
-            text = "${dataUiModel.currentAmount}$displayableCurrency",
+            text = "${displayableAmount}$displayableCurrency",
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.displayMedium
         )

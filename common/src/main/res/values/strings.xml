@@ -14,7 +14,7 @@
     <string name="onboarding_2_submit">Next</string>
 
     <string name="onboarding_3_title">You pay for your habit every day</string>
-    <string name="onboarding_3_subtitle" translatable="false">Cigarettes quietly steal your money. Imagine how much you could save if you quit</string>
+    <string name="onboarding_3_subtitle">Cigarettes quietly steal your money. Imagine how much you could save if you quit</string>
     <string name="onboarding_3_submit">Next</string>
 
     <string name="onboarding_4_title">You can change everything. We’ll help you!</string>
@@ -325,5 +325,7 @@
     <string name="goals_savings_goal_details">Details ></string>
     <string name="savings_goal_details_header">Savings goal</string>
     <string name="savings_goal_details_saved_so_far">Saved so far</string>
+    <string name="savings_goal_details_card_goal">Goal: %s</string>
+    <string name="savings_goal_details_card_progress">Progress</string>
 
 </resources>

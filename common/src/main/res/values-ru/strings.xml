@@ -315,5 +315,7 @@
     <string name="goals_savings_goal_details">Подробнее ></string>
     <string name="savings_goal_details_header">Копилка</string>
     <string name="savings_goal_details_saved_so_far">Накоплено</string>
+    <string name="savings_goal_details_card_goal">Цель: %s</string>
+    <string name="savings_goal_details_card_progress">Прогресс</string>
 
 </resources>

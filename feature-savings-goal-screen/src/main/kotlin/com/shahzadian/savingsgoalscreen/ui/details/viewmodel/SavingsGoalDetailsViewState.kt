@@ -2,7 +2,7 @@ package com.shahzadian.savingsgoalscreen.ui.details.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
-import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
 
 @Immutable
 internal sealed interface SavingsGoalDetailsViewState : ViewState {
@@ -23,6 +23,6 @@ internal sealed interface SavingsGoalDetailsViewState : ViewState {
         val noCigDays: Int,
         val currency: String?,
         val achievedPercents: Int,
-        val category: TextWrapper,
+        val category: SavingsGoalCategoryUiModel,
     )
 }
