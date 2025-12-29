@@ -317,4 +317,11 @@
     <string name="goals_savings_goal">Savings goal</string>
     <string name="goals_savings_goal_progress_label">Saved %d%%</string>
 
+    <plurals name="goals_savings_goal_calendar">
+        <item quantity="one">%d day smoke-free</item>
+        <item quantity="other">%d days smoke-free</item>
+    </plurals>
+
+    <string name="goals_savings_goal_details">Details ></string>
+
 </resources>

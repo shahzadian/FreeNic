@@ -90,6 +90,7 @@ internal class GoalsViewModel @Inject constructor(
             achievedPercents = this.achievedPercents.toInt(),
             category = category,
             currency = this.currency,
+            noCigDays = this.noCigDays,
             necessaryAmount = this.necessaryAmount,
             currentAmount = this.currentAmount
         )

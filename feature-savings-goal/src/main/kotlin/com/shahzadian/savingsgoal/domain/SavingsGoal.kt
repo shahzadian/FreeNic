@@ -5,6 +5,7 @@ class SavingsGoal(
     val necessaryAmount: Float,
     val currentAmount: Float,
     val currency: String?,
+    val noCigDays: Int,
     val achievedPercents: Float,
     val categoryId: String,
 )

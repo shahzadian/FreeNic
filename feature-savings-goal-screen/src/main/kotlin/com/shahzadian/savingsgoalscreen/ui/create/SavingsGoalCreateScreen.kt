@@ -1,4 +1,4 @@
-package com.shahzadian.savingsgoalscreen.ui
+package com.shahzadian.savingsgoalscreen.ui.create
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -48,10 +48,10 @@ import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.savingsgoalscreen.ui.viewmodel.SavingsGoalCreateViewCommand
-import com.shahzadian.savingsgoalscreen.ui.viewmodel.SavingsGoalCreateViewEvent
-import com.shahzadian.savingsgoalscreen.ui.viewmodel.SavingsGoalCreateViewModel
-import com.shahzadian.savingsgoalscreen.ui.viewmodel.SavingsGoalCreateViewState
+import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewCommand
+import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewEvent
+import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewModel
+import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

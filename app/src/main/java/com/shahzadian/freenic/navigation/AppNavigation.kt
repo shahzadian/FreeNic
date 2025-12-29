@@ -40,7 +40,7 @@ import com.shahzadian.insightsscreen.ui.InsightsScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.profilescreen.ui.ProfileScreen
-import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCreateScreen
+import com.shahzadian.savingsgoalscreen.ui.create.SavingsGoalCreateScreen
 import com.shahzadian.subscription.paywall.ui.PaywallScreen
 import com.shahzadian.welcomescreen.ui.onboardingscreen.OnboardingScreen
 import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen

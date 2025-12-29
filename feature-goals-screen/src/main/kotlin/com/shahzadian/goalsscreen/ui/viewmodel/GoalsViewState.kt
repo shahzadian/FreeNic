@@ -22,6 +22,7 @@ internal sealed interface GoalsViewState : ViewState {
         val name: String,
         val necessaryAmount: Float,
         val currentAmount: Float,
+        val noCigDays: Int,
         val currency: String?,
         val achievedPercents: Int,
         val category: TextWrapper,

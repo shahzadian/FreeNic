@@ -1,4 +1,4 @@
-package com.shahzadian.savingsgoalscreen.ui.viewmodel
+package com.shahzadian.savingsgoalscreen.ui.create.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewEvent

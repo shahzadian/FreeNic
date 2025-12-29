@@ -2,6 +2,7 @@ package com.shahzadian.goalsscreen.ui.savingsgoal
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,9 +13,11 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.TextOverflow
@@ -45,7 +48,13 @@ internal fun SavingsGoalViewExisting(
             currentAmount = savingsGoal.currentAmount,
             necessaryAmount = savingsGoal.necessaryAmount,
             currency = savingsGoal.currency,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        DetailsView(
+            noCigDays = savingsGoal.noCigDays,
+            onDetailsClicked = {}
         )
     }
 }
@@ -133,6 +142,59 @@ private fun ProgressView(
                 percents / 100f
             },
             color = MaterialTheme.colorScheme.primary,
+        )
+    }
+}
+
+@Composable
+private fun DetailsView(
+    noCigDays: Int,
+    onDetailsClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val detailsClick = remember {
+        { onDetailsClicked() }
+    }
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        SmokeFreeDaysView(
+            noCigDays = noCigDays,
+            modifier = Modifier.weight(1f)
+        )
+        Text(
+            text = stringResource(com.shahzadian.baseui.R.string.goals_savings_goal_details),
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier
+                .clickable {
+                    detailsClick()
+                }
+        )
+    }
+}
+
+@Composable
+private fun SmokeFreeDaysView(
+    noCigDays: Int,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_goals_savings_details_calendar),
+            contentDescription = "Smoke Free Days",
+            modifier = Modifier.padding(end = 4.dp)
+        )
+        val pluralText = pluralStringResource(com.shahzadian.baseui.R.plurals.goals_savings_goal_calendar, noCigDays, noCigDays)
+        Text(
+            text = pluralText,
+            color = MaterialTheme.colorScheme.onSecondary,
+            style = MaterialTheme.typography.bodyMedium
         )
     }
 }
