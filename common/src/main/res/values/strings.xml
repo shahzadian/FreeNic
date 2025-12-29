@@ -327,5 +327,7 @@
     <string name="savings_goal_details_saved_so_far">Saved so far</string>
     <string name="savings_goal_details_card_goal">Goal: %s</string>
     <string name="savings_goal_details_card_progress">Progress</string>
+    <string name="savings_goal_details_card_left_amount">Left</string>
+    <string name="savings_goal_details_card_left_days">At your current pace</string>
 
 </resources>

@@ -23,6 +23,8 @@ internal sealed interface SavingsGoalDetailsViewState : ViewState {
         val noCigDays: Int,
         val currency: String?,
         val achievedPercents: Int,
+        val daysLeft: Int,
+        val amountLeft: Float,
         val category: SavingsGoalCategoryUiModel,
     )
 }

@@ -10,6 +10,8 @@ interface UserDataHelper {
     fun getSkippedDaysCount(): Int
 
     fun getSavedMoney(): Float
+
+    fun getSavedMoneyPerDay(): Float
 }
 
 internal class UserDataHelperImpl(
@@ -28,9 +30,13 @@ internal class UserDataHelperImpl(
 
     override fun getSavedMoney(): Float {
         val skippedDaysCount = resolveSkippedDays()
+        return skippedDaysCount * getSavedMoneyPerDay()
+    }
+
+    override fun getSavedMoneyPerDay(): Float {
         val packsPerDay = userData.cigarettesData.packsPerDay
         val pricePerPack = userData.cigarettesData.priceData.price / packsPerDay
-        return skippedDaysCount * pricePerPack * packsPerDay
+        return pricePerPack * packsPerDay
     }
 
     private fun resolveSkippedDays(): Int {

@@ -318,5 +318,7 @@
     <string name="savings_goal_details_saved_so_far">Накоплено</string>
     <string name="savings_goal_details_card_goal">Цель: %s</string>
     <string name="savings_goal_details_card_progress">Прогресс</string>
+    <string name="savings_goal_details_card_left_amount">Осталось</string>
+    <string name="savings_goal_details_card_left_days">При текущем темпе</string>
 
 </resources>

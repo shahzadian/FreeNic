@@ -20,3 +20,4 @@ val Outline = Color(0xFF2E3A43)
 
 val Success = Color(0xFF4CAF50)
 val Smoke = Color(0xFF1A2A33)
+val Tertiary = Color(0xFFFFD180)

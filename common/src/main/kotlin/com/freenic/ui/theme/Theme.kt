@@ -16,7 +16,8 @@ private val LightColorScheme = lightColorScheme(
     surface = Surface,
     onSurface = OnSurface,
     error = Error,
-    outline = Outline
+    outline = Outline,
+    tertiary = Tertiary,
 )
 
 @Composable

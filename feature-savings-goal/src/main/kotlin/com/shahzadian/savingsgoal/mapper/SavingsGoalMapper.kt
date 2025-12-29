@@ -43,6 +43,9 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         val percents = (savedMoney / necessaryMoney) * 100
         val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
         val noCigDays = getUserDataHelper().getSkippedDaysCount()
+        val moneyLeft = necessaryMoney - savedMoney
+        val savedMoneyPerDay = getUserDataHelper().getSavedMoneyPerDay()
+        val daysLeft = (moneyLeft / savedMoneyPerDay).toInt()
         return SavingsGoal(
             name = savingsGoalData.name,
             necessaryAmount = savingsGoalData.necessaryAmount,
@@ -50,6 +53,8 @@ internal class SavingsGoalMapperImpl @Inject constructor(
             currency = currency,
             noCigDays = noCigDays,
             achievedPercents = minOf(percents, 100f),
+            daysLeft = daysLeft,
+            amountLeft = moneyLeft,
             categoryId = savingsGoalData.categoryId
         )
     }
