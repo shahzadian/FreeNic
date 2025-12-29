@@ -1,9 +1,10 @@
-package com.shahzadian.savingsgoalscreen.ui
+package com.shahzadian.savingsgoalscreen.ui.create.viewmodel
 
 import androidx.compose.runtime.Immutable
+import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
 
 @Immutable
-data class SavingsGoalDataUiModel(
+data class SavingsGoalCreateDataUiModel(
     val goalName: String?,
     val goalAmount: String?,
     val categories: List<SavingsGoalCategoryUiModel>,

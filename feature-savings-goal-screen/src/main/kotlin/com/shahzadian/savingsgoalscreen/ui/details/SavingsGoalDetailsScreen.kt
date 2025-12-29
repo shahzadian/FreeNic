@@ -1,6 +1,7 @@
 package com.shahzadian.savingsgoalscreen.ui.details
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,7 +42,12 @@ private fun ContentView(
     modifier: Modifier = Modifier,
 ) {
     HeaderScreen(
-        title = TextWrapper.FromRes(R.string.savings_details_header),
+        title = TextWrapper.FromRes(R.string.savings_goal_details_header),
         modifier = modifier,
-    ) { }
+    ) {
+        SavingsGoalDetailsHeaderView(
+            dataUiModel = data.uiModel,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }

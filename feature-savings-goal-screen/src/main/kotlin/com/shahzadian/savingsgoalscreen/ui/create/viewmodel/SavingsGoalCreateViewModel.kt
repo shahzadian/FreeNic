@@ -6,7 +6,6 @@ import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
-import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -56,7 +55,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
         viewModelScope.launch {
             setViewState(
                 SavingsGoalCreateViewState.Data(
-                    model = SavingsGoalDataUiModel(
+                    model = SavingsGoalCreateDataUiModel(
                         goalName = goalName,
                         goalAmount = goalAmount,
                         categories = getAllCategories().map { it.toUiModel() },

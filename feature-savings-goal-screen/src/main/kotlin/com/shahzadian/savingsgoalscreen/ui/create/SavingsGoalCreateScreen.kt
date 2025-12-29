@@ -49,7 +49,7 @@ import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
-import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
+import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateDataUiModel
 import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewCommand
 import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewEvent
 import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewModel
@@ -95,7 +95,7 @@ fun SavingsGoalCreateScreen(
 
 @Composable
 private fun ContentView(
-    data: SavingsGoalDataUiModel,
+    data: SavingsGoalCreateDataUiModel,
     onEvent: (SavingsGoalCreateViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
