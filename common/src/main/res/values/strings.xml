@@ -329,5 +329,6 @@
     <string name="savings_goal_details_card_progress">Progress</string>
     <string name="savings_goal_details_card_left_amount">Left</string>
     <string name="savings_goal_details_card_left_days">At your current pace</string>
+    <string name="savings_goal_details_info">Your progress is real! Every smoke-free day brings you closer to your goal</string>
 
 </resources>

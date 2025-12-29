@@ -2,6 +2,7 @@ package com.shahzadian.savingsgoalscreen.ui.details
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,8 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.ComposeConst
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
+import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.wrapper.ImageWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.details.viewmodel.SavingsGoalDetailsViewState
 
@@ -40,6 +43,15 @@ internal fun SavingsGoalDetailsCardView(
             )
             .padding(16.dp),
     ) {
+        HeaderView(
+            goalName = dataUiModel.name,
+            necessaryAmount = dataUiModel.necessaryAmount,
+            currency = dataUiModel.currency,
+            categoryIcon = dataUiModel.category.icon,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
         ProgressView(
             amount = dataUiModel.currentAmount,
             currency = dataUiModel.currency,
@@ -55,6 +67,48 @@ internal fun SavingsGoalDetailsCardView(
             currency = dataUiModel.currency,
             daysLeft = dataUiModel.daysLeft,
             modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+private fun HeaderView(
+    goalName: String,
+    necessaryAmount: Float,
+    currency: String?,
+    categoryIcon: ImageWrapper,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+    ) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 16.dp),
+            verticalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                text = goalName,
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.padding(bottom = 4.dp),
+            )
+            val displayableCurrency = currency ?: ""
+            Text(
+                text = stringResource(
+                    R.string.savings_goal_details_card_goal,
+                    "$necessaryAmount$displayableCurrency"
+                ),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSecondary,
+            )
+        }
+        Image(
+            painter = imageFromWrapper(categoryIcon),
+            contentDescription = "Goal category",
         )
     }
 }

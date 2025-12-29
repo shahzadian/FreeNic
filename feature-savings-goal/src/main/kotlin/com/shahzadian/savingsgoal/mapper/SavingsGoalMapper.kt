@@ -53,8 +53,8 @@ internal class SavingsGoalMapperImpl @Inject constructor(
             currency = currency,
             noCigDays = noCigDays,
             achievedPercents = minOf(percents, 100f),
-            daysLeft = daysLeft,
-            amountLeft = moneyLeft,
+            daysLeft = maxOf(0, daysLeft),
+            amountLeft = maxOf(0f, moneyLeft),
             categoryId = savingsGoalData.categoryId
         )
     }

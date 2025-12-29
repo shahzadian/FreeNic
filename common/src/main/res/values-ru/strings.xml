@@ -320,5 +320,6 @@
     <string name="savings_goal_details_card_progress">Прогресс</string>
     <string name="savings_goal_details_card_left_amount">Осталось</string>
     <string name="savings_goal_details_card_left_days">При текущем темпе</string>
+    <string name="savings_goal_details_info">Ваш прогресс реален! Каждый день без сигарет приближает вас к цели.</string>
 
 </resources>

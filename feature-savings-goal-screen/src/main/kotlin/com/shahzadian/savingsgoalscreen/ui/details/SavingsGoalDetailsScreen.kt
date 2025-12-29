@@ -47,14 +47,14 @@ private fun ContentView(
         title = TextWrapper.FromRes(R.string.savings_goal_details_header),
         modifier = modifier,
     ) {
-        SavingsGoalDetailsHeaderView(
+        SavingsGoalDetailsCardView(
             dataUiModel = data.uiModel,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-        SavingsGoalDetailsCardView(
-            dataUiModel = data.uiModel,
+        SavingsGoalDetailsInfoView(
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
