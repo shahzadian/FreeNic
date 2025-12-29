@@ -16,6 +16,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.ComposeConst
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
@@ -45,6 +48,8 @@ internal fun SavingsGoalDetailsCardView(
             modifier = Modifier.padding(bottom = 8.dp)
         )
         ProgressView(
+            amount = dataUiModel.currentAmount,
+            currency = dataUiModel.currency,
             percents = dataUiModel.achievedPercents,
         )
     }
@@ -94,6 +99,8 @@ private fun HeaderView(
 
 @Composable
 private fun ProgressView(
+    amount: Float,
+    currency: String?,
     percents: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -102,6 +109,16 @@ private fun ProgressView(
         percentsAnimatable.snapTo(0f)
         percentsAnimatable.animateTo(
             targetValue = percents.toFloat(),
+            animationSpec = tween(
+                durationMillis = ComposeConst.PROGRESS_ANIMATION_DURATION,
+            )
+        )
+    }
+    val amountAnimatable = remember { Animatable(amount) }
+    LaunchedEffect(amount) {
+        amountAnimatable.snapTo(0f)
+        amountAnimatable.animateTo(
+            targetValue = amount,
             animationSpec = tween(
                 durationMillis = ComposeConst.PROGRESS_ANIMATION_DURATION,
             )
@@ -121,10 +138,23 @@ private fun ProgressView(
                 color = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier.weight(1f),
             )
+            val displayableCurrency = currency ?: ""
+            val displayableAmount = if (amountAnimatable.value == amount) {
+                amountAnimatable.value
+            } else {
+                amountAnimatable.value.toInt().toFloat()
+            }
             Text(
-                text = "${percentsAnimatable.value.toInt()}%",
+                buildAnnotatedString {
+                    withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                        append("$displayableAmount$displayableCurrency")
+                    }
+                    append(" / ")
+                    withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onPrimary)) {
+                        append("${percentsAnimatable.value.toInt()}%")
+                    }
+                },
                 style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.primary,
             )
         }
         MainAnimatableLinearProgressIndicator(

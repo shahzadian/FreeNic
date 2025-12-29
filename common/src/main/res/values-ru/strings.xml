@@ -310,6 +310,7 @@
     <plurals name="goals_savings_goal_calendar">
         <item quantity="one">%d день без сигарет</item>
         <item quantity="few">%d дня без сигарет</item>
+        <item quantity="many">%d дней без сигарет</item>
         <item quantity="other">%d дней без сигарет</item>
     </plurals>
     <string name="goals_savings_goal_details">Подробнее ></string>
