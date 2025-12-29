@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.shahzadian.goalsscreen.R
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
 
@@ -54,7 +54,7 @@ internal fun SavingsGoalViewExisting(
             currency = savingsGoal.currency,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = 8.dp)
         )
         DetailsView(
             noCigDays = savingsGoal.noCigDays,
@@ -140,12 +140,9 @@ private fun ProgressView(
                 )
             }
         }
-        LinearProgressIndicator(
+        MainAnimatableLinearProgressIndicator(
             modifier = Modifier.fillMaxWidth(),
-            progress = {
-                percents / 100f
-            },
-            color = MaterialTheme.colorScheme.primary,
+            progress = percents.toFloat(),
         )
     }
 }

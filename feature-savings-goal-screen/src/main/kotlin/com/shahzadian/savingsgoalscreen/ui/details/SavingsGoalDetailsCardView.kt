@@ -17,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.ComposeConst
+import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.shahzadian.baseui.R
@@ -40,7 +42,7 @@ internal fun SavingsGoalDetailsCardView(
             necessaryAmount = dataUiModel.necessaryAmount,
             currency = dataUiModel.currency,
             categoryIcon = dataUiModel.category.icon,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 8.dp)
         )
         ProgressView(
             percents = dataUiModel.achievedPercents,
@@ -101,7 +103,7 @@ private fun ProgressView(
         percentsAnimatable.animateTo(
             targetValue = percents.toFloat(),
             animationSpec = tween(
-                durationMillis = 1500,
+                durationMillis = ComposeConst.PROGRESS_ANIMATION_DURATION,
             )
         )
     }
@@ -109,8 +111,8 @@ private fun ProgressView(
         modifier = modifier,
     ) {
         Row(
-            modifier = Modifier.padding(bottom = 4.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 8.dp),
+            verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
@@ -121,9 +123,12 @@ private fun ProgressView(
             )
             Text(
                 text = "${percentsAnimatable.value.toInt()}%",
-                style = MaterialTheme.typography.displaySmall,
+                style = MaterialTheme.typography.headlineSmall,
                 color = MaterialTheme.colorScheme.primary,
             )
         }
+        MainAnimatableLinearProgressIndicator(
+            progress = percents.toFloat(),
+        )
     }
 }
