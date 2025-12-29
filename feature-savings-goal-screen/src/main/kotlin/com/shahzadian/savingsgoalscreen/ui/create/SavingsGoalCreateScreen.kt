@@ -48,6 +48,8 @@ import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
+import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewCommand
 import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewEvent
 import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewModel
@@ -72,7 +74,7 @@ fun SavingsGoalCreateScreen(
 
         is SavingsGoalCreateViewState.Data -> {
             ContentView(
-                data = (state as SavingsGoalCreateViewState.Data),
+                data = (state as SavingsGoalCreateViewState.Data).model,
                 onEvent = viewModel::onViewEvent,
                 modifier = modifier.fillMaxSize()
             )
@@ -93,7 +95,7 @@ fun SavingsGoalCreateScreen(
 
 @Composable
 private fun ContentView(
-    data: SavingsGoalCreateViewState.Data,
+    data: SavingsGoalDataUiModel,
     onEvent: (SavingsGoalCreateViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -294,7 +296,7 @@ internal fun InputField(
 
 @Composable
 private fun CategoriesView(
-    categories: List<SavingsGoalCreateViewState.SavingsGoalCategoryUiModel>,
+    categories: List<SavingsGoalCategoryUiModel>,
     selectedCategoryId: String?,
     onClick: (String) -> Unit,
     modifier: Modifier = Modifier,

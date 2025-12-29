@@ -19,4 +19,7 @@ internal sealed interface GoalsViewEvent : ViewEvent {
 
     @Immutable
     data object OnSavingsGoalCreateClicked : GoalsViewEvent
+
+    @Immutable
+    data object OnSavingsGoalDetailsClicked : GoalsViewEvent
 }

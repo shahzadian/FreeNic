@@ -60,7 +60,11 @@ internal class GoalsViewModel @Inject constructor(
                 }
             }
 
-
+            is GoalsViewEvent.OnSavingsGoalDetailsClicked -> {
+                viewModelScope.launch {
+                    sendViewCommand(GoalsViewCommand.NavigateTo(AppScreen.SavingsGoalDetailsScreen))
+                }
+            }
         }
     }
 

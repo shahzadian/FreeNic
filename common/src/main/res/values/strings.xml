@@ -324,4 +324,6 @@
 
     <string name="goals_savings_goal_details">Details ></string>
 
+    <string name="savings_details_header">Savings goal</string>
+
 </resources>

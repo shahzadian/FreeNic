@@ -5,6 +5,8 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
+import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
+import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -54,13 +56,15 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
         viewModelScope.launch {
             setViewState(
                 SavingsGoalCreateViewState.Data(
-                    goalName = goalName,
-                    goalAmount = goalAmount,
-                    categories = getAllCategories().map { it.toUiModel() },
-                    selectedCategoryId = currentCategoryId,
-                    isSubmitButtonEnabled = goalName?.isNotBlank() == true &&
-                            goalAmount?.isNotBlank() == true &&
-                            currentCategoryId != null
+                    model = SavingsGoalDataUiModel(
+                        goalName = goalName,
+                        goalAmount = goalAmount,
+                        categories = getAllCategories().map { it.toUiModel() },
+                        selectedCategoryId = currentCategoryId,
+                        isSubmitButtonEnabled = goalName?.isNotBlank() == true &&
+                                goalAmount?.isNotBlank() == true &&
+                                currentCategoryId != null
+                    ),
                 )
             )
         }
@@ -73,8 +77,8 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
         }
     }
 
-    private fun SavingsGoalCategory.toUiModel(): SavingsGoalCreateViewState.SavingsGoalCategoryUiModel {
-        return SavingsGoalCreateViewState.SavingsGoalCategoryUiModel(
+    private fun SavingsGoalCategory.toUiModel(): SavingsGoalCategoryUiModel {
+        return SavingsGoalCategoryUiModel(
             id = this.id,
             name = this.name,
             icon = this.icon

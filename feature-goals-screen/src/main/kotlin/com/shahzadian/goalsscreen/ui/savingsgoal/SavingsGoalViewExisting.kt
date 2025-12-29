@@ -28,8 +28,12 @@ import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
 @Composable
 internal fun SavingsGoalViewExisting(
     savingsGoal: GoalsViewState.SavingsGoalUiModel,
+    onDetailsClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val detailsClick = remember {
+        { onDetailsClicked() }
+    }
     Column(
         modifier = modifier
             .background(
@@ -54,7 +58,7 @@ internal fun SavingsGoalViewExisting(
         )
         DetailsView(
             noCigDays = savingsGoal.noCigDays,
-            onDetailsClicked = {}
+            onDetailsClicked = detailsClick,
         )
     }
 }
@@ -190,7 +194,11 @@ private fun SmokeFreeDaysView(
             contentDescription = "Smoke Free Days",
             modifier = Modifier.padding(end = 4.dp)
         )
-        val pluralText = pluralStringResource(com.shahzadian.baseui.R.plurals.goals_savings_goal_calendar, noCigDays, noCigDays)
+        val pluralText = pluralStringResource(
+            com.shahzadian.baseui.R.plurals.goals_savings_goal_calendar,
+            noCigDays,
+            noCigDays
+        )
         Text(
             text = pluralText,
             color = MaterialTheme.colorScheme.onSecondary,

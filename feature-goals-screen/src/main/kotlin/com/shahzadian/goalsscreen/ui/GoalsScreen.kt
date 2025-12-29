@@ -85,6 +85,10 @@ private fun ContentView(
     val onSavingsGoalCreateClick: () -> Unit = remember {
         { onEvent(GoalsViewEvent.OnSavingsGoalCreateClicked) }
     }
+    val onSavingsGoalDetailsClick: () -> Unit = remember {
+        { onEvent(GoalsViewEvent.OnSavingsGoalDetailsClicked) }
+    }
+
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.goals_header_title),
         subtitle = TextWrapper.FromRes(R.string.goals_header_subtitle),
@@ -95,6 +99,7 @@ private fun ContentView(
             data.savingsGoal?.let { savingsGoal ->
                 SavingsGoalViewExisting(
                     savingsGoal = savingsGoal,
+                    onDetailsClicked = onSavingsGoalDetailsClick,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp)
