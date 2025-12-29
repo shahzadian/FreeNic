@@ -236,6 +236,7 @@ fun AppNavigation() {
                 exitTransition = { ExitTransition.None },
             ) {
                 SavingsGoalDetailsScreen(
+                    navController = navController,
                     modifier = BaseModifier,
                 )
             }

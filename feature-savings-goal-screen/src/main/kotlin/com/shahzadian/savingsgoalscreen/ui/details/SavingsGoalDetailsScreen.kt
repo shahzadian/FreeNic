@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.TextWrapper
@@ -18,6 +20,7 @@ import com.shahzadian.savingsgoalscreen.ui.details.viewmodel.SavingsGoalDetailsV
 
 @Composable
 fun SavingsGoalDetailsScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: SavingsGoalDetailsViewModel = hiltViewModel()
@@ -32,6 +35,7 @@ fun SavingsGoalDetailsScreen(
         is SavingsGoalDetailsViewState.Data -> {
             ContentView(
                 data = (state as SavingsGoalDetailsViewState.Data),
+                onBackIconClicked = { navController.popBackStack() },
                 modifier = modifier.fillMaxSize(),
             )
         }
@@ -41,10 +45,16 @@ fun SavingsGoalDetailsScreen(
 @Composable
 private fun ContentView(
     data: SavingsGoalDetailsViewState.Data,
+    onBackIconClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val backIconClick = remember {
+        { onBackIconClicked() }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.savings_goal_details_header),
+        hasBackIcon = true,
+        onBackIconClicked = backIconClick,
         modifier = modifier,
     ) {
         SavingsGoalDetailsCardView(
