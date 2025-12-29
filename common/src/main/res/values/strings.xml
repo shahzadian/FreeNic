@@ -315,5 +315,6 @@
     <string name="savings_create_category_other">Other</string>
     <string name="savings_goal_create_submit">Save goal</string>
     <string name="goals_savings_goal">Savings goal</string>
+    <string name="goals_savings_goal_progress_label">Saved %d%%</string>
 
 </resources>

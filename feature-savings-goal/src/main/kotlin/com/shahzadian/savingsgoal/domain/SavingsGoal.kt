@@ -4,6 +4,7 @@ class SavingsGoal(
     val name: String,
     val necessaryAmount: Float,
     val currentAmount: Float,
+    val currency: String?,
     val achievedPercents: Float,
     val categoryId: String,
 )

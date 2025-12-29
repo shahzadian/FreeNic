@@ -2,8 +2,10 @@ package com.shahzadian.savingsgoal.mapper
 
 import com.shahzadian.savingsgoal.data.SavingsGoalData
 import com.shahzadian.savingsgoal.domain.SavingsGoal
+import com.shahzadian.user.domain.UserDataHelper
 import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
+import com.shahzadian.user.model.UserData
 import javax.inject.Inject
 
 interface SavingsGoalMapper {
@@ -24,6 +26,9 @@ internal class SavingsGoalMapperImpl @Inject constructor(
     private val getUserDataUseCase: GetUserDataUseCase,
 ) : SavingsGoalMapper {
 
+    private var _userData: UserData? = null
+    private var _userDataHelper: UserDataHelper? = null
+
     override fun fromDomainToData(savingsGoal: SavingsGoal): SavingsGoalData {
         return SavingsGoalData(
             name = savingsGoal.name,
@@ -33,13 +38,15 @@ internal class SavingsGoalMapperImpl @Inject constructor(
     }
 
     override suspend fun fromDataToDomain(savingsGoalData: SavingsGoalData): SavingsGoal {
-        val savedMoney = getSavedMoney()
+        val savedMoney = getUserDataHelper().getSavedMoney()
         val necessaryMoney = savingsGoalData.necessaryAmount
         val percents = (savedMoney / necessaryMoney) * 100
+        val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
         return SavingsGoal(
             name = savingsGoalData.name,
             necessaryAmount = savingsGoalData.necessaryAmount,
             currentAmount = savedMoney,
+            currency = currency,
             achievedPercents = minOf(percents, 100f),
             categoryId = savingsGoalData.categoryId
         )
@@ -57,10 +64,20 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         )
     }
 
-    private suspend fun getSavedMoney(): Float {
-        val userData = getUserDataUseCase()
-            ?: throw IllegalStateException("User data is null")
-        val userDataHelper = userDataHelperFactory.create(userData)
-        return userDataHelper.getSavedMoney()
+    private suspend fun getUserData(): UserData {
+        return _userData ?: let {
+            val userData = getUserDataUseCase()
+                ?: throw IllegalStateException("User data is null")
+            this._userData = userData
+            userData
+        }
+    }
+
+    private suspend fun getUserDataHelper(): UserDataHelper {
+        return _userDataHelper ?: let {
+            val userDataHelper = userDataHelperFactory.create(getUserData())
+            this._userDataHelper = userDataHelper
+            userDataHelper
+        }
     }
 }

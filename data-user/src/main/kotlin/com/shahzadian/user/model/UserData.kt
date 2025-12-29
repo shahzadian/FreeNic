@@ -25,7 +25,11 @@ class UserCigarettesData(
         val currency: String,
     ) {
 
-        fun isValidCurrency(): Boolean {
+        fun getValidCurrencyOrNull(): Currency? {
+            return if (isValidCurrency()) Currency.getInstance(currency) else null
+        }
+
+        private fun isValidCurrency(): Boolean {
             return getAvailableCurrencies().contains(currency)
         }
 
