@@ -8,6 +8,8 @@ import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,6 +24,7 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
 
     init {
         setData()
+        setupObservers()
     }
 
     override fun onViewEventHappened(event: SavingsGoalDetailsViewEvent) {
@@ -57,6 +60,13 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
             }?.toUiModel()
                 ?: throw IllegalStateException("No category found for id ${this.categoryId}")
         )
+    }
+
+    private fun setupObservers() {
+        savingsGoalHelper
+            .eventFlow
+            .onEach { setData() }
+            .launchIn(viewModelScope)
     }
 
     private fun SavingsGoalCategory.toUiModel(): SavingsGoalCategoryUiModel {

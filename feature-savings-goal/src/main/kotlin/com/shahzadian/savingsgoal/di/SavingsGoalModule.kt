@@ -30,7 +30,8 @@ internal interface SavingsGoalModule {
     fun bindSavingsGoalRepository(impl: SavingsGoalRepositoryImpl): SavingsGoalRepository
 
     @Binds
-    fun bindGetSavingsGoalUseCase(impl: SavingsGoalHelperImpl): SavingsGoalHelper
+    @Singleton
+    fun bindSavingsGoalHelper(impl: SavingsGoalHelperImpl): SavingsGoalHelper
 
     @Binds
     fun bindSavingsGoalCategoryRepository(impl: SavingsGoalCategoryRepositoryImpl): SavingsGoalCategoryRepository

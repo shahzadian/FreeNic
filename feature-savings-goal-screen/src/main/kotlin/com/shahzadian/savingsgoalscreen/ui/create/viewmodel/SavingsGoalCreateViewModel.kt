@@ -78,7 +78,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                         categories = getAllCategories().map { it.toUiModel() },
                         selectedCategoryId = currentCategoryId,
                         isSubmitButtonEnabled = goalName?.isNotBlank() == true &&
-                                goalAmount?.isNotBlank() == true &&
+                                goalAmount?.toFloatOrNull()?.let { it > 0 } == true &&
                                 currentCategoryId != null
                     ),
                 )
@@ -118,7 +118,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
         if (isEdit) {
             savingsGoalHelper.updateSavingsGoal(
                 name = name,
-                amount = amount.toDouble(),
+                amount = amount.toFloat(),
                 categoryId = category.id,
             )
         } else {

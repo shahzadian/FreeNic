@@ -14,9 +14,15 @@ interface SavingsGoalMapper {
 
     suspend fun fromDataToDomain(savingsGoalData: SavingsGoalData): SavingsGoal
 
+    suspend fun createDomainModel(
+        name: String,
+        amount: Float,
+        categoryId: String
+    ): SavingsGoal
+
     suspend fun createDataModel(
         name: String,
-        amount: Double,
+        amount: Float,
         categoryId: String
     ): SavingsGoalData
 }
@@ -59,14 +65,39 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         )
     }
 
+    override suspend fun createDomainModel(
+        name: String,
+        amount: Float,
+        categoryId: String
+    ): SavingsGoal {
+        val savedMoney = getUserDataHelper().getSavedMoney()
+        val percents = (savedMoney / amount) * 100
+        val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
+        val noCigDays = getUserDataHelper().getSkippedDaysCount()
+        val moneyLeft = amount - savedMoney
+        val savedMoneyPerDay = getUserDataHelper().getSavedMoneyPerDay()
+        val daysLeft = (moneyLeft / savedMoneyPerDay).toInt()
+        return SavingsGoal(
+            name = name,
+            necessaryAmount = amount,
+            currentAmount = savedMoney,
+            currency = currency,
+            noCigDays = noCigDays,
+            achievedPercents = minOf(percents, 100f),
+            daysLeft = maxOf(0, daysLeft),
+            amountLeft = maxOf(0f, moneyLeft),
+            categoryId = categoryId
+        )
+    }
+
     override suspend fun createDataModel(
         name: String,
-        amount: Double,
+        amount: Float,
         categoryId: String
     ): SavingsGoalData {
         return SavingsGoalData(
             name = name,
-            necessaryAmount = amount.toFloat(),
+            necessaryAmount = amount,
             categoryId = categoryId,
         )
     }

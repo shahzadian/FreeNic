@@ -24,6 +24,7 @@ internal class GoalsViewModel @Inject constructor(
 
     init {
         setDataState()
+        setupObservers()
     }
 
     override fun onViewEventHappened(event: GoalsViewEvent) {
@@ -81,6 +82,14 @@ internal class GoalsViewModel @Inject constructor(
                     savingsGoal = savingsGoalHelper.getCurrentSavingsGoal()?.toUiModel(),
                 )
             )
+        }
+    }
+
+    private fun setupObservers() {
+        viewModelScope.launch {
+            savingsGoalHelper.eventFlow.collect { event ->
+                setDataState()
+            }
         }
     }
 
