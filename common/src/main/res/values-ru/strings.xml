@@ -323,5 +323,9 @@
     <string name="savings_goal_details_info">Ваш прогресс реален! Каждый день без сигарет приближает вас к цели.</string>
     <string name="savings_goal_details_edit">Редактировать цель</string>
     <string name="savings_goal_details_delete">Удалить цель</string>
+    <string name="savings_goal_delete_confirm_title">Удалить копилку?</string>
+    <string name="savings_goal_delete_confirm_message">Действие нельзя отменить. Вы уверены, что хотите удалить копилку?</string>
+    <string name="savings_goal_delete_confirm_yes">Удалить</string>
+    <string name="savings_goal_delete_confirm_no">Отмена</string>
 
 </resources>

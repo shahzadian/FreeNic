@@ -28,6 +28,8 @@ interface SavingsGoalHelper {
         categoryId: String,
     )
 
+    suspend fun deleteSavingsGoal()
+
     sealed interface SavingsGoalEvent {
 
         data class OnSavingsGoalCreated(
@@ -89,5 +91,10 @@ internal class SavingsGoalHelperImpl @Inject constructor(
         val dataGoal = savingsGoalMapper.fromDomainToData(domainGoal)
         savingsGoalRepository.createSavingsGoal(dataGoal)
         eventFlow.emit(SavingsGoalHelper.SavingsGoalEvent.OnSavingsGoalUpdated(domainGoal))
+    }
+
+    override suspend fun deleteSavingsGoal() {
+        savingsGoalRepository.deleteSavingsGoal()
+        eventFlow.emit(SavingsGoalHelper.SavingsGoalEvent.OnSavingsGoalDeleted)
     }
 }

@@ -5,4 +5,5 @@ import com.freenic.ui.vm.ViewCommand
 
 @Immutable
 internal sealed interface SavingsGoalDetailsViewCommand : ViewCommand {
+    data object NavigateBack : SavingsGoalDetailsViewCommand
 }

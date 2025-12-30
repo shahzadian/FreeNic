@@ -14,6 +14,8 @@ internal interface SavingsGoalRepository {
     suspend fun getActiveSavingsGoal(): SavingsGoalData?
 
     suspend fun createSavingsGoal(savingsGoal: SavingsGoalData)
+
+    suspend fun deleteSavingsGoal()
 }
 
 internal class SavingsGoalRepositoryImpl @Inject constructor(
@@ -44,6 +46,16 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
                 prefs[stringPreferencesKey(PREF_KEY_NAME)] = savingsGoal.name
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] = savingsGoal.necessaryAmount
                 prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] = savingsGoal.categoryId
+            }
+        }
+    }
+
+    override suspend fun deleteSavingsGoal() {
+        withContext(coroutineContexts.io) {
+            savingsGoalDataStoreProvider.provide().edit { prefs ->
+                prefs.remove(stringPreferencesKey(PREF_KEY_NAME))
+                prefs.remove(floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT))
+                prefs.remove(stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID))
             }
         }
     }

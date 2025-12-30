@@ -28,7 +28,13 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
     }
 
     override fun onViewEventHappened(event: SavingsGoalDetailsViewEvent) {
-
+        when (event) {
+            SavingsGoalDetailsViewEvent.OnDeleteClicked -> {
+                viewModelScope.launch {
+                    savingsGoalHelper.deleteSavingsGoal()
+                }
+            }
+        }
     }
 
     private fun setData() {
@@ -65,7 +71,17 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
     private fun setupObservers() {
         savingsGoalHelper
             .eventFlow
-            .onEach { setData() }
+            .onEach { ev ->
+                when (ev) {
+                    is SavingsGoalHelper.SavingsGoalEvent.OnSavingsGoalDeleted -> {
+                        sendViewCommand(SavingsGoalDetailsViewCommand.NavigateBack)
+                    }
+                    is SavingsGoalHelper.SavingsGoalEvent.OnSavingsGoalCreated,
+                    is SavingsGoalHelper.SavingsGoalEvent.OnSavingsGoalUpdated -> {
+                        setData()
+                    }
+                }
+            }
             .launchIn(viewModelScope)
     }
 

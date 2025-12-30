@@ -332,5 +332,9 @@
     <string name="savings_goal_details_info">Your progress is real! Every smoke-free day brings you closer to your goal</string>
     <string name="savings_goal_details_edit">Edit goal</string>
     <string name="savings_goal_details_delete">Delete goal</string>
+    <string name="savings_goal_delete_confirm_title">Delete savings goal?</string>
+    <string name="savings_goal_delete_confirm_message">This action cannot be undone. Are you sure you want to delete your savings goal?</string>
+    <string name="savings_goal_delete_confirm_yes">Delete</string>
+    <string name="savings_goal_delete_confirm_no">Cancel</string>
 
 </resources>

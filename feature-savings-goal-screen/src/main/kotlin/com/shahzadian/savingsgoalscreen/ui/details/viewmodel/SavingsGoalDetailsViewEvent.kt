@@ -5,4 +5,5 @@ import com.freenic.ui.vm.ViewEvent
 
 @Immutable
 internal sealed interface SavingsGoalDetailsViewEvent : ViewEvent {
+    data object OnDeleteClicked : SavingsGoalDetailsViewEvent
 }
