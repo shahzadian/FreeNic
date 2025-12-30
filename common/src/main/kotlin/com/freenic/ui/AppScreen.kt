@@ -62,7 +62,14 @@ sealed class AppScreen {
     }
 
     object SavingsGoalCreateScreen : AppScreen() {
-        override val route: String = "savings_goal_screen"
+        override val route: String = "$BASE_ROUTE?${ARG_IS_EDIT}={${ARG_IS_EDIT}}"
+
+        fun composeRoute(isEdit: Boolean = false): String {
+            return "$BASE_ROUTE?${ARG_IS_EDIT}=$isEdit"
+        }
+
+        const val ARG_IS_EDIT: String = "is_edit"
+        private const val BASE_ROUTE: String = "savings_goal_screen"
     }
 
     object SavingsGoalDetailsScreen : AppScreen() {

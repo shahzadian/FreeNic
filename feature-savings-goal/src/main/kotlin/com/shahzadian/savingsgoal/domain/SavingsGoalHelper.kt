@@ -16,6 +16,12 @@ interface SavingsGoalHelper {
         amount: Double,
         categoryId: String,
     )
+
+    suspend fun updateSavingsGoal(
+        name: String,
+        amount: Double,
+        categoryId: String,
+    )
 }
 
 internal class SavingsGoalHelperImpl @Inject constructor(
@@ -39,6 +45,16 @@ internal class SavingsGoalHelperImpl @Inject constructor(
         amount: Double,
         categoryId: String
     ) {
+        val goal = savingsGoalMapper.createDataModel(name, amount, categoryId)
+        savingsGoalRepository.createSavingsGoal(goal)
+    }
+
+    override suspend fun updateSavingsGoal(
+        name: String,
+        amount: Double,
+        categoryId: String,
+    ) {
+        // Repository currently persists a single active goal, so create acts as an upsert
         val goal = savingsGoalMapper.createDataModel(name, amount, categoryId)
         savingsGoalRepository.createSavingsGoal(goal)
     }

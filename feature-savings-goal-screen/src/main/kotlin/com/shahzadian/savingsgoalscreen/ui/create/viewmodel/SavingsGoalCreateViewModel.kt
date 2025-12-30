@@ -1,6 +1,8 @@
 package com.shahzadian.savingsgoalscreen.ui.create.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
@@ -13,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SavingsGoalCreateViewModel @Inject constructor(
     private val savingsGoalHelper: SavingsGoalHelper,
+    private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SavingsGoalCreateViewState, SavingsGoalCreateViewEvent, SavingsGoalCreateViewCommand>() {
 
     override val initState: SavingsGoalCreateViewState by lazyUnsafe {
@@ -23,9 +26,23 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
     private var goalAmount: String? = null
     private var categories: List<SavingsGoalCategory>? = null
     private var currentCategoryId: String? = null
+    private val isEdit: Boolean by lazyUnsafe {
+        savedStateHandle.get<Boolean>(AppScreen.SavingsGoalCreateScreen.ARG_IS_EDIT) ?: false
+    }
 
     init {
-        setData()
+        viewModelScope.launch {
+            if (isEdit) {
+                // Prefill with current savings goal data if available
+                val current = savingsGoalHelper.getCurrentSavingsGoal()
+                if (current != null) {
+                    goalName = current.name
+                    goalAmount = current.necessaryAmount.toString()
+                    currentCategoryId = current.categoryId
+                }
+            }
+            setData()
+        }
     }
 
     override fun onViewEventHappened(event: SavingsGoalCreateViewEvent) {
@@ -98,10 +115,18 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
         val category = categories
             ?.firstOrNull { it.id == currentCategoryId }
             ?: throw IllegalStateException("No category selected")
-        savingsGoalHelper.createSavingsGoal(
-            name = name,
-            amount = amount.toDouble(),
-            categoryId = category.id,
-        )
+        if (isEdit) {
+            savingsGoalHelper.updateSavingsGoal(
+                name = name,
+                amount = amount.toDouble(),
+                categoryId = category.id,
+            )
+        } else {
+            savingsGoalHelper.createSavingsGoal(
+                name = name,
+                amount = amount.toDouble(),
+                categoryId = category.id,
+            )
+        }
     }
 }

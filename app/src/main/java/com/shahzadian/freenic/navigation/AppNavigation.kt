@@ -223,6 +223,13 @@ fun AppNavigation() {
                 route = AppScreen.SavingsGoalCreateScreen.route,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
+                arguments = listOf(
+                    navArgument(AppScreen.SavingsGoalCreateScreen.ARG_IS_EDIT) {
+                        type = NavType.BoolType
+                        defaultValue = false
+                        nullable = false
+                    }
+                )
             ) {
                 SavingsGoalCreateScreen(
                     navController = navController,

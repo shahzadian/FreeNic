@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
@@ -36,6 +37,12 @@ fun SavingsGoalDetailsScreen(
             ContentView(
                 data = (state as SavingsGoalDetailsViewState.Data),
                 onBackIconClicked = { navController.popBackStack() },
+                onEditClicked = {
+                    // Navigate to create screen in edit mode
+                    navController.navigate(
+                        AppScreen.SavingsGoalCreateScreen.composeRoute(true)
+                    )
+                },
                 modifier = modifier.fillMaxSize(),
             )
         }
@@ -46,11 +53,13 @@ fun SavingsGoalDetailsScreen(
 private fun ContentView(
     data: SavingsGoalDetailsViewState.Data,
     onBackIconClicked: () -> Unit,
+    onEditClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val backIconClick = remember {
         { onBackIconClicked() }
     }
+    val editClick = remember { { onEditClicked() } }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.savings_goal_details_header),
         hasBackIcon = true,
@@ -69,7 +78,7 @@ private fun ContentView(
                 .padding(bottom = 16.dp)
         )
         SavingsGoalDetailsFooterView(
-            onEditClicked = {},
+            onEditClicked = editClick,
             onDeleteClicked = {},
             modifier = Modifier.fillMaxWidth()
         )
