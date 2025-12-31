@@ -76,6 +76,10 @@ sealed class AppScreen {
         override val route: String = "savings_goal_details_screen"
     }
 
+    object SavingsGoalShareScreen : AppScreen() {
+        override val route: String = "savings_goal_share_screen"
+    }
+
     object AchievementsScreen : AppScreen() {
         override val route: String = "achievements_screen"
     }
@@ -116,6 +120,7 @@ sealed class AppScreen {
                 GoalsScreen,
                 SavingsGoalCreateScreen,
                 SavingsGoalDetailsScreen,
+                SavingsGoalShareScreen,
                 AchievementsScreen,
                 AchievementShareScreen,
                 InsightsScreen,

@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.HeaderScreen
+import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.details.viewmodel.SavingsGoalDetailsViewCommand
@@ -47,6 +48,9 @@ fun SavingsGoalDetailsScreen(
             ContentView(
                 data = (state as SavingsGoalDetailsViewState.Data),
                 onBackIconClicked = { navController.popBackStack() },
+                onShareClicked = {
+                    navController.navigate(AppScreen.SavingsGoalShareScreen.route)
+                },
                 onEditClicked = {
                     // Navigate to create screen in edit mode
                     navController.navigate(
@@ -74,6 +78,7 @@ fun SavingsGoalDetailsScreen(
 private fun ContentView(
     data: SavingsGoalDetailsViewState.Data,
     onBackIconClicked: () -> Unit,
+    onShareClicked: () -> Unit,
     onEditClicked: () -> Unit,
     onDeleteClicked: () -> Unit,
     modifier: Modifier = Modifier,
@@ -82,6 +87,7 @@ private fun ContentView(
     val backIconClick = remember {
         { onBackIconClicked() }
     }
+    val shareIconClick = remember { { onShareClicked() } }
     val editClick = remember { { onEditClicked() } }
     val deleteClick = remember { { showDeleteDialog = true } }
     HeaderScreen(
@@ -89,6 +95,8 @@ private fun ContentView(
         hasBackIcon = true,
         onBackIconClicked = backIconClick,
         modifier = modifier,
+        icon = ImageWrapper.FromRes(com.shahzadian.savingsgoalscreen.R.drawable.ic_savings_goal_details_share),
+        onIconClicked = shareIconClick,
     ) {
         SavingsGoalDetailsCardView(
             dataUiModel = data.uiModel,

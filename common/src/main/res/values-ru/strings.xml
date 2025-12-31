@@ -327,5 +327,6 @@
     <string name="savings_goal_delete_confirm_message">Действие нельзя отменить. Вы уверены, что хотите удалить копилку?</string>
     <string name="savings_goal_delete_confirm_yes">Удалить</string>
     <string name="savings_goal_delete_confirm_no">Отмена</string>
+    <string name="savings_goal_share_title">Поделиться</string>
 
 </resources>

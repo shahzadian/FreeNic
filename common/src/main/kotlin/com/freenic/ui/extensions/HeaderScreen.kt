@@ -25,8 +25,10 @@ fun HeaderScreen(
     modifier: Modifier = Modifier,
     title: TextWrapper,
     subtitle: TextWrapper? = null,
+    icon: ImageWrapper? = null,
     hasBackIcon: Boolean = false,
     onBackIconClicked: () -> Unit = {},
+    onIconClicked: () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit,
 ) {
     HeaderScreen(
@@ -35,7 +37,15 @@ fun HeaderScreen(
         subtitle = subtitle,
         hasBackIcon = hasBackIcon,
         onBackIconClicked = onBackIconClicked,
-        image = null,
+        image = {
+            icon?.let {
+                Image(
+                    painter = imageFromWrapper(it),
+                    contentDescription = "Header image",
+                    modifier = Modifier.clickable { onIconClicked() }
+                )
+            }
+        },
         content = content
     )
 }
@@ -92,6 +102,7 @@ fun HeaderScreen(
         Row(
             modifier = Modifier.padding(bottom = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
         ) {
             if (hasBackIcon) {
                 Image(
@@ -127,7 +138,7 @@ internal fun HeaderView(
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.Top,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         TitleView(
             title = title,
@@ -155,8 +166,9 @@ private fun TitleView(
             text = textFromWrapper(title),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(bottom =
-                subtitle?.let { 4.dp } ?: 0.dp
+            modifier = Modifier.padding(
+                bottom =
+                    subtitle?.let { 4.dp } ?: 0.dp
             ),
         )
         subtitle?.let { subtitle ->
