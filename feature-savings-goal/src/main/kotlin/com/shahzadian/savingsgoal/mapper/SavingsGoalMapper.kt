@@ -39,18 +39,20 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         return SavingsGoalData(
             name = savingsGoal.name,
             necessaryAmount = savingsGoal.necessaryAmount,
+            createTimeMillis = savingsGoal.createTimeMillis,
             categoryId = savingsGoal.categoryId
         )
     }
 
     override suspend fun fromDataToDomain(savingsGoalData: SavingsGoalData): SavingsGoal {
-        val savedMoney = getUserDataHelper().getSavedMoney()
         val necessaryMoney = savingsGoalData.necessaryAmount
+        val savedMoneyPerDay = getUserDataHelper().getSavedMoneyPerDay()
+        val passedDays = getPassedDaysFromMillis(savingsGoalData.createTimeMillis)
+        val savedMoney = savedMoneyPerDay * passedDays
         val percents = (savedMoney / necessaryMoney) * 100
         val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
         val noCigDays = getUserDataHelper().getSkippedDaysCount()
         val moneyLeft = necessaryMoney - savedMoney
-        val savedMoneyPerDay = getUserDataHelper().getSavedMoneyPerDay()
         val daysLeft = (moneyLeft / savedMoneyPerDay).toInt()
         return SavingsGoal(
             name = savingsGoalData.name,
@@ -59,6 +61,7 @@ internal class SavingsGoalMapperImpl @Inject constructor(
             currency = currency,
             noCigDays = noCigDays,
             achievedPercents = minOf(percents, 100f),
+            createTimeMillis = savingsGoalData.createTimeMillis,
             daysLeft = maxOf(0, daysLeft),
             amountLeft = maxOf(0f, moneyLeft),
             categoryId = savingsGoalData.categoryId
@@ -70,22 +73,22 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         amount: Float,
         categoryId: String
     ): SavingsGoal {
-        val savedMoney = getUserDataHelper().getSavedMoney()
-        val percents = (savedMoney / amount) * 100
-        val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
-        val noCigDays = getUserDataHelper().getSkippedDaysCount()
-        val moneyLeft = amount - savedMoney
+        val createTimeMillis = System.currentTimeMillis()
         val savedMoneyPerDay = getUserDataHelper().getSavedMoneyPerDay()
-        val daysLeft = (moneyLeft / savedMoneyPerDay).toInt()
+        val passedDays = getPassedDaysFromMillis(createTimeMillis)
+        val savedMoney = savedMoneyPerDay * passedDays
+        val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
+        val daysLeft = (amount / savedMoneyPerDay).toInt()
         return SavingsGoal(
             name = name,
             necessaryAmount = amount,
             currentAmount = savedMoney,
             currency = currency,
-            noCigDays = noCigDays,
-            achievedPercents = minOf(percents, 100f),
+            noCigDays = getUserDataHelper().getSkippedDaysCount(),
+            achievedPercents = 0f,
             daysLeft = maxOf(0, daysLeft),
-            amountLeft = maxOf(0f, moneyLeft),
+            createTimeMillis = createTimeMillis,
+            amountLeft = amount,
             categoryId = categoryId
         )
     }
@@ -98,6 +101,7 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         return SavingsGoalData(
             name = name,
             necessaryAmount = amount,
+            createTimeMillis = System.currentTimeMillis(),
             categoryId = categoryId,
         )
     }
@@ -117,5 +121,10 @@ internal class SavingsGoalMapperImpl @Inject constructor(
             this._userDataHelper = userDataHelper
             userDataHelper
         }
+    }
+
+    private fun getPassedDaysFromMillis(millis: Long): Int {
+        val passedMillis = System.currentTimeMillis() - millis
+        return (passedMillis / (1000 * 60 * 60 * 24)).toInt()
     }
 }

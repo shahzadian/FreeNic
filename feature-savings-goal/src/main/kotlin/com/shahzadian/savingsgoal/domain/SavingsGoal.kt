@@ -7,6 +7,7 @@ class SavingsGoal(
     val currency: String?,
     val noCigDays: Int,
     val achievedPercents: Float,
+    val createTimeMillis: Long,
     val daysLeft: Int,
     val amountLeft: Float,
     val categoryId: String,

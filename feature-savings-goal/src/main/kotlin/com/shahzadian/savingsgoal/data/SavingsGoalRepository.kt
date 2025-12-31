@@ -2,6 +2,7 @@ package com.shahzadian.savingsgoal.data
 
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.freenic.ui.model.CoroutineContexts
 import com.shahzadian.savingsgoal.data.datastore.SavingsGoalDataStoreProvider
@@ -32,9 +33,12 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] ?: return@withContext null
             val categoryId =
                 prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] ?: return@withContext null
+            val createdTimeMillis =
+                prefs[longPreferencesKey(PREF_KEY_CREATED_TIME_MILLIS)] ?: return@withContext null
             SavingsGoalData(
                 name = name,
                 necessaryAmount = necessaryAmount,
+                createTimeMillis = createdTimeMillis,
                 categoryId = categoryId,
             )
         }
@@ -46,6 +50,7 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
                 prefs[stringPreferencesKey(PREF_KEY_NAME)] = savingsGoal.name
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] = savingsGoal.necessaryAmount
                 prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] = savingsGoal.categoryId
+                prefs[longPreferencesKey(PREF_KEY_CREATED_TIME_MILLIS)] = savingsGoal.createTimeMillis
             }
         }
     }
@@ -56,6 +61,7 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
                 prefs.remove(stringPreferencesKey(PREF_KEY_NAME))
                 prefs.remove(floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT))
                 prefs.remove(stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID))
+                prefs.remove(longPreferencesKey(PREF_KEY_CREATED_TIME_MILLIS))
             }
         }
     }
@@ -64,5 +70,6 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
         private const val PREF_KEY_NAME: String = "name"
         private const val PREF_KEY_NECESSARY_AMOUNT: String = "necessary_amount"
         private const val PREF_KEY_GOAL_CATEGORY_ID: String = "goal_category_id"
+        private const val PREF_KEY_CREATED_TIME_MILLIS: String = "created_time_millis"
     }
 }
