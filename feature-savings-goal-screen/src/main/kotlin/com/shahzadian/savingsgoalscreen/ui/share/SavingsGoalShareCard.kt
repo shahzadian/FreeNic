@@ -1,9 +1,9 @@
 package com.shahzadian.savingsgoalscreen.ui.share
 
 import android.graphics.Bitmap
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.padding
@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.rememberGraphicsLayer
@@ -27,6 +28,62 @@ import com.shahzadian.savingsgoalscreen.R
 @Composable
 internal fun SavingsGoalShareCard(
     isSelected: Boolean,
+    shouldRecord: Boolean,
+    onCardClick: () -> Unit,
+    containerColorBrush: Brush,
+    modifier: Modifier = Modifier,
+    onRecorded: (Bitmap) -> Unit = {},
+    content: @Composable BoxScope.() -> Unit,
+) {
+    Box(
+        modifier = modifier
+            .background(
+                brush = containerColorBrush,
+                shape = if (shouldRecord) {
+                    RectangleShape
+                } else {
+                    MaterialTheme.shapes.small
+                },
+            )
+            .border(
+                width = if (isSelected) {
+                    2.dp
+                } else {
+                    0.dp
+                },
+                color = if (isSelected) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    Color.Transparent
+                },
+                shape = if (shouldRecord) {
+                    RectangleShape
+                } else {
+                    MaterialTheme.shapes.small
+                },
+            )
+    ) {
+        ContentView(
+            shouldRecord = shouldRecord,
+            onCardClick = onCardClick,
+            containerColorBrush = containerColorBrush,
+            onRecorded = onRecorded,
+            content = content,
+        )
+        if (isSelected) {
+            Image(
+                painter = painterResource(R.drawable.ic_share_achievement_check),
+                contentDescription = "check",
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(end = 8.dp, top = 8.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun ContentView(
     shouldRecord: Boolean,
     onCardClick: () -> Unit,
     containerColorBrush: Brush,
@@ -52,14 +109,6 @@ internal fun SavingsGoalShareCard(
                 }
             },
         elevation = CardDefaults.cardElevation(defaultElevation = if (shouldRecord) 0.dp else 4.dp),
-        border = if (isSelected && !shouldRecord) {
-            BorderStroke(
-                width = 2.dp,
-                color = MaterialTheme.colorScheme.primary,
-            )
-        } else {
-            null
-        },
         shape = if (shouldRecord) {
             RectangleShape
         } else {
@@ -71,18 +120,15 @@ internal fun SavingsGoalShareCard(
             modifier = Modifier
                 .background(
                     brush = containerColorBrush,
-                    shape = MaterialTheme.shapes.small
+                    shape = if (shouldRecord) {
+                        RectangleShape
+                    } else {
+                        MaterialTheme.shapes.small
+                    },
                 )
                 .padding(16.dp)
         ) {
             content()
-            if (isSelected && !shouldRecord) {
-                Image(
-                    painter = painterResource(R.drawable.ic_share_achievement_check),
-                    contentDescription = "check",
-                    modifier = Modifier.align(Alignment.TopEnd)
-                )
-            }
         }
     }
     if (shouldRecord) {
