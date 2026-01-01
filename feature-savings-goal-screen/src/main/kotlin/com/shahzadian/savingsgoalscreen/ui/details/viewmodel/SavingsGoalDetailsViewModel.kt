@@ -7,6 +7,7 @@ import com.shahzadian.savingsgoal.domain.SavingsGoal
 import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
+import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -51,8 +52,8 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
         }
     }
 
-    private suspend fun SavingsGoal.toUiModel(): SavingsGoalDetailsViewState.SavingsGoalDataUiModel {
-        return SavingsGoalDetailsViewState.SavingsGoalDataUiModel(
+    private suspend fun SavingsGoal.toUiModel(): SavingsGoalDataUiModel {
+        return SavingsGoalDataUiModel(
             name = this.name,
             currency = this.currency,
             currentAmount = this.currentAmount,

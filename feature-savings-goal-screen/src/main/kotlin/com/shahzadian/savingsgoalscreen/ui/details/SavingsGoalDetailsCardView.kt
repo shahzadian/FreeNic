@@ -28,11 +28,11 @@ import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.savingsgoalscreen.ui.details.viewmodel.SavingsGoalDetailsViewState
+import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 
 @Composable
 internal fun SavingsGoalDetailsCardView(
-    dataUiModel: SavingsGoalDetailsViewState.SavingsGoalDataUiModel,
+    dataUiModel: SavingsGoalDataUiModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
