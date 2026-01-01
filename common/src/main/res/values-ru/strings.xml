@@ -328,5 +328,9 @@
     <string name="savings_goal_delete_confirm_yes">Удалить</string>
     <string name="savings_goal_delete_confirm_no">Отмена</string>
     <string name="savings_goal_share_title">Поделиться</string>
+    <string name="savings_goal_share_orange_title">Отказ от курения уже даёт результат!</string>
+    <string name="savings_goal_share_orange_data_title">Моя цель</string>
+    <string name="savings_goal_share_orange_data_money">Накоплено</string>
+    <string name="savings_goal_share_orange_data_progress">Прогресс</string>
 
 </resources>

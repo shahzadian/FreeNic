@@ -337,5 +337,9 @@
     <string name="savings_goal_delete_confirm_yes">Delete</string>
     <string name="savings_goal_delete_confirm_no">Cancel</string>
     <string name="savings_goal_share_title">Share</string>
+    <string name="savings_goal_share_orange_title">Quitting smoking is paying off!</string>
+    <string name="savings_goal_share_orange_data_title">My goal</string>
+    <string name="savings_goal_share_orange_data_money">Money saved</string>
+    <string name="savings_goal_share_orange_data_progress">Progress</string>
 
 </resources>

@@ -3,6 +3,7 @@ package com.shahzadian.savingsgoalscreen.ui.share
 import android.graphics.Bitmap
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.rememberGraphicsLayer
@@ -27,6 +29,7 @@ internal fun SavingsGoalShareCard(
     isSelected: Boolean,
     shouldRecord: Boolean,
     onCardClick: () -> Unit,
+    containerColorBrush: Brush,
     modifier: Modifier = Modifier,
     onRecorded: (Bitmap) -> Unit = {},
     content: @Composable BoxScope.() -> Unit,
@@ -66,6 +69,10 @@ internal fun SavingsGoalShareCard(
     ) {
         Box(
             modifier = Modifier
+                .background(
+                    brush = containerColorBrush,
+                    shape = MaterialTheme.shapes.small
+                )
                 .padding(16.dp)
         ) {
             content()
