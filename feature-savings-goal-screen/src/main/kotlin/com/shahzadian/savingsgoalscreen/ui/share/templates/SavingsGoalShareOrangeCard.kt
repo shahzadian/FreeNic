@@ -127,7 +127,7 @@ private fun DataView(
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.onPrimary,
-                shape = MaterialTheme.shapes.medium,
+                shape = MaterialTheme.shapes.small,
             )
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
