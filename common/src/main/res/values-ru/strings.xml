@@ -333,5 +333,9 @@
     <string name="savings_goal_share_orange_data_money">Накоплено</string>
     <string name="savings_goal_share_orange_data_progress">Прогресс</string>
     <string name="savings_goal_share_submit_button">Поделиться</string>
+    <string name="savings_goal_share_classic_title">Каждый лень без сигарет</string>
+    <string name="savings_goal_share_classic_subtitle">Приближает меня к цели</string>
+    <string name="savings_goal_share_classic_data_header_subtitle">Цель: %s</string>
+    <string name="savings_goal_share_classic_data_progress_label">Денег накоплено</string>
 
 </resources>

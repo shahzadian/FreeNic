@@ -29,7 +29,7 @@ import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 import com.shahzadian.savingsgoalscreen.ui.share.SavingsGoalShareCard
 
 @Composable
-internal fun SavingsGoalShareOrangeCard(
+internal fun SavingsGoalShareOrangeTemplate(
     dataUiModel: SavingsGoalDataUiModel,
     isSelected: Boolean,
     shouldRecord: Boolean,

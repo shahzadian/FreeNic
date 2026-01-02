@@ -26,7 +26,8 @@ import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.savingsgoalscreen.ui.share.templates.SavingsGoalShareOrangeCard
+import com.shahzadian.savingsgoalscreen.ui.share.templates.SavingsGoalShareClassicTemplate
+import com.shahzadian.savingsgoalscreen.ui.share.templates.SavingsGoalShareOrangeTemplate
 import com.shahzadian.savingsgoalscreen.ui.share.viewmodel.SavingsGoalShareViewModel
 import com.shahzadian.savingsgoalscreen.ui.share.viewmodel.SavingsGoalShareViewState
 import java.io.File
@@ -79,6 +80,9 @@ private fun ContentView(
             shouldRecord = false
         }
     }
+    val orangeTemplateId = 0
+    val classicTemplateId = 1
+    var selectedTemplateId by remember { mutableStateOf(orangeTemplateId) }
     Box(
         modifier = modifier,
     ) {
@@ -88,12 +92,27 @@ private fun ContentView(
             icon = null,
             hasBackIcon = true,
             onBackIconClicked = backIconClick,
+            modifier = Modifier.padding(bottom = 84.dp)
         ) {
-            SavingsGoalShareOrangeCard(
+            SavingsGoalShareOrangeTemplate(
                 dataUiModel = data.dataUiModel,
-                isSelected = true,
-                shouldRecord = shouldRecord,
-                onClick = {},
+                isSelected = selectedTemplateId == orangeTemplateId,
+                shouldRecord = shouldRecord && selectedTemplateId == orangeTemplateId,
+                onClick = {
+                    selectedTemplateId = orangeTemplateId
+                },
+                onRecorded = onBitmapRecord,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+            )
+            SavingsGoalShareClassicTemplate(
+                dataUiModel = data.dataUiModel,
+                isSelected = selectedTemplateId == classicTemplateId,
+                shouldRecord = shouldRecord && selectedTemplateId == classicTemplateId,
+                onClick = {
+                    selectedTemplateId = classicTemplateId
+                },
                 onRecorded = onBitmapRecord,
                 modifier = Modifier.fillMaxWidth(),
             )

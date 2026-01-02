@@ -342,5 +342,9 @@
     <string name="savings_goal_share_orange_data_money">Money saved</string>
     <string name="savings_goal_share_orange_data_progress">Progress</string>
     <string name="savings_goal_share_submit_button">Share</string>
+    <string name="savings_goal_share_classic_title">Every smoke-free day</string>
+    <string name="savings_goal_share_classic_subtitle">Brings me closer to the goal</string>
+    <string name="savings_goal_share_classic_data_header_subtitle">Target: %s</string>
+    <string name="savings_goal_share_classic_data_progress_label">Money saved</string>
 
 </resources>
