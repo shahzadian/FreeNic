@@ -17,13 +17,15 @@ interface SavingsGoalMapper {
     suspend fun createDomainModel(
         name: String,
         amount: Float,
-        categoryId: String
+        categoryId: String,
+        currentAmount: Float,
     ): SavingsGoal
 
     suspend fun createDataModel(
         name: String,
         amount: Float,
-        categoryId: String
+        categoryId: String,
+        currentAmount: Float,
     ): SavingsGoalData
 }
 
@@ -39,6 +41,7 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         return SavingsGoalData(
             name = savingsGoal.name,
             necessaryAmount = savingsGoal.necessaryAmount,
+            currentAmount = savingsGoal.currentAmount,
             createTimeMillis = savingsGoal.createTimeMillis,
             categoryId = savingsGoal.categoryId
         )
@@ -48,16 +51,16 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         val necessaryMoney = savingsGoalData.necessaryAmount
         val savedMoneyPerDay = getUserDataHelper().getSavedMoneyPerDay()
         val passedDays = getPassedDaysFromMillis(savingsGoalData.createTimeMillis)
-        val savedMoney = savedMoneyPerDay * passedDays
-        val percents = (savedMoney / necessaryMoney) * 100
+        val currentAmount = savingsGoalData.currentAmount + savedMoneyPerDay * passedDays
+        val percents = (currentAmount / necessaryMoney) * 100
         val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
         val noCigDays = getUserDataHelper().getSkippedDaysCount()
-        val moneyLeft = necessaryMoney - savedMoney
+        val moneyLeft = necessaryMoney - currentAmount
         val daysLeft = (moneyLeft / savedMoneyPerDay).toInt()
         return SavingsGoal(
             name = savingsGoalData.name,
             necessaryAmount = savingsGoalData.necessaryAmount,
-            currentAmount = savedMoney,
+            currentAmount = currentAmount.coerceAtLeast(0f),
             currency = currency,
             noCigDays = noCigDays,
             achievedPercents = minOf(percents, 100f),
@@ -71,24 +74,27 @@ internal class SavingsGoalMapperImpl @Inject constructor(
     override suspend fun createDomainModel(
         name: String,
         amount: Float,
-        categoryId: String
+        categoryId: String,
+        currentAmount: Float,
     ): SavingsGoal {
         val createTimeMillis = System.currentTimeMillis()
         val savedMoneyPerDay = getUserDataHelper().getSavedMoneyPerDay()
-        val passedDays = getPassedDaysFromMillis(createTimeMillis)
-        val savedMoney = savedMoneyPerDay * passedDays
+        // При создании цели текущая сумма равна введённой пользователем начальной сумме
+        val computedCurrent = currentAmount
         val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
-        val daysLeft = (amount / savedMoneyPerDay).toInt()
+        val amountLeft = (amount - computedCurrent).coerceAtLeast(0f)
+        val daysLeft = (amountLeft / savedMoneyPerDay).toInt()
+        val achievedPercents = if (amount == 0f) 0f else ((computedCurrent / amount) * 100f).coerceAtMost(100f)
         return SavingsGoal(
             name = name,
             necessaryAmount = amount,
-            currentAmount = savedMoney,
+            currentAmount = computedCurrent.coerceAtLeast(0f),
             currency = currency,
             noCigDays = getUserDataHelper().getSkippedDaysCount(),
-            achievedPercents = 0f,
+            achievedPercents = achievedPercents,
             daysLeft = maxOf(0, daysLeft),
             createTimeMillis = createTimeMillis,
-            amountLeft = amount,
+            amountLeft = amountLeft,
             categoryId = categoryId
         )
     }
@@ -96,11 +102,13 @@ internal class SavingsGoalMapperImpl @Inject constructor(
     override suspend fun createDataModel(
         name: String,
         amount: Float,
-        categoryId: String
+        categoryId: String,
+        currentAmount: Float,
     ): SavingsGoalData {
         return SavingsGoalData(
             name = name,
             necessaryAmount = amount,
+            currentAmount = currentAmount,
             createTimeMillis = System.currentTimeMillis(),
             categoryId = categoryId,
         )

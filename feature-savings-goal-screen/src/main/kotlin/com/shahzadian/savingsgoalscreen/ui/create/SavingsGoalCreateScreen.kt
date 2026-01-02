@@ -107,6 +107,10 @@ private fun ContentView(
         { onEvent(SavingsGoalCreateViewEvent.OnAmountChanged(it)) }
     }
 
+    val onCurrentAmountChange: (String) -> Unit = remember {
+        { onEvent(SavingsGoalCreateViewEvent.OnCurrentAmountChanged(it)) }
+    }
+
     val onCategoryClick: (String) -> Unit = remember {
         { onEvent(SavingsGoalCreateViewEvent.OnCategoryChanged(it)) }
     }
@@ -147,10 +151,24 @@ private fun ContentView(
                 value = data.goalAmount,
                 hint = stringResource(R.string.savings_goal_create_hint_amount),
                 onValueChange = onAmountChange,
-                hasNextField = false,
+                hasNextField = true,
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
+                )
+            )
+        }
+        InputView(
+            label = stringResource(R.string.savings_goal_create_label_current_amount),
+            modifier = Modifier.padding(bottom = 16.dp),
+        ) {
+            InputField(
+                value = data.currentAmount,
+                onValueChange = onCurrentAmountChange,
+                hasNextField = false,
+                modifier = Modifier.fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Decimal
                 )
             )
         }

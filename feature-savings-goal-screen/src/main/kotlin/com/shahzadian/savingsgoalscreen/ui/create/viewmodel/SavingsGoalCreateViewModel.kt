@@ -24,6 +24,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
 
     private var goalName: String? = null
     private var goalAmount: String? = null
+    private var currentAmount: String = "0"
     private var categories: List<SavingsGoalCategory>? = null
     private var currentCategoryId: String? = null
     private val isEdit: Boolean by lazyUnsafe {
@@ -38,6 +39,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                 if (current != null) {
                     goalName = current.name
                     goalAmount = current.necessaryAmount.toString()
+                    currentAmount = current.currentAmount.toString()
                     currentCategoryId = current.categoryId
                 }
             }
@@ -54,6 +56,11 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
 
             is SavingsGoalCreateViewEvent.OnAmountChanged -> {
                 goalAmount = event.amount
+                setData()
+            }
+
+            is SavingsGoalCreateViewEvent.OnCurrentAmountChanged -> {
+                currentAmount = event.amount
                 setData()
             }
 
@@ -75,10 +82,12 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                     model = SavingsGoalCreateDataUiModel(
                         goalName = goalName,
                         goalAmount = goalAmount,
+                        currentAmount = currentAmount,
                         categories = getAllCategories().map { it.toUiModel() },
                         selectedCategoryId = currentCategoryId,
                         isSubmitButtonEnabled = goalName?.isNotBlank() == true &&
                                 goalAmount?.toFloatOrNull()?.let { it > 0 } == true &&
+                                currentAmount.toFloatOrNull()?.let { it >= 0 } == true &&
                                 currentCategoryId != null
                     ),
                 )
@@ -112,6 +121,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
     private suspend fun saveGoal() {
         val name = goalName ?: throw IllegalStateException("Goal name is empty")
         val amount = goalAmount ?: throw IllegalStateException("Goal amount is empty")
+        val currentAmount = currentAmount.toFloatOrNull() ?: throw IllegalStateException("Current amount is empty")
         val category = categories
             ?.firstOrNull { it.id == currentCategoryId }
             ?: throw IllegalStateException("No category selected")
@@ -120,12 +130,14 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                 name = name,
                 amount = amount.toFloat(),
                 categoryId = category.id,
+                currentAmount = currentAmount,
             )
         } else {
             savingsGoalHelper.createSavingsGoal(
                 name = name,
                 amount = amount.toDouble(),
                 categoryId = category.id,
+                currentAmount = currentAmount,
             )
         }
     }

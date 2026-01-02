@@ -66,7 +66,7 @@ internal class SavingsGoalMapperTest {
         )
 
         // Act
-        val result = mapper.createDomainModel(name, amount, categoryId)
+        val result = mapper.createDomainModel(name, amount, categoryId, currentAmount = 0f)
 
         // Assert
         assert(result.name == name)
@@ -111,7 +111,7 @@ internal class SavingsGoalMapperTest {
         )
 
         // Act
-        val data = mapper.createDataModel(name, amount, categoryId)
+        val data = mapper.createDataModel(name, amount, categoryId, currentAmount = 0f)
         val domain = mapper.fromDataToDomain(data)
 
         // Assert
@@ -160,6 +160,7 @@ internal class SavingsGoalMapperTest {
         val data = SavingsGoalData(
             name = name,
             necessaryAmount = necessary,
+            currentAmount = 50f,
             createTimeMillis = createTimeMillis,
             categoryId = categoryId
         )
@@ -168,7 +169,7 @@ internal class SavingsGoalMapperTest {
         val domain = mapper.fromDataToDomain(data)
 
         // Assert
-        val expectedSaved = savedPerDay * daysAgo
+        val expectedSaved = 50f + savedPerDay * daysAgo
         val expectedPercents = (expectedSaved / necessary) * 100f
         val expectedMoneyLeft = (necessary - expectedSaved).coerceAtLeast(0f)
         val expectedDaysLeft = (expectedMoneyLeft / savedPerDay).toInt().coerceAtLeast(0)

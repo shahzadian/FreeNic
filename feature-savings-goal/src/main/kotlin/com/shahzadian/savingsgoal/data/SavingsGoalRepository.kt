@@ -31,6 +31,8 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
             val name = prefs[stringPreferencesKey(PREF_KEY_NAME)] ?: return@withContext null
             val necessaryAmount =
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] ?: return@withContext null
+            val currentAmount =
+                prefs[floatPreferencesKey(PREF_KEY_CURRENT_AMOUNT)] ?: 0f
             val categoryId =
                 prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] ?: return@withContext null
             val createdTimeMillis =
@@ -38,6 +40,7 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
             SavingsGoalData(
                 name = name,
                 necessaryAmount = necessaryAmount,
+                currentAmount = currentAmount,
                 createTimeMillis = createdTimeMillis,
                 categoryId = categoryId,
             )
@@ -49,6 +52,7 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
             savingsGoalDataStoreProvider.provide().edit { prefs ->
                 prefs[stringPreferencesKey(PREF_KEY_NAME)] = savingsGoal.name
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] = savingsGoal.necessaryAmount
+                prefs[floatPreferencesKey(PREF_KEY_CURRENT_AMOUNT)] = savingsGoal.currentAmount
                 prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] = savingsGoal.categoryId
                 prefs[longPreferencesKey(PREF_KEY_CREATED_TIME_MILLIS)] = savingsGoal.createTimeMillis
             }
@@ -60,6 +64,7 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
             savingsGoalDataStoreProvider.provide().edit { prefs ->
                 prefs.remove(stringPreferencesKey(PREF_KEY_NAME))
                 prefs.remove(floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT))
+                prefs.remove(floatPreferencesKey(PREF_KEY_CURRENT_AMOUNT))
                 prefs.remove(stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID))
                 prefs.remove(longPreferencesKey(PREF_KEY_CREATED_TIME_MILLIS))
             }
@@ -69,6 +74,7 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
     private companion object {
         private const val PREF_KEY_NAME: String = "name"
         private const val PREF_KEY_NECESSARY_AMOUNT: String = "necessary_amount"
+        private const val PREF_KEY_CURRENT_AMOUNT: String = "current_amount"
         private const val PREF_KEY_GOAL_CATEGORY_ID: String = "goal_category_id"
         private const val PREF_KEY_CREATED_TIME_MILLIS: String = "created_time_millis"
     }
