@@ -344,6 +344,5 @@
     <string name="savings_goal_share_blue_progress_label">Прогресс</string>
     <string name="savings_goal_share_blue_days_label">Дней без сигарет</string>
     <string name="free_nic_widget_main_name">Freenic виджет</string>
-    <string name="free_nic_widget_main_title">Ваш прогресс</string>
 
 </resources>

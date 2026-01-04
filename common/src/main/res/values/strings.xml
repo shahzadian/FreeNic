@@ -353,6 +353,5 @@
     <string name="savings_goal_share_classic_data_header_subtitle">Target: %s</string>
     <string name="savings_goal_share_classic_data_progress_label">Money saved</string>
     <string name="free_nic_widget_main_name">Freenic widget</string>
-    <string name="free_nic_widget_main_title">Your progress</string>
 
 </resources>
