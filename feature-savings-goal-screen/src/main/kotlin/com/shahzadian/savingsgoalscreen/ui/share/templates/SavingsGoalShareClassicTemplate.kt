@@ -191,7 +191,7 @@ private fun ProgressView(
             )
         }
         MainAnimatableLinearProgressIndicator(
-            progress = (dataUiModel.currentAmount / dataUiModel.necessaryAmount) * 100,
+            progress = dataUiModel.achievedPercents.toFloat(),
         )
     }
 }

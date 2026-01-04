@@ -345,6 +345,11 @@
     <string name="savings_goal_share_submit_button">Share</string>
     <string name="savings_goal_share_classic_title">Every smoke-free day</string>
     <string name="savings_goal_share_classic_subtitle">Brings me closer to the goal</string>
+    <string name="savings_goal_share_blue_title">I choose my goal over cigarettes</string>
+    <string name="savings_goal_share_blue_progress_goal_label">Goal</string>
+    <string name="savings_goal_share_blue_progress_label">Progress</string>
+    <string name="savings_goal_share_blue_days_label">Smoke-free days</string>
+    <string name="savings_goal_share_blue_saved_money_label">Money saved</string>
     <string name="savings_goal_share_classic_data_header_subtitle">Target: %s</string>
     <string name="savings_goal_share_classic_data_progress_label">Money saved</string>
 

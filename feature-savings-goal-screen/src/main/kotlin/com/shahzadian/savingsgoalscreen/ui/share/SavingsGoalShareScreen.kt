@@ -26,6 +26,7 @@ import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.savingsgoalscreen.ui.share.templates.SavingsGoalShareBlueTemplate
 import com.shahzadian.savingsgoalscreen.ui.share.templates.SavingsGoalShareClassicTemplate
 import com.shahzadian.savingsgoalscreen.ui.share.templates.SavingsGoalShareOrangeTemplate
 import com.shahzadian.savingsgoalscreen.ui.share.viewmodel.SavingsGoalShareViewModel
@@ -82,6 +83,7 @@ private fun ContentView(
     }
     val orangeTemplateId = 0
     val classicTemplateId = 1
+    val blueTemplateId = 2
     var selectedTemplateId by remember { mutableStateOf(orangeTemplateId) }
     Box(
         modifier = modifier,
@@ -114,7 +116,17 @@ private fun ContentView(
                     selectedTemplateId = classicTemplateId
                 },
                 onRecorded = onBitmapRecord,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+            )
+            SavingsGoalShareBlueTemplate(
+                dataUiModel = data.dataUiModel,
+                isSelected = selectedTemplateId == blueTemplateId,
+                shouldRecord = shouldRecord && selectedTemplateId == blueTemplateId,
+                onClick = {
+                    selectedTemplateId = blueTemplateId
+                },
             )
         }
         MainSubmitButton(

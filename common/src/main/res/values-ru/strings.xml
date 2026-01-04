@@ -336,7 +336,12 @@
     <string name="savings_goal_share_submit_button">Поделиться</string>
     <string name="savings_goal_share_classic_title">Каждый лень без сигарет</string>
     <string name="savings_goal_share_classic_subtitle">Приближает меня к цели</string>
+    <string name="savings_goal_share_blue_title">Я выбираю свою цель, а не сигареты</string>
+    <string name="savings_goal_share_blue_saved_money_label">Денег накоплено</string>
     <string name="savings_goal_share_classic_data_header_subtitle">Цель: %s</string>
     <string name="savings_goal_share_classic_data_progress_label">Денег накоплено</string>
+    <string name="savings_goal_share_blue_progress_goal_label">Цель</string>
+    <string name="savings_goal_share_blue_progress_label">Прогресс</string>
+    <string name="savings_goal_share_blue_days_label">Дней без сигарет</string>
 
 </resources>
