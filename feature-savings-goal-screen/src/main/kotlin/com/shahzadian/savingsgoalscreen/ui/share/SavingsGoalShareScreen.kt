@@ -127,6 +127,7 @@ private fun ContentView(
                 onClick = {
                     selectedTemplateId = blueTemplateId
                 },
+                onRecorded = onBitmapRecord,
             )
         }
         MainSubmitButton(

@@ -66,11 +66,16 @@ dependencies {
     implementation(project(":feature-debug-panel-screen"))
     implementation(project(":feature-debug-params"))
     implementation(project(":feature-savings-goal-screen"))
+    implementation(project(":feature-widget"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
 
+
+    // Compose BOM
+    implementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -1,0 +1,1 @@
+# keep rules for the widget module (currently empty)
