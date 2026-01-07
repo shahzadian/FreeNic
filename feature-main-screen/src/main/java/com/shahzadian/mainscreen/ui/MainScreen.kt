@@ -4,14 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.freenic.ui.AppScreen
 
 @Composable
 fun MainScreen(
     navController: NavController,
-    modifier: Modifier = Modifier,
 ) {
     val viewModel: MainViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()
@@ -23,6 +22,9 @@ fun MainScreen(
             navController.navigate(firstRoute) {
                 launchSingleTop = true
                 restoreState = true
+                popUpTo(AppScreen.MainScreen.route) {
+                    inclusive = true
+                }
             }
         }
     }

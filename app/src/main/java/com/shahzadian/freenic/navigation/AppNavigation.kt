@@ -149,7 +149,6 @@ fun AppNavigation(
             ) {
                 MainScreen(
                     navController = navController,
-                    modifier = BaseModifier,
                 )
             }
             composable(
