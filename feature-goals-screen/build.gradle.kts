@@ -43,6 +43,7 @@ dependencies {
     implementation(project(":feature-achievements"))
     implementation(project(":feature-subscription"))
     implementation(project(":feature-savings-goal"))
+    implementation(project(":feature-ad"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

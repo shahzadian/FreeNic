@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.shahzadian.ad.AdHelper
 import com.shahzadian.goalsscreen.ui.AchievementsConst
 import com.shahzadian.goalsscreen.ui.AchievementsUiModelFetcher
 import com.shahzadian.savingsgoal.domain.SavingsGoal
@@ -18,6 +19,7 @@ internal class GoalsViewModel @Inject constructor(
     private val achievementsUiModelFetcher: AchievementsUiModelFetcher,
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val savingsGoalHelper: SavingsGoalHelper,
+    private val adHelper: AdHelper,
 ) : BaseViewModel<GoalsViewState, GoalsViewEvent, GoalsViewCommand>() {
 
     override val initState: GoalsViewState by lazyUnsafe { GoalsViewState.Loading }
@@ -25,6 +27,7 @@ internal class GoalsViewModel @Inject constructor(
     init {
         setDataState()
         setupObservers()
+        setupAd()
     }
 
     override fun onViewEventHappened(event: GoalsViewEvent) {
@@ -91,6 +94,10 @@ internal class GoalsViewModel @Inject constructor(
                 setDataState()
             }
         }
+    }
+
+    private fun setupAd() {
+        adHelper.requestAdShow()
     }
 
     private suspend fun SavingsGoal.toUiModel(): GoalsViewState.SavingsGoalUiModel {

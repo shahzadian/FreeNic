@@ -8,9 +8,13 @@ import androidx.lifecycle.lifecycleScope
 import com.freenic.AppLaunchConst
 import com.freenic.ui.model.CoroutineContexts
 import com.freenic.ui.theme.FreeNicTheme
-import com.google.android.gms.ads.MobileAds
+import com.shahzadian.ad.AdHelper
 import com.shahzadian.freenic.navigation.AppNavigation
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,6 +23,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var coroutineContexts: CoroutineContexts
+
+    @Inject
+    lateinit var adHelper: AdHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +42,24 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun initializeAdSdk() {
-        lifecycleScope.launch(coroutineContexts.io) {
-            MobileAds.initialize(this@MainActivity)
+        lifecycleScope.launch(coroutineContexts.unconfined) {
+            adHelper.initialize(this@MainActivity)
+            adHelper
+                .loadBannerAd()
+                .collect {
+//                    Result is not needed
+                }
         }
+        adHelper
+            .adShowRequestFlow
+            .flatMapConcat {
+                adHelper.showAd(this@MainActivity)
+            }
+            .onEach {
+//                Result is not needed
+            }
+            .launchIn(lifecycleScope)
     }
 }

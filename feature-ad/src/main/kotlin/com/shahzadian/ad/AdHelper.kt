@@ -1,0 +1,171 @@
+package com.shahzadian.ad
+
+import android.app.Activity
+import android.content.Context
+import com.freenic.ui.appinfo.AppInfoHelper
+import com.freenic.ui.extensions.lazyUnsafe
+import com.freenic.ui.model.CoroutineContexts
+import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+interface AdHelper {
+
+    suspend fun initialize(context: Context)
+
+    val adShowRequestFlow: Flow<Unit>
+
+    fun requestAdShow()
+
+    suspend fun showAd(activity: Activity): Flow<BannerAdShowResult>
+
+    suspend fun loadBannerAd(): Flow<BannerAdLoadResult>
+
+    sealed interface BannerAdLoadResult {
+        object Success : BannerAdLoadResult
+
+        class Error(
+            val throwable: Throwable
+        ) : BannerAdLoadResult
+    }
+
+    sealed interface BannerAdShowResult {
+        object Showing : BannerAdShowResult
+        object Dismissed : BannerAdShowResult
+        class Error(
+            val throwable: Throwable
+        ) : BannerAdShowResult
+    }
+}
+
+internal class AdHelperImpl @Inject constructor(
+    @param:ApplicationContext
+    private val context: Context,
+    private val appInfoHelper: AppInfoHelper,
+    private val coroutineContexts: CoroutineContexts,
+) : AdHelper {
+
+    private var currentInterstitialAd: InterstitialAd? = null
+
+    override val adShowRequestFlow: MutableSharedFlow<Unit> by lazyUnsafe {
+        MutableSharedFlow()
+    }
+
+    private val coroutineScope by lazyUnsafe {
+        CoroutineScope(coroutineContexts.unconfined)
+    }
+
+    override fun requestAdShow() {
+        if (canShowAd()) {
+            coroutineScope.launch {
+                adShowRequestFlow.emit(Unit)
+            }
+        } else {
+            coroutineScope.launch {
+                loadBannerAd()
+                    .collect { result ->
+//                        Result is not needed
+                    }
+            }
+        }
+    }
+
+    override suspend fun showAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
+        return callbackFlow {
+            val ad = currentInterstitialAd
+            if (ad == null) {
+                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Ad is not loaded yet")))
+                close()
+                return@callbackFlow
+            }
+
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    currentInterstitialAd = null
+                    trySend(AdHelper.BannerAdShowResult.Dismissed)
+                    close()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    currentInterstitialAd = null
+                    trySend(AdHelper.BannerAdShowResult.Error(Throwable(p0.message)))
+                    close()
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    trySend(AdHelper.BannerAdShowResult.Showing)
+                }
+            }
+
+            ad.show(activity)
+
+            awaitClose {
+                // Avoid memory leaks
+                ad.fullScreenContentCallback = null
+            }
+        }
+    }
+
+    override suspend fun loadBannerAd(): Flow<AdHelper.BannerAdLoadResult> {
+        // Return a one-shot flow that completes after load success or failure
+        return callbackFlow {
+            InterstitialAd.load(
+                context,
+                getAppAdId(),
+                AdRequest.Builder().build(),
+                object : InterstitialAdLoadCallback() {
+                    override fun onAdLoaded(p0: InterstitialAd) {
+                        currentInterstitialAd = p0
+                        trySend(AdHelper.BannerAdLoadResult.Success)
+                        close()
+                    }
+
+                    override fun onAdFailedToLoad(p0: LoadAdError) {
+                        currentInterstitialAd = null
+                        trySend(
+                            AdHelper.BannerAdLoadResult.Error(
+                                Throwable(p0.message)
+                            )
+                        )
+                        close()
+                    }
+                }
+            )
+
+            awaitClose { /* no-op */ }
+        }
+    }
+
+    override suspend fun initialize(context: Context) {
+        MobileAds.initialize(context)
+    }
+
+    private fun canShowAd(): Boolean {
+        return currentInterstitialAd != null
+    }
+
+    private fun getAppAdId(): String {
+        return if (appInfoHelper.isDebugBuild()) {
+            ADS_TEST_ID
+        } else {
+            ADS_PROD_ID
+        }
+    }
+
+    private companion object {
+        const val ADS_TEST_ID: String = "ca-app-pub-3940256099942544/1033173712"
+        const val ADS_PROD_ID: String = "ca-app-pub-3104359766953553/8805483242"
+    }
+}

@@ -64,13 +64,12 @@ dependencies {
     implementation(project(":feature-debug-params"))
     implementation(project(":feature-savings-goal-screen"))
     implementation(project(":feature-widget"))
+    implementation(project(":feature-ad"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-
-    implementation(libs.play.services.ads)
-
+    
     // Compose BOM
     implementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(platform(libs.androidx.compose.bom))
