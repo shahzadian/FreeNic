@@ -62,6 +62,11 @@ internal class AdHelperImpl @Inject constructor(
 
     private var currentInterstitialAd: InterstitialAd? = null
 
+    private var lastTimeAdWasShown: Long? = null
+
+    @Volatile
+    private var isLoadingAd: Boolean = false
+
     override val adShowRequestFlow: MutableSharedFlow<Unit> by lazyUnsafe {
         MutableSharedFlow()
     }
@@ -89,7 +94,7 @@ internal class AdHelperImpl @Inject constructor(
     override suspend fun showAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
         return callbackFlow {
             if (!canShowAdToUser()) {
-                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("User has paid subscription")))
+                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Cannot show ad currently")))
                 close()
                 return@callbackFlow
             }
@@ -104,6 +109,7 @@ internal class AdHelperImpl @Inject constructor(
                 override fun onAdDismissedFullScreenContent() {
                     currentInterstitialAd = null
                     trySend(AdHelper.BannerAdShowResult.Dismissed)
+                    lastTimeAdWasShown = System.currentTimeMillis()
                     close()
                 }
 
@@ -128,10 +134,11 @@ internal class AdHelperImpl @Inject constructor(
     }
 
     override suspend fun loadBannerAd(): Flow<AdHelper.BannerAdLoadResult> {
-        // Return a one-shot flow that completes after load success or failure
+        if (isLoadingAd) return callbackFlow { close() }
+        isLoadingAd = true
         return callbackFlow {
             if (!canShowAdToUser()) {
-                trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("User has paid subscription")))
+                trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently")))
                 close()
                 return@callbackFlow
             }
@@ -167,6 +174,9 @@ internal class AdHelperImpl @Inject constructor(
     }
 
     private suspend fun canShowAdToUser(): Boolean {
+        if (lastTimeAdWasShown != null && System.currentTimeMillis() - lastTimeAdWasShown!! < AD_SHOW_MINIMAL_INTERVAL_MILLIS) {
+            return false
+        }
         val currentSubscription = getUserCurrentSubscriptionUseCase()
         return currentSubscription == null
     }
@@ -182,5 +192,6 @@ internal class AdHelperImpl @Inject constructor(
     private companion object {
         const val ADS_TEST_ID: String = "ca-app-pub-3940256099942544/1033173712"
         const val ADS_PROD_ID: String = "ca-app-pub-3104359766953553/8805483242"
+        const val AD_SHOW_MINIMAL_INTERVAL_MILLIS: Long = 1000 * 60
     }
 }

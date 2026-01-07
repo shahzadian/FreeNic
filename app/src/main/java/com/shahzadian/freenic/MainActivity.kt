@@ -46,20 +46,33 @@ class MainActivity : ComponentActivity() {
     private fun initializeAdSdk() {
         lifecycleScope.launch(coroutineContexts.main) {
             adHelper.initialize(this@MainActivity)
-            adHelper
-                .loadBannerAd()
-                .collect {
-//                    Result is not needed
-                }
+            loadAd()
         }
         adHelper
             .adShowRequestFlow
             .flatMapConcat {
                 adHelper.showAd(this@MainActivity)
             }
-            .onEach {
-//                Result is not needed
+            .onEach { result ->
+                when (result) {
+                    is AdHelper.BannerAdShowResult.Error -> {
+                        loadAd()
+                    }
+                    is AdHelper.BannerAdShowResult.Dismissed -> {
+                        loadAd()
+                    }
+                    is AdHelper.BannerAdShowResult.Showing -> {}
+                }
             }
             .launchIn(lifecycleScope)
+    }
+
+    private fun loadAd() {
+        lifecycleScope.launch(coroutineContexts.main) {
+            adHelper.loadBannerAd()
+                .collect {
+//                    Result is not needed
+                }
+        }
     }
 }
