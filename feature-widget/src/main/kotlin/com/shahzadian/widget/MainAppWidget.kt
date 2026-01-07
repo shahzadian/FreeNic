@@ -164,7 +164,16 @@ private fun UpgradeWidget() {
             },
             colors = androidx.glance.ButtonDefaults.buttonColors(
                 backgroundColor = ColorProvider(MaterialTheme.colorScheme.primary),
-            )
+            ),
+        )
+        Text(
+            text = context.getString(com.shahzadian.baseui.R.string.widget_main_info),
+            style = TextStyle(
+                color = ColorProvider(MaterialTheme.colorScheme.onSecondary),
+                fontSize = AppTypography.bodyMedium.fontSize,
+            ),
+            modifier = GlanceModifier
+                .padding(top = 8.dp)
         )
     }
 }

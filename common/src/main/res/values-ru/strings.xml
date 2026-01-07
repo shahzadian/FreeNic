@@ -349,5 +349,6 @@
     <string name="widget_main_info_cigs_skipped">Не выкурено</string>
     <string name="widget_main_upgrade">Обновите план, чтобы увидеть информацию</string>
     <string name="widget_main_upgrade_button">Обновить</string>
+    <string name="widget_main_info">Виджет обновляется каждые 30 минут</string>
 
 </resources>
