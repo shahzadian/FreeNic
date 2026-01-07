@@ -12,6 +12,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface AdHelper {
@@ -55,6 +57,7 @@ internal class AdHelperImpl @Inject constructor(
     private val context: Context,
     private val appInfoHelper: AppInfoHelper,
     private val coroutineContexts: CoroutineContexts,
+    private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
 ) : AdHelper {
 
     private var currentInterstitialAd: InterstitialAd? = null
@@ -68,22 +71,28 @@ internal class AdHelperImpl @Inject constructor(
     }
 
     override fun requestAdShow() {
-        if (canShowAd()) {
-            coroutineScope.launch {
+        coroutineScope.launch {
+            if (!canShowAdToUser()) return@launch
+            if (currentInterstitialAd != null) {
                 adShowRequestFlow.emit(Unit)
-            }
-        } else {
-            coroutineScope.launch {
-                loadBannerAd()
-                    .collect { result ->
+            } else {
+                withContext(coroutineContexts.main) {
+                    loadBannerAd()
+                        .collect { result ->
 //                        Result is not needed
-                    }
+                        }
+                }
             }
         }
     }
 
     override suspend fun showAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
         return callbackFlow {
+            if (!canShowAdToUser()) {
+                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("User has paid subscription")))
+                close()
+                return@callbackFlow
+            }
             val ad = currentInterstitialAd
             if (ad == null) {
                 trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Ad is not loaded yet")))
@@ -121,6 +130,11 @@ internal class AdHelperImpl @Inject constructor(
     override suspend fun loadBannerAd(): Flow<AdHelper.BannerAdLoadResult> {
         // Return a one-shot flow that completes after load success or failure
         return callbackFlow {
+            if (!canShowAdToUser()) {
+                trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("User has paid subscription")))
+                close()
+                return@callbackFlow
+            }
             InterstitialAd.load(
                 context,
                 getAppAdId(),
@@ -152,8 +166,9 @@ internal class AdHelperImpl @Inject constructor(
         MobileAds.initialize(context)
     }
 
-    private fun canShowAd(): Boolean {
-        return currentInterstitialAd != null
+    private suspend fun canShowAdToUser(): Boolean {
+        val currentSubscription = getUserCurrentSubscriptionUseCase()
+        return currentSubscription == null
     }
 
     private fun getAppAdId(): String {

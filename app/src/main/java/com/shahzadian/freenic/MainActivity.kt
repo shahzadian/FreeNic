@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun initializeAdSdk() {
-        lifecycleScope.launch(coroutineContexts.unconfined) {
+        lifecycleScope.launch(coroutineContexts.main) {
             adHelper.initialize(this@MainActivity)
             adHelper
                 .loadBannerAd()

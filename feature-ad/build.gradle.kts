@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":feature-subscription"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
