@@ -12,9 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,25 +30,46 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.freenic.ui.AppLoaderView
+import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewCommand
+import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewEvent
 import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewModel
 import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewState
 
 @Composable
 fun PaywallScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: PaywallViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()
+    val backIconClickEvent = remember {
+        { viewModel.onViewEvent(PaywallViewEvent.OnBackIconClicked) }
+    }
     when (state) {
-        is PaywallViewState.Loading -> {}
+        is PaywallViewState.Loading -> {
+            AppLoaderView(
+                modifier = modifier.fillMaxSize()
+            )
+        }
         is PaywallViewState.Data -> {
             ContentView(
                 data = state as PaywallViewState.Data,
+                onBackIconClicked = backIconClickEvent,
                 modifier = modifier.fillMaxSize()
             )
+        }
+    }
+    LaunchedEffect(viewModel.viewCommandFlow) {
+        viewModel.viewCommandFlow.collect { command ->
+            when (command) {
+                is PaywallViewCommand.NavigateBack -> navController.popBackStack()
+            }
         }
     }
 }
@@ -58,14 +77,17 @@ fun PaywallScreen(
 @Composable
 private fun ContentView(
     data: PaywallViewState.Data,
+    onBackIconClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = modifier
-            .verticalScroll(scrollState)
-            .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp),
+    val backIconClick = remember {
+        { onBackIconClicked() }
+    }
+    HeaderScreen(
+        title = TextWrapper.FromRes(R.string.paywall_page_title),
+        hasBackIcon = true,
+        onBackIconClicked = backIconClick,
+        modifier = modifier,
     ) {
         HeaderView(
             modifier = Modifier

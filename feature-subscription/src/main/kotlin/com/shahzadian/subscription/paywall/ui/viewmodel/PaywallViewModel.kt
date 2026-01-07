@@ -25,7 +25,15 @@ internal class PaywallViewModel @Inject constructor(
     }
 
     override fun onViewEventHappened(event: PaywallViewEvent) {
-
+        when (event) {
+            is PaywallViewEvent.OnBackIconClicked -> {
+                viewModelScope.launch {
+                    sendViewCommand(
+                        PaywallViewCommand.NavigateBack
+                    )
+                }
+            }
+        }
     }
 
     private fun setDataViewState() {

@@ -350,5 +350,6 @@
     <string name="widget_main_upgrade">Обновите план, чтобы увидеть информацию</string>
     <string name="widget_main_upgrade_button">Обновить</string>
     <string name="widget_main_info">Виджет обновляется каждые 30 минут</string>
+    <string name="paywall_page_title">Премиум подписка</string>
 
 </resources>

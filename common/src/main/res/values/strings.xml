@@ -359,5 +359,6 @@
     <string name="widget_main_upgrade">Upgrade your plan to see the widget info</string>
     <string name="widget_main_upgrade_button">Upgrade</string>
     <string name="widget_main_info">Widget is updated every 30 minutes</string>
+    <string name="paywall_page_title">Premium subscription</string>
 
 </resources>

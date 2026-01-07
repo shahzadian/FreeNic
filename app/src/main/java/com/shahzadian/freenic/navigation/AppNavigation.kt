@@ -217,6 +217,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 PaywallScreen(
+                    navController = navController,
                     modifier = BaseModifier,
                 )
             }
