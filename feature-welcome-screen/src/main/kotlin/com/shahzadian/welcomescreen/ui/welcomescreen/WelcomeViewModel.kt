@@ -7,6 +7,7 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,12 +34,32 @@ internal class WelcomeViewModel @Inject constructor(
                         AppScreen.getAll().firstOrNull {
                             it.getBaseRoute() == screen
                         }
-                    } ?: AppScreen.MainScreen
-                sendViewCommand(
-                    WelcomeViewCommand.Navigate(
-                        screen = screenToNavigate
+                    }
+
+                if (screenToNavigate == null) {
+                    sendViewCommand(
+                        WelcomeViewCommand.Navigate(
+                            screen = AppScreen.MainScreen,
+                            keepInStack = false,
+                        )
                     )
-                )
+                } else {
+//                    Main screen is added to stack first
+                    if (screenToNavigate != AppScreen.MainScreen) {
+                        sendViewCommand(
+                            WelcomeViewCommand.Navigate(
+                                screen = AppScreen.MainScreen,
+                                keepInStack = false,
+                            )
+                        )
+                    }
+                    delay(500)
+                    sendViewCommand(
+                        WelcomeViewCommand.Navigate(
+                            screen = screenToNavigate
+                        )
+                    )
+                }
             } else {
                 setViewState(
                     WelcomeViewState.GetStarted

@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.mainGradientBackground
 import com.freenic.ui.wrapper.TextWrapper
@@ -68,7 +69,14 @@ fun WelcomeScreen(
             .collect { command ->
                 when (command) {
                     is WelcomeViewCommand.Navigate -> {
-                        navController.navigate(command.screen.route)
+                        navController.navigate(command.screen.route) {
+                            if (!command.keepInStack) {
+                                popUpTo(AppScreen.WelcomeScreen.route) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+
                     }
                 }
             }

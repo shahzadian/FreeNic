@@ -7,5 +7,8 @@ import com.freenic.ui.vm.ViewCommand
 @Immutable
 sealed interface WelcomeViewCommand : ViewCommand {
 
-    data class Navigate(val screen: AppScreen) : WelcomeViewCommand
+    data class Navigate(
+        val screen: AppScreen,
+        val keepInStack: Boolean = true,
+    ) : WelcomeViewCommand
 }
