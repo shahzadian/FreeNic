@@ -5,7 +5,7 @@
         <receiver
             android:name="com.shahzadian.widget.FreeNicGlanceWidgetReceiver"
             android:exported="true"
-            android:label="@string/free_nic_widget_main_name">
+            android:label="@string/widget_main_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

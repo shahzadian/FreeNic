@@ -19,11 +19,13 @@ import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Alignment
+import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxSize
+import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
-import androidx.glance.layout.size
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
@@ -36,6 +38,7 @@ import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.model.UserData
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Currency
 import javax.inject.Inject
 
 
@@ -52,10 +55,11 @@ class MainAppWidget(
                     ?: throw IllegalStateException("UserData is null")
                 userDataHelper = userDataHelperFactory.create(userData!!)
             }
-            userDataHelper?.let {
+            if (userData != null && userDataHelper != null) {
                 FreeNicTheme {
                     MainWidget(
-                        userDataHelper = it
+                        userData = userData!!,
+                        userDataHelper = userDataHelper!!
                     )
                 }
             }
@@ -65,6 +69,7 @@ class MainAppWidget(
 
 @Composable
 private fun MainWidget(
+    userData: UserData,
     userDataHelper: UserDataHelper,
 ) {
     Column(
@@ -74,15 +79,31 @@ private fun MainWidget(
                 color = MaterialTheme.colorScheme.background,
             )
             .padding(16.dp),
-        verticalAlignment = Alignment.Vertical.CenterVertically,
+        verticalAlignment = Alignment.Vertical.Top,
         horizontalAlignment = Alignment.Horizontal.Start
     ) {
         HeaderView(
             modifier = GlanceModifier
         )
-        DataView(
-            userDataHelper = userDataHelper,
-        )
+        Column {
+            DataView(
+                userDataHelper = userDataHelper,
+                modifier = GlanceModifier.padding(end = 4.dp)
+            )
+            Box(
+                modifier = GlanceModifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(ColorProvider(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.1f)))
+
+            ) { }
+            FooterView(
+                userData = userData,
+                userDataHelper = userDataHelper,
+                modifier = GlanceModifier
+                    .padding(top = 8.dp),
+            )
+        }
     }
 }
 
@@ -90,30 +111,18 @@ private fun MainWidget(
 private fun HeaderView(
     modifier: GlanceModifier = GlanceModifier
 ) {
-    Row(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalAlignment = Alignment.CenterVertically,
+    val context = LocalContext.current
+    val label = context.getString(com.shahzadian.baseui.R.string.app_name)
+    val textStyle = AppTypography.bodyMedium
+    Text(
+        text = label,
+        style = TextStyle(
+            color = ColorProvider(MaterialTheme.colorScheme.onSecondary),
+            fontSize = textStyle.fontSize,
+            fontWeight = FontWeight.Medium,
+        ),
         modifier = modifier,
-    ) {
-        Image(
-            provider = ImageProvider(R.drawable.ic_app_icon_transparent_bg),
-            contentDescription = "app icon",
-            modifier = GlanceModifier
-                .size(40.dp)
-                .padding(end = 8.dp)
-        )
-        val context = LocalContext.current
-        val label = context.getString(com.shahzadian.baseui.R.string.app_name)
-        val textStyle = AppTypography.bodyMedium
-        Text(
-            text = label,
-            style = TextStyle(
-                color = ColorProvider(MaterialTheme.colorScheme.onSecondary),
-                fontSize = textStyle.fontSize,
-                fontWeight = FontWeight.Medium,
-            )
-        )
-    }
+    )
 }
 
 @Composable
@@ -131,14 +140,67 @@ private fun DataView(
     Column(
         modifier = modifier,
     ) {
-        val textStyle = AppTypography.headlineMedium
+        val noCigDaysStyle = AppTypography.headlineMedium
         Text(
             text = noCigDaysText,
             style = TextStyle(
                 color = ColorProvider(MaterialTheme.colorScheme.onPrimary),
-                fontSize = textStyle.fontSize,
+                fontSize = noCigDaysStyle.fontSize,
                 fontWeight = FontWeight.Medium,
-            )
+            ),
+            modifier = GlanceModifier.padding(bottom = 4.dp)
+        )
+        val smokeFreeStyle = AppTypography.bodyLarge
+        Text(
+            text = context.getString(com.shahzadian.baseui.R.string.widget_main_smoke_free),
+            style = TextStyle(
+                color = ColorProvider(MaterialTheme.colorScheme.primary),
+                fontSize = smokeFreeStyle.fontSize,
+            ),
+            modifier = GlanceModifier.padding(bottom = 8.dp)
+        )
+    }
+}
+
+@Composable
+private fun FooterView(
+    userData: UserData,
+    userDataHelper: UserDataHelper,
+    modifier: GlanceModifier = GlanceModifier,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            provider = ImageProvider(R.drawable.ic_widget_main_saved_money),
+            contentDescription = "Money saved",
+            modifier = GlanceModifier.padding(end = 8.dp)
+        )
+        val context = LocalContext.current
+        val savedMoneyText =
+            context.getString(com.shahzadian.baseui.R.string.widget_main_info_money_saved)
+        Text(
+            text = savedMoneyText,
+            style = TextStyle(
+                color = ColorProvider(MaterialTheme.colorScheme.onSecondary),
+                fontSize = AppTypography.bodyMedium.fontSize,
+            ),
+            modifier = GlanceModifier.padding(end = 8.dp)
+        )
+        val displayableCurrency =
+            try {
+                Currency.getInstance(userData.cigarettesData.priceData.currency).symbol
+            } catch (t: Throwable) {
+                ""
+            }
+        Text(
+            text = "${userDataHelper.getSavedMoney()}$displayableCurrency",
+            style = TextStyle(
+                color = ColorProvider(MaterialTheme.colorScheme.onPrimary),
+                fontSize = AppTypography.titleLarge.fontSize,
+                fontWeight = FontWeight.Medium,
+            ),
         )
     }
 }

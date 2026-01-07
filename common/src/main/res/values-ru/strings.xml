@@ -343,6 +343,9 @@
     <string name="savings_goal_share_blue_progress_goal_label">Цель</string>
     <string name="savings_goal_share_blue_progress_label">Прогресс</string>
     <string name="savings_goal_share_blue_days_label">Дней без сигарет</string>
-    <string name="free_nic_widget_main_name">Freenic виджет</string>
+    <string name="widget_main_name">Freenic виджет</string>
+    <string name="widget_main_smoke_free">Без сигарет</string>
+    <string name="widget_main_info_money_saved">Сэкономлено</string>
+    <string name="widget_main_info_cigs_skipped">Не выкурено</string>
 
 </resources>
