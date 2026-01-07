@@ -13,6 +13,7 @@ import com.shahzadian.freenic.navigation.AppNavigation
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -34,7 +35,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        initializeAdSdk()
         val targetScreen =
             intent.getStringExtra(AppLaunchConst.KEY_INTENT_TARGET_SCREEN)
         setContent {
@@ -44,6 +44,7 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }
+        initializeAdSdk()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -52,6 +53,7 @@ class MainActivity : ComponentActivity() {
             if (getUserCurrentSubscriptionUseCase() != null) {
                 return@launch
             }
+            delay(1000)
             adHelper.initialize(this@MainActivity)
             loadAd()
         }
