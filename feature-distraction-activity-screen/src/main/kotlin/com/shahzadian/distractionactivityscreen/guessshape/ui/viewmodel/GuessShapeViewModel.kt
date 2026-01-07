@@ -3,6 +3,7 @@ package com.shahzadian.distractionactivityscreen.guessshape.ui.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.shahzadian.ad.AdHelper
 import com.shahzadian.distractionactivityscreen.guessshape.domain.GuessShapeModel
 import com.shahzadian.distractionactivityscreen.guessshape.domain.GuessShapeProgress
 import com.shahzadian.distractionactivityscreen.guessshape.domain.GuessShapeProgressHelper
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class GuessShapeViewModel @Inject constructor(
     private val guessShapeProgressHelperFactory: GuessShapeProgressHelperFactory,
+    private val adHelper: AdHelper,
 ) : BaseViewModel<GuessShapeViewState, GuessShapeViewEvent, GuessShapeViewCommand>() {
 
     override val initState: GuessShapeViewState by lazyUnsafe {
@@ -54,6 +56,9 @@ internal class GuessShapeViewModel @Inject constructor(
             .progressStateFlow
             .onEach { state ->
                 val viewState = state.toUiState()
+                if (viewState is GuessShapeViewState.Result) {
+                    adHelper.requestAdShow()
+                }
                 setViewState(viewState)
             }
             .launchIn(viewModelScope)

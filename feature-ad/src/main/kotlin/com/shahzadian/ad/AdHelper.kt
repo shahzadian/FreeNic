@@ -139,6 +139,7 @@ internal class AdHelperImpl @Inject constructor(
         return callbackFlow {
             if (!canShowAdToUser()) {
                 trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently")))
+                isLoadingAd = false
                 close()
                 return@callbackFlow
             }
@@ -150,6 +151,7 @@ internal class AdHelperImpl @Inject constructor(
                     override fun onAdLoaded(p0: InterstitialAd) {
                         currentInterstitialAd = p0
                         trySend(AdHelper.BannerAdLoadResult.Success)
+                        isLoadingAd = false
                         close()
                     }
 
@@ -160,12 +162,15 @@ internal class AdHelperImpl @Inject constructor(
                                 Throwable(p0.message)
                             )
                         )
+                        isLoadingAd = false
                         close()
                     }
                 }
             )
 
-            awaitClose { /* no-op */ }
+            awaitClose {
+                isLoadingAd = false
+            }
         }
     }
 

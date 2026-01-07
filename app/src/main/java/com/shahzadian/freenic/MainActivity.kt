@@ -10,6 +10,7 @@ import com.freenic.ui.model.CoroutineContexts
 import com.freenic.ui.theme.FreeNicTheme
 import com.shahzadian.ad.AdHelper
 import com.shahzadian.freenic.navigation.AppNavigation
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapConcat
@@ -26,6 +27,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var adHelper: AdHelper
+
+    @Inject
+    lateinit var getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +49,9 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun initializeAdSdk() {
         lifecycleScope.launch(coroutineContexts.main) {
+            if (getUserCurrentSubscriptionUseCase() != null) {
+                return@launch
+            }
             adHelper.initialize(this@MainActivity)
             loadAd()
         }
@@ -58,9 +65,11 @@ class MainActivity : ComponentActivity() {
                     is AdHelper.BannerAdShowResult.Error -> {
                         loadAd()
                     }
+
                     is AdHelper.BannerAdShowResult.Dismissed -> {
                         loadAd()
                     }
+
                     is AdHelper.BannerAdShowResult.Showing -> {}
                 }
             }
