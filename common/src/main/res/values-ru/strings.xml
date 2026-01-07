@@ -347,5 +347,7 @@
     <string name="widget_main_smoke_free">Без сигарет</string>
     <string name="widget_main_info_money_saved">Сэкономлено</string>
     <string name="widget_main_info_cigs_skipped">Не выкурено</string>
+    <string name="widget_main_upgrade">Обновите план, чтобы увидеть информацию</string>
+    <string name="widget_main_upgrade_button">Обновить</string>
 
 </resources>

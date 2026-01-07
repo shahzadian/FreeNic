@@ -1,6 +1,7 @@
 package com.shahzadian.widget
 
 import android.content.Context
+import android.content.Intent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,13 +10,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
+import androidx.glance.Button
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
+import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
+import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
 import androidx.glance.layout.Alignment
@@ -33,6 +37,7 @@ import androidx.glance.unit.ColorProvider
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.theme.AppTypography
 import com.freenic.ui.theme.FreeNicTheme
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.user.domain.UserDataHelper
 import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
@@ -45,22 +50,34 @@ import javax.inject.Inject
 class MainAppWidget(
     private val userDataHelperFactory: UserDataHelperFactory,
     private val getUserDataUseCase: GetUserDataUseCase,
+    private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
 ) : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
+            var hasPaidSubscription: Boolean? by remember { mutableStateOf(null) }
             var userData: UserData? by remember { mutableStateOf(null) }
             var userDataHelper: UserDataHelper? by remember { mutableStateOf(null) }
             LaunchedEffect(Unit) {
-                userData = getUserDataUseCase()
-                    ?: throw IllegalStateException("UserData is null")
-                userDataHelper = userDataHelperFactory.create(userData!!)
+                // Check subscription first
+                hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null
+                if (hasPaidSubscription == true) {
+                    userData = getUserDataUseCase()
+                        ?: throw IllegalStateException("UserData is null")
+                    userDataHelper = userDataHelperFactory.create(userData!!)
+                }
             }
-            if (userData != null && userDataHelper != null) {
-                FreeNicTheme {
-                    MainWidget(
-                        userData = userData!!,
-                        userDataHelper = userDataHelper!!
-                    )
+            FreeNicTheme {
+                when {
+                    hasPaidSubscription == false -> {
+                        UpgradeWidget()
+                    }
+
+                    userData != null && userDataHelper != null -> {
+                        MainWidget(
+                            userData = userData!!,
+                            userDataHelper = userDataHelper!!
+                        )
+                    }
                 }
             }
         }
@@ -72,13 +89,20 @@ private fun MainWidget(
     userData: UserData,
     userDataHelper: UserDataHelper,
 ) {
+    val context = LocalContext.current
+    val launchIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+        ?.apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+    var modifier = GlanceModifier
+        .fillMaxSize()
+        .background(
+            color = MaterialTheme.colorScheme.background,
+        )
+        .padding(16.dp)
+    if (launchIntent != null) {
+        modifier = modifier.clickable(actionStartActivity(launchIntent))
+    }
     Column(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .background(
-                color = MaterialTheme.colorScheme.background,
-            )
-            .padding(16.dp),
+        modifier = modifier,
         verticalAlignment = Alignment.Vertical.Top,
         horizontalAlignment = Alignment.Horizontal.Start
     ) {
@@ -104,6 +128,44 @@ private fun MainWidget(
                     .padding(top = 8.dp),
             )
         }
+    }
+}
+
+@Composable
+private fun UpgradeWidget() {
+    val context = LocalContext.current
+    val launchIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+        ?.apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+    var modifier = GlanceModifier
+        .fillMaxSize()
+        .background(color = MaterialTheme.colorScheme.background)
+        .padding(16.dp)
+    if (launchIntent != null) {
+        modifier = modifier.clickable(actionStartActivity(launchIntent))
+    }
+    Column(
+        modifier = modifier,
+        verticalAlignment = Alignment.Vertical.CenterVertically,
+        horizontalAlignment = Alignment.Horizontal.CenterHorizontally
+    ) {
+        Text(
+            text = context.getString(com.shahzadian.baseui.R.string.widget_main_upgrade),
+            style = TextStyle(
+                color = ColorProvider(MaterialTheme.colorScheme.onPrimary),
+                fontSize = AppTypography.bodyLarge.fontSize,
+                fontWeight = FontWeight.Medium,
+            ),
+            modifier = GlanceModifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp),
+        )
+        Button(
+            text = context.getString(com.shahzadian.baseui.R.string.widget_main_upgrade_button),
+            onClick = { launchIntent?.let { context.startActivity(it) } },
+            colors = androidx.glance.ButtonDefaults.buttonColors(
+                backgroundColor = ColorProvider(MaterialTheme.colorScheme.primary),
+            )
+        )
     }
 }
 
@@ -214,10 +276,14 @@ class FreeNicGlanceWidgetReceiver : GlanceAppWidgetReceiver() {
     @Inject
     lateinit var getUserDataUseCase: GetUserDataUseCase
 
+    @Inject
+    lateinit var getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase
+
     override val glanceAppWidget: GlanceAppWidget by lazyUnsafe {
         MainAppWidget(
             userDataHelperFactory = userDataHelperFactory,
             getUserDataUseCase = getUserDataUseCase,
+            getUserCurrentSubscriptionUseCase = getUserCurrentSubscriptionUseCase,
         )
     }
 }

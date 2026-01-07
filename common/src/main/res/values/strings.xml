@@ -356,5 +356,7 @@
     <string name="widget_main_smoke_free">Smoke-free</string>
     <string name="widget_main_info_money_saved">Saved money</string>
     <string name="widget_main_info_cigs_skipped">Not smoked</string>
+    <string name="widget_main_upgrade">Upgrade your plan to see the widget info</string>
+    <string name="widget_main_upgrade_button">Upgrade</string>
 
 </resources>
