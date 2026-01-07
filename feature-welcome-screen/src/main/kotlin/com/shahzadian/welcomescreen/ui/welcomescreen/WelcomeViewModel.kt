@@ -1,5 +1,6 @@
 package com.shahzadian.welcomescreen.ui.welcomescreen
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
@@ -12,19 +13,30 @@ import javax.inject.Inject
 @HiltViewModel
 internal class WelcomeViewModel @Inject constructor(
     private val getUserDataUseCase: GetUserDataUseCase,
+    private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<WelcomeViewState, WelcomeViewEvent, WelcomeViewCommand>() {
 
     override val initState: WelcomeViewState by lazyUnsafe {
         WelcomeViewState.Loading
     }
 
+    private val targetScreen: String? by lazyUnsafe {
+        savedStateHandle.get<String>(AppScreen.WelcomeScreen.ARG_TARGET_SCREEN)
+    }
+
     init {
         viewModelScope.launch {
             val isUserRegistered = getUserDataUseCase.isUserRegistered()
             if (isUserRegistered) {
+                val screenToNavigate = targetScreen
+                    ?.let { screen ->
+                        AppScreen.getAll().firstOrNull {
+                            it.getBaseRoute() == screen
+                        }
+                    } ?: AppScreen.MainScreen
                 sendViewCommand(
                     WelcomeViewCommand.Navigate(
-                        screen = AppScreen.MainScreen
+                        screen = screenToNavigate
                     )
                 )
             } else {

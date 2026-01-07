@@ -34,6 +34,8 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import com.freenic.AppLaunchConst
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.theme.AppTypography
 import com.freenic.ui.theme.FreeNicTheme
@@ -89,20 +91,13 @@ private fun MainWidget(
     userData: UserData,
     userDataHelper: UserDataHelper,
 ) {
-    val context = LocalContext.current
-    val launchIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)
-        ?.apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
-    var modifier = GlanceModifier
-        .fillMaxSize()
-        .background(
-            color = MaterialTheme.colorScheme.background,
-        )
-        .padding(16.dp)
-    if (launchIntent != null) {
-        modifier = modifier.clickable(actionStartActivity(launchIntent))
-    }
     Column(
-        modifier = modifier,
+        modifier = GlanceModifier
+            .fillMaxSize()
+            .background(
+                color = MaterialTheme.colorScheme.background,
+            )
+            .padding(16.dp),
         verticalAlignment = Alignment.Vertical.Top,
         horizontalAlignment = Alignment.Horizontal.Start
     ) {
@@ -135,7 +130,10 @@ private fun MainWidget(
 private fun UpgradeWidget() {
     val context = LocalContext.current
     val launchIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)
-        ?.apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+        ?.apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            this.putExtra(AppLaunchConst.KEY_INTENT_TARGET_SCREEN, AppScreen.PaywallScreen.route)
+        }
     var modifier = GlanceModifier
         .fillMaxSize()
         .background(color = MaterialTheme.colorScheme.background)
@@ -161,7 +159,9 @@ private fun UpgradeWidget() {
         )
         Button(
             text = context.getString(com.shahzadian.baseui.R.string.widget_main_upgrade_button),
-            onClick = { launchIntent?.let { context.startActivity(it) } },
+            onClick = {
+                launchIntent?.let { context.startActivity(it) }
+            },
             colors = androidx.glance.ButtonDefaults.buttonColors(
                 backgroundColor = ColorProvider(MaterialTheme.colorScheme.primary),
             )

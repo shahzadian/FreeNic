@@ -4,10 +4,29 @@ sealed class AppScreen {
 
     abstract val route: String
 
+    /**
+     * Route without arguments
+     */
+    open fun getBaseRoute(): String {
+        return route
+    }
+
     open fun shouldShowWithPremiumIcon(): Boolean = false
 
     object WelcomeScreen : AppScreen() {
-        override val route = "welcome_screen"
+
+        override val route: String = "$BASE_ROUTE?${ARG_TARGET_SCREEN}={${ARG_TARGET_SCREEN}}"
+
+        fun composeRoute(targetScreen: String?): String {
+            return targetScreen?.let { "$BASE_ROUTE?${ARG_TARGET_SCREEN}=$it" } ?: BASE_ROUTE
+        }
+
+        override fun getBaseRoute(): String {
+            return BASE_ROUTE
+        }
+
+        const val ARG_TARGET_SCREEN: String = "target_screen"
+        private const val BASE_ROUTE: String = "welcome_screen"
     }
 
     object OnboardingScreen : AppScreen() {
@@ -68,6 +87,10 @@ sealed class AppScreen {
             return "$BASE_ROUTE?${ARG_IS_EDIT}=$isEdit"
         }
 
+        override fun getBaseRoute(): String {
+            return BASE_ROUTE
+        }
+
         const val ARG_IS_EDIT: String = "is_edit"
         private const val BASE_ROUTE: String = "savings_goal_screen"
     }
@@ -90,6 +113,10 @@ sealed class AppScreen {
 
         fun composeRoute(achievementId: String): String {
             return "${BASE_ROUTE}/$achievementId"
+        }
+
+        override fun getBaseRoute(): String {
+            return BASE_ROUTE
         }
 
         const val ARG_ACHIEVEMENT_ID = "achievement_id"

@@ -48,7 +48,9 @@ import com.shahzadian.welcomescreen.ui.onboardingscreen.OnboardingScreen
 import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    targetScreen: String?,
+) {
     val navController = rememberNavController()
     // Keep explicit remembered state for bottom bar visibility to avoid timing issues
     val showBottomBarState = remember { mutableStateOf(false) }
@@ -108,10 +110,21 @@ fun AppNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = AppScreen.WelcomeScreen.route,
+            startDestination = AppScreen.WelcomeScreen.composeRoute(
+                targetScreen = targetScreen
+            ),
             modifier = Modifier.padding(innerPadding),
         ) {
-            composable(route = AppScreen.WelcomeScreen.route) {
+            composable(
+                route = AppScreen.WelcomeScreen.route,
+                arguments = listOf(
+                    navArgument(AppScreen.WelcomeScreen.ARG_TARGET_SCREEN) {
+                        type = NavType.StringType
+                        nullable = true
+                        defaultValue = null
+                    }
+                )
+            ) {
                 WelcomeScreen(
                     navController = navController,
                     modifier = BaseModifier,
