@@ -23,7 +23,7 @@ internal class MainScreenPageRepositoryImpl @Inject constructor() : MainScreenPa
                 icon = ImageWrapper.FromRes(
                     com.shahzadian.mainscreen.R.drawable.ic_main_page_home
                 ),
-                screen = AppScreen.InsightsScreen
+                screen = AppScreen.DashboardScreen
             ),
             MainScreenPage(
                 name = TextWrapper.FromRes(
