@@ -91,13 +91,22 @@ private fun MainWidget(
     userData: UserData,
     userDataHelper: UserDataHelper,
 ) {
+    val context = LocalContext.current
+    val launchIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)
+        ?.apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+    var modifier = GlanceModifier
+        .fillMaxSize()
+        .background(
+            color = MaterialTheme.colorScheme.background,
+        )
+        .padding(16.dp)
+    if (launchIntent != null) {
+        modifier = modifier.clickable(actionStartActivity(launchIntent))
+    }
     Column(
-        modifier = GlanceModifier
-            .fillMaxSize()
-            .background(
-                color = MaterialTheme.colorScheme.background,
-            )
-            .padding(16.dp),
+        modifier = modifier,
         verticalAlignment = Alignment.Vertical.Top,
         horizontalAlignment = Alignment.Horizontal.Start
     ) {
