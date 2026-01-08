@@ -366,5 +366,15 @@
     <string name="dashboard_health_insights_title">Состояние здоровья</string>
     <string name="dashboard_health_insights_subtitle">Ваш организм уже восстанавливается</string>
     <string name="dashboard_health_insights_see_details">Подробнее о здоровье</string>
+    <string name="helpful_note_1">Эта тяга пройдёт, а сигарета не поможет!</string>
+    <string name="helpful_note_2">Вы пожалеете об этой сигарете сразу после первой затяжки!</string>
+    <string name="helpful_note_3">Вы бросили не просто так. Держитесь!</string>
+    <string name="helpful_note_4">Одна сигарета ничего не решит!</string>
+    <string name="helpful_note_5">Сделайте вдох. Этот момент пройдёт!</string>
+    <string name="helpful_note_6">Вы уже слишком далеко зашли, чтобы возвращаться назад!</string>
+    <string name="helpful_note_7">Сигарета не сделает этот момент лучше!</string>
+    <string name="helpful_note_8">Выберите, как будете чувствовать себя через 10 минут!</string>
+    <string name="helpful_note_9">Вы сильнее этого желания!</string>
+    <string name="helpful_note_10">Каждый раз, когда вы сдерживаетесь, в следующий раз становится легче!</string>
 
 </resources>

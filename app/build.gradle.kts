@@ -65,6 +65,7 @@ dependencies {
     implementation(project(":feature-savings-goal-screen"))
     implementation(project(":feature-widget"))
     implementation(project(":feature-ad"))
+    implementation(project(":feature-helpful-notes"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))
