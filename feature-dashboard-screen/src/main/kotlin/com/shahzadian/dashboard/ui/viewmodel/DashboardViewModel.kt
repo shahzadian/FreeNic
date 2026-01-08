@@ -47,6 +47,10 @@ internal class DashboardViewModel @Inject constructor(
             is DashboardViewEvent.OnDetailedInsightsClicked -> {
                 onDetailedInsightsClicked()
             }
+
+            is DashboardViewEvent.OnHelpfulNoteRefreshClicked -> {
+                updateDataWithNewHelpfulNote()
+            }
         }
     }
 
@@ -62,6 +66,18 @@ internal class DashboardViewModel @Inject constructor(
                     helpfulNote = getHelpfulNotesUseCase().random().toUiModel(),
                 )
             )
+        }
+    }
+
+    private fun updateDataWithNewHelpfulNote() {
+        val state = viewState as? DashboardViewState.Data ?: return
+        viewModelScope.launch {
+            val newState = DashboardViewState.Data(
+                mainProgressUiModel = state.mainProgressUiModel,
+                healthInsightsUiModel = state.healthInsightsUiModel,
+                helpfulNote = getHelpfulNotesUseCase().random().toUiModel(),
+            )
+            setViewState(newState)
         }
     }
 
