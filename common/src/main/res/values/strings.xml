@@ -73,8 +73,8 @@
 
     <string name="dashboard_cigs_avoided_title">Cigarettes\navoided</string>
 
-    <string name="dashboard_header_title">Welcome back, %s</string>
-    <string name="dashboard_header_subtitle">Here is your progress today</string>
+    <string name="dashboard_header_title">Dashboard</string>
+    <string name="dashboard_header_subtitle">Welcome back!</string>
     <string name="dashboard_health_progress_title">Health progress</string>
     <string name="dashboard_health_progress_heart_label">Heart health</string>
     <string name="dashboard_health_progress_energy_label">Energy improvement</string>

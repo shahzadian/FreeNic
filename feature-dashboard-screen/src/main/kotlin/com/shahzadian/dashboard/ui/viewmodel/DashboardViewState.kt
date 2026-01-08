@@ -9,7 +9,6 @@ internal sealed interface DashboardViewState : ViewState {
     @Immutable
     data object Loading : DashboardViewState
 
-    data class Data(
-        val uiModel: DashboardUiModel,
-    ) : DashboardViewState
+    @Immutable
+    data object Data : DashboardViewState
 }

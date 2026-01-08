@@ -157,6 +157,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 DashboardScreen(
+                    navController = navController,
                     modifier = BaseModifier,
                 )
             }
@@ -293,7 +294,7 @@ fun AppNavigation(
                         type = NavType.StringType
                     }
                 )
-            ) { backStackEntry ->
+            ) { _ ->
                 AchievementShareScreen(
                     navController = navController,
                     modifier = BaseModifier,
