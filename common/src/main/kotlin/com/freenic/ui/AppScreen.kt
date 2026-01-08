@@ -123,12 +123,16 @@ sealed class AppScreen {
         private const val BASE_ROUTE: String = "achievement_share_screen"
     }
 
-    object InsightsScreen : AppScreen(), NavBarScreen {
+    object InsightsScreen : AppScreen() {
         override val route: String = "insights_screen"
     }
 
     object DebugPanelScreen : AppScreen() {
         override val route: String = "debug_panel_screen"
+    }
+
+    object MotivationalNotesScreen : AppScreen() {
+        override val route: String = "motivational_notes_screen"
     }
 
     companion object {
@@ -151,7 +155,8 @@ sealed class AppScreen {
                 AchievementsScreen,
                 AchievementShareScreen,
                 InsightsScreen,
-                DebugPanelScreen
+                DebugPanelScreen,
+                MotivationalNotesScreen,
             )
         }
     }

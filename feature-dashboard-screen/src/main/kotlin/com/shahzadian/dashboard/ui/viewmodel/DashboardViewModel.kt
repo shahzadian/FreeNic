@@ -161,15 +161,16 @@ internal class DashboardViewModel @Inject constructor(
     private fun onHelpfulNoteAddClicked() {
         viewModelScope.launch {
             val hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null
-            if (!hasPaidSubscription) {
-                sendViewCommand(
-                    DashboardViewCommand.NavigateTo(
-                        screen = AppScreen.PaywallScreen,
-                    )
-                )
+            val screen = if (!hasPaidSubscription) {
+                AppScreen.PaywallScreen
             } else {
-//                TODO notes screen
+                AppScreen.MotivationalNotesScreen
             }
+            sendViewCommand(
+                DashboardViewCommand.NavigateTo(
+                    screen = screen,
+                )
+            )
         }
     }
 }

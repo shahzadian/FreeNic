@@ -377,5 +377,6 @@
     <string name="motivational_note_9">Вы сильнее этого желания!</string>
     <string name="motivational_note_10">Каждый раз, когда вы сдерживаетесь, в следующий раз становится легче!</string>
     <string name="dashboard_motivational_notes_add_your_own">Добавьте свои заметки</string>
+    <string name="motivational_notes_header">Мотивационные заметки</string>
 
 </resources>

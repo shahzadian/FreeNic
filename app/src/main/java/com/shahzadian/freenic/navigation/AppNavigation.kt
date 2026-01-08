@@ -39,6 +39,7 @@ import com.shahzadian.goalsscreen.ui.achievementsscreen.AchievementsScreen
 import com.shahzadian.insightsscreen.ui.InsightsScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
+import com.shahzadian.motivationalnotesscreen.ui.MotivationalNotesScreen
 import com.shahzadian.profilescreen.ui.ProfileScreen
 import com.shahzadian.savingsgoalscreen.ui.create.SavingsGoalCreateScreen
 import com.shahzadian.savingsgoalscreen.ui.details.SavingsGoalDetailsScreen
@@ -317,6 +318,17 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 DebugPanelScreen(
+                    modifier = BaseModifier,
+                )
+            }
+
+            composable(
+                route = AppScreen.MotivationalNotesScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                MotivationalNotesScreen(
+                    navController = navController,
                     modifier = BaseModifier,
                 )
             }

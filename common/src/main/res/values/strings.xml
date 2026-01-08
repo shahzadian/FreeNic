@@ -385,5 +385,6 @@
     <string name="motivational_note_9">You\’re stronger than this urge!</string>
     <string name="motivational_note_10">Every time you resist, it gets easier next time!</string>
     <string name="dashboard_motivational_notes_add_your_own">Add your own notes</string>
+    <string name="motivational_notes_header">Motivational notes</string>
 
 </resources>
