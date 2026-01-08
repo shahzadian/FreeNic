@@ -5,4 +5,7 @@ import com.freenic.ui.vm.ViewEvent
 
 @Immutable
 internal sealed interface DashboardViewEvent : ViewEvent {
+
+    @Immutable
+    data object OnCravingsHelpClicked : DashboardViewEvent
 }

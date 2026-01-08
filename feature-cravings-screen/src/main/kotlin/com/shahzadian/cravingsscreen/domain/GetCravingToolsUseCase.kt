@@ -3,7 +3,7 @@ package com.shahzadian.cravingsscreen.domain
 import com.shahzadian.cravingsscreen.data.CravingToolsRepository
 import javax.inject.Inject
 
-internal interface GetCravingToolsUseCase {
+interface GetCravingToolsUseCase {
 
     suspend operator fun invoke(): List<CravingTool>
 }

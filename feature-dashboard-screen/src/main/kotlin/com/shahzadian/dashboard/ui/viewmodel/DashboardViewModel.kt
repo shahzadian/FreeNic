@@ -3,6 +3,8 @@ package com.shahzadian.dashboard.ui.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.shahzadian.cravingsscreen.domain.CravingTool
+import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
 import com.shahzadian.dashboard.domain.GetUserDashboardUseCase
 import com.shahzadian.dashboard.domain.UserDashboard
 import com.shahzadian.user.domain.UserDataHelper
@@ -13,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class DashboardViewModel @Inject constructor(
     private val getUserDashboardUseCase: GetUserDashboardUseCase,
+    private val getCravingToolsUseCase: GetCravingToolsUseCase,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
     private var userDataHelper: UserDataHelper? = null
@@ -26,7 +29,11 @@ internal class DashboardViewModel @Inject constructor(
     }
 
     override fun onViewEventHappened(event: DashboardViewEvent) {
-
+        when (event) {
+            is DashboardViewEvent.OnCravingsHelpClicked -> {
+                onCravingsHelpClicked()
+            }
+        }
     }
 
     private fun setData() {
@@ -45,5 +52,20 @@ internal class DashboardViewModel @Inject constructor(
                 currency = this.mainProgressData.currency,
             )
         )
+    }
+
+    private fun onCravingsHelpClicked() {
+        viewModelScope.launch {
+            val cravingTools = getCravingToolsUseCase()
+            val screen = cravingTools
+                .mapNotNull { (it.behavior as? CravingTool.Behavior.NavigateToScreen)?.screen }
+                .shuffled()
+                .firstOrNull() ?: return@launch
+            sendViewCommand(
+                DashboardViewCommand.NavigateTo(
+                    screen = screen,
+                )
+            )
+        }
     }
 }
