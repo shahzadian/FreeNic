@@ -10,8 +10,8 @@ import com.shahzadian.cravingsscreen.domain.CravingTool
 import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
 import com.shahzadian.dashboard.domain.GetUserDashboardUseCase
 import com.shahzadian.dashboard.domain.UserDashboard
-import com.shahzadian.helpfulnotes.domain.GetHelpfulNotesUseCase
-import com.shahzadian.helpfulnotes.domain.HelpfulNote
+import com.shahzadian.helpfulnotes.domain.GetMotivationalNotesUseCase
+import com.shahzadian.helpfulnotes.domain.MotivationalNote
 import com.shahzadian.recoverycalculator.domain.HealthRecoveryCalculator
 import com.shahzadian.recoverycalculator.domain.factory.HealthRecoveryCalculatorFactory
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
@@ -25,7 +25,7 @@ internal class DashboardViewModel @Inject constructor(
     private val getCravingToolsUseCase: GetCravingToolsUseCase,
     private val recoveryCalculatorFactory: HealthRecoveryCalculatorFactory,
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
-    private val getHelpfulNotesUseCase: GetHelpfulNotesUseCase,
+    private val getMotivationalNotesUseCase: GetMotivationalNotesUseCase,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
     private var recoveryCalculator: HealthRecoveryCalculator? = null
@@ -48,11 +48,11 @@ internal class DashboardViewModel @Inject constructor(
                 onDetailedInsightsClicked()
             }
 
-            is DashboardViewEvent.OnHelpfulNoteRefreshClicked -> {
+            is DashboardViewEvent.OnMotivationalNoteRefreshClicked -> {
                 onHelpfulNoteRefreshClicked()
             }
 
-            is DashboardViewEvent.OnHelpfulNoteAddClicked -> {
+            is DashboardViewEvent.OnMotivationalNoteAddClicked -> {
                 onHelpfulNoteAddClicked()
             }
         }
@@ -67,7 +67,7 @@ internal class DashboardViewModel @Inject constructor(
                 state = DashboardViewState.Data(
                     mainProgressUiModel = dashboard.toMainProgress(),
                     healthInsightsUiModel = recoveryCalculator!!.getRandomHealthInsight(),
-                    helpfulNote = getHelpfulNotesUseCase().random().toUiModel(),
+                    motivationalNote = getMotivationalNotesUseCase().random().toUiModel(),
                 )
             )
         }
@@ -78,7 +78,7 @@ internal class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             setViewState(
                 state.copy(
-                    helpfulNote = getHelpfulNotesUseCase().random().toUiModel(),
+                    motivationalNote = getMotivationalNotesUseCase().random().toUiModel(),
                 )
             )
         }
@@ -152,8 +152,8 @@ internal class DashboardViewModel @Inject constructor(
         }
     }
 
-    private fun HelpfulNote.toUiModel(): DashboardViewState.HelpfulNoteUiModel {
-        return DashboardViewState.HelpfulNoteUiModel(
+    private fun MotivationalNote.toUiModel(): DashboardViewState.MotivationalNoteUiModel {
+        return DashboardViewState.MotivationalNoteUiModel(
             text = this.text,
         )
     }

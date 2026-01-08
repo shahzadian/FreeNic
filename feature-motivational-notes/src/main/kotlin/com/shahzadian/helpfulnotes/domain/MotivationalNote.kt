@@ -2,7 +2,7 @@ package com.shahzadian.helpfulnotes.domain
 
 import com.freenic.ui.wrapper.TextWrapper
 
-class HelpfulNote(
+class MotivationalNote(
     val text: TextWrapper,
     val source: Source,
 ) {

@@ -69,10 +69,10 @@ private fun ContentView(
         { onViewModelEvent(DashboardViewEvent.OnDetailedInsightsClicked) }
     }
     val onHelpfulNoteRefreshClick = remember {
-        { onViewModelEvent(DashboardViewEvent.OnHelpfulNoteRefreshClicked) }
+        { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteRefreshClicked) }
     }
     val onHelpfulNoteAddClick = remember {
-        { onViewModelEvent(DashboardViewEvent.OnHelpfulNoteAddClicked) }
+        { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteAddClicked) }
     }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.dashboard_header_title),
@@ -91,8 +91,8 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)
         )
-        HelpfulNotesView(
-            note = data.helpfulNote,
+        MotivationalNotesView(
+            note = data.motivationalNote,
             onRefreshClicked = onHelpfulNoteRefreshClick,
             onAddNoteClicked = onHelpfulNoteAddClick,
             modifier = Modifier

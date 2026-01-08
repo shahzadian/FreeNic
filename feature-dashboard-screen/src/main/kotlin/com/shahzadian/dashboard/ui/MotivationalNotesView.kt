@@ -22,8 +22,8 @@ import com.shahzadian.dashboard.R
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewState
 
 @Composable
-internal fun HelpfulNotesView(
-    note: DashboardViewState.HelpfulNoteUiModel,
+internal fun MotivationalNotesView(
+    note: DashboardViewState.MotivationalNoteUiModel,
     onRefreshClicked: () -> Unit,
     onAddNoteClicked: () -> Unit,
     modifier: Modifier = Modifier,
@@ -56,7 +56,7 @@ internal fun HelpfulNotesView(
 
 @Composable
 private fun NotesView(
-    note: DashboardViewState.HelpfulNoteUiModel,
+    note: DashboardViewState.MotivationalNoteUiModel,
     onRefreshClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -82,7 +82,7 @@ private fun NotesView(
                 .weight(1f)
         )
         Image(
-            painter = painterResource(R.drawable.ic_dashboard_helpful_notes_refresh),
+            painter = painterResource(R.drawable.ic_dashboard_motivational_notes_refresh),
             contentDescription = "Refresh",
             modifier = Modifier.clickable(onClick = onRefreshClick),
         )
@@ -110,12 +110,12 @@ private fun AddYourOwnNotesView(
         horizontalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_dashboard_helpful_notes_premium),
+            painter = painterResource(R.drawable.ic_dashboard_motivational_notes_premium),
             contentDescription = "Helpful notes premium",
             modifier = Modifier.padding(end = 8.dp)
         )
         Text(
-            text = stringResource(com.shahzadian.baseui.R.string.dashboard_helpful_notes_add_your_own),
+            text = stringResource(com.shahzadian.baseui.R.string.dashboard_motivational_notes_add_your_own),
             color = MaterialTheme.colorScheme.secondary,
             style = MaterialTheme.typography.bodyMedium,
         )

@@ -13,8 +13,8 @@ internal sealed interface DashboardViewEvent : ViewEvent {
     data object OnDetailedInsightsClicked : DashboardViewEvent
 
     @Immutable
-    data object OnHelpfulNoteRefreshClicked : DashboardViewEvent
+    data object OnMotivationalNoteRefreshClicked : DashboardViewEvent
 
     @Immutable
-    data object OnHelpfulNoteAddClicked : DashboardViewEvent
+    data object OnMotivationalNoteAddClicked : DashboardViewEvent
 }

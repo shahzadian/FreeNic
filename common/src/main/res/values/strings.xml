@@ -374,16 +374,16 @@
     <string name="dashboard_health_insights_title">Health insights</string>
     <string name="dashboard_health_insights_subtitle">Your body is already healing</string>
     <string name="dashboard_health_insights_see_details">View detailed insights</string>
-    <string name="helpful_note_1">This craving will pass, but smoking won\’t help!</string>
-    <string name="helpful_note_2">You\’ll regret this cigarette right after the first puff!</string>
-    <string name="helpful_note_3">You didn\’t quit for nothing. Stay with it!</string>
-    <string name="helpful_note_4">One cigarette won\’t solve anything!</string>
-    <string name="helpful_note_5">Take a breath. This moment will pass!</string>
-    <string name="helpful_note_6">You\’ve already come too far to turn back now!</string>
-    <string name="helpful_note_7">Smoking won\’t make this moment better!</string>
-    <string name="helpful_note_8">Choose how you\’ll feel in 10 minutes!</string>
-    <string name="helpful_note_9">You\’re stronger than this urge!</string>
-    <string name="helpful_note_10">Every time you resist, it gets easier next time!</string>
-    <string name="dashboard_helpful_notes_add_your_own">Add your own notes</string>
+    <string name="motivational_note_1">This craving will pass, but smoking won\’t help!</string>
+    <string name="motivational_note_2">You\’ll regret this cigarette right after the first puff!</string>
+    <string name="motivational_note_3">You didn\’t quit for nothing. Stay with it!</string>
+    <string name="motivational_note_4">One cigarette won\’t solve anything!</string>
+    <string name="motivational_note_5">Take a breath. This moment will pass!</string>
+    <string name="motivational_note_6">You\’ve already come too far to turn back now!</string>
+    <string name="motivational_note_7">Smoking won\’t make this moment better!</string>
+    <string name="motivational_note_8">Choose how you\’ll feel in 10 minutes!</string>
+    <string name="motivational_note_9">You\’re stronger than this urge!</string>
+    <string name="motivational_note_10">Every time you resist, it gets easier next time!</string>
+    <string name="dashboard_motivational_notes_add_your_own">Add your own notes</string>
 
 </resources>
