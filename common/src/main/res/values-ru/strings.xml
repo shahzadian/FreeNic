@@ -376,5 +376,6 @@
     <string name="helpful_note_8">Выберите, как будете чувствовать себя через 10 минут!</string>
     <string name="helpful_note_9">Вы сильнее этого желания!</string>
     <string name="helpful_note_10">Каждый раз, когда вы сдерживаетесь, в следующий раз становится легче!</string>
+    <string name="dashboard_helpful_notes_add_your_own">Добавьте свои заметки</string>
 
 </resources>

@@ -142,8 +142,8 @@ private fun ProgressView(
                     color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
                     shape = MaterialTheme.shapes.medium,
                 )
-                .padding(16.dp)
-                .clickable(onClick = onDetailedInsightsClick),
+                .clickable(onClick = onDetailedInsightsClick)
+                .padding(16.dp),
         ) {
             Text(
                 text = stringResource(com.shahzadian.baseui.R.string.dashboard_health_insights_see_details),

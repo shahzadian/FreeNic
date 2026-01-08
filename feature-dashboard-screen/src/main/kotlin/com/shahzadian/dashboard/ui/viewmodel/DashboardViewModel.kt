@@ -49,7 +49,11 @@ internal class DashboardViewModel @Inject constructor(
             }
 
             is DashboardViewEvent.OnHelpfulNoteRefreshClicked -> {
-                updateDataWithNewHelpfulNote()
+                onHelpfulNoteRefreshClicked()
+            }
+
+            is DashboardViewEvent.OnHelpfulNoteAddClicked -> {
+                onHelpfulNoteAddClicked()
             }
         }
     }
@@ -69,15 +73,14 @@ internal class DashboardViewModel @Inject constructor(
         }
     }
 
-    private fun updateDataWithNewHelpfulNote() {
+    private fun onHelpfulNoteRefreshClicked() {
         val state = viewState as? DashboardViewState.Data ?: return
         viewModelScope.launch {
-            val newState = DashboardViewState.Data(
-                mainProgressUiModel = state.mainProgressUiModel,
-                healthInsightsUiModel = state.healthInsightsUiModel,
-                helpfulNote = getHelpfulNotesUseCase().random().toUiModel(),
+            setViewState(
+                state.copy(
+                    helpfulNote = getHelpfulNotesUseCase().random().toUiModel(),
+                )
             )
-            setViewState(newState)
         }
     }
 
@@ -153,5 +156,20 @@ internal class DashboardViewModel @Inject constructor(
         return DashboardViewState.HelpfulNoteUiModel(
             text = this.text,
         )
+    }
+
+    private fun onHelpfulNoteAddClicked() {
+        viewModelScope.launch {
+            val hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null
+            if (!hasPaidSubscription) {
+                sendViewCommand(
+                    DashboardViewCommand.NavigateTo(
+                        screen = AppScreen.PaywallScreen,
+                    )
+                )
+            } else {
+//                TODO notes screen
+            }
+        }
     }
 }

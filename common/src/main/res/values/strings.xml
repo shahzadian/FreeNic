@@ -384,5 +384,6 @@
     <string name="helpful_note_8">Choose how you\’ll feel in 10 minutes!</string>
     <string name="helpful_note_9">You\’re stronger than this urge!</string>
     <string name="helpful_note_10">Every time you resist, it gets easier next time!</string>
+    <string name="dashboard_helpful_notes_add_your_own">Add your own notes</string>
 
 </resources>
