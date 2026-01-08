@@ -40,6 +40,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
+    implementation(project(":feature-motivational-notes"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

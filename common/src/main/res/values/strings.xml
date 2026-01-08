@@ -386,5 +386,7 @@
     <string name="motivational_note_10">Every time you resist, it gets easier next time!</string>
     <string name="dashboard_motivational_notes_add_your_own">Add your own notes</string>
     <string name="motivational_notes_header">Motivational notes</string>
+    <string name="motivational_notes_badge_general">From FreeNic</string>
+    <string name="motivational_notes_badge_by_user">From You</string>
 
 </resources>
