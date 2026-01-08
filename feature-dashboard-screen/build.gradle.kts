@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":data-user"))
     implementation(project(":feature-cravings-screen"))
+    implementation(project(":feature-recovery-calculator"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

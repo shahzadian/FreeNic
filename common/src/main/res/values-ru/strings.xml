@@ -363,5 +363,8 @@
     <string name="dashboard_craving_title">Чувствуете тягу прямо сейчас?</string>
     <string name="dashboard_craving_subtitle">Это желание пройдет</string>
     <string name="dashboard_craving_button">Мне нужна помощь!</string>
+    <string name="dashboard_health_insights_title">Состояние здоровья</string>
+    <string name="dashboard_health_insights_subtitle">Ваш организм уже восстанавливается</string>
+    <string name="dashboard_health_insights_see_details">Подробнее о здоровье</string>
 
 </resources>

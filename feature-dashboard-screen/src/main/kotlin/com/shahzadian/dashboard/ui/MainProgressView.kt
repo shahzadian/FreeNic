@@ -27,7 +27,7 @@ private const val ANIMATION_DURATION: Int = 1000
 
 @Composable
 internal fun MainProgressView(
-    data: DashboardViewState.MainProgressDataUiModel,
+    data: DashboardViewState.MainProgressUiModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -65,7 +65,7 @@ internal fun MainProgressView(
 
 @Composable
 private fun NoCigDaysView(
-    data: DashboardViewState.MainProgressDataUiModel,
+    data: DashboardViewState.MainProgressUiModel,
     modifier: Modifier = Modifier,
 ) {
     val noCigDaysAnimated = remember { Animatable(0f) }
@@ -101,7 +101,7 @@ private fun NoCigDaysView(
 
 @Composable
 private fun SavedMoneyView(
-    data: DashboardViewState.MainProgressDataUiModel,
+    data: DashboardViewState.MainProgressUiModel,
     modifier: Modifier = Modifier,
 ) {
     val savedMoneyAnimated = remember { Animatable(0f) }

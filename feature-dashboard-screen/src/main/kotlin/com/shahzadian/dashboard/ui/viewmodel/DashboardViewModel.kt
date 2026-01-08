@@ -3,11 +3,14 @@ package com.shahzadian.dashboard.ui.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
 import com.shahzadian.cravingsscreen.domain.CravingTool
 import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
 import com.shahzadian.dashboard.domain.GetUserDashboardUseCase
 import com.shahzadian.dashboard.domain.UserDashboard
-import com.shahzadian.user.domain.UserDataHelper
+import com.shahzadian.recoverycalculator.domain.HealthRecoveryCalculator
+import com.shahzadian.recoverycalculator.domain.factory.HealthRecoveryCalculatorFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,9 +19,10 @@ import javax.inject.Inject
 internal class DashboardViewModel @Inject constructor(
     private val getUserDashboardUseCase: GetUserDashboardUseCase,
     private val getCravingToolsUseCase: GetCravingToolsUseCase,
+    private val recoveryCalculatorFactory: HealthRecoveryCalculatorFactory,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
-    private var userDataHelper: UserDataHelper? = null
+    private var recoveryCalculator: HealthRecoveryCalculator? = null
 
     init {
         setData()
@@ -38,19 +42,23 @@ internal class DashboardViewModel @Inject constructor(
 
     private fun setData() {
         viewModelScope.launch {
+            recoveryCalculator = recoveryCalculatorFactory.create()
             val dashboard = getUserDashboardUseCase()
                 ?: throw IllegalStateException("User dashboard is null")
-            setViewState(dashboard.toViewState())
+            setViewState(
+                state = DashboardViewState.Data(
+                    mainProgressUiModel = dashboard.toMainProgress(),
+                    healthInsightsUiModel = recoveryCalculator!!.getRandomHealthInsight(),
+                )
+            )
         }
     }
 
-    private fun UserDashboard.toViewState(): DashboardViewState.Data {
-        return DashboardViewState.Data(
-            mainProgressDataUiModel = DashboardViewState.MainProgressDataUiModel(
-                noCigDays = this.mainProgressData.noCigDays,
-                savedMoney = this.mainProgressData.savedMoney,
-                currency = this.mainProgressData.currency,
-            )
+    private fun UserDashboard.toMainProgress(): DashboardViewState.MainProgressUiModel {
+        return DashboardViewState.MainProgressUiModel(
+            noCigDays = this.mainProgressData.noCigDays,
+            savedMoney = this.mainProgressData.savedMoney,
+            currency = this.mainProgressData.currency,
         )
     }
 
@@ -67,5 +75,34 @@ internal class DashboardViewModel @Inject constructor(
                 )
             )
         }
+    }
+
+    private fun HealthRecoveryCalculator.getRandomHealthInsight(): DashboardViewState.HealthInsightsUiModel {
+        return listOf(
+            DashboardViewState.HealthInsightsUiModel(
+                label = TextWrapper.FromRes(R.string.insights_oxygen_title),
+                progress = calculateOxygenCoNormalizationPercent()
+            ),
+            DashboardViewState.HealthInsightsUiModel(
+                label = TextWrapper.FromRes(R.string.insights_circulation_title),
+                progress = calculateCirculationHeartRecoveryPercent()
+            ),
+            DashboardViewState.HealthInsightsUiModel(
+                label = TextWrapper.FromRes(R.string.insights_lung_self_cleaning_title),
+                progress = calculateLungSelfCleaningPercent()
+            ),
+            DashboardViewState.HealthInsightsUiModel(
+                label = TextWrapper.FromRes(R.string.insights_energy_level_title),
+                progress = calculateEnergyLevelPercent()
+            ),
+            DashboardViewState.HealthInsightsUiModel(
+                label = TextWrapper.FromRes(R.string.insights_breathing_comfort_title),
+                progress = calculateBreathingComfortPercent()
+            ),
+            DashboardViewState.HealthInsightsUiModel(
+                label = TextWrapper.FromRes(R.string.insights_endurance_title),
+                progress = calculatePhysicalEndurancePercent(),
+            ),
+        ).random()
     }
 }

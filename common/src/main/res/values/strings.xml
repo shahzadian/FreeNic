@@ -371,5 +371,8 @@
     <string name="dashboard_craving_title">Feeling a craving right now?</string>
     <string name="dashboard_craving_subtitle">This urge will pass</string>
     <string name="dashboard_craving_button">I need help!</string>
+    <string name="dashboard_health_insights_title">Health insights</string>
+    <string name="dashboard_health_insights_subtitle">Your body is already healing</string>
+    <string name="dashboard_health_insights_see_details">View detailed insights</string>
 
 </resources>

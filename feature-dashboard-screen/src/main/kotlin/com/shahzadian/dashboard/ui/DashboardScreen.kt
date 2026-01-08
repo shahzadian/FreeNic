@@ -71,14 +71,20 @@ private fun ContentView(
         modifier = modifier,
     ) {
         MainProgressView(
-            data = data.mainProgressDataUiModel,
+            data = data.mainProgressUiModel,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
         CravingsView(
             onHelpClicked = onCravingsHelpClick,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        HealthInsightsView(
+            data = data.healthInsightsUiModel,
+            modifier = Modifier.padding(bottom = 16.dp),
         )
     }
 }
