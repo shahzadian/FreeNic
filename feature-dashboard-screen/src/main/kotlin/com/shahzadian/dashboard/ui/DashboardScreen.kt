@@ -65,6 +65,9 @@ private fun ContentView(
     val onCravingsHelpClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnCravingsHelpClicked) }
     }
+    val onDetailedInsightsClick = remember {
+        { onViewModelEvent(DashboardViewEvent.OnDetailedInsightsClicked) }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.dashboard_header_title),
         subtitle = TextWrapper.FromRes(R.string.dashboard_header_subtitle),
@@ -76,15 +79,16 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
+        HealthInsightsView(
+            data = data.healthInsightsUiModel,
+            onDetailedInsightsClicked = onDetailedInsightsClick,
+            modifier = Modifier.padding(bottom = 16.dp),
+        )
         CravingsView(
             onHelpClicked = onCravingsHelpClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
-        )
-        HealthInsightsView(
-            data = data.healthInsightsUiModel,
-            modifier = Modifier.padding(bottom = 16.dp),
         )
     }
 }

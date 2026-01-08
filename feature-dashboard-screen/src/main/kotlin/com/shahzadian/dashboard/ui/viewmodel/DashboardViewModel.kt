@@ -1,6 +1,7 @@
 package com.shahzadian.dashboard.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.freenic.ui.wrapper.TextWrapper
@@ -11,6 +12,7 @@ import com.shahzadian.dashboard.domain.GetUserDashboardUseCase
 import com.shahzadian.dashboard.domain.UserDashboard
 import com.shahzadian.recoverycalculator.domain.HealthRecoveryCalculator
 import com.shahzadian.recoverycalculator.domain.factory.HealthRecoveryCalculatorFactory
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +22,7 @@ internal class DashboardViewModel @Inject constructor(
     private val getUserDashboardUseCase: GetUserDashboardUseCase,
     private val getCravingToolsUseCase: GetCravingToolsUseCase,
     private val recoveryCalculatorFactory: HealthRecoveryCalculatorFactory,
+    private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
     private var recoveryCalculator: HealthRecoveryCalculator? = null
@@ -36,6 +39,10 @@ internal class DashboardViewModel @Inject constructor(
         when (event) {
             is DashboardViewEvent.OnCravingsHelpClicked -> {
                 onCravingsHelpClicked()
+            }
+
+            is DashboardViewEvent.OnDetailedInsightsClicked -> {
+                onDetailedInsightsClicked()
             }
         }
     }
@@ -104,5 +111,21 @@ internal class DashboardViewModel @Inject constructor(
                 progress = calculatePhysicalEndurancePercent(),
             ),
         ).random()
+    }
+
+    private fun onDetailedInsightsClicked() {
+        viewModelScope.launch {
+            val subscription = getUserCurrentSubscriptionUseCase()
+            val screen = if (subscription != null) {
+                AppScreen.InsightsScreen
+            } else {
+                AppScreen.PaywallScreen
+            }
+            sendViewCommand(
+                DashboardViewCommand.NavigateTo(
+                    screen = screen,
+                )
+            )
+        }
     }
 }

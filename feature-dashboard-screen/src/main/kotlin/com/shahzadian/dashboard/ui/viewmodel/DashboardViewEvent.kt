@@ -8,4 +8,7 @@ internal sealed interface DashboardViewEvent : ViewEvent {
 
     @Immutable
     data object OnCravingsHelpClicked : DashboardViewEvent
+
+    @Immutable
+    data object OnDetailedInsightsClicked : DashboardViewEvent
 }

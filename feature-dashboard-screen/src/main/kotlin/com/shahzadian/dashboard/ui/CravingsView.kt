@@ -2,7 +2,6 @@ package com.shahzadian.dashboard.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,12 +28,7 @@ internal fun CravingsView(
     Column(
         modifier = modifier
             .background(
-                color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
-                shape = MaterialTheme.shapes.large,
-            )
-            .border(
-                width = 2.dp,
-                color = MaterialTheme.colorScheme.outline,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 shape = MaterialTheme.shapes.large,
             )
             .padding(16.dp),
