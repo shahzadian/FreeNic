@@ -360,5 +360,8 @@
     </plurals>
     <string name="dashboard_main_progress_money_saved">Сэкономлено</string>
     <string name="dashboard_main_progress_footer">Ваш текущий прогресс</string>
+    <string name="dashboard_craving_title">Чувствуете тягу прямо сейчас?</string>
+    <string name="dashboard_craving_subtitle">Это желание пройдет</string>
+    <string name="dashboard_craving_button">Мне нужна помощь!</string>
 
 </resources>

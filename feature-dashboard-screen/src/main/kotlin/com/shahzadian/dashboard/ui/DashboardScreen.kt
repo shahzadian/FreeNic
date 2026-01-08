@@ -2,10 +2,12 @@ package com.shahzadian.dashboard.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
@@ -49,6 +51,12 @@ private fun ContentView(
     ) {
         MainProgressView(
             data = data.mainProgressDataUiModel,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        CravingsView(
+            onHelpClicked = {},
             modifier = Modifier.fillMaxWidth()
         )
     }

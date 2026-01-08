@@ -368,5 +368,8 @@
     </plurals>
     <string name="dashboard_main_progress_money_saved">Money saved</string>
     <string name="dashboard_main_progress_footer">Your progress so far</string>
+    <string name="dashboard_craving_title">Feeling a craving right now?</string>
+    <string name="dashboard_craving_subtitle">This urge will pass</string>
+    <string name="dashboard_craving_button">I need help!</string>
 
 </resources>
