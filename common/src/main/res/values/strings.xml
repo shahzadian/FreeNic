@@ -361,4 +361,12 @@
     <string name="widget_main_info">Widget is updated every 30 minutes</string>
     <string name="paywall_page_title">Premium subscription</string>
 
+    <string name="dashboard_main_progress_title">Your progress today</string>
+    <plurals name="dashboard_main_progress_no_cig_days">
+        <item quantity="one">day smoke-free</item>
+        <item quantity="other">days smoke-free</item>
+    </plurals>
+    <string name="dashboard_main_progress_money_saved">Money saved</string>
+    <string name="dashboard_main_progress_footer">Your progress so far</string>
+
 </resources>

@@ -352,4 +352,13 @@
     <string name="widget_main_info">Виджет обновляется каждые 30 минут</string>
     <string name="paywall_page_title">Премиум подписка</string>
 
+    <string name="dashboard_main_progress_title">Ваш прогресс сегодня</string>
+    <plurals name="dashboard_main_progress_no_cig_days">
+        <item quantity="one">день без сигарет</item>
+        <item quantity="few">дня без сигарет</item>
+        <item quantity="other">дней без сигарет</item>
+    </plurals>
+    <string name="dashboard_main_progress_money_saved">Сэкономлено</string>
+    <string name="dashboard_main_progress_footer">Ваш текущий прогресс</string>
+
 </resources>

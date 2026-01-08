@@ -1,6 +1,7 @@
 package com.shahzadian.dashboard.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -45,5 +46,10 @@ private fun ContentView(
         title = TextWrapper.FromRes(R.string.dashboard_header_title),
         subtitle = TextWrapper.FromRes(R.string.dashboard_header_subtitle),
         modifier = modifier,
-    ) { }
+    ) {
+        MainProgressView(
+            data = data.mainProgressDataUiModel,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }

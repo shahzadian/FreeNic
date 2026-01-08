@@ -10,5 +10,14 @@ internal sealed interface DashboardViewState : ViewState {
     data object Loading : DashboardViewState
 
     @Immutable
-    data object Data : DashboardViewState
+    data class Data(
+        val mainProgressDataUiModel: MainProgressDataUiModel,
+    ) : DashboardViewState
+
+    @Immutable
+    data class MainProgressDataUiModel(
+        val noCigDays: Int,
+        val savedMoney: Float,
+        val currency: String?,
+    )
 }
