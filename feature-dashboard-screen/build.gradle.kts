@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":feature-cravings-screen"))
     implementation(project(":feature-recovery-calculator"))
     implementation(project(":feature-subscription"))
+    implementation(project(":feature-helpful-notes"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

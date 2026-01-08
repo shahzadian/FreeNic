@@ -14,6 +14,7 @@ internal sealed interface DashboardViewState : ViewState {
     data class Data(
         val mainProgressUiModel: MainProgressUiModel,
         val healthInsightsUiModel: HealthInsightsUiModel,
+        val helpfulNote: HelpfulNoteUiModel,
     ) : DashboardViewState
 
     @Immutable
@@ -27,5 +28,10 @@ internal sealed interface DashboardViewState : ViewState {
     data class HealthInsightsUiModel(
         val label: TextWrapper,
         val progress: Int,
+    )
+
+    @Immutable
+    data class HelpfulNoteUiModel(
+        val text: TextWrapper,
     )
 }

@@ -77,18 +77,24 @@ private fun ContentView(
             data = data.mainProgressUiModel,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
-        HealthInsightsView(
-            data = data.healthInsightsUiModel,
-            onDetailedInsightsClicked = onDetailedInsightsClick,
-            modifier = Modifier.padding(bottom = 16.dp),
+                .padding(bottom = 8.dp)
         )
         CravingsView(
             onHelpClicked = onCravingsHelpClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = 8.dp)
+        )
+        HelpfulNotesView(
+            note = data.helpfulNote,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 8.dp)
+        )
+        HealthInsightsView(
+            data = data.healthInsightsUiModel,
+            onDetailedInsightsClicked = onDetailedInsightsClick,
+            modifier = Modifier.padding(bottom = 16.dp),
         )
     }
 }

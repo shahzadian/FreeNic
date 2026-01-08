@@ -47,13 +47,13 @@ internal fun MainProgressView(
     ) {
         NoCigDaysView(
             data = data,
-            modifier = Modifier.padding(bottom = 16.dp),
+            modifier = Modifier.padding(bottom = 4.dp),
         )
         SavedMoneyView(
             data = data,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = 4.dp)
         )
         Text(
             text = stringResource(R.string.dashboard_main_progress_footer),
