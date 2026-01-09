@@ -13,7 +13,6 @@ internal sealed interface DashboardViewState : ViewState {
     @Immutable
     data class Data(
         val analyticsData: DashboardAnalyticsUiModel,
-        val healthInsightsUiModel: HealthInsightsUiModel,
         val motivationalNote: MotivationalNoteUiModel,
     ) : DashboardViewState
 
@@ -22,12 +21,6 @@ internal sealed interface DashboardViewState : ViewState {
         val noCigDays: Int,
         val savedMoney: Float,
         val currency: String,
-    )
-
-    @Immutable
-    data class HealthInsightsUiModel(
-        val label: TextWrapper,
-        val progress: Int,
     )
 
     @Immutable

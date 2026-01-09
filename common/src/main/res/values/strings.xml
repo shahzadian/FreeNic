@@ -392,5 +392,6 @@
     <string name="dashboard_want_to_smoke_subtitle">Tap for support</string>
     <string name="dashboard_i_smoked_title">I smoked</string>
     <string name="dashboard_i_smoked_subtitle">You can always start again</string>
+    <string name="dashboard_motivational_note_show_another">Show another note</string>
 
 </resources>

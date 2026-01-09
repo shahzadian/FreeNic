@@ -384,5 +384,6 @@
     <string name="dashboard_want_to_smoke_subtitle">Нажмите для помощи</string>
     <string name="dashboard_i_smoked_title">Я сорвался</string>
     <string name="dashboard_i_smoked_subtitle">Вы всегда можете начать заново</string>
+    <string name="dashboard_motivational_note_show_another">Показать другую заметку</string>
 
 </resources>

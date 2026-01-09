@@ -4,16 +4,12 @@ import androidx.lifecycle.viewModelScope
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
-import com.freenic.ui.wrapper.TextWrapper
-import com.shahzadian.baseui.R
 import com.shahzadian.cravingsscreen.domain.CravingTool
 import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
 import com.shahzadian.dashboard.domain.GetUserDashboardUseCase
 import com.shahzadian.dashboard.domain.UserDashboard
 import com.shahzadian.helpfulnotes.domain.GetMotivationalNotesUseCase
 import com.shahzadian.helpfulnotes.domain.MotivationalNote
-import com.shahzadian.recoverycalculator.domain.HealthRecoveryCalculator
-import com.shahzadian.recoverycalculator.domain.factory.HealthRecoveryCalculatorFactory
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,12 +19,9 @@ import javax.inject.Inject
 internal class DashboardViewModel @Inject constructor(
     private val getUserDashboardUseCase: GetUserDashboardUseCase,
     private val getCravingToolsUseCase: GetCravingToolsUseCase,
-    private val recoveryCalculatorFactory: HealthRecoveryCalculatorFactory,
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val getMotivationalNotesUseCase: GetMotivationalNotesUseCase,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
-
-    private var recoveryCalculator: HealthRecoveryCalculator? = null
 
     init {
         setData()
@@ -60,13 +53,11 @@ internal class DashboardViewModel @Inject constructor(
 
     private fun setData() {
         viewModelScope.launch {
-            recoveryCalculator = recoveryCalculatorFactory.create()
             val dashboard = getUserDashboardUseCase()
                 ?: throw IllegalStateException("User dashboard is null")
             setViewState(
                 state = DashboardViewState.Data(
                     analyticsData = dashboard.toMainProgress(),
-                    healthInsightsUiModel = recoveryCalculator!!.getRandomHealthInsight(),
                     motivationalNote = getMotivationalNotesUseCase().random().toUiModel(),
                 )
             )
@@ -105,35 +96,6 @@ internal class DashboardViewModel @Inject constructor(
                 )
             )
         }
-    }
-
-    private fun HealthRecoveryCalculator.getRandomHealthInsight(): DashboardViewState.HealthInsightsUiModel {
-        return listOf(
-            DashboardViewState.HealthInsightsUiModel(
-                label = TextWrapper.FromRes(R.string.insights_oxygen_title),
-                progress = calculateOxygenCoNormalizationPercent()
-            ),
-            DashboardViewState.HealthInsightsUiModel(
-                label = TextWrapper.FromRes(R.string.insights_circulation_title),
-                progress = calculateCirculationHeartRecoveryPercent()
-            ),
-            DashboardViewState.HealthInsightsUiModel(
-                label = TextWrapper.FromRes(R.string.insights_lung_self_cleaning_title),
-                progress = calculateLungSelfCleaningPercent()
-            ),
-            DashboardViewState.HealthInsightsUiModel(
-                label = TextWrapper.FromRes(R.string.insights_energy_level_title),
-                progress = calculateEnergyLevelPercent()
-            ),
-            DashboardViewState.HealthInsightsUiModel(
-                label = TextWrapper.FromRes(R.string.insights_breathing_comfort_title),
-                progress = calculateBreathingComfortPercent()
-            ),
-            DashboardViewState.HealthInsightsUiModel(
-                label = TextWrapper.FromRes(R.string.insights_endurance_title),
-                progress = calculatePhysicalEndurancePercent(),
-            ),
-        ).random()
     }
 
     private fun onDetailedInsightsClicked() {

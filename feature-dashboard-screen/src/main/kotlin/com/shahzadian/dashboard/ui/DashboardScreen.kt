@@ -68,7 +68,7 @@ private fun ContentView(
     val onDetailedInsightsClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnDetailedInsightsClicked) }
     }
-    val onHelpfulNoteRefreshClick = remember {
+    val onMotivationalNoteRefreshClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteRefreshClicked) }
     }
     val onMotivationalNoteSeeAllClick = remember {
@@ -84,19 +84,24 @@ private fun ContentView(
             onDetailsClicked = onDetailedInsightsClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                .padding(bottom = 32.dp),
         )
         DashboardWantToSmokeView(
             onClicked = onWantToSmokeClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                .padding(bottom = 8.dp),
         )
         ISmokedView(
             onClicked = {},
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                .padding(bottom = 32.dp),
+        )
+        MotivationalNoteView(
+            noteUiModel = data.motivationalNote,
+            onClicked = onMotivationalNoteRefreshClick,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
