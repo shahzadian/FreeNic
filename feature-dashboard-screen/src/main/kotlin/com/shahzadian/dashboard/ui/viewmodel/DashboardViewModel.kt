@@ -40,8 +40,8 @@ internal class DashboardViewModel @Inject constructor(
 
     override fun onViewEventHappened(event: DashboardViewEvent) {
         when (event) {
-            is DashboardViewEvent.OnCravingsHelpClicked -> {
-                onCravingsHelpClicked()
+            is DashboardViewEvent.OnWantToSmokeClicked -> {
+                onWantToSmokeClicked()
             }
 
             is DashboardViewEvent.OnDetailedInsightsClicked -> {
@@ -92,7 +92,7 @@ internal class DashboardViewModel @Inject constructor(
         )
     }
 
-    private fun onCravingsHelpClicked() {
+    private fun onWantToSmokeClicked() {
         viewModelScope.launch {
             val cravingTools = getCravingToolsUseCase()
             val screen = cravingTools

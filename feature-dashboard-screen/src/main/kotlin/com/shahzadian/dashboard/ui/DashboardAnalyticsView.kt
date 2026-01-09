@@ -36,29 +36,33 @@ internal fun DashboardAnalyticsView(
     modifier: Modifier = Modifier,
 ) {
     val detailsClick = remember(Unit) { { onDetailsClicked() } }
-    Row(
-        modifier = modifier
-            .padding(bottom = 8.dp),
-        horizontalArrangement = Arrangement.Center,
+    Column(
+        modifier = modifier,
     ) {
-        NoCigDaysView(
-            days = data.noCigDays,
+        Row(
             modifier = Modifier
-                .weight(1f)
-                .padding(end = 4.dp),
-        )
-        SavedMoneyView(
-            savedMoney = data.savedMoney,
-            currency = data.currency,
-            modifier = Modifier
-                .weight(1f)
-                .padding(start = 4.dp),
+                .padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            NoCigDaysView(
+                days = data.noCigDays,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 4.dp),
+            )
+            SavedMoneyView(
+                savedMoney = data.savedMoney,
+                currency = data.currency,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 4.dp),
+            )
+        }
+        DetailsView(
+            onClicked = detailsClick,
+            modifier = Modifier.fillMaxWidth()
         )
     }
-    DetailsView(
-        onClicked = detailsClick,
-        modifier = Modifier.fillMaxWidth()
-    )
 }
 
 @Composable
@@ -160,7 +164,7 @@ private fun DetailsView(
             .clickable {
                 click()
             }
-            .padding(16.dp),
+            .padding(12.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -172,7 +176,7 @@ private fun DetailsView(
         )
         Text(
             text = stringResource(R.string.dashboard_analytics_view_more),
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier.padding(start = 4.dp)
         )

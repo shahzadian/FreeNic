@@ -380,5 +380,7 @@
     <string name="motivational_notes_badge_by_user">От Вас</string>
     <string name="motivational_notes_swipe_hint">Листайте, чтобы увидеть больше</string>
     <string name="dashboard_analytics_view_more">Детальная аналитика</string>
+    <string name="dashboard_want_to_smoke_title">Хочу курить</string>
+    <string name="dashboard_want_to_smoke_subtitle">Нажмите для помощи</string>
 
 </resources>
