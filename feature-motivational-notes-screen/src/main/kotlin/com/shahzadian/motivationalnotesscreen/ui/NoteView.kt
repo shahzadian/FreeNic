@@ -31,10 +31,10 @@ internal fun NoteView(
     Column(
         modifier = modifier
             .background(
-                brush = Brush.verticalGradient(
+                brush = Brush.linearGradient(
                     colors = listOf(
                         Color(android.graphics.Color.parseColor("#00BFA5")).copy(alpha = 0.2f),
-                        Color(android.graphics.Color.parseColor("#00BFA5")).copy(alpha = 0.1f),
+                        Color(android.graphics.Color.parseColor("#00BFA5")).copy(alpha = 0.05f),
                     )
                 ),
                 shape = MaterialTheme.shapes.medium,
