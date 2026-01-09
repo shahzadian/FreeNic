@@ -2,14 +2,12 @@ package com.shahzadian.dashboard.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
@@ -79,30 +77,10 @@ private fun ContentView(
         subtitle = TextWrapper.FromRes(R.string.dashboard_header_subtitle),
         modifier = modifier,
     ) {
-        MainProgressView(
-            data = data.mainProgressUiModel,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
-        CravingsView(
-            onHelpClicked = onCravingsHelpClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
-        MotivationalNotesView(
-            note = data.motivationalNote,
-            onRefreshClicked = onHelpfulNoteRefreshClick,
-            onSeeAllClicked = onMotivationalNoteSeeAllClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp)
-        )
-        HealthInsightsView(
-            data = data.healthInsightsUiModel,
-            onDetailedInsightsClicked = onDetailedInsightsClick,
-            modifier = Modifier.padding(bottom = 16.dp),
+        DashboardAnalyticsView(
+            data = data.analyticsData,
+            onDetailsClicked = onDetailedInsightsClick,
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }

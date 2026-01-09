@@ -65,7 +65,7 @@ internal class DashboardViewModel @Inject constructor(
                 ?: throw IllegalStateException("User dashboard is null")
             setViewState(
                 state = DashboardViewState.Data(
-                    mainProgressUiModel = dashboard.toMainProgress(),
+                    analyticsData = dashboard.toMainProgress(),
                     healthInsightsUiModel = recoveryCalculator!!.getRandomHealthInsight(),
                     motivationalNote = getMotivationalNotesUseCase().random().toUiModel(),
                 )
@@ -84,11 +84,11 @@ internal class DashboardViewModel @Inject constructor(
         }
     }
 
-    private fun UserDashboard.toMainProgress(): DashboardViewState.MainProgressUiModel {
-        return DashboardViewState.MainProgressUiModel(
+    private fun UserDashboard.toMainProgress(): DashboardViewState.DashboardAnalyticsUiModel {
+        return DashboardViewState.DashboardAnalyticsUiModel(
             noCigDays = this.mainProgressData.noCigDays,
             savedMoney = this.mainProgressData.savedMoney,
-            currency = this.mainProgressData.currency,
+            currency = this.mainProgressData.currency ?: "",
         )
     }
 

@@ -352,14 +352,12 @@
     <string name="widget_main_info">Виджет обновляется каждые 30 минут</string>
     <string name="paywall_page_title">Премиум подписка</string>
 
-    <string name="dashboard_main_progress_title">Ваш прогресс сегодня</string>
-    <plurals name="dashboard_main_progress_no_cig_days">
+    <plurals name="dashboard_analytics_no_cig_days">
         <item quantity="one">день без сигарет</item>
         <item quantity="few">дня без сигарет</item>
         <item quantity="other">дней без сигарет</item>
     </plurals>
-    <string name="dashboard_main_progress_money_saved">Сэкономлено</string>
-    <string name="dashboard_main_progress_footer">Ваш текущий прогресс</string>
+    <string name="dashboard_analytics_money_saved">сэкономлено</string>
     <string name="dashboard_craving_title">Чувствуете тягу прямо сейчас?</string>
     <string name="dashboard_craving_subtitle">Это желание пройдет</string>
     <string name="dashboard_craving_button">Мне нужна помощь!</string>
@@ -381,5 +379,6 @@
     <string name="motivational_notes_badge_general">От FreeNic</string>
     <string name="motivational_notes_badge_by_user">От Вас</string>
     <string name="motivational_notes_swipe_hint">Листайте, чтобы увидеть больше</string>
+    <string name="dashboard_analytics_view_more">Детальная аналитика</string>
 
 </resources>

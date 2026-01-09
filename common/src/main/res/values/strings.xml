@@ -361,13 +361,11 @@
     <string name="widget_main_info">Widget is updated every 30 minutes</string>
     <string name="paywall_page_title">Premium subscription</string>
 
-    <string name="dashboard_main_progress_title">Your progress today</string>
-    <plurals name="dashboard_main_progress_no_cig_days">
+    <plurals name="dashboard_analytics_no_cig_days">
         <item quantity="one">day smoke-free</item>
         <item quantity="other">days smoke-free</item>
     </plurals>
-    <string name="dashboard_main_progress_money_saved">Money saved</string>
-    <string name="dashboard_main_progress_footer">Your progress so far</string>
+    <string name="dashboard_analytics_money_saved">money saved</string>
     <string name="dashboard_craving_title">Feeling a craving right now?</string>
     <string name="dashboard_craving_subtitle">This urge will pass</string>
     <string name="dashboard_craving_button">I need help!</string>
@@ -389,5 +387,6 @@
     <string name="motivational_notes_badge_general">From FreeNic</string>
     <string name="motivational_notes_badge_by_user">From You</string>
     <string name="motivational_notes_swipe_hint">Swipe to see more</string>
+    <string name="dashboard_analytics_view_more">Detailed analytics</string>
 
 </resources>
