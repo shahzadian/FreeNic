@@ -98,7 +98,7 @@ private fun NotesPagerView(
 ) {
     val actualCount = data.notes.size
     val infiniteCount = Int.MAX_VALUE
-    val initialPageIndex = 0
+    val initialPageIndex = data.notes.size / 2
     val pagerState = rememberPagerState(initialPage = initialPageIndex) {
         infiniteCount
     }
