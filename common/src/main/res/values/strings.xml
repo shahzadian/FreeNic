@@ -384,9 +384,10 @@
     <string name="motivational_note_8">Choose how you\’ll feel in 10 minutes!</string>
     <string name="motivational_note_9">You\’re stronger than this urge!</string>
     <string name="motivational_note_10">Every time you resist, it gets easier next time!</string>
-    <string name="dashboard_motivational_notes_add_your_own">Add your own notes</string>
+    <string name="dashboard_motivational_notes_see_all">All notes</string>
     <string name="motivational_notes_header">Motivational notes</string>
     <string name="motivational_notes_badge_general">From FreeNic</string>
     <string name="motivational_notes_badge_by_user">From You</string>
+    <string name="motivational_notes_swipe_hint">Swipe to see more</string>
 
 </resources>

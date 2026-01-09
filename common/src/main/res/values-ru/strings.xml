@@ -376,9 +376,10 @@
     <string name="motivational_note_8">Выберите, как будете чувствовать себя через 10 минут!</string>
     <string name="motivational_note_9">Вы сильнее этого желания!</string>
     <string name="motivational_note_10">Каждый раз, когда вы сдерживаетесь, в следующий раз становится легче!</string>
-    <string name="dashboard_motivational_notes_add_your_own">Добавьте свои заметки</string>
+    <string name="dashboard_motivational_notes_see_all">Все заметки</string>
     <string name="motivational_notes_header">Мотивационные заметки</string>
     <string name="motivational_notes_badge_general">От FreeNic</string>
     <string name="motivational_notes_badge_by_user">От Вас</string>
+    <string name="motivational_notes_swipe_hint">Листайте, чтобы увидеть больше</string>
 
 </resources>

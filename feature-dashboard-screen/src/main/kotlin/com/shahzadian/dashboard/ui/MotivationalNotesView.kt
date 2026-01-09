@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,14 +26,14 @@ import com.shahzadian.dashboard.ui.viewmodel.DashboardViewState
 internal fun MotivationalNotesView(
     note: DashboardViewState.MotivationalNoteUiModel,
     onRefreshClicked: () -> Unit,
-    onAddNoteClicked: () -> Unit,
+    onSeeAllClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val onRefreshClick = remember {
         { onRefreshClicked() }
     }
-    val onAddNoteClick = remember {
-        { onAddNoteClicked() }
+    val onSeeAllClick = remember {
+        { onSeeAllClicked() }
     }
     Column(
         modifier = modifier
@@ -47,9 +48,10 @@ internal fun MotivationalNotesView(
             onRefreshClicked = onRefreshClick,
             modifier = Modifier.padding(bottom = 8.dp),
         )
-        AddYourOwnNotesView(
-            onAddNoteClicked = onAddNoteClick,
-            modifier = Modifier.fillMaxWidth()
+        SeeAllNotesView(
+            onClicked = onSeeAllClick,
+            modifier = Modifier
+                .fillMaxWidth()
         )
     }
 }
@@ -76,7 +78,7 @@ private fun NotesView(
         Text(
             text = textFromWrapper(note.text),
             color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.titleLarge,
+            style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier
                 .padding(end = 8.dp)
                 .weight(1f)
@@ -90,34 +92,27 @@ private fun NotesView(
 }
 
 @Composable
-private fun AddYourOwnNotesView(
-    onAddNoteClicked: () -> Unit,
+private fun SeeAllNotesView(
+    onClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val onAddNoteClick = remember {
-        { onAddNoteClicked() }
+    val onClick = remember {
+        { onClicked() }
     }
-    Row(
+    Box(
         modifier = modifier
-            .fillMaxWidth()
             .background(
                 color = MaterialTheme.colorScheme.secondary.copy(alpha = 0.1f),
                 shape = MaterialTheme.shapes.medium,
             )
-            .clickable(onClick = onAddNoteClick)
+            .clickable(onClick = onClick)
             .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
     ) {
-        Image(
-            painter = painterResource(R.drawable.ic_dashboard_motivational_notes_premium),
-            contentDescription = "Helpful notes premium",
-            modifier = Modifier.padding(end = 8.dp)
-        )
         Text(
-            text = stringResource(com.shahzadian.baseui.R.string.dashboard_motivational_notes_add_your_own),
+            text = stringResource(com.shahzadian.baseui.R.string.dashboard_motivational_notes_see_all),
             color = MaterialTheme.colorScheme.secondary,
             style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.align(Alignment.Center),
         )
     }
 }

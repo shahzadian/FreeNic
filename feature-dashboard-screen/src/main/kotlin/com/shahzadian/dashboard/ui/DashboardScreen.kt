@@ -71,7 +71,7 @@ private fun ContentView(
     val onHelpfulNoteRefreshClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteRefreshClicked) }
     }
-    val onHelpfulNoteAddClick = remember {
+    val onMotivationalNoteSeeAllClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteAddClicked) }
     }
     HeaderScreen(
@@ -94,7 +94,7 @@ private fun ContentView(
         MotivationalNotesView(
             note = data.motivationalNote,
             onRefreshClicked = onHelpfulNoteRefreshClick,
-            onAddNoteClicked = onHelpfulNoteAddClick,
+            onSeeAllClicked = onMotivationalNoteSeeAllClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)

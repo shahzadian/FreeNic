@@ -1,6 +1,8 @@
 package com.shahzadian.motivationalnotesscreen.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -71,11 +73,21 @@ private fun ContentView(
                 .align(Alignment.TopCenter)
                 .padding(bottom = 16.dp),
         )
-        NotesPagerView(
-            data = data,
+        Column(
             modifier = Modifier
-                .align(Alignment.Center)
-        )
+                .align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            NotesPagerView(
+                data = data,
+                modifier = Modifier
+                    .padding(bottom = 16.dp)
+            )
+            SwipeHintView(
+
+            )
+        }
     }
 }
 
