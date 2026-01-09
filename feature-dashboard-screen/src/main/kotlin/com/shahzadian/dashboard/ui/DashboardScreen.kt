@@ -92,5 +92,11 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
         )
+        ISmokedView(
+            onClicked = {},
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+        )
     }
 }

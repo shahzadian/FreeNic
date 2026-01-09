@@ -390,5 +390,7 @@
     <string name="dashboard_analytics_view_more">Detailed analytics</string>
     <string name="dashboard_want_to_smoke_title">I want to smoke</string>
     <string name="dashboard_want_to_smoke_subtitle">Tap for support</string>
+    <string name="dashboard_i_smoked_title">I smoked</string>
+    <string name="dashboard_i_smoked_subtitle">You can always start again</string>
 
 </resources>

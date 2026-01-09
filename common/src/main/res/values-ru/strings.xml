@@ -382,5 +382,7 @@
     <string name="dashboard_analytics_view_more">Детальная аналитика</string>
     <string name="dashboard_want_to_smoke_title">Хочу курить</string>
     <string name="dashboard_want_to_smoke_subtitle">Нажмите для помощи</string>
+    <string name="dashboard_i_smoked_title">Я сорвался</string>
+    <string name="dashboard_i_smoked_subtitle">Вы всегда можете начать заново</string>
 
 </resources>
