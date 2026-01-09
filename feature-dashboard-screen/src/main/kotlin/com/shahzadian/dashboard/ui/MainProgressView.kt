@@ -14,11 +14,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.theme.AppTypography
 import com.shahzadian.baseui.R
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewState
@@ -32,14 +31,8 @@ internal fun MainProgressView(
 ) {
     Column(
         modifier = modifier
-            .background(
-                brush = Brush.linearGradient(
-                    colors = listOf(
-                        Color(android.graphics.Color.parseColor("#00BFA5")),
-                        Color(android.graphics.Color.parseColor("#3BAFDA")),
-                    ),
-                ),
-                shape = MaterialTheme.shapes.large
+            .mainCardBackground(
+                shape = MaterialTheme.shapes.large,
             )
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

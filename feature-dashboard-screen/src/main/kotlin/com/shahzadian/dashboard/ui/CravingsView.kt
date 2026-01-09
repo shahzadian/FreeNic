@@ -1,7 +1,6 @@
 package com.shahzadian.dashboard.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainSubmitButton
+import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 
@@ -27,8 +27,7 @@ internal fun CravingsView(
     val onHelpClick = remember(onHelpClicked) { { onHelpClicked() } }
     Column(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
+            .mainCardBackground(
                 shape = MaterialTheme.shapes.large,
             )
             .padding(16.dp),

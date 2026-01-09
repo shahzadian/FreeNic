@@ -3,6 +3,8 @@ package com.freenic.ui.extensions
 import android.content.Context
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,12 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
@@ -113,11 +117,11 @@ fun MainAnimatableLinearProgressIndicator(
 ) {
     val valueAnimatable = remember { Animatable(progress) }
     LaunchedEffect(progress) {
-       valueAnimatable.snapTo(0f)
-       valueAnimatable.animateTo(
-           targetValue = progress,
-           animationSpec = tween(durationMillis = animationDuration)
-       )
+        valueAnimatable.snapTo(0f)
+        valueAnimatable.animateTo(
+            targetValue = progress,
+            animationSpec = tween(durationMillis = animationDuration)
+        )
     }
     LinearProgressIndicator(
         progress = { valueAnimatable.value / 100f },
@@ -134,6 +138,47 @@ fun MainAnimatableLinearProgressIndicator(
 fun colorFromHex(hex: String): Color {
     return Color(android.graphics.Color.parseColor(hex))
 }
+
+@Composable
+fun Modifier.mainHintBackground(): Modifier {
+    return this
+        .background(
+            color = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.1f),
+            shape = MaterialTheme.shapes.medium,
+        )
+        .border(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.tertiary,
+            shape = MaterialTheme.shapes.medium,
+        )
+}
+
+@Composable
+fun Modifier.mainCardBackground(
+    shape: Shape = MaterialTheme.shapes.medium,
+): Modifier {
+    return this
+        .background(
+            color = mainCardBackground,
+            shape = shape,
+        )
+        .border(
+            width = mainCardBorderWidth,
+            color = mainCardBorderColor,
+            shape = shape,
+        )
+}
+
+val mainCardBackground: Color
+    @Composable
+    get() = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+
+val mainCardBorderColor: Color
+    @Composable
+    get() = MaterialTheme.colorScheme.primary
+
+val mainCardBorderWidth: Dp
+    get() = 1.dp
 
 val screenWidth: Int
     @Composable

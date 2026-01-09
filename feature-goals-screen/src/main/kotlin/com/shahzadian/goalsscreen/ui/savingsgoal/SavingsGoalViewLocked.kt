@@ -20,6 +20,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainSubmitButton
+import com.freenic.ui.extensions.mainCardBackground
+import com.freenic.ui.extensions.mainCardBorderColor
+import com.freenic.ui.extensions.mainCardBorderWidth
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.goalsscreen.R
 
@@ -31,11 +34,11 @@ fun SavingsGoalViewLocked(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor = mainCardBackground
         ),
         border = BorderStroke(
-            width = 0.2.dp,
-            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)
+            width = mainCardBorderWidth,
+            color = mainCardBorderColor
         )
     ) {
         PremiumWarningView(

@@ -3,6 +3,7 @@ package com.shahzadian.goalsscreen.ui
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +33,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.mainCardBackground
+import com.freenic.ui.extensions.mainCardBorderColor
 import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.goalsscreen.R
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
@@ -49,14 +52,21 @@ internal fun AchievementView(
     val achievementShareClick = remember { { onAchievementShareClicked() } }
     Card(
         modifier = modifier,
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (isAchievementUnlocked) {
-                MaterialTheme.colorScheme.primaryContainer
+                mainCardBackground
             } else {
                 MaterialTheme.colorScheme.outline
             }
         ),
+        border = if (isAchievementUnlocked) {
+            BorderStroke(
+                width = 1.dp,
+                color = mainCardBorderColor
+            )
+        } else {
+            null
+        },
     ) {
         Box(
             modifier = Modifier,

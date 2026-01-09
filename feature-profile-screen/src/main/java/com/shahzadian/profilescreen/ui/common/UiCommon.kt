@@ -3,7 +3,6 @@ package com.shahzadian.profilescreen.ui.common
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -15,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.mainCardBackground
 import com.shahzadian.profilescreen.R
 
 @Composable
@@ -26,10 +26,7 @@ internal fun ProfileSettingsBlockView(
 ) {
     Column(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = MaterialTheme.shapes.medium
-            )
+            .mainCardBackground()
             .padding(16.dp),
     ) {
         Row(

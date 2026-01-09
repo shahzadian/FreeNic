@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.dashboard.R
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewState
@@ -37,10 +38,7 @@ internal fun MotivationalNotesView(
     }
     Column(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = MaterialTheme.shapes.medium,
-            )
+            .mainCardBackground()
             .padding(16.dp),
     ) {
         NotesView(

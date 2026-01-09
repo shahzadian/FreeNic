@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewState
@@ -33,9 +34,8 @@ internal fun SubscriptionPlanView(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            containerColor = mainCardBackground,
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         border = BorderStroke(
             width = if (selected) 2.dp else 0.2.dp,
             color = if (selected) {

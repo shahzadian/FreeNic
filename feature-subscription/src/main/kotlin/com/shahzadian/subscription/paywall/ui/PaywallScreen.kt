@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -153,12 +154,6 @@ private fun PaidFeaturesBlock(
             style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 8.dp)
         )
-//        paidFeatures.forEach { feature ->
-//            PaidFeatureView(
-//                uiModel = feature,
-//                modifier = Modifier.padding(bottom = 16.dp)
-//            )
-//        }
         PaidFeaturesCarousel(
             paidFeatures = paidFeatures,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -231,7 +226,7 @@ private fun SubscriptionPlansView(
     defaultPlanIndex: Int,
     modifier: Modifier = Modifier,
 ) {
-    var selectedPlanIndex by remember { mutableStateOf(defaultPlanIndex) }
+    var selectedPlanIndex by remember { mutableIntStateOf(defaultPlanIndex) }
     Column(
         modifier = modifier,
     ) {

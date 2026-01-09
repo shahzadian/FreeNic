@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -44,6 +45,9 @@ import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.mainCardBackground
+import com.freenic.ui.extensions.mainCardBorderColor
+import com.freenic.ui.extensions.mainHintBackground
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
@@ -196,16 +200,14 @@ private fun HintView(
 ) {
     Row(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = MaterialTheme.shapes.medium,
-            )
+            .mainHintBackground()
             .padding(16.dp),
     ) {
         Image(
             painter = painterResource(com.shahzadian.savingsgoalscreen.R.drawable.ic_saving_goal_hint),
             contentDescription = "Hint",
-            modifier = Modifier.padding(end = 8.dp)
+            modifier = Modifier.padding(end = 8.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.tertiary)
         )
         Column(
             modifier = Modifier.weight(1f)
@@ -361,12 +363,12 @@ private fun CategoryView(
                 onCategoryClick()
             }
             .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
+                color = mainCardBackground,
                 shape = MaterialTheme.shapes.medium,
             )
             .border(
                 width = 1.dp,
-                color = if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent,
+                color = if (isSelected) mainCardBorderColor else Color.Transparent,
                 shape = MaterialTheme.shapes.medium,
             )
             .padding(16.dp),

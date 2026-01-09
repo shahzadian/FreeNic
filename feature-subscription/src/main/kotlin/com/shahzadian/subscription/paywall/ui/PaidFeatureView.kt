@@ -14,6 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.mainCardBackground
+import com.freenic.ui.extensions.mainCardBorderColor
+import com.freenic.ui.extensions.mainCardBorderWidth
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewState
@@ -26,12 +29,11 @@ internal fun PaidFeatureView(
     Card(
         modifier = modifier,
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            containerColor = mainCardBackground,
         ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         border = BorderStroke(
-            width = 0.2.dp,
-            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)
+            width = mainCardBorderWidth,
+            color = mainCardBorderColor
         )
     ) {
         Row(

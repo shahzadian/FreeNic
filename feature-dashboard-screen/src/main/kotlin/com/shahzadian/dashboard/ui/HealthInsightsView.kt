@@ -22,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
+import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.dashboard.R
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewState
@@ -37,10 +38,7 @@ internal fun HealthInsightsView(
     }
     Box(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = MaterialTheme.shapes.large,
-            )
+            .mainCardBackground()
             .padding(16.dp)
     ) {
         Image(
