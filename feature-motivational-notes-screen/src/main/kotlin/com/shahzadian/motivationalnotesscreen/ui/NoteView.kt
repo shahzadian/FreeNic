@@ -2,6 +2,7 @@ package com.shahzadian.motivationalnotesscreen.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,8 +31,18 @@ internal fun NoteView(
     Column(
         modifier = modifier
             .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color(android.graphics.Color.parseColor("#00BFA5")).copy(alpha = 0.2f),
+                        Color(android.graphics.Color.parseColor("#00BFA5")).copy(alpha = 0.1f),
+                    )
+                ),
                 shape = MaterialTheme.shapes.medium,
+            )
+            .border(
+                width = 1.dp,
+                color = Color(android.graphics.Color.parseColor("#00BFA5")).copy(alpha = 0.3f),
+                shape = MaterialTheme.shapes.medium
             )
             .padding(16.dp),
     ) {
@@ -85,6 +98,6 @@ private fun NoteTextView(
         modifier = modifier,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onPrimary,
-        style = MaterialTheme.typography.titleLarge
+        style = MaterialTheme.typography.headlineMedium
     )
 }
