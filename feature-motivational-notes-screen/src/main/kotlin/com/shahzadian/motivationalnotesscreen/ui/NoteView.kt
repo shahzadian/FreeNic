@@ -3,8 +3,9 @@ package com.shahzadian.motivationalnotesscreen.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,7 +25,7 @@ internal fun NoteView(
     data: MotivationalNotesViewState.MotivationalNoteUiModel,
     modifier: Modifier = Modifier,
 ) {
-    Box(
+    Column(
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.primaryContainer,
@@ -34,13 +35,14 @@ internal fun NoteView(
     ) {
         BadgeView(
             text = textFromWrapper(data.source.getBadgeText()),
-            modifier = Modifier.align(Alignment.TopEnd)
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(bottom = 16.dp),
         )
-        NoteView(
+        NoteTextView(
             text = data.text,
             modifier = Modifier
-                .align(Alignment.Center)
-                .padding(48.dp)
+                .fillMaxWidth()
         )
     }
 }
@@ -74,7 +76,7 @@ private fun BadgeView(
 }
 
 @Composable
-private fun NoteView(
+private fun NoteTextView(
     text: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
@@ -83,6 +85,6 @@ private fun NoteView(
         modifier = modifier,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onPrimary,
-        style = MaterialTheme.typography.headlineLarge
+        style = MaterialTheme.typography.titleLarge
     )
 }

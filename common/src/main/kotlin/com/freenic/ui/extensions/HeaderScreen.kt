@@ -99,28 +99,14 @@ fun HeaderScreen(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
     ) {
-        Row(
-            modifier = Modifier.padding(bottom = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            if (hasBackIcon) {
-                Image(
-                    painter = painterResource(R.drawable.ic_back_arrow),
-                    contentDescription = "Back arrow",
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .clickable {
-                            onBackIconClicked()
-                        }
-                )
-            }
-            HeaderView(
-                title = title,
-                subtitle = subtitle,
-                image = image,
-            )
-        }
+        MainToolbarView(
+            title = title,
+            subtitle = subtitle,
+            hasBackIcon = hasBackIcon,
+            onBackIconClicked = onBackIconClicked,
+            image = image,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
         Column(
             modifier = Modifier.verticalScroll(scrollState)
         ) {
@@ -179,5 +165,38 @@ private fun TitleView(
             )
         }
 
+    }
+}
+
+@Composable
+fun MainToolbarView(
+    title: TextWrapper,
+    modifier: Modifier = Modifier,
+    subtitle: TextWrapper? = null,
+    hasBackIcon: Boolean = false,
+    onBackIconClicked: () -> Unit = {},
+    image: @Composable (() -> Unit)? = null,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        if (hasBackIcon) {
+            Image(
+                painter = painterResource(R.drawable.ic_back_arrow),
+                contentDescription = "Back arrow",
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .clickable {
+                        onBackIconClicked()
+                    }
+            )
+        }
+        HeaderView(
+            title = title,
+            subtitle = subtitle,
+            image = image,
+        )
     }
 }
