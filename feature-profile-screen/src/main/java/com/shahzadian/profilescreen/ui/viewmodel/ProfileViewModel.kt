@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.AppScreen
 import com.freenic.ui.appinfo.AppInfoHelper
+import com.freenic.ui.extensions.extractMainDisplayableDate
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.baseui.R
@@ -15,10 +16,6 @@ import com.shahzadian.user.model.UserPersonalData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,7 +74,7 @@ internal class ProfileViewModel @Inject constructor(
                     personalData = ProfileViewState.Data.PersonalData(
                         name = userData.personalData.name,
                         age = userData.personalData.age,
-                        quitDate = extractDisplayableQuitDate(userData.quitData.quitDateMillis),
+                        quitDate = extractMainDisplayableDate(userData.quitData.quitDateMillis),
                         quitDateMillis = userData.quitData.quitDateMillis,
                     ),
                     smokingDetails = ProfileViewState.Data.SmokingDetails(
@@ -95,7 +92,7 @@ internal class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             val currentState = viewStateFlow.value
             if (currentState is ProfileViewState.Data) {
-                val formatted = extractDisplayableQuitDate(event.millis)
+                val formatted = extractMainDisplayableDate(event.millis)
                 val updated = currentState.copy(
                     personalData = currentState.personalData.copy(
                         quitDate = formatted,
@@ -106,13 +103,6 @@ internal class ProfileViewModel @Inject constructor(
             }
             updateUserDataUseCase.updateQuidDate(event.millis)
         }
-    }
-
-    private fun extractDisplayableQuitDate(quitDateMillis: Long): String {
-        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.getDefault())
-        return Instant.ofEpochMilli(quitDateMillis)
-            .atZone(ZoneId.systemDefault())
-            .format(formatter)
     }
 
     private fun onNameEdited(name: String) {

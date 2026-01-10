@@ -100,13 +100,13 @@ private fun ContentView(
                 .fillMaxWidth()
                 .align(Alignment.TopCenter),
         )
-        ReasonsView(
+        MainDataView(
             data = data,
             onReasonClicked = onReasonClick,
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.TopCenter)
-                .padding(vertical = 64.dp),
+                .padding(vertical = 96.dp),
         )
         FooterView(
             isConfirmButtonEnabled = data.isSubmitButtonEnabled,
@@ -118,17 +118,39 @@ private fun ContentView(
 }
 
 @Composable
-private fun ReasonsView(
+private fun MainDataView(
     data: SlipReasonViewState.Data,
     onReasonClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val onClick = remember { { id: String -> onReasonClicked(id) } }
+    val onReasonClick = remember { { id: String -> onReasonClicked(id) } }
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        ReasonsView(
+            data = data,
+            onClicked = onReasonClick,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        DateView(
+            data = data,
+            modifier = Modifier.padding(bottom = 64.dp)
+        )
+    }
+}
+
+@Composable
+private fun ReasonsView(
+    data: SlipReasonViewState.Data,
+    onClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val onClick = remember { { id: String -> onClicked(id) } }
+    Column(
+        modifier = modifier,
     ) {
         data
             .slipReasons
@@ -141,12 +163,41 @@ private fun ReasonsView(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = if (index < data.slipReasons.lastIndex) 16.dp else 0.dp)
+                        .padding(bottom = 16.dp)
 
                 )
             }
     }
 }
+
+@Composable
+private fun DateView(
+    data: SlipReasonViewState.Data,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Text(
+            text = stringResource(R.string.slip_reason_date_title),
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.padding(bottom = 8.dp),
+        )
+        Text(
+            text = stringResource(R.string.slip_reason_date_subtitle),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSecondary,
+            modifier = Modifier.padding(bottom = 16.dp),
+        )
+        SlipDateView(
+            data = data.slipDateUiModel,
+            onDateConfirmed = {},
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+
 
 @Composable
 private fun FooterView(

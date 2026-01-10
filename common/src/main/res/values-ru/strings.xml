@@ -397,8 +397,11 @@
     <string name="slip_reason_craving">Сильная тяга</string>
     <string name="slip_reason_other">Другое</string>
     <string name="slip_context_toolbar_title">Помогите понять</string>
-    <string name="slip_context_toolbar_subtitle">Что усложнило ситуацию в этот раз? (необязательно)</string>
+    <string name="slip_context_toolbar_subtitle">Что усложнило ситуацию в этот раз?</string>
     <string name="slip_context_submit">Продолжить</string>
     <string name="slip_context_skip">Пропустить</string>
+    <string name="slip_reason_date_title">Когда это случилось?</string>
+    <string name="slip_reason_date_subtitle">(необязательно)</string>
+    <string name="slip_reason_date_today">Сегодня</string>
 
 </resources>

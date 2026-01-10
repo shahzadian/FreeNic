@@ -13,5 +13,10 @@ internal sealed interface SlipReasonViewEvent : ViewEvent {
     data object OnConfirmClicked : SlipReasonViewEvent
 
     @Immutable
+    data class OnSlipDatePicked(
+        val millis: Long
+    ) : SlipReasonViewEvent
+
+    @Immutable
     data object OnSkipClicked : SlipReasonViewEvent
 }

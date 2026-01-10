@@ -16,6 +16,7 @@ internal interface SlipReasonViewState : ViewState {
         val slipReasons: List<SlipReasonUiModel>,
         val selectedReasonId: String?,
         val isSubmitButtonEnabled: Boolean,
+        val slipDateUiModel: SlipDateUiModel,
     ) : SlipReasonViewState
 
     @Immutable
@@ -23,5 +24,11 @@ internal interface SlipReasonViewState : ViewState {
         val id: String,
         val name: TextWrapper,
         val icon: ImageWrapper,
+    )
+
+    @Immutable
+    data class SlipDateUiModel(
+        val millis: Long,
+        val displayableDate: String,
     )
 }

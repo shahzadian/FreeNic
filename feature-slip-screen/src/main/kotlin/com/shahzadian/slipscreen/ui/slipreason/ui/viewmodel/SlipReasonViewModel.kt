@@ -7,6 +7,10 @@ import com.shahzadian.slipscreen.ui.slipreason.domain.GetSlipReasonsUseCase
 import com.shahzadian.slipscreen.ui.slipreason.domain.SlipReason
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,6 +19,7 @@ internal class SlipReasonViewModel @Inject constructor(
 ) : BaseViewModel<SlipReasonViewState, SlipReasonViewEvent, SlipReasonViewCommand>() {
 
     private var selectedReasonId: String? = null
+    private var slipDate: Long = System.currentTimeMillis()
 
     override val initState: SlipReasonViewState by lazyUnsafe {
         SlipReasonViewState.Loading
@@ -32,8 +37,13 @@ internal class SlipReasonViewModel @Inject constructor(
             }
 
             is SlipReasonViewEvent.OnConfirmClicked -> {}
+
             is SlipReasonViewEvent.OnSkipClicked -> {
                 onSkipClicked()
+            }
+
+            is SlipReasonViewEvent.OnSlipDatePicked -> {
+                onSlipDatePicked(event.millis)
             }
         }
     }
@@ -46,7 +56,11 @@ internal class SlipReasonViewModel @Inject constructor(
                 SlipReasonViewState.Data(
                     isSubmitButtonEnabled = selectedReasonId != null,
                     selectedReasonId = selectedReasonId,
-                    slipReasons = reasons
+                    slipReasons = reasons,
+                    slipDateUiModel = SlipReasonViewState.SlipDateUiModel(
+                        millis = slipDate,
+                        displayableDate = extractDisplayableQuitDate(slipDate)
+                    )
                 )
             )
         }
@@ -60,7 +74,12 @@ internal class SlipReasonViewModel @Inject constructor(
                 SlipReasonViewState.Data(
                     isSubmitButtonEnabled = selectedReasonId != null,
                     selectedReasonId = selectedReasonId,
-                    slipReasons = reasons
+                    slipReasons = reasons,
+                    slipDateUiModel = (viewState as? SlipReasonViewState.Data)?.slipDateUiModel
+                        ?: SlipReasonViewState.SlipDateUiModel(
+                            millis = slipDate,
+                            displayableDate = extractDisplayableQuitDate(slipDate)
+                        )
                 )
             )
         }
@@ -72,11 +91,23 @@ internal class SlipReasonViewModel @Inject constructor(
         }
     }
 
+    private fun onSlipDatePicked(millis: Long) {
+        slipDate = millis
+        updateData()
+    }
+
     private fun SlipReason.toUiModel(): SlipReasonViewState.SlipReasonUiModel {
         return SlipReasonViewState.SlipReasonUiModel(
             id = this.id,
             name = this.name,
             icon = this.icon,
         )
+    }
+
+    private fun extractDisplayableQuitDate(quitDateMillis: Long): String {
+        val formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", Locale.getDefault())
+        return Instant.ofEpochMilli(quitDateMillis)
+            .atZone(ZoneId.systemDefault())
+            .format(formatter)
     }
 }

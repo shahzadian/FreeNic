@@ -405,8 +405,11 @@
     <string name="slip_reason_craving">Strong craving</string>
     <string name="slip_reason_other">Other</string>
     <string name="slip_context_toolbar_title">Help us understand</string>
-    <string name="slip_context_toolbar_subtitle">What made it harder this time? (optional)</string>
+    <string name="slip_context_toolbar_subtitle">What made it harder this time?</string>
     <string name="slip_context_submit">Continue</string>
     <string name="slip_context_skip">Skip</string>
+    <string name="slip_reason_date_title">When did this happen?</string>
+    <string name="slip_reason_date_subtitle">(optional)</string>
+    <string name="slip_reason_date_today">Today</string>
 
 </resources>
