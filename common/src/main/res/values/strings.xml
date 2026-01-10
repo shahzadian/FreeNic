@@ -406,5 +406,7 @@
     <string name="slip_context_other">Other</string>
     <string name="slip_context_toolbar_title">Help us understand</string>
     <string name="slip_context_toolbar_subtitle">What made it harder this time? (optional)</string>
+    <string name="slip_context_submit">Continue</string>
+    <string name="slip_context_skip">Skip</string>
 
 </resources>
