@@ -393,5 +393,7 @@
     <string name="dashboard_i_smoked_title">I smoked</string>
     <string name="dashboard_i_smoked_subtitle">You can always start again</string>
     <string name="dashboard_motivational_note_show_another">Show another note</string>
+    <string name="craving_tool_motivational_notes_title">See notes</string>
+    <string name="craving_tool_motivational_notes_subtitle">Read motivational notes to remind yourself why staying strong matters</string>
 
 </resources>

@@ -23,7 +23,11 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
             CravingTool(
                 name = TextWrapper.FromRes(
                     R.string.cravings_tool_breathing_title,
-                    listOf(breatheExerciseSettings.inhaleSeconds, breatheExerciseSettings.holdSeconds, breatheExerciseSettings.exhaleSeconds)
+                    listOf(
+                        breatheExerciseSettings.inhaleSeconds,
+                        breatheExerciseSettings.holdSeconds,
+                        breatheExerciseSettings.exhaleSeconds
+                    )
                 ),
                 description = TextWrapper.FromRes(
                     R.string.cravings_tool_breathing_subtitle
@@ -32,17 +36,6 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
                     com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_breathe,
                 ),
                 behavior = CravingTool.Behavior.NavigateToScreen(AppScreen.BreatheExerciseScreen),
-            ),
-            CravingTool(
-                name = TextWrapper.FromRes(
-                    R.string.cravings_tool_relaxation_title,
-                ),
-                description = TextWrapper.FromRes(
-                    R.string.cravings_tool_relaxation_subtitle,
-                ),
-                icon = ImageWrapper.FromRes(
-                    com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_relaxation
-                )
             ),
             CravingTool(
                 name = TextWrapper.FromRes(
@@ -60,26 +53,16 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
             ),
             CravingTool(
                 name = TextWrapper.FromRes(
-                    R.string.cravings_tool_water_title,
+                    R.string.craving_tool_motivational_notes_title
                 ),
                 description = TextWrapper.FromRes(
-                    R.string.cravings_tool_water_subtitle,
+                    R.string.craving_tool_motivational_notes_subtitle
                 ),
                 icon = ImageWrapper.FromRes(
-                    com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_water
-                )
-            ),
-            CravingTool(
-                name = TextWrapper.FromRes(
-                    R.string.cravings_tool_mini_mindfulness_title,
+                    com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_motivational_notes
                 ),
-                description = TextWrapper.FromRes(
-                    R.string.cravings_tool_mini_mindfulness_subtitle,
-                ),
-                icon = ImageWrapper.FromRes(
-                    com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_mindfulness
-                )
-            ),
+                behavior = CravingTool.Behavior.NavigateToScreen(AppScreen.MotivationalNotesScreen)
+            )
         )
     }
 }

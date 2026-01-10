@@ -385,5 +385,7 @@
     <string name="dashboard_i_smoked_title">Я сорвался</string>
     <string name="dashboard_i_smoked_subtitle">Вы всегда можете начать заново</string>
     <string name="dashboard_motivational_note_show_another">Показать другую заметку</string>
+    <string name="craving_tool_motivational_notes_title">Посмотреть заметки</string>
+    <string name="craving_tool_motivational_notes_subtitle">Почитайте мотивационные заметки о вреде курения и важности держаться</string>
 
 </resources>

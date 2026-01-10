@@ -19,6 +19,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.MainToolbarView
+import com.freenic.ui.extensions.screenHeight
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.motivationalnotesscreen.ui.viewmodel.MotivationalNotesViewModel
@@ -73,19 +74,20 @@ private fun ContentView(
                 .align(Alignment.TopCenter)
                 .padding(bottom = 16.dp),
         )
+        val currentScreenHeight = screenHeight.dp
         Column(
             modifier = Modifier
-                .align(Alignment.Center),
+                .align(Alignment.TopCenter)
+                .padding(top = currentScreenHeight / 3),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
             NotesPagerView(
                 data = data,
-                modifier = Modifier
-                    .padding(bottom = 16.dp)
             )
             SwipeHintView(
-
+                modifier = Modifier
+                    .padding(top = 16.dp)
             )
         }
     }
