@@ -36,6 +36,9 @@ internal fun GuessShapeView(
 ) {
     val shapeSelected = remember { { id: String -> onShapeSelected(id) } }
     var selectedShapeId = ""
+    var isButtonEnabled by remember {
+        mutableStateOf(false)
+    }
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.Center,
@@ -47,10 +50,12 @@ internal fun GuessShapeView(
             shapes = shapes,
             onShapeClicked = {
                 selectedShapeId = it
+                isButtonEnabled = shapes.any { shape -> shape.id == selectedShapeId }
             },
             modifier = Modifier.padding(bottom = 16.dp),
         )
         ConfirmButton(
+            isEnabled = isButtonEnabled,
             onButtonClick = {
                 shapeSelected(selectedShapeId)
             },
@@ -124,12 +129,14 @@ private fun ShapeView(
 
 @Composable
 private fun ConfirmButton(
+    isEnabled: Boolean,
     onButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     MainSubmitButton(
         text = TextWrapper.FromRes(R.string.guess_shape_guessing_submit),
         onClick = onButtonClick,
+        enabled = isEnabled,
         modifier = modifier,
     )
 }
