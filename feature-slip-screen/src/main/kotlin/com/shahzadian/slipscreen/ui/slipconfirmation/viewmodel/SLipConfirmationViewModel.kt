@@ -1,8 +1,10 @@
 package com.shahzadian.slipscreen.ui.slipconfirmation.viewmodel
 
+import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -14,6 +16,24 @@ internal class SLipConfirmationViewModel @Inject constructor() :
     }
 
     override fun onViewEventHappened(event: SlipConfirmationViewEvent) {
+        when (event) {
+            is SlipConfirmationViewEvent.OnCancelClicked -> {
+                onCancelClicked()
+            }
 
+            is SlipConfirmationViewEvent.OnConfirmClicked -> {
+                onConfirmClicked()
+            }
+        }
+    }
+
+    private fun onConfirmClicked() {
+//        TODO
+    }
+
+    private fun onCancelClicked() {
+        viewModelScope.launch {
+            sendViewCommand(SlipConfirmationViewCommand.NavigateBack)
+        }
     }
 }

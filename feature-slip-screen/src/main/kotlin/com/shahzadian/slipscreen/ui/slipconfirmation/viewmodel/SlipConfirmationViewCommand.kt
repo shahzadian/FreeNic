@@ -5,4 +5,7 @@ import com.freenic.ui.vm.ViewCommand
 
 @Immutable
 internal sealed interface SlipConfirmationViewCommand : ViewCommand {
+
+    @Immutable
+    data object NavigateBack : SlipConfirmationViewCommand
 }

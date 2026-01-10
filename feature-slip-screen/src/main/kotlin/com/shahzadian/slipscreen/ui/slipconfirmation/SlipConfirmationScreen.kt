@@ -34,6 +34,8 @@ import com.freenic.ui.extensions.screenHeight
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.slipscreen.R
 import com.shahzadian.slipscreen.ui.slipconfirmation.viewmodel.SLipConfirmationViewModel
+import com.shahzadian.slipscreen.ui.slipconfirmation.viewmodel.SlipConfirmationViewCommand
+import com.shahzadian.slipscreen.ui.slipconfirmation.viewmodel.SlipConfirmationViewEvent
 import com.shahzadian.slipscreen.ui.slipconfirmation.viewmodel.SlipConfirmationViewState
 
 @Composable
@@ -46,26 +48,35 @@ fun SlipConfirmationScreen(
     when (state) {
         is SlipConfirmationViewState.Data -> {
             ContentView(
-                onConfirmed = {},
-                onCanceled = {},
+                onViewModelEvent = viewModel::onViewEvent,
                 modifier = modifier
                     .fillMaxSize()
             )
         }
     }
+    LaunchedEffect(viewModel.viewCommandFlow) {
+        viewModel
+            .viewCommandFlow
+            .collect { command ->
+                when (command) {
+                    is SlipConfirmationViewCommand.NavigateBack -> {
+                        navController.popBackStack()
+                    }
+                }
+            }
+    }
 }
 
 @Composable
 private fun ContentView(
-    onConfirmed: () -> Unit,
-    onCanceled: () -> Unit,
+    onViewModelEvent: (SlipConfirmationViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val confirmed = remember {
-        { onConfirmed() }
+        { onViewModelEvent(SlipConfirmationViewEvent.OnConfirmClicked) }
     }
     val canceled = remember {
-        { onCanceled() }
+        { onViewModelEvent(SlipConfirmationViewEvent.OnCancelClicked) }
     }
     Box(
         modifier = modifier
@@ -168,7 +179,7 @@ private fun MainContentView(
                 text = TextWrapper.FromRes(com.shahzadian.baseui.R.string.slip_confirmation_submit),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 32.dp)
+                    .padding(bottom = 24.dp)
             )
             Text(
                 text = stringResource(com.shahzadian.baseui.R.string.slip_confirmation_cancel),

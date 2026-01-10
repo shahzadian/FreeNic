@@ -5,4 +5,10 @@ import com.freenic.ui.vm.ViewEvent
 
 @Immutable
 internal sealed interface SlipConfirmationViewEvent : ViewEvent {
+
+    @Immutable
+    data object OnCancelClicked : SlipConfirmationViewEvent
+
+    @Immutable
+    data object OnConfirmClicked : SlipConfirmationViewEvent
 }
