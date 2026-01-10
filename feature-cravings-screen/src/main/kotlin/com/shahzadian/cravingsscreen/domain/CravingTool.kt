@@ -5,6 +5,7 @@ import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 
 class CravingTool(
+    val id: String,
     val name: TextWrapper,
     val description: TextWrapper,
     val icon: ImageWrapper,

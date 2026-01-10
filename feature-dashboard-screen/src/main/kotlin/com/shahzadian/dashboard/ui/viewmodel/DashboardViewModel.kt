@@ -23,6 +23,8 @@ internal class DashboardViewModel @Inject constructor(
     private val getMotivationalNotesUseCase: GetMotivationalNotesUseCase,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
+    private var latestCravingToolId: String? = null
+
     init {
         setData()
     }
@@ -86,13 +88,17 @@ internal class DashboardViewModel @Inject constructor(
     private fun onWantToSmokeClicked() {
         viewModelScope.launch {
             val cravingTools = getCravingToolsUseCase()
-            val screen = cravingTools
-                .mapNotNull { (it.behavior as? CravingTool.Behavior.NavigateToScreen)?.screen }
+            val tool = cravingTools
+                .filter {
+                    it.id != latestCravingToolId &&
+                            it.behavior is CravingTool.Behavior.NavigateToScreen
+                }
                 .shuffled()
                 .firstOrNull() ?: return@launch
+            latestCravingToolId = tool.id
             sendViewCommand(
                 DashboardViewCommand.NavigateTo(
-                    screen = screen,
+                    screen = (tool.behavior as CravingTool.Behavior.NavigateToScreen).screen,
                 )
             )
         }

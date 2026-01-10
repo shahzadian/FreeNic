@@ -21,6 +21,7 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
         val breatheExerciseSettings = getBreatheExerciseSettingsUseCase.invoke()
         return listOf(
             CravingTool(
+                id = "breathe",
                 name = TextWrapper.FromRes(
                     R.string.cravings_tool_breathing_title,
                     listOf(
@@ -38,6 +39,7 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
                 behavior = CravingTool.Behavior.NavigateToScreen(AppScreen.BreatheExerciseScreen),
             ),
             CravingTool(
+                id = "distraction",
                 name = TextWrapper.FromRes(
                     R.string.cravings_tool_distraction_title,
                 ),
@@ -52,6 +54,7 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
                 )
             ),
             CravingTool(
+                id = "motivational_notes",
                 name = TextWrapper.FromRes(
                     R.string.craving_tool_motivational_notes_title
                 ),
