@@ -31,11 +31,6 @@ internal class PaidFeaturesRepositoryImpl @Inject constructor() : PaidFeaturesRe
                 icon = ImageWrapper.FromRes(R.drawable.ic_paywall_feature_widget),
             ),
             PaidFeature(
-                name = TextWrapper.FromRes(com.shahzadian.baseui.R.string.paywall_feature_motivation_notes_title),
-                description = TextWrapper.FromRes(com.shahzadian.baseui.R.string.paywall_feature_motivation_notes_subtitle),
-                icon = ImageWrapper.FromRes(R.drawable.ic_paywall_feature_motivation_notes),
-            ),
-            PaidFeature(
                 name = TextWrapper.FromRes(com.shahzadian.baseui.R.string.paywall_feature_analytics_title),
                 description = TextWrapper.FromRes(com.shahzadian.baseui.R.string.paywall_feature_analytics_subtitle),
                 icon = ImageWrapper.FromRes(R.drawable.ic_paywall_feature_analytics),
