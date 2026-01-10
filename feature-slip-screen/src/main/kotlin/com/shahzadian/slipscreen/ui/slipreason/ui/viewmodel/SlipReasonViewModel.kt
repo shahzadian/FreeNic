@@ -2,6 +2,7 @@ package com.shahzadian.slipscreen.ui.slipreason.ui.viewmodel
 
 import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.freenic.ui.wrapper.TextWrapper
@@ -39,7 +40,9 @@ internal class SlipReasonViewModel @Inject constructor(
                 updateData()
             }
 
-            is SlipReasonViewEvent.OnConfirmClicked -> {}
+            is SlipReasonViewEvent.OnConfirmClicked -> {
+                onConfirmClicked()
+            }
 
             is SlipReasonViewEvent.OnSkipClicked -> {
                 onSkipClicked()
@@ -87,9 +90,15 @@ internal class SlipReasonViewModel @Inject constructor(
         }
     }
 
+    private fun onConfirmClicked() {
+        viewModelScope.launch {
+            sendViewCommand(SlipReasonViewCommand.NavigateTo(AppScreen.SlipResultScreen))
+        }
+    }
+
     private fun onSkipClicked() {
         viewModelScope.launch {
-            sendViewCommand(SlipReasonViewCommand.NavigateBack)
+            sendViewCommand(SlipReasonViewCommand.NavigateTo(AppScreen.SlipResultScreen))
         }
     }
 

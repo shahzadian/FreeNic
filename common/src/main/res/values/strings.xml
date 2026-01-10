@@ -411,5 +411,11 @@
     <string name="slip_reason_date_title">When did this happen?</string>
     <string name="slip_reason_date_subtitle">(optional)</string>
     <string name="slip_reason_date_today">Today</string>
+    <string name="slip_result_title">This does not erase your progress</string>
+    <string name="slip_result_subtitle">You stayed smoke-free for %s. That effort still matters.</string>
+    <string name="slip_result_secondary">A new streak starts now - and that\'s okay.</string>
+    <string name="slip_result_read_motvation_note">Read a supportive note</string>
+    <string name="slip_result_back_to_dashboard">Back to dashboard</string>
+    <string name="slip_result_hint">Your lifetime progress, health  improvements, and money saved  remain unchanged.</string>
 
 </resources>

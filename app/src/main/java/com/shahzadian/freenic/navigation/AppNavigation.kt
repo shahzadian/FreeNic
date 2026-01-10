@@ -46,6 +46,7 @@ import com.shahzadian.savingsgoalscreen.ui.details.SavingsGoalDetailsScreen
 import com.shahzadian.savingsgoalscreen.ui.share.SavingsGoalShareScreen
 import com.shahzadian.slipscreen.ui.slipconfirmation.SlipConfirmationScreen
 import com.shahzadian.slipscreen.ui.slipreason.ui.SlipReasonScreen
+import com.shahzadian.slipscreen.ui.slipresult.SlipResultScreen
 import com.shahzadian.subscription.paywall.ui.PaywallScreen
 import com.shahzadian.welcomescreen.ui.onboardingscreen.OnboardingScreen
 import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
@@ -352,6 +353,17 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 SlipReasonScreen(
+                    navController = navController,
+                    modifier = BaseModifier,
+                )
+            }
+
+            composable(
+                route = AppScreen.SlipResultScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                SlipResultScreen(
                     navController = navController,
                     modifier = BaseModifier,
                 )

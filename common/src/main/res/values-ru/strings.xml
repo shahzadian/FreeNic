@@ -4,7 +4,7 @@
     <string name="welcome_screen_desc">Ваш путь к жизни без курения начинается здесь. Я буду с вами на каждом шагу!</string>
     <string name="welcome_screen_button">Начать</string>
 
-<!--    Onboarding-->
+    <!--    Onboarding-->
     <string name="onboarding_1_title">Каждый вдох с дымом - шаг прочь от жизни</string>
     <string name="onboarding_1_subtitle">Курение разрушает тело медленно, незаметно, но неотвратимо. Сегодня - лучший день, чтобы остановиться</string>
     <string name="onboarding_1_submit">Далее</string>
@@ -21,7 +21,7 @@
     <string name="onboarding_4_subtitle">FreeNic — это твой первый шаг к свободе. Поддержка, мотивация и путь без дыма начинаются прямо здесь</string>
     <string name="onboarding_4_submit">Я готов!</string>
 
-<!--    Data fill-->
+    <!--    Data fill-->
     <string name="data_fill_start_title">Расскажи немного о себе</string>
     <string name="data_fill_start_subtitle">Чтобы мы помогли тебе бросить эффективнее</string>
     <string name="data_fill_submit_button">Продолжить</string>
@@ -403,5 +403,11 @@
     <string name="slip_reason_date_title">Когда это случилось?</string>
     <string name="slip_reason_date_subtitle">(необязательно)</string>
     <string name="slip_reason_date_today">Сегодня</string>
+    <string name="slip_result_title">Это не отменяет твой прогресс</string>
+    <string name="slip_result_subtitle">Вы не курили %s. Этот опыт по-прежнему имеет значение.</string>
+    <string name="slip_result_secondary">Новая серия начинается сейчас - и это нормально.</string>
+    <string name="slip_result_read_motvation_note">Прочитать поддерживающую заметку</string>
+    <string name="slip_result_back_to_dashboard">На главный экран</string>
+    <string name="slip_result_hint">Ваш прогресс за всё время, улучшения в здоровье и сэкономленные деньги остаются без изменений.</string>
 
 </resources>
