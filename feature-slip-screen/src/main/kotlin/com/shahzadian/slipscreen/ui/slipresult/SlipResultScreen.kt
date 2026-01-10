@@ -4,11 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -79,6 +81,11 @@ private fun ContentView(
                 data = data,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
+            DividerView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 32.dp)
+            )
         }
     }
 }
@@ -145,6 +152,39 @@ private fun TextsView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
             textAlign = TextAlign.Center,
+        )
+    }
+}
+
+@Composable
+private fun DividerView(
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        HorizontalDivider(
+            modifier = Modifier
+                .padding(end = 2.dp)
+                .weight(4f),
+            color = MaterialTheme.colorScheme.outline,
+            thickness = 1.dp,
+        )
+        Image(
+            painter = painterResource(R.drawable.ic_slip_result_divider),
+            contentDescription = "Divider",
+            modifier = Modifier
+                .padding(horizontal = 2.dp)
+                .weight(1f)
+        )
+        HorizontalDivider(
+            modifier = Modifier
+                .padding(start = 2.dp)
+                .weight(4f),
+            color = MaterialTheme.colorScheme.outline,
+            thickness = 1.dp,
         )
     }
 }
