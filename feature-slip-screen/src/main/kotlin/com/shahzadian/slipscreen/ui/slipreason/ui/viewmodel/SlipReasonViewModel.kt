@@ -1,8 +1,11 @@
 package com.shahzadian.slipscreen.ui.slipreason.ui.viewmodel
 
+import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
 import com.shahzadian.slipscreen.ui.slipreason.domain.GetSlipReasonsUseCase
 import com.shahzadian.slipscreen.ui.slipreason.domain.SlipReason
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -59,7 +62,7 @@ internal class SlipReasonViewModel @Inject constructor(
                     slipReasons = reasons,
                     slipDateUiModel = SlipReasonViewState.SlipDateUiModel(
                         millis = slipDate,
-                        displayableDate = extractDisplayableQuitDate(slipDate)
+                        displayableDate = getDisplayableSlipDate()
                     )
                 )
             )
@@ -75,11 +78,10 @@ internal class SlipReasonViewModel @Inject constructor(
                     isSubmitButtonEnabled = selectedReasonId != null,
                     selectedReasonId = selectedReasonId,
                     slipReasons = reasons,
-                    slipDateUiModel = (viewState as? SlipReasonViewState.Data)?.slipDateUiModel
-                        ?: SlipReasonViewState.SlipDateUiModel(
-                            millis = slipDate,
-                            displayableDate = extractDisplayableQuitDate(slipDate)
-                        )
+                    slipDateUiModel = SlipReasonViewState.SlipDateUiModel(
+                        millis = slipDate,
+                        displayableDate = getDisplayableSlipDate()
+                    )
                 )
             )
         }
@@ -109,5 +111,14 @@ internal class SlipReasonViewModel @Inject constructor(
         return Instant.ofEpochMilli(quitDateMillis)
             .atZone(ZoneId.systemDefault())
             .format(formatter)
+    }
+
+    private fun getDisplayableSlipDate(): TextWrapper {
+        val isToday = DateUtils.isToday(slipDate)
+        return if (isToday) {
+            TextWrapper.FromRes(R.string.slip_reason_date_today)
+        } else {
+            TextWrapper.FromString(extractDisplayableQuitDate(slipDate))
+        }
     }
 }

@@ -87,6 +87,8 @@ private fun ContentView(
         remember(Unit) { { id: String -> onEvent(SlipReasonViewEvent.OnReasonClicked(id)) } }
     val onConfirmClick = remember(Unit) { { onEvent(SlipReasonViewEvent.OnConfirmClicked) } }
     val onSkipClick = remember(Unit) { { onEvent(SlipReasonViewEvent.OnSkipClicked) } }
+    val onSlipDateConfirmed =
+        remember(Unit) { { millis: Long -> onEvent(SlipReasonViewEvent.OnSlipDatePicked(millis)) } }
     Box(
         modifier = modifier
             .padding(16.dp),
@@ -103,6 +105,7 @@ private fun ContentView(
         MainDataView(
             data = data,
             onReasonClicked = onReasonClick,
+            onSlipDateConfirmed = onSlipDateConfirmed,
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.TopCenter)
@@ -121,9 +124,11 @@ private fun ContentView(
 private fun MainDataView(
     data: SlipReasonViewState.Data,
     onReasonClicked: (String) -> Unit,
+    onSlipDateConfirmed: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val onReasonClick = remember { { id: String -> onReasonClicked(id) } }
+    val onDateConfirmed = remember { { millis: Long -> onSlipDateConfirmed(millis) } }
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState()),
@@ -137,6 +142,7 @@ private fun MainDataView(
         )
         DateView(
             data = data,
+            onDateConfirmed = onDateConfirmed,
             modifier = Modifier.padding(bottom = 64.dp)
         )
     }
@@ -154,7 +160,7 @@ private fun ReasonsView(
     ) {
         data
             .slipReasons
-            .forEachIndexed { index, reasonUiModel ->
+            .forEach { reasonUiModel ->
                 SlipReasonView(
                     data = reasonUiModel,
                     isSelected = data.selectedReasonId == reasonUiModel.id,
@@ -173,8 +179,10 @@ private fun ReasonsView(
 @Composable
 private fun DateView(
     data: SlipReasonViewState.Data,
+    onDateConfirmed: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val onDateConfirm = remember { { date: Long -> onDateConfirmed(date) } }
     Column(
         modifier = modifier,
     ) {
@@ -192,7 +200,7 @@ private fun DateView(
         )
         SlipDateView(
             data = data.slipDateUiModel,
-            onDateConfirmed = {},
+            onDateConfirmed = onDateConfirm,
             modifier = Modifier.fillMaxWidth(),
         )
     }

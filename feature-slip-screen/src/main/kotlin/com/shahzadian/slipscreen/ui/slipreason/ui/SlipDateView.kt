@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.AppDatePickerDialog
 import com.freenic.ui.DatePickerResult
+import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.slipscreen.R
 import com.shahzadian.slipscreen.ui.slipreason.ui.viewmodel.SlipReasonViewState
 
@@ -62,7 +63,7 @@ internal fun SlipDateView(
             modifier = Modifier.padding(end = 8.dp)
         )
         Text(
-            text = data.displayableDate,
+            text = textFromWrapper(data.displayableDate),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier
@@ -78,6 +79,7 @@ internal fun SlipDateView(
     if (isPickerShown) {
         AppDatePickerDialog(
             initialDateMillis = data.millis,
+            maxDateMillis = System.currentTimeMillis(),
             onDismissRequest = onDismiss,
             onDateConfirmed = onConfirmed,
         )
