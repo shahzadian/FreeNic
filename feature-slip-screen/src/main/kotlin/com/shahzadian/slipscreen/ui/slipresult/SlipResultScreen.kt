@@ -89,7 +89,6 @@ private fun ContentView(
                     .padding(bottom = 32.dp)
             )
             HintView(
-                data = data,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 32.dp)
@@ -199,7 +198,6 @@ private fun DividerView(
 
 @Composable
 private fun HintView(
-    data: SlipResultViewState.Data,
     modifier: Modifier = Modifier,
 ) {
     Row(
