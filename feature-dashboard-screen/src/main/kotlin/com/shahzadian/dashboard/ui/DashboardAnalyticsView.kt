@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.mainCardBackground
 import com.shahzadian.baseui.R
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewState
 
@@ -190,10 +191,7 @@ private fun AnalyticsCard(
 ) {
     Box(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
-                shape = MaterialTheme.shapes.medium,
-            )
+            .mainCardBackground()
             .padding(16.dp),
     ) {
         content()
