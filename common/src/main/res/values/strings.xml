@@ -395,5 +395,9 @@
     <string name="dashboard_motivational_note_show_another">Show another note</string>
     <string name="craving_tool_motivational_notes_title">Motivational notes</string>
     <string name="craving_tool_motivational_notes_subtitle">Read motivational notes to remind yourself why staying strong matters</string>
+    <string name="slip_confirmation_title">Thanks for being honest</string>
+    <string name="slip_confirmation_subtitle">This happens to many people. Let’s just acknowledge it and move forward</string>
+    <string name="slip_confirmation_submit">Log this</string>
+    <string name="slip_confirmation_cancel">Cancel</string>
 
 </resources>

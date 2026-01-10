@@ -65,14 +65,14 @@ private fun ContentView(
     val onWantToSmokeClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnWantToSmokeClicked) }
     }
+    val onISmokedClick = remember {
+        { onViewModelEvent(DashboardViewEvent.OnISmokedClicked) }
+    }
     val onDetailedInsightsClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnDetailedInsightsClicked) }
     }
     val onMotivationalNoteRefreshClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteRefreshClicked) }
-    }
-    val onMotivationalNoteSeeAllClick = remember {
-        { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteAddClicked) }
     }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.dashboard_header_title),
@@ -93,7 +93,7 @@ private fun ContentView(
                 .padding(bottom = 8.dp),
         )
         ISmokedView(
-            onClicked = {},
+            onClicked = onISmokedClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 32.dp),

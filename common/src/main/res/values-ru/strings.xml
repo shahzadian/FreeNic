@@ -387,5 +387,9 @@
     <string name="dashboard_motivational_note_show_another">Показать другую заметку</string>
     <string name="craving_tool_motivational_notes_title">Мотивационные заметки</string>
     <string name="craving_tool_motivational_notes_subtitle">Почитайте мотивационные заметки о вреде курения и важности держаться</string>
+    <string name="slip_confirmation_title">Спасибо за честность</string>
+    <string name="slip_confirmation_subtitle">Такое случается со многими. Давайте просто зафиксируем это и пойдём дальше</string>
+    <string name="slip_confirmation_submit">Зафиксировать</string>
+    <string name="slip_confirmation_cancel">Отмена</string>
 
 </resources>

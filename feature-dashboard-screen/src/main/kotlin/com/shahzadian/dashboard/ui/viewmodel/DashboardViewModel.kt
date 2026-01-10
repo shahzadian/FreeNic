@@ -44,11 +44,11 @@ internal class DashboardViewModel @Inject constructor(
             }
 
             is DashboardViewEvent.OnMotivationalNoteRefreshClicked -> {
-                onHelpfulNoteRefreshClicked()
+                onMotivationalNoteRefreshClicked()
             }
 
-            is DashboardViewEvent.OnMotivationalNoteAddClicked -> {
-                onHelpfulNoteAddClicked()
+            is DashboardViewEvent.OnISmokedClicked -> {
+                onISmokedClicked()
             }
         }
     }
@@ -66,7 +66,7 @@ internal class DashboardViewModel @Inject constructor(
         }
     }
 
-    private fun onHelpfulNoteRefreshClicked() {
+    private fun onMotivationalNoteRefreshClicked() {
         val state = viewState as? DashboardViewState.Data ?: return
         viewModelScope.launch {
             setViewState(
@@ -120,25 +120,19 @@ internal class DashboardViewModel @Inject constructor(
         }
     }
 
+    private fun onISmokedClicked() {
+        viewModelScope.launch {
+            sendViewCommand(
+                DashboardViewCommand.NavigateTo(
+                    screen = AppScreen.SlipConfirmationScreen,
+                )
+            )
+        }
+    }
+
     private fun MotivationalNote.toUiModel(): DashboardViewState.MotivationalNoteUiModel {
         return DashboardViewState.MotivationalNoteUiModel(
             text = this.text,
         )
-    }
-
-    private fun onHelpfulNoteAddClicked() {
-        viewModelScope.launch {
-            val hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null
-            val screen = if (!hasPaidSubscription) {
-                AppScreen.PaywallScreen
-            } else {
-                AppScreen.MotivationalNotesScreen
-            }
-            sendViewCommand(
-                DashboardViewCommand.NavigateTo(
-                    screen = screen,
-                )
-            )
-        }
     }
 }

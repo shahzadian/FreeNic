@@ -10,11 +10,11 @@ internal sealed interface DashboardViewEvent : ViewEvent {
     data object OnWantToSmokeClicked : DashboardViewEvent
 
     @Immutable
+    data object OnISmokedClicked : DashboardViewEvent
+
+    @Immutable
     data object OnDetailedInsightsClicked : DashboardViewEvent
 
     @Immutable
     data object OnMotivationalNoteRefreshClicked : DashboardViewEvent
-
-    @Immutable
-    data object OnMotivationalNoteAddClicked : DashboardViewEvent
 }
