@@ -38,7 +38,7 @@ internal class SlipResultViewModel @Inject constructor(
                 val noCigDays = getUserDataHelper().getSkippedDaysCount()
                 setViewState(
                     SlipResultViewState.Data(
-                        noCigDays = noCigDays
+                        noCigDays = noCigDays,
                     )
                 )
             }

@@ -18,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
+import com.freenic.ui.extensions.mainHintBackground
 import com.shahzadian.slipscreen.R
 import com.shahzadian.slipscreen.ui.slipresult.viewmodel.SlipResultViewModel
 import com.shahzadian.slipscreen.ui.slipresult.viewmodel.SlipResultViewState
@@ -82,6 +84,12 @@ private fun ContentView(
                 modifier = Modifier.padding(bottom = 32.dp)
             )
             DividerView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 32.dp)
+            )
+            HintView(
+                data = data,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 32.dp)
@@ -185,6 +193,30 @@ private fun DividerView(
                 .weight(4f),
             color = MaterialTheme.colorScheme.outline,
             thickness = 1.dp,
+        )
+    }
+}
+
+@Composable
+private fun HintView(
+    data: SlipResultViewState.Data,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .mainHintBackground()
+            .padding(16.dp),
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_slip_result_hint),
+            contentDescription = "Hint",
+            modifier = Modifier.padding(end = 8.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.tertiary)
+        )
+        Text(
+            text = stringResource(com.shahzadian.baseui.R.string.slip_result_hint),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onPrimary,
         )
     }
 }
