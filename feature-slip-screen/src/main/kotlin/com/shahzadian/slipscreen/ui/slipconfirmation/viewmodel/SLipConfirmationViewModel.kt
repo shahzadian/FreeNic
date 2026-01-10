@@ -30,7 +30,7 @@ internal class SLipConfirmationViewModel @Inject constructor() :
 
     private fun onConfirmClicked() {
         viewModelScope.launch {
-            sendViewCommand(SlipConfirmationViewCommand.NavigateTo(AppScreen.SlipContextScreen))
+            sendViewCommand(SlipConfirmationViewCommand.NavigateTo(AppScreen.SlipReasonScreen))
         }
     }
 

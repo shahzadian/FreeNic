@@ -1,4 +1,4 @@
-package com.shahzadian.slipscreen.ui.slipcontext.ui.viewmodel
+package com.shahzadian.slipscreen.ui.slipreason.ui.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
@@ -6,20 +6,20 @@ import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 
 @Immutable
-internal interface SlipContextViewState : ViewState {
+internal interface SlipReasonViewState : ViewState {
 
     @Immutable
-    data object Loading : SlipContextViewState
+    data object Loading : SlipReasonViewState
 
     @Immutable
     data class Data(
-        val slipContexts: List<SlipContextUiModel>,
-        val selectedContextId: String?,
+        val slipReasons: List<SlipReasonUiModel>,
+        val selectedReasonId: String?,
         val isSubmitButtonEnabled: Boolean,
-    ) : SlipContextViewState
+    ) : SlipReasonViewState
 
     @Immutable
-    data class SlipContextUiModel(
+    data class SlipReasonUiModel(
         val id: String,
         val name: TextWrapper,
         val icon: ImageWrapper,

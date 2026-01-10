@@ -139,8 +139,8 @@ sealed class AppScreen {
         override val route: String = "slide_confirmation_screen"
     }
 
-    object SlipContextScreen : AppScreen() {
-        override val route: String = "slide_context_screen"
+    object SlipReasonScreen : AppScreen() {
+        override val route: String = "slide_reason_screen"
     }
 
     companion object {
@@ -166,7 +166,7 @@ sealed class AppScreen {
                 DebugPanelScreen,
                 MotivationalNotesScreen,
                 SlipConfirmationScreen,
-                SlipContextScreen,
+                SlipReasonScreen,
             )
         }
     }

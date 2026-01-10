@@ -1,9 +1,9 @@
 package com.shahzadian.slipscreen.ui.di
 
-import com.shahzadian.slipscreen.ui.slipcontext.data.SlipContextRepository
-import com.shahzadian.slipscreen.ui.slipcontext.data.SlipContextRepositoryImpl
-import com.shahzadian.slipscreen.ui.slipcontext.domain.GetSlipContextsUseCase
-import com.shahzadian.slipscreen.ui.slipcontext.domain.GetSlipContextsUseCaseImpl
+import com.shahzadian.slipscreen.ui.slipreason.data.SlipReasonRepository
+import com.shahzadian.slipscreen.ui.slipreason.data.SlipReasonRepositoryImpl
+import com.shahzadian.slipscreen.ui.slipreason.domain.GetSlipReasonsUseCase
+import com.shahzadian.slipscreen.ui.slipreason.domain.GetSlipReasonsUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,11 +15,11 @@ internal interface SlipModule {
 
     @Binds
     fun bindSlipContextRepository(
-        impl: SlipContextRepositoryImpl
-    ): SlipContextRepository
+        impl: SlipReasonRepositoryImpl
+    ): SlipReasonRepository
 
     @Binds
     fun bindGetSlipContextsUseCase(
-        impl: GetSlipContextsUseCaseImpl
-    ): GetSlipContextsUseCase
+        impl: GetSlipReasonsUseCaseImpl
+    ): GetSlipReasonsUseCase
 }
