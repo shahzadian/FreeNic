@@ -1,6 +1,7 @@
 package com.shahzadian.slipscreen.ui.slipconfirmation.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +29,9 @@ internal class SLipConfirmationViewModel @Inject constructor() :
     }
 
     private fun onConfirmClicked() {
-//        TODO
+        viewModelScope.launch {
+            sendViewCommand(SlipConfirmationViewCommand.NavigateTo(AppScreen.SlipContextScreen))
+        }
     }
 
     private fun onCancelClicked() {

@@ -391,5 +391,12 @@
     <string name="slip_confirmation_subtitle">Такое случается со многими. Давайте просто зафиксируем это и пойдём дальше</string>
     <string name="slip_confirmation_submit">Зафиксировать</string>
     <string name="slip_confirmation_cancel">Отмена</string>
+    <string name="slip_context_stress">Стресс</string>
+    <string name="slip_context_social">Компания / окружение</string>
+    <string name="slip_context_habit">Привычка</string>
+    <string name="slip_context_craving">Сильная тяга</string>
+    <string name="slip_context_other">Другое</string>
+    <string name="slip_context_toolbar_title">Помогите понять</string>
+    <string name="slip_context_toolbar_subtitle">Что усложнило ситуацию в этот раз? (необязательно)</string>
 
 </resources>

@@ -399,5 +399,12 @@
     <string name="slip_confirmation_subtitle">This happens to many people. Let’s just acknowledge it and move forward</string>
     <string name="slip_confirmation_submit">Log this</string>
     <string name="slip_confirmation_cancel">Cancel</string>
+    <string name="slip_context_stress">Stress</string>
+    <string name="slip_context_social">Social situation</string>
+    <string name="slip_context_habit">Habit</string>
+    <string name="slip_context_craving">Strong craving</string>
+    <string name="slip_context_other">Other</string>
+    <string name="slip_context_toolbar_title">Help us understand</string>
+    <string name="slip_context_toolbar_subtitle">What made it harder this time? (optional)</string>
 
 </resources>

@@ -62,6 +62,10 @@ fun SlipConfirmationScreen(
                     is SlipConfirmationViewCommand.NavigateBack -> {
                         navController.popBackStack()
                     }
+
+                    is SlipConfirmationViewCommand.NavigateTo -> {
+                        navController.navigate(command.screen.route)
+                    }
                 }
             }
     }
