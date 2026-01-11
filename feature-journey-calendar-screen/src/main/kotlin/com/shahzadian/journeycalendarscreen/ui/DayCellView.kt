@@ -33,7 +33,7 @@ internal fun DayCellView(
                 color = background, shape = MaterialTheme.shapes.small,
             )
             .then(
-                if (cell.isEnabled) Modifier.clickable(onClick = dayClick) else Modifier
+                if (cell.inCurrentMonth) Modifier.clickable(onClick = dayClick) else Modifier
             ),
         contentAlignment = Alignment.Center,
     ) {

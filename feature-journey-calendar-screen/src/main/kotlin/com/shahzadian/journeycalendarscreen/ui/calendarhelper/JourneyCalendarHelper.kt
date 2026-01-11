@@ -44,24 +44,23 @@ internal class JourneyCalendarHelperImpl @Inject constructor() : JourneyCalendar
 
         val cells = (0 until totalCells).map { index ->
             val dayNumber = index - leadingBlanks + 1
-            if (dayNumber in 1..daysInMonth) {
-                val date = currentMonth.atDay(dayNumber)
-                DayCellUiModel(
-                    date = date,
-                    dayText = TextWrapper.FromString(dayNumber.toString()),
-                    inCurrentMonth = true,
-                    isToday = date == today,
-                    isEnabled = true,
-                )
+            val inCurrentMonth = dayNumber in 1..daysInMonth
+            val date = if (inCurrentMonth) {
+                currentMonth.atDay(dayNumber)
             } else {
-                DayCellUiModel(
-                    date = null,
-                    dayText = null,
-                    inCurrentMonth = false,
-                    isToday = false,
-                    isEnabled = false,
-                )
+                null
             }
+            DayCellUiModel(
+                dayText = if (inCurrentMonth) {
+                    TextWrapper.FromString(dayNumber.toString())
+                } else {
+                    null
+                },
+                inCurrentMonth = inCurrentMonth,
+                isToday = date == today,
+//                    TODO
+                events = emptyList(),
+            )
         }
 
         val weeks = cells.chunked(7)
