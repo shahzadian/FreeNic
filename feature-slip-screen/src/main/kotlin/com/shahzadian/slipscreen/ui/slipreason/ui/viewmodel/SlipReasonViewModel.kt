@@ -7,8 +7,8 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.slipscreen.ui.slipreason.domain.GetSlipReasonsUseCase
-import com.shahzadian.slipscreen.ui.slipreason.domain.SlipReason
+import com.shahzadian.slip.slipreason.domain.GetSlipReasonsUseCase
+import com.shahzadian.slip.slipreason.domain.SlipReason
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.Instant

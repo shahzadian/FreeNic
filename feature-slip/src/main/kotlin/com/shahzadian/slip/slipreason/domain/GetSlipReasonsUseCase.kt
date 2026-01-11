@@ -1,9 +1,9 @@
-package com.shahzadian.slipscreen.ui.slipreason.domain
+package com.shahzadian.slip.slipreason.domain
 
-import com.shahzadian.slipscreen.ui.slipreason.data.SlipReasonRepository
+import com.shahzadian.slip.slipreason.data.SlipReasonRepository
 import javax.inject.Inject
 
-internal interface GetSlipReasonsUseCase {
+interface GetSlipReasonsUseCase {
 
     suspend operator fun invoke(): List<SlipReason>
 }

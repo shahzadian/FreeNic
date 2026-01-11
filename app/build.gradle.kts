@@ -68,6 +68,7 @@ dependencies {
     implementation(project(":feature-motivational-notes"))
     implementation(project(":feature-motivational-notes-screen"))
     implementation(project(":feature-slip-screen"))
+    implementation(project(":feature-slip"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))
