@@ -32,6 +32,10 @@ internal class JourneyCalendarViewModel @Inject constructor(
             is JourneyCalendarViewEvent.OnNextMonthClicked -> {
                 onNextMonthClicked()
             }
+
+            is JourneyCalendarViewEvent.OnBackIconClicked -> {
+                onBackIconClicked()
+            }
         }
     }
 
@@ -57,6 +61,14 @@ internal class JourneyCalendarViewModel @Inject constructor(
         viewModelScope.launch {
             journeyCalendarHelper.incrementMonth()
             setData()
+        }
+    }
+
+    private fun onBackIconClicked() {
+        viewModelScope.launch {
+            sendViewCommand(
+                JourneyCalendarViewCommand.NavigateBack
+            )
         }
     }
 }

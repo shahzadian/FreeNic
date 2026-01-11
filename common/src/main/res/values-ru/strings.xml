@@ -416,5 +416,6 @@
     <string name="journey_calendar_weekday_friday">Пт</string>
     <string name="journey_calendar_weekday_saturday">Сб</string>
     <string name="journey_calendar_weekday_sunday">Вс</string>
+    <string name="journey_calendar_header">Календарь пути</string>
 
 </resources>

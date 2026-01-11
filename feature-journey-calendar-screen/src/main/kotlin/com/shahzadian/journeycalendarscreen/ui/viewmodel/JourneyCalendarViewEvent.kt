@@ -11,4 +11,7 @@ internal sealed interface JourneyCalendarViewEvent : ViewEvent {
 
     @Immutable
     data object OnNextMonthClicked : JourneyCalendarViewEvent
+
+    @Immutable
+    data object OnBackIconClicked : JourneyCalendarViewEvent
 }

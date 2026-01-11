@@ -376,6 +376,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 JourneyCalendarScreen(
+                    navController = navController,
                     modifier = BaseModifier,
                 )
             }

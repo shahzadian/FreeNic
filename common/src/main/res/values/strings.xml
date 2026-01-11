@@ -424,5 +424,6 @@
     <string name="journey_calendar_weekday_friday">Fri</string>
     <string name="journey_calendar_weekday_saturday">Sat</string>
     <string name="journey_calendar_weekday_sunday">Sun</string>
+    <string name="journey_calendar_header">Journey calendar</string>
 
 </resources>
