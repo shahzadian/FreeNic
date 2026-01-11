@@ -41,6 +41,9 @@ internal class JourneyCalendarViewModel @Inject constructor(
 
     private fun setData() {
         viewModelScope.launch {
+            setViewState(
+                state = JourneyCalendarViewState.Loading
+            )
             val model = journeyCalendarHelper.getMonth()
             setViewState(
                 state = JourneyCalendarViewState.Data(

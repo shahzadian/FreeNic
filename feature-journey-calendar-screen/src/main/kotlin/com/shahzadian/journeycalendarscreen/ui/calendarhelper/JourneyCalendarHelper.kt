@@ -1,8 +1,11 @@
 package com.shahzadian.journeycalendarscreen.ui.calendarhelper
 
 import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.slip.slipcase.domain.GetSlipCasesUseCase
+import com.shahzadian.slip.slipcase.domain.SlipCase
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.Locale
 import javax.inject.Inject
@@ -16,9 +19,13 @@ internal interface JourneyCalendarHelper {
     suspend fun incrementMonth()
 }
 
-internal class JourneyCalendarHelperImpl @Inject constructor() : JourneyCalendarHelper {
+internal class JourneyCalendarHelperImpl @Inject constructor(
+    private val getSlipCasesUseCase: GetSlipCasesUseCase,
+) : JourneyCalendarHelper {
 
     private var currentMonth: YearMonth = YearMonth.now()
+
+    private var _slipCases: List<SlipCase>? = null
 
     override suspend fun getMonth(): MonthDataUiModel {
         val title = TextWrapper.FromString(
@@ -56,10 +63,9 @@ internal class JourneyCalendarHelperImpl @Inject constructor() : JourneyCalendar
                 } else {
                     null
                 },
-                inCurrentMonth = inCurrentMonth,
+                isInCurrentMonth = inCurrentMonth,
                 isToday = date == today,
-//                    TODO
-                events = emptyList(),
+                events = date?.getEventsForDay() ?: emptyList(),
             )
         }
 
@@ -76,5 +82,36 @@ internal class JourneyCalendarHelperImpl @Inject constructor() : JourneyCalendar
 
     override suspend fun incrementMonth() {
         currentMonth = currentMonth.plusMonths(1)
+    }
+
+    private suspend fun getSlipCases(): List<SlipCase> {
+        return _slipCases ?: let {
+            val cases = getSlipCasesUseCase()
+            _slipCases = cases
+            cases
+        }
+    }
+
+    private suspend fun LocalDate.getEventsForDay(): List<DayEventUiModel> {
+        val zone = ZoneId.systemDefault()
+        val startOfDay = this
+            .atStartOfDay(zone)
+            .toInstant()
+            .toEpochMilli()
+        val endOfDay = this
+            .plusDays(1)
+            .atStartOfDay(zone)
+            .toInstant()
+            .toEpochMilli()
+        val slipCases = getSlipCases()
+        val casesInDay = slipCases
+            .mapNotNull { case ->
+                if (case.slipDateMillis in startOfDay..endOfDay) {
+                    DayEventUiModel.Slip
+                } else {
+                    null
+                }
+            }
+        return casesInDay
     }
 }
