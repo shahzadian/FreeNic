@@ -61,7 +61,8 @@ internal fun DashboardAnalyticsView(
         }
         DetailsView(
             onClicked = detailsClick,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
         )
     }
 }

@@ -43,6 +43,10 @@ internal class DashboardViewModel @Inject constructor(
                 onDetailedInsightsClicked()
             }
 
+            is DashboardViewEvent.OnJourneyCalendarClicked -> {
+                onJourneyCalendarClicked()
+            }
+
             is DashboardViewEvent.OnMotivationalNoteRefreshClicked -> {
                 onMotivationalNoteRefreshClicked()
             }
@@ -115,6 +119,16 @@ internal class DashboardViewModel @Inject constructor(
             sendViewCommand(
                 DashboardViewCommand.NavigateTo(
                     screen = screen,
+                )
+            )
+        }
+    }
+
+    private fun onJourneyCalendarClicked() {
+        viewModelScope.launch {
+            sendViewCommand(
+                DashboardViewCommand.NavigateTo(
+                    screen = AppScreen.JourneyCalendarScreen,
                 )
             )
         }

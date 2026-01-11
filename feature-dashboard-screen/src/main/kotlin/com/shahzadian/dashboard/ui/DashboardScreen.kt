@@ -71,6 +71,9 @@ private fun ContentView(
     val onDetailedInsightsClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnDetailedInsightsClicked) }
     }
+    val onJourneyCalendarClick = remember {
+        { onViewModelEvent(DashboardViewEvent.OnJourneyCalendarClicked) }
+    }
     val onMotivationalNoteRefreshClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteRefreshClicked) }
     }
@@ -96,7 +99,13 @@ private fun ContentView(
             onClicked = onISmokedClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp),
+                .padding(bottom = 8.dp),
+        )
+        DashboardJourneyCalendarView(
+            onClicked = onJourneyCalendarClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 32.dp)
         )
         MotivationalNoteView(
             noteUiModel = data.motivationalNote,

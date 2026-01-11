@@ -16,5 +16,8 @@ internal sealed interface DashboardViewEvent : ViewEvent {
     data object OnDetailedInsightsClicked : DashboardViewEvent
 
     @Immutable
+    data object OnJourneyCalendarClicked : DashboardViewEvent
+
+    @Immutable
     data object OnMotivationalNoteRefreshClicked : DashboardViewEvent
 }
