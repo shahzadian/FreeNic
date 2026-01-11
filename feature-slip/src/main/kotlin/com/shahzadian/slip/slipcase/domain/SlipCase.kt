@@ -1,6 +1,6 @@
 package com.shahzadian.slip.slipcase.domain
 
 class SlipCase(
-    val slipId: String,
+    val reasonId: String,
     val slipDateMillis: Long,
 )

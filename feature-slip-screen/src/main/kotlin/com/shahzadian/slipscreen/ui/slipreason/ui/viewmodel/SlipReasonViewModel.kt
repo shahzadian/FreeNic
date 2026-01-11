@@ -7,6 +7,8 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.slip.slipcase.domain.CreateSlipCaseUseCase
+import com.shahzadian.slip.slipcase.domain.SlipCase
 import com.shahzadian.slip.slipreason.domain.GetSlipReasonsUseCase
 import com.shahzadian.slip.slipreason.domain.SlipReason
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SlipReasonViewModel @Inject constructor(
     private val getSlipReasonsUseCase: GetSlipReasonsUseCase,
+    private val createSlipCaseUseCase: CreateSlipCaseUseCase,
 ) : BaseViewModel<SlipReasonViewState, SlipReasonViewEvent, SlipReasonViewCommand>() {
 
     private var selectedReasonId: String? = null
@@ -92,6 +95,14 @@ internal class SlipReasonViewModel @Inject constructor(
 
     private fun onConfirmClicked() {
         viewModelScope.launch {
+            createSlipCaseUseCase(
+                slipCase = SlipCase(
+                    reasonId = requireNotNull(selectedReasonId) {
+                        "Selected reason id is null."
+                    },
+                    slipDateMillis = slipDate,
+                )
+            )
             sendViewCommand(SlipReasonViewCommand.NavigateTo(AppScreen.SlipResultScreen))
         }
     }

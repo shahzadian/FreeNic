@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 internal class SlipCaseEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    val slipId: String,
+    val slipReasonId: String,
     val slipDateMillis: Long,
 )

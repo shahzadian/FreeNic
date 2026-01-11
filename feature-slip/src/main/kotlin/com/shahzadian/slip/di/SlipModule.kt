@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.shahzadian.slip.slipcase.data.SlipCaseRepository
 import com.shahzadian.slip.slipcase.data.SlipCaseRepositoryImpl
 import com.shahzadian.slip.slipcase.db.SlipCaseDatabase
+import com.shahzadian.slip.slipcase.domain.CreateSlipCaseUseCase
+import com.shahzadian.slip.slipcase.domain.CreateSlipCaseUseCaseImpl
 import com.shahzadian.slip.slipcase.domain.GetSlipCasesUseCase
 import com.shahzadian.slip.slipcase.domain.GetSlipCasesUseCaseImpl
 import com.shahzadian.slip.slipreason.data.SlipReasonRepository
@@ -42,6 +44,11 @@ internal interface SlipModule {
     fun bindGetSlipCasesUseCase(
         impl: GetSlipCasesUseCaseImpl
     ): GetSlipCasesUseCase
+
+    @Binds
+    fun bindCreateSlipCaseUseCase(
+        impl: CreateSlipCaseUseCaseImpl
+    ): CreateSlipCaseUseCase
 
     companion object {
 

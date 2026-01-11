@@ -10,6 +10,8 @@ import javax.inject.Inject
 internal interface SlipCaseRepository {
 
     suspend fun getSlipCases(): List<SlipCase>
+
+    suspend fun insertSlipCase(slipCase: SlipCase)
 }
 
 internal class SlipCaseRepositoryImpl @Inject constructor(
@@ -23,9 +25,22 @@ internal class SlipCaseRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun insertSlipCase(slipCase: SlipCase) {
+        withContext(coroutineContexts.io) {
+            slipCaseDatabase.slipCaseDao().insert(slipCase.toEntity())
+        }
+    }
+
     private fun SlipCaseEntity.toDomain(): SlipCase {
         return SlipCase(
-            slipId = this.slipId,
+            reasonId = this.slipReasonId,
+            slipDateMillis = this.slipDateMillis,
+        )
+    }
+
+    private fun SlipCase.toEntity(): SlipCaseEntity {
+        return SlipCaseEntity(
+            slipReasonId = this.reasonId,
             slipDateMillis = this.slipDateMillis,
         )
     }
