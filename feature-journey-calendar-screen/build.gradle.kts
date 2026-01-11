@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":feature-slip"))
     implementation(project(":data-user"))
+    implementation(project(":feature-achievements"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
