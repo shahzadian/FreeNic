@@ -2,6 +2,8 @@ package com.shahzadian.journeycalendarscreen.di
 
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.JourneyCalendarHelper
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.JourneyCalendarHelperImpl
+import com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder.JourneyCalendarEventsFinderFactory
+import com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder.JourneyCalendarEventsFinderFactoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,4 +17,9 @@ internal interface JourneyCalendarModule {
     fun bindCalendarHelper(
         impl: JourneyCalendarHelperImpl
     ): JourneyCalendarHelper
+
+    @Binds
+    fun bindCalendarEventsFinderFactory(
+        impl: JourneyCalendarEventsFinderFactoryImpl
+    ): JourneyCalendarEventsFinderFactory
 }

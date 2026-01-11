@@ -40,6 +40,7 @@ android {
 dependencies {
     implementation(project(":common"))
     implementation(project(":feature-slip"))
+    implementation(project(":data-user"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
