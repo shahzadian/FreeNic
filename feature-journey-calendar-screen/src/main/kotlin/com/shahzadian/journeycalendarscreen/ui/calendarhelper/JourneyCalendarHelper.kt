@@ -3,7 +3,7 @@ package com.shahzadian.journeycalendarscreen.ui.calendarhelper
 import com.freenic.ui.wrapper.TextWrapper
 import java.time.LocalDate
 import java.time.YearMonth
-import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
 import java.util.Locale
 import javax.inject.Inject
 
@@ -21,8 +21,12 @@ internal class JourneyCalendarHelperImpl @Inject constructor() : JourneyCalendar
     private var currentMonth: YearMonth = YearMonth.now()
 
     override suspend fun getMonth(): MonthDataUiModel {
-        val formatter = DateTimeFormatter.ofPattern("MMMM yyyy", Locale.ENGLISH)
-        val title = TextWrapper.FromString(currentMonth.atDay(1).format(formatter))
+        val title = TextWrapper.FromString(
+            currentMonth.month.getDisplayName(
+                TextStyle.FULL_STANDALONE,
+                Locale.getDefault()
+            ).plus(" ").plus(currentMonth.year)
+        )
 
         val firstOfMonth = currentMonth.atDay(1)
         val daysInMonth = currentMonth.lengthOfMonth()
