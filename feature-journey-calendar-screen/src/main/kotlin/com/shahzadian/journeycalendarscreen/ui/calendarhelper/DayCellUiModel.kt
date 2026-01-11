@@ -25,4 +25,11 @@ internal sealed interface DayEventUiModel {
             ImageWrapper.FromRes(R.drawable.ic_journey_calendar_event_slip)
         }
     }
+
+    data object QuitStart : DayEventUiModel {
+
+        override val icon: ImageWrapper by lazyUnsafe {
+            ImageWrapper.FromRes(R.drawable.ic_journey_calendar_event_quit_start)
+        }
+    }
 }

@@ -33,19 +33,11 @@ fun JourneyCalendarScreen(
 ) {
     val viewModel: JourneyCalendarViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()
-    when (state) {
-        is JourneyCalendarViewState.Loading -> {
-            AppLoaderView(
-                modifier = modifier.fillMaxSize()
-            )
-        }
-
-        is JourneyCalendarViewState.Data -> ContentView(
-            data = state as JourneyCalendarViewState.Data,
-            onEvent = viewModel::onViewEvent,
-            modifier = modifier.fillMaxSize(),
-        )
-    }
+    ContentView(
+        state = state,
+        onEvent = viewModel::onViewEvent,
+        modifier = modifier.fillMaxSize(),
+    )
     LaunchedEffect(viewModel) {
         viewModel
             .viewCommandFlow
@@ -61,19 +53,16 @@ fun JourneyCalendarScreen(
 
 @Composable
 private fun ContentView(
-    data: JourneyCalendarViewState.Data,
+    state: JourneyCalendarViewState,
     onEvent: (JourneyCalendarViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val month = data.monthDataUiModel
-    val onBackIconClickEvent = remember { { onEvent(JourneyCalendarViewEvent.OnBackIconClicked) } }
-    val onPrevMonthEvent = remember { { onEvent(JourneyCalendarViewEvent.OnPreviousMonthClicked) } }
-    val onNextMonthEvent = remember { { onEvent(JourneyCalendarViewEvent.OnNextMonthClicked) } }
-
     Column(
         modifier = modifier
             .padding(16.dp),
     ) {
+        val onBackIconClickEvent =
+            remember { { onEvent(JourneyCalendarViewEvent.OnBackIconClicked) } }
         MainToolbarView(
             title = TextWrapper.FromRes(R.string.journey_calendar_header),
             hasBackIcon = true,
@@ -82,6 +71,18 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
+        if (state is JourneyCalendarViewState.Loading) {
+            AppLoaderView(
+                modifier = Modifier.fillMaxSize()
+            )
+            return
+        }
+        val data = state as JourneyCalendarViewState.Data
+        val month = data.monthDataUiModel
+        val onPrevMonthEvent =
+            remember { { onEvent(JourneyCalendarViewEvent.OnPreviousMonthClicked) } }
+        val onNextMonthEvent = remember { { onEvent(JourneyCalendarViewEvent.OnNextMonthClicked) } }
+
         CalendarHeaderView(
             title = month.monthTitle,
             onPrevClicked = onPrevMonthEvent,
