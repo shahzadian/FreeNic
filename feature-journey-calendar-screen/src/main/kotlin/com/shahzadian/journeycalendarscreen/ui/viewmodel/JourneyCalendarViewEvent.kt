@@ -5,4 +5,10 @@ import com.freenic.ui.vm.ViewEvent
 
 @Immutable
 internal sealed interface JourneyCalendarViewEvent : ViewEvent {
+
+    @Immutable
+    data object OnPreviousMonthClicked : JourneyCalendarViewEvent
+
+    @Immutable
+    data object OnNextMonthClicked : JourneyCalendarViewEvent
 }

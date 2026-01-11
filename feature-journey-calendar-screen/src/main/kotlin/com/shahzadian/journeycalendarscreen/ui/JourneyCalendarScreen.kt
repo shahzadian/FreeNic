@@ -10,9 +10,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewEvent
 import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewModel
 import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewState
 
@@ -26,6 +28,7 @@ fun JourneyCalendarScreen(
         is JourneyCalendarViewState.Loading -> {}
         is JourneyCalendarViewState.Data -> ContentView(
             data = state as JourneyCalendarViewState.Data,
+            onEvent = viewModel::onViewEvent,
             modifier = modifier,
         )
     }
@@ -34,17 +37,21 @@ fun JourneyCalendarScreen(
 @Composable
 private fun ContentView(
     data: JourneyCalendarViewState.Data,
+    onEvent: (JourneyCalendarViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val month = data.monthDataUiModel
+    val onPrevMonthEvent = remember { { onEvent(JourneyCalendarViewEvent.OnPreviousMonthClicked) } }
+    val onNextMonthEvent = remember { { onEvent(JourneyCalendarViewEvent.OnNextMonthClicked) } }
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         CalendarHeaderView(
-            title = data.monthTitle,
-            onPrev = data.onPrevMonth,
-            onNext = data.onNextMonth,
+            title = month.monthTitle,
+            onPrevClicked = onPrevMonthEvent,
+            onNextClicked = onNextMonthEvent,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
@@ -64,9 +71,12 @@ private fun ContentView(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            val flat = data.weeks.flatten()
+            val flat = month.weeks.flatten()
             items(items = flat) { cell ->
-                DayCellView(cell)
+                DayCellView(
+                    onDayClicked = {},
+                    cell = cell,
+                )
             }
         }
     }
