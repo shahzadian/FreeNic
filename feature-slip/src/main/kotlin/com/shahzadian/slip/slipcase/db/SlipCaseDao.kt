@@ -1,4 +1,4 @@
-package com.shahzadian.slip.slipcase.data.db
+package com.shahzadian.slip.slipcase.db
 
 import androidx.room.Dao
 import androidx.room.Query
@@ -7,7 +7,7 @@ import androidx.room.Upsert
 @Dao
 internal interface SlipCaseDao {
 
-    @Query("SELECT * FROM slip_entity")
+    @Query("SELECT * FROM slipcaseentity")
     fun getAll(): List<SlipCaseEntity>
 
     @Upsert

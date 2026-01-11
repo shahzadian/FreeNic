@@ -1,4 +1,4 @@
-package com.shahzadian.slip.slipcase.data.db
+package com.shahzadian.slip.slipcase.db
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
