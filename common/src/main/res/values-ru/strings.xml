@@ -409,5 +409,12 @@
     <string name="slip_result_read_motvation_note">Прочитать поддерживающую заметку</string>
     <string name="slip_result_back_to_dashboard">На главный экран</string>
     <string name="slip_result_hint">Ваш прогресс за всё время, улучшения в здоровье и сэкономленные деньги остаются без изменений.</string>
+    <string name="journey_calendar_weekday_monday">Пн</string>
+    <string name="journey_calendar_weekday_tuesday">Вт</string>
+    <string name="journey_calendar_weekday_wednesday">Ср</string>
+    <string name="journey_calendar_weekday_thursday">Чт</string>
+    <string name="journey_calendar_weekday_friday">Пт</string>
+    <string name="journey_calendar_weekday_saturday">Сб</string>
+    <string name="journey_calendar_weekday_sunday">Вс</string>
 
 </resources>

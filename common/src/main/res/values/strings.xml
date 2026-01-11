@@ -417,5 +417,12 @@
     <string name="slip_result_read_motvation_note">Read a supportive note</string>
     <string name="slip_result_back_to_dashboard">Back to dashboard</string>
     <string name="slip_result_hint">Your lifetime progress, health  improvements, and money saved  remain unchanged.</string>
+    <string name="journey_calendar_weekday_monday">Mon</string>
+    <string name="journey_calendar_weekday_tuesday">Tue</string>
+    <string name="journey_calendar_weekday_wednesday">Wed</string>
+    <string name="journey_calendar_weekday_thursday">Thu</string>
+    <string name="journey_calendar_weekday_friday">Fri</string>
+    <string name="journey_calendar_weekday_saturday">Sat</string>
+    <string name="journey_calendar_weekday_sunday">Sun</string>
 
 </resources>

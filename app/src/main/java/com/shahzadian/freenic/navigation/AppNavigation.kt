@@ -37,6 +37,7 @@ import com.shahzadian.goalsscreen.ui.GoalsScreen
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.AchievementShareScreen
 import com.shahzadian.goalsscreen.ui.achievementsscreen.AchievementsScreen
 import com.shahzadian.insightsscreen.ui.InsightsScreen
+import com.shahzadian.journeycalendarscreen.ui.JourneyCalendarScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.motivationalnotesscreen.ui.MotivationalNotesScreen
@@ -365,6 +366,16 @@ fun AppNavigation(
             ) {
                 SlipResultScreen(
                     navController = navController,
+                    modifier = BaseModifier,
+                )
+            }
+
+            composable(
+                route = AppScreen.JourneyCalendarScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                JourneyCalendarScreen(
                     modifier = BaseModifier,
                 )
             }
