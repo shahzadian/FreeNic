@@ -1,5 +1,6 @@
 package com.shahzadian.slipscreen.ui.slipresult
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,15 +8,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -32,6 +38,8 @@ import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.mainHintBackground
 import com.shahzadian.slipscreen.R
+import com.shahzadian.slipscreen.ui.slipresult.viewmodel.SlipResultViewCommand
+import com.shahzadian.slipscreen.ui.slipresult.viewmodel.SlipResultViewEvent
 import com.shahzadian.slipscreen.ui.slipresult.viewmodel.SlipResultViewModel
 import com.shahzadian.slipscreen.ui.slipresult.viewmodel.SlipResultViewState
 
@@ -52,25 +60,44 @@ fun SlipResultScreen(
         is SlipResultViewState.Data -> {
             ContentView(
                 data = (state as SlipResultViewState.Data),
+                onEvent = viewModel::onViewEvent,
                 modifier = modifier.fillMaxSize(),
             )
         }
+    }
+    LaunchedEffect(viewModel) {
+        viewModel
+            .viewCommandFlow
+            .collect { command ->
+                when (command) {
+                    is SlipResultViewCommand.NavigateTo -> {
+                        navController.navigate(command.screen.route)
+                    }
+                }
+            }
     }
 }
 
 @Composable
 private fun ContentView(
     data: SlipResultViewState.Data,
+    onEvent: (SlipResultViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val onReadNotesClick = remember {
+        { onEvent(SlipResultViewEvent.OnReadMotivationalNotesClicked) }
+    }
+    val onBackToDashboardClick = remember {
+        { onEvent(SlipResultViewEvent.OnBackToDashboardClicked) }
+    }
     Box(
-        modifier = modifier
-            .padding(16.dp),
+        modifier = modifier,
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -92,6 +119,19 @@ private fun ContentView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 32.dp)
+            )
+            ReadNotesButton(
+                onReadNotesClicked = onReadNotesClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
+                    .padding(bottom = 8.dp),
+            )
+            BackToDashboardButton(
+                onBackToDashboardClicked = onBackToDashboardClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp)
             )
         }
     }
@@ -216,5 +256,73 @@ private fun HintView(
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary,
         )
+    }
+}
+
+@Composable
+private fun ReadNotesButton(
+    onReadNotesClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val onReadNotesClick = remember(Unit) { { onReadNotesClicked() } }
+    Button(
+        onClick = onReadNotesClick,
+        modifier = modifier,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+        ),
+        shape = MaterialTheme.shapes.medium,
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                painter = painterResource(R.drawable.ic_slip_result_motivation_note),
+                contentDescription = "Motivation note",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text(
+                text = stringResource(com.shahzadian.baseui.R.string.slip_result_read_motvation_note),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onPrimary,
+            )
+        }
+    }
+}
+
+@Composable
+private fun BackToDashboardButton(
+    onBackToDashboardClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val backToDashboardClick = remember(Unit) { { onBackToDashboardClicked() } }
+    Button(
+        onClick = backToDashboardClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.background,
+        ),
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.outline,
+        ),
+        shape = MaterialTheme.shapes.medium,
+        modifier = modifier,
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Image(
+                painter = painterResource(R.drawable.ic_slip_result_back_to_dashboard),
+                contentDescription = "Back to dashboard",
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text(
+                text = stringResource(com.shahzadian.baseui.R.string.slip_result_back_to_dashboard),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onPrimary,
+            )
+        }
     }
 }

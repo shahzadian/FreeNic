@@ -1,6 +1,7 @@
 package com.shahzadian.slipscreen.ui.slipresult.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.user.domain.UserDataHelper
@@ -29,7 +30,15 @@ internal class SlipResultViewModel @Inject constructor(
     }
 
     override fun onViewEventHappened(event: SlipResultViewEvent) {
+        when (event) {
+            is SlipResultViewEvent.OnReadMotivationalNotesClicked -> {
+                onReadMotivationalNotesClicked()
+            }
 
+            is SlipResultViewEvent.OnBackToDashboardClicked -> {
+                onBackToDashboardClicked()
+            }
+        }
     }
 
     private fun setData() {
@@ -59,5 +68,23 @@ internal class SlipResultViewModel @Inject constructor(
             userDataHelper = data
             data
         }
+    }
+
+    private fun onReadMotivationalNotesClicked() {
+        viewModelScope
+            .launch {
+                sendViewCommand(
+                    SlipResultViewCommand.NavigateTo(AppScreen.MotivationalNotesScreen)
+                )
+            }
+    }
+
+    private fun onBackToDashboardClicked() {
+        viewModelScope
+            .launch {
+                sendViewCommand(
+                    SlipResultViewCommand.NavigateTo(AppScreen.DashboardScreen)
+                )
+            }
     }
 }
