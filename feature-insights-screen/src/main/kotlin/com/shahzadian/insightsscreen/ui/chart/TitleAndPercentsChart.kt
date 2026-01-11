@@ -3,7 +3,6 @@ package com.shahzadian.insightsscreen.ui.chart
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState
 
@@ -28,10 +28,7 @@ internal fun TitleAndPercentsChart(
 ) {
     Column(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = MaterialTheme.shapes.small
-            )
+            .mainCardBackground()
             .padding(16.dp),
     ) {
         HeaderView(
