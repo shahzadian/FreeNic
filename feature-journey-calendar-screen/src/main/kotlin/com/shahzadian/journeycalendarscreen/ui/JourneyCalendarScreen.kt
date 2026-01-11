@@ -68,8 +68,8 @@ private fun ContentView(
             columns = GridCells.Fixed(7),
             modifier = Modifier.fillMaxWidth(),
             userScrollEnabled = false,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             val flat = month.weeks.flatten()
             items(items = flat) { cell ->

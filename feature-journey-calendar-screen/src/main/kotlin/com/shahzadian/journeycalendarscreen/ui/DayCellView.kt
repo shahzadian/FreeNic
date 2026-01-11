@@ -23,12 +23,15 @@ internal fun DayCellView(
     val dayClick = remember { { onDayClicked() } }
     val background = when {
         cell.isToday -> MaterialTheme.colorScheme.tertiary.copy(alpha = 0.25f)
+        cell.inCurrentMonth -> MaterialTheme.colorScheme.surface
         else -> Color.Transparent
     }
     Box(
         modifier = Modifier
             .aspectRatio(1f)
-            .background(background, shape = MaterialTheme.shapes.small)
+            .background(
+                color = background, shape = MaterialTheme.shapes.small,
+            )
             .then(
                 if (cell.isEnabled) Modifier.clickable(onClick = dayClick) else Modifier
             ),
