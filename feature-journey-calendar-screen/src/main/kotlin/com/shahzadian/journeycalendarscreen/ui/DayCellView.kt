@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,6 +23,7 @@ import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 internal fun DayCellView(
     onDayClicked: () -> Unit,
     cell: DayCellUiModel,
+    modifier: Modifier = Modifier,
 ) {
     val dayClick = remember { { onDayClicked() } }
     val background = when {
@@ -32,16 +32,16 @@ internal fun DayCellView(
         else -> Color.Transparent
     }
     Column(
-        modifier = Modifier
-            .aspectRatio(1f)
+        modifier = modifier
             .background(
                 color = background, shape = MaterialTheme.shapes.small,
             )
             .then(
                 if (cell.isInCurrentMonth) Modifier.clickable(onClick = dayClick) else Modifier
-            ),
+            )
+            .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Top
     ) {
         Text(
             text = cell.dayText?.let { textFromWrapper(it) } ?: "",
