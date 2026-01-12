@@ -107,6 +107,11 @@ private fun ContentView(
         val rowHeights = remember { mutableStateMapOf<Int, Int>() } // px
         val density = LocalDensity.current
 
+        // Clear cached row heights when content changes to avoid using stale values
+        LaunchedEffect(data.changeId) {
+            rowHeights.clear()
+        }
+
         LazyVerticalGrid(
             columns = GridCells.Fixed(7),
             modifier = Modifier.fillMaxWidth(),
@@ -115,7 +120,10 @@ private fun ContentView(
             horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             val flat = month.weeks.flatten()
-            itemsIndexed(items = flat) { index, cell ->
+            itemsIndexed(
+                items = flat,
+                key = { index, _ -> "${data.changeId}-$index" }
+            ) { index, cell ->
                 val rowIndex = index / 7
                 val maxHeightPx = rowHeights[rowIndex]
                 val heightModifier = if (maxHeightPx != null) {

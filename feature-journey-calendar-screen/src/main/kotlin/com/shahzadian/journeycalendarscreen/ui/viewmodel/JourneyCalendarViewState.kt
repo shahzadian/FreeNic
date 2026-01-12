@@ -13,5 +13,8 @@ internal sealed interface JourneyCalendarViewState : ViewState {
     @Immutable
     data class Data(
         val monthDataUiModel: MonthDataUiModel,
+        // changeId гарантирует, что при каждом setData будет новый экземпляр состояния,
+        // даже если вложенные модели равны по equals -> заставляет Compose перерисовать контент
+        val changeId: Long = System.nanoTime(),
     ) : JourneyCalendarViewState
 }

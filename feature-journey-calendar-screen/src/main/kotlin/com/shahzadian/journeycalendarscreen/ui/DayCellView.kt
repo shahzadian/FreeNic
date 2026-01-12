@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,7 +24,6 @@ internal fun DayCellView(
     cell: DayCellUiModel,
     modifier: Modifier = Modifier,
 ) {
-    val dayClick = remember { { onDayClicked() } }
     val background = when {
         cell.isToday -> MaterialTheme.colorScheme.tertiary.copy(alpha = 0.25f)
         cell.isInCurrentMonth -> MaterialTheme.colorScheme.surface
@@ -37,7 +35,7 @@ internal fun DayCellView(
                 color = background, shape = MaterialTheme.shapes.small,
             )
             .then(
-                if (cell.isInCurrentMonth) Modifier.clickable(onClick = dayClick) else Modifier
+                if (cell.isInCurrentMonth) Modifier.clickable(onClick = onDayClicked) else Modifier
             )
             .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
