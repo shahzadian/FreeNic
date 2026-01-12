@@ -426,5 +426,9 @@
     <string name="journey_calendar_weekday_sunday">Sun</string>
     <string name="journey_calendar_header">Journey calendar</string>
     <string name="dashboard_journey_calendar">Journey calendar</string>
+    <string name="journey_calendar_legend_achievement">Achievement</string>
+    <string name="journey_calendar_legend_slip">Slip</string>
+    <string name="journey_calendar_legend_smoke_free">Smoke-free</string>
+    <string name="journey_calendar_legend_savings">Savings</string>
 
 </resources>

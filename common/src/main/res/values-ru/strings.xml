@@ -418,5 +418,9 @@
     <string name="journey_calendar_weekday_sunday">Вс</string>
     <string name="journey_calendar_header">Календарь пути</string>
     <string name="dashboard_journey_calendar">Календарь пути</string>
+    <string name="journey_calendar_legend_achievement">Достижение</string>
+    <string name="journey_calendar_legend_slip">Срыв</string>
+    <string name="journey_calendar_legend_smoke_free">Без сигарет</string>
+    <string name="journey_calendar_legend_savings">Копилка</string>
 
 </resources>
