@@ -3,7 +3,6 @@ package com.shahzadian.journeycalendarscreen.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,11 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -103,15 +99,6 @@ private fun ContentView(
                 .padding(top = 8.dp, bottom = 4.dp)
         )
 
-        // Track max height per grid row (7 columns => index/7)
-        val rowHeights = remember { mutableStateMapOf<Int, Int>() } // px
-        val density = LocalDensity.current
-
-        // Clear cached row heights when content changes to avoid using stale values
-        LaunchedEffect(data.changeId) {
-            rowHeights.clear()
-        }
-
         LazyVerticalGrid(
             columns = GridCells.Fixed(7),
             modifier = Modifier.fillMaxWidth(),
@@ -123,38 +110,18 @@ private fun ContentView(
             itemsIndexed(
                 items = flat,
                 key = { index, _ -> "${data.changeId}-$index" }
-            ) { index, cell ->
-                val rowIndex = index / 7
-                val maxHeightPx = rowHeights[rowIndex]
-                val heightModifier = if (maxHeightPx != null) {
-                    with(density) { Modifier.height(maxHeightPx.toDp()) }
-                } else Modifier
-
-                Box(
-                    modifier = heightModifier
-                        .then(
-                            if (maxHeightPx == null) {
-                                Modifier.onGloballyPositioned { coords ->
-                                    val h = coords.size.height
-                                    val current = rowHeights[rowIndex] ?: 0
-                                    if (h > current) {
-                                        rowHeights[rowIndex] = h
-                                    }
-                                }
-                            } else Modifier
-                        )
-                ) {
+            ) { _, cell ->
+                Box {
                     DayCellView(
                         onDayClicked = {},
                         cell = cell,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .fillMaxHeight(),
+                            .height(80.dp),
                     )
                 }
             }
         }
     }
-
 }
 
