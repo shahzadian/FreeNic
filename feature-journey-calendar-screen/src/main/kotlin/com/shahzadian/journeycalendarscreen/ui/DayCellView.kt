@@ -2,6 +2,7 @@ package com.shahzadian.journeycalendarscreen.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,7 +26,7 @@ internal fun DayCellView(
     modifier: Modifier = Modifier,
 ) {
     val background = when {
-        cell.isToday -> MaterialTheme.colorScheme.tertiary.copy(alpha = 0.25f)
+        cell.isToday -> MaterialTheme.colorScheme.primary.copy(alpha = 0.25f)
         cell.isInCurrentMonth -> MaterialTheme.colorScheme.surface
         else -> Color.Transparent
     }
@@ -36,6 +37,16 @@ internal fun DayCellView(
             )
             .then(
                 if (cell.isInCurrentMonth) Modifier.clickable(onClick = onDayClicked) else Modifier
+            )
+            .then(
+                if (cell.isInSmokeQuitPeriod) {
+                    Modifier
+                        .border(
+                            width = 1.dp,
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = MaterialTheme.shapes.small,
+                        )
+                } else Modifier
             )
             .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

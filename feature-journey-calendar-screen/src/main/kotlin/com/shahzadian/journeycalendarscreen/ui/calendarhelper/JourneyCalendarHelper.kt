@@ -3,8 +3,12 @@ package com.shahzadian.journeycalendarscreen.ui.calendarhelper
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder.JourneyCalendarEventsFinderFactory
+import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
+import com.shahzadian.user.model.UserData
+import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
+import java.time.ZoneId
 import java.time.format.TextStyle
 import java.util.Locale
 import javax.inject.Inject
@@ -20,6 +24,7 @@ internal interface JourneyCalendarHelper {
 
 internal class JourneyCalendarHelperImpl @Inject constructor(
     private val eventsFinderFactory: JourneyCalendarEventsFinderFactory,
+    private val getUserDataUseCase: GetUserDataUseCase,
 ) : JourneyCalendarHelper {
 
     private var currentMonth: YearMonth = YearMonth.now()
@@ -27,6 +32,8 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     private val eventsFinders by lazyUnsafe {
         eventsFinderFactory.getAll()
     }
+
+    private var _userData: UserData? = null
 
     override suspend fun getMonth(): MonthDataUiModel {
         val title = TextWrapper.FromString(
@@ -66,6 +73,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
                 },
                 isInCurrentMonth = inCurrentMonth,
                 isToday = date == today,
+                isInSmokeQuitPeriod = date?.isInSmokeQuitPeriod() ?: false,
                 events = date?.let { localDate ->
                     eventsFinders
                         .map { it.findEventsForDate(localDate) }.flatten()
@@ -86,5 +94,20 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
 
     override suspend fun incrementMonth() {
         currentMonth = currentMonth.plusMonths(1)
+    }
+
+    private suspend fun LocalDate.isInSmokeQuitPeriod(): Boolean {
+        val userData = getUserData() ?: return false
+        val instant = Instant.ofEpochMilli(userData.quitData.quitDateMillis)
+        val zone = ZoneId.systemDefault()
+        val quitDate = instant.atZone(zone).toLocalDate()
+        return this >= quitDate
+    }
+
+    private suspend fun getUserData(): UserData? {
+        return _userData ?: run {
+            _userData = getUserDataUseCase.invoke()
+            _userData
+        }
     }
 }
