@@ -6,9 +6,13 @@ import java.time.ZoneId
 
 internal abstract class JourneyCalendarEventsFinder {
 
-    protected val zone = ZoneId.systemDefault()
+    protected val zone: ZoneId = ZoneId.systemDefault()
 
-    abstract suspend fun findEventsForDate(date: LocalDate): List<DayEventUiModel>
+    suspend fun findEventsForDate(date: LocalDate): List<DayEventUiModel> {
+        return getEventsForDate(date)
+    }
+
+    protected abstract suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel>
 
     protected fun LocalDate.startOfDayMillis(): Long {
         return this

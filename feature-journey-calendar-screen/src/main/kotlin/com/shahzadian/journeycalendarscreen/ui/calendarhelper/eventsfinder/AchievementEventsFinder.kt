@@ -17,7 +17,7 @@ internal class AchievementEventsFinder(
     private var _achievements: List<Achievement>? = null
     private var _userData: UserData? = null
 
-    override suspend fun findEventsForDate(date: LocalDate): List<DayEventUiModel> {
+    override suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel> {
         val userData = getUserData() ?: return emptyList()
         val achievements = getAchievements()
         val quitDate = userData.getQuitDate()

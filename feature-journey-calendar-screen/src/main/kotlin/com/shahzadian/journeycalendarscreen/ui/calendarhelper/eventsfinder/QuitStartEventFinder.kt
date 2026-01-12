@@ -11,7 +11,7 @@ internal class QuitStartEventFinder(
 
     private var _userData: UserData? = null
 
-    override suspend fun findEventsForDate(date: LocalDate): List<DayEventUiModel> {
+    override suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel> {
         val userData = getUserData() ?: return emptyList()
         return if (userData.quitData.quitDateMillis in date.startOfDayMillis()..date.endOfDayMillis()) {
             listOf(

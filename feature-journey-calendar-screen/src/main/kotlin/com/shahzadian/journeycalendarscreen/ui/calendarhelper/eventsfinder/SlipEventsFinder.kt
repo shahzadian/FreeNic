@@ -11,7 +11,7 @@ internal class SlipEventsFinder(
 
     private var _slipCases: List<SlipCase>? = null
 
-    override suspend fun findEventsForDate(date: LocalDate): List<DayEventUiModel> {
+    override suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel> {
         val startOfDay = date.startOfDayMillis()
         val slipCases = getSlipCases()
         val endOfDay = date.endOfDayMillis()
