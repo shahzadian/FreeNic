@@ -1,7 +1,10 @@
 package com.shahzadian.datafill.ui.pages
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,21 +28,28 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.AppDatePickerDialog
+import com.freenic.ui.DatePickerResult
 import com.freenic.ui.extensions.noIndicationClick
+import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.datafill.R
 import com.shahzadian.datafill.ui.DataFillViewState
 
 @Composable
 internal fun DataFillPackPricePage(
     data: DataFillViewState.PackPrice,
     onPriceChanged: (price: String, currency: String) -> Unit,
+    onQuitDateChanged: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+    val quitDateChanged = remember { { millis: Long -> onQuitDateChanged(millis) } }
     Column(
         modifier = modifier
             .noIndicationClick {
@@ -62,7 +72,18 @@ internal fun DataFillPackPricePage(
                     onPriceChanged = onPriceChanged,
                     modifier = it,
                 )
-            }
+            },
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        DataFillFieldBlock(
+            label = TextWrapper.FromRes(com.shahzadian.baseui.R.string.fillable_info_pack_price_quit_date),
+            inputField = {
+                QuitDateView(
+                    data = data.quitData,
+                    onDateConfirmed = quitDateChanged,
+                    modifier = it.fillMaxWidth(),
+                )
+            },
         )
     }
 }
@@ -151,6 +172,69 @@ private fun RowCurrencyPicker(
             imageVector = Icons.Filled.ArrowDropDown,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
+        )
+    }
+}
+
+
+@Composable
+private fun QuitDateView(
+    data: DataFillViewState.PackPrice.QuitData,
+    onDateConfirmed: (Long) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var isPickerShown by remember { mutableStateOf(false) }
+    val onDismiss = remember { { isPickerShown = false } }
+    val onConfirmed: (DatePickerResult) -> Unit =
+        remember {
+            { result ->
+                isPickerShown = false
+                onDateConfirmed(result.millis)
+            }
+        }
+    Row(
+        modifier = modifier
+            .background(
+                color = MaterialTheme.colorScheme.surface,
+                shape = MaterialTheme.shapes.large,
+            )
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = MaterialTheme.shapes.large,
+            )
+            .clickable {
+                isPickerShown = true
+            }
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_data_fill_calendar),
+            contentDescription = "Calendar",
+            modifier = Modifier.padding(end = 8.dp)
+        )
+        Text(
+            text = textFromWrapper(data.displayableQuitDate),
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier
+                .weight(1f)
+                .padding(end = 8.dp)
+        )
+        Image(
+            painter = painterResource(R.drawable.ic_data_fill_calendar_arrow),
+            contentDescription = "Calendar arrow",
+        )
+    }
+
+    if (isPickerShown) {
+        AppDatePickerDialog(
+            initialDateMillis = data.quitDateMillis,
+            maxDateMillis = System.currentTimeMillis(),
+            onDismissRequest = onDismiss,
+            onDateConfirmed = onConfirmed,
         )
     }
 }

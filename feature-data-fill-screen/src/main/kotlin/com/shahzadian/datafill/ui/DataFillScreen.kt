@@ -133,6 +133,13 @@ private fun ScreenByState(
                         )
                     )
                 },
+                onQuitDateChanged = {
+                    onViewEvent(
+                        DataFillViewEvent.OnQuitDateChanged(
+                            quitDateMillis = it,
+                        )
+                    )
+                },
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(24.dp)

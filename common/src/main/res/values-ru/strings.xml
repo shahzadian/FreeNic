@@ -41,7 +41,7 @@
     <string name="data_fill_cigarettes_per_day_desc">В среднем за последние недели</string>
     <string name="data_fill_cigarettes_per_day_packs_per_day_suffix">Пачек в день</string>
     <string name="data_fill_price_label">Сколько стоит твоя пачка сигарет?</string>
-    <string name="data_fill_price_title">Сколько стоит твоя пачка сигарет?</string>
+    <string name="data_fill_price_title">Побольше информации</string>
     <string name="data_fill_price_subtitle">Это поможет рассчитать, сколько ты экономишь</string>
     <string name="data_fill_smoking_habits_title">Твои привычки курения</string>
     <string name="data_fill_price_input_hint">Введите цену</string>
@@ -434,5 +434,7 @@
     <string name="journey_calendar_event_slip_subtitle">В этот день вы покурили</string>
     <string name="journey_calendar_event_savings_goal_title">Цель накоплений достигнута</string>
     <string name="journey_calendar_event_savings_goal_subtitle">Вы накопили %1$s на цель %2$s</string>
+    <string name="fillable_info_pack_price_quit_date">Дата отказа от сигарет</string>
+    <string name="data_fill_quit_date_today">Сегодня</string>
 
 </resources>

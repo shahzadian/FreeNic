@@ -72,6 +72,14 @@ internal class DataFillViewModel @Inject constructor(
                 )
             }
 
+            is DataFillViewEvent.OnQuitDateChanged -> {
+                fillableInfoHelper.sendEvent(
+                    PackPriceFillableInfoEvent.OnQuitDateChanged(
+                        quitDateMillis = event.quitDateMillis,
+                    )
+                )
+            }
+
             is DataFillViewEvent.OnBack -> {
                 viewModelScope.launch {
                     fillableInfoHelper.getPreviousData()
@@ -98,8 +106,8 @@ internal class DataFillViewModel @Inject constructor(
     private fun onAllDataFilled() {
         viewModelScope.launch {
             fillableInfoHelper.sharedState.toSaveableUserData()?.let {
-                updateUserDataUseCase(it)
-                updateUserDataUseCase.setUserRegistered(true)
+                  updateUserDataUseCase(it)
+                  updateUserDataUseCase.setUserRegistered(true)
             }
                sendViewCommand(DataFillCommand.NavigateTo(AppScreen.MainScreen))
         }
@@ -141,6 +149,11 @@ internal class DataFillViewModel @Inject constructor(
                     currentPageIndex = fillableInfoHelper.currentPageIndex,
                 ),
                 submitButtonEnabled = info.isValid(),
+                quitData = DataFillViewState.PackPrice.QuitData(
+                    quitDateMillis = info.quitDateMillis,
+                    displayableQuitDate = info.displayableQuitDate,
+
+                    ),
                 price = DataFillViewState.PackPrice.PriceData(
                     price = info.price?.toString() ?: "",
                     currency = info.currency,

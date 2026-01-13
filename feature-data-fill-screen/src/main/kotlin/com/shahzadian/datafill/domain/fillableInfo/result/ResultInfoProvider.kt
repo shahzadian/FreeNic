@@ -38,12 +38,13 @@ internal class ResultInfoProvider(
         val name = requireNotNull(sharedStateHolder.sharedState.name)
         val age = requireNotNull(sharedStateHolder.sharedState.age)
         val cigarettesPerDay = requireNotNull(sharedStateHolder.sharedState.cigarettesPerDay)
+        val quitDateMillis = requireNotNull(sharedStateHolder.sharedState.quitDate)
         return ResultFillableInfo(
             userInfo = ResultFillableInfo.UserInfo(
                 name = name,
                 age = age,
                 cigarettesPerDay = cigarettesPerDay,
-                quitDateMillis = System.currentTimeMillis(),
+                quitDateMillis = quitDateMillis,
             )
         )
     }
