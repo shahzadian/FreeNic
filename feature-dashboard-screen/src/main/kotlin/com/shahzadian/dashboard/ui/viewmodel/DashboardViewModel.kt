@@ -24,6 +24,7 @@ internal class DashboardViewModel @Inject constructor(
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
     private var latestCravingToolId: String? = null
+    private var _hasPaidSubscription: Boolean? = null
 
     init {
         setData()
@@ -110,8 +111,7 @@ internal class DashboardViewModel @Inject constructor(
 
     private fun onDetailedInsightsClicked() {
         viewModelScope.launch {
-            val subscription = getUserCurrentSubscriptionUseCase()
-            val screen = if (subscription != null) {
+            val screen = if (hasUserPaidSubscription()) {
                 AppScreen.InsightsScreen
             } else {
                 AppScreen.PaywallScreen
@@ -126,9 +126,14 @@ internal class DashboardViewModel @Inject constructor(
 
     private fun onJourneyCalendarClicked() {
         viewModelScope.launch {
+            val screen = if (hasUserPaidSubscription()) {
+                AppScreen.JourneyCalendarScreen
+            } else {
+                AppScreen.PaywallScreen
+            }
             sendViewCommand(
                 DashboardViewCommand.NavigateTo(
-                    screen = AppScreen.JourneyCalendarScreen,
+                    screen = screen,
                 )
             )
         }
@@ -148,5 +153,13 @@ internal class DashboardViewModel @Inject constructor(
         return DashboardViewState.MotivationalNoteUiModel(
             text = this.text,
         )
+    }
+
+    private suspend fun hasUserPaidSubscription(): Boolean {
+        return _hasPaidSubscription ?: let {
+            val subscription = getUserCurrentSubscriptionUseCase()
+            _hasPaidSubscription = subscription != null
+            subscription != null
+        }
     }
 }

@@ -54,7 +54,12 @@ internal fun DashboardJourneyCalendarView(
             text = stringResource(R.string.dashboard_journey_calendar),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(start = 4.dp)
+            modifier = Modifier
+                .padding(start = 4.dp, end = 8.dp)
+        )
+        Image(
+            painter = painterResource(R.drawable.ic_premium),
+            contentDescription = "premium",
         )
     }
 }

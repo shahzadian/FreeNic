@@ -170,17 +170,18 @@ private fun DetailsView(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Image(
-            painter = painterResource(com.shahzadian.dashboard.R.drawable.ic_dashboard_analytics_premium),
-            contentDescription = "premium",
-            modifier = Modifier
-                .padding(end = 4.dp),
-        )
         Text(
             text = stringResource(R.string.dashboard_analytics_view_more),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.padding(start = 4.dp)
+            modifier = Modifier
+                .padding(end = 4.dp),
+        )
+        Image(
+            painter = painterResource(R.drawable.ic_premium),
+            contentDescription = "premium",
+            modifier = Modifier
+                .padding(start = 4.dp),
         )
     }
 }
