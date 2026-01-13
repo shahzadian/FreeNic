@@ -3,7 +3,6 @@ package com.shahzadian.welcomescreen.ui.welcomescreen
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,7 +31,6 @@ import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.mainGradientBackground
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.welcomescreen.ui.UiUtils.DELAY_ANIMATION_VISIBILITY_TITLE
 import com.shahzadian.welcomescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 @Composable
@@ -55,11 +53,10 @@ fun WelcomeScreen(
         }
 
         is WelcomeViewState.GetStarted -> {
-            GetStartedContent(
+            Content(
                 onEvent = onEvent,
                 modifier = modifier
-                    .fillMaxSize()
-                    .background(mainGradientBackground()),
+                    .fillMaxSize(),
             )
         }
     }
@@ -84,38 +81,13 @@ fun WelcomeScreen(
 }
 
 @Composable
-private fun GetStartedContent(
+private fun Content(
     onEvent: (WelcomeViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val onClick: (WelcomeViewEvent) -> Unit = remember {
-        { event -> onEvent(event) }
+    val submitClick: () -> Unit = remember {
+        { onEvent(WelcomeViewEvent.OnGetStartedClicked) }
     }
-    var contentVisible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) { contentVisible = true }
-
-    AnimatedVisibility(
-        visible = contentVisible,
-        enter = fadeIn(
-            animationSpec = tween(
-                durationMillis = DURATION_ANIMATION_VISIBILITY
-            )
-        ),
-        modifier = modifier
-    ) {
-        Content(
-            onClick = {
-                onClick(WelcomeViewEvent.OnGetStartedClicked)
-            }
-        )
-    }
-}
-
-@Composable
-private fun Content(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -127,12 +99,7 @@ private fun Content(
         AnimatedVisibility(
             modifier = modifier.weight(1f),
             visible = contentVisible,
-            enter = slideInVertically(
-                initialOffsetY = { it },
-                animationSpec = tween(
-                    durationMillis = DURATION_ANIMATION_VISIBILITY * 2,
-                )
-            ) + fadeIn(
+            enter = fadeIn(
                 animationSpec = tween(
                     durationMillis = DURATION_ANIMATION_VISIBILITY,
                 )
@@ -146,13 +113,12 @@ private fun Content(
                     modifier = Modifier
                         .padding(bottom = 12.dp),
                 )
-                Description(
-                )
+                Description()
             }
         }
 
         StartButton(
-            onClick = onClick,
+            onClick = submitClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 48.dp)
@@ -191,7 +157,7 @@ private fun StartButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val animationDelay = DELAY_ANIMATION_VISIBILITY_TITLE * 2
+    val animationDelay = DURATION_ANIMATION_VISIBILITY
     var buttonVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { buttonVisible = true }
 

@@ -164,7 +164,7 @@ private fun Footer(
         modifier = modifier
             .fillMaxWidth()
             .background(Smoke.copy(alpha = 0.3f))
-            .padding(24.dp)
+            .padding(start = 24.dp, end = 24.dp, top = 24.dp, bottom = 48.dp),
     ) {
         PagesIndicators(
             pagesCount = pagesCount,

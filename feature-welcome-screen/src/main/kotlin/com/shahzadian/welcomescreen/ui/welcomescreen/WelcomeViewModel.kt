@@ -74,7 +74,7 @@ internal class WelcomeViewModel @Inject constructor(
                 viewModelScope.launch {
                     sendViewCommand(
                         WelcomeViewCommand.Navigate(
-                            screen = AppScreen.OnboardingScreen
+                            screen = AppScreen.DataFillScreen
                         )
                     )
                 }
