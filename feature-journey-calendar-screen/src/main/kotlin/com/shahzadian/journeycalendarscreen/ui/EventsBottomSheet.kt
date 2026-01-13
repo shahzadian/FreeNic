@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.mainCardBackground
+import com.freenic.ui.extensions.mainHintBackground
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
@@ -141,7 +142,9 @@ private fun NoCigDaysEventView(
                 R.drawable.ic_journey_calendar_event_no_cig_days
             )
         ),
-        modifier = modifier,
+        modifier = modifier
+            .mainHintBackground(),
+        hasDefaultBackground = false,
     )
 }
 
@@ -149,10 +152,17 @@ private fun NoCigDaysEventView(
 private fun EventView(
     model: DayEventUiModel,
     modifier: Modifier = Modifier,
+    hasDefaultBackground: Boolean = true,
 ) {
     Row(
         modifier = modifier
-            .mainCardBackground()
+            .then(
+                if (hasDefaultBackground) {
+                    Modifier.mainCardBackground()
+                } else {
+                    Modifier
+                }
+            )
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -193,12 +203,14 @@ private fun EventIconView(
                 shape = CircleShape,
             )
             .size(48.dp)
-            .padding(16.dp)
+            .padding(4.dp)
     ) {
         Image(
             painter = imageFromWrapper(icon),
             contentDescription = null,
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier
+                .size(24.dp)
+                .align(Alignment.Center),
         )
     }
 }
