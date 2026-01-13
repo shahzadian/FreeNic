@@ -449,9 +449,13 @@
     <string name="journey_calendar_legend_smoke_free">Smoke-free</string>
     <string name="journey_calendar_legend_savings">Savings</string>
     <string name="journey_calendar_event_achievement_title">Milestone reached</string>
-    <plurals name="journey_calendar_event_achievement_subtitle">
+    <plurals name="journey_calendar_event_day_based_achievement_subtitle">
         <item quantity="one">You stayed smoke-free for %d day</item>
         <item quantity="other">You stayed smoke-free for %d days</item>
+    </plurals>
+    <plurals name="journey_calendar_event_no_cigs_based_achievement_subtitle">
+        <item quantity="one">You skipped %d cigarette</item>
+        <item quantity="other">You skipped %d cigarettes</item>
     </plurals>
     <string name="journey_calendar_event_quit_start_title">Journey started</string>
     <string name="journey_calendar_event_quit_start_subtitle">You decided to quit smoking</string>

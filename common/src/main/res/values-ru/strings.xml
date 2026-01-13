@@ -426,10 +426,15 @@
     <string name="journey_calendar_legend_smoke_free">Без сигарет</string>
     <string name="journey_calendar_legend_savings">Копилка</string>
     <string name="journey_calendar_event_achievement_title">Важный рубеж</string>
-    <plurals name="journey_calendar_event_achievement_subtitle">
+    <plurals name="journey_calendar_event_day_based_achievement_subtitle">
         <item quantity="one">Вы не курили %d день</item>
         <item quantity="few">Вы не курили %d дня</item>
         <item quantity="other">Вы не курили %d дней</item>
+    </plurals>
+    <plurals name="journey_calendar_event_no_cigs_based_achievement_subtitle">
+        <item quantity="one">Вы не выкурили %d сигарету</item>
+        <item quantity="few">Вы не выкурили %d сигареты</item>
+        <item quantity="other">Вы не выкурили %d сигарет</item>
     </plurals>
     <string name="journey_calendar_event_quit_start_title">Начало пути</string>
     <string name="journey_calendar_event_quit_start_subtitle">Вы решили отказаться от сигарет</string>
