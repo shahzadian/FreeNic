@@ -162,6 +162,8 @@
     <string name="paywall_feature_analytics_subtitle">Unlock detailed charts, progress trends, and behavioral insights</string>
     <string name="paywall_feature_no_ads_title">No ads</string>
     <string name="paywall_feature_no_ads_subtitle">Remove all ads for a cleaner and more focused experience</string>
+    <string name="paywall_feature_journey_calendar_title">Journey calendar</string>
+    <string name="paywall_feature_journey_calendar_subtitle">Your entire quit-smoking journey, day by day</string>
 
     <string name="subscription_plan_title">Choose your plan</string>
     <string name="subscription_plan_name_monthly">Monthly</string>

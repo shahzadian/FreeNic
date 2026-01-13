@@ -165,6 +165,7 @@
     <string name="paywall_feature_analytics_subtitle">Получите доступ к детальным графикам, динамике прогресса и анализу поведения</string>
     <string name="paywall_feature_no_ads_title">Без рекламы</string>
     <string name="paywall_feature_no_ads_subtitle">Уберите всю рекламу для более комфортного использования</string>
+    <string name="paywall_feature_journey_calendar_subtitle">Вся ваша история отказа от курения по дням</string>
     <string name="subscription_plan_title">Выберите план</string>
     <string name="subscription_plan_name_monthly">Месяц</string>
     <string name="subscription_plan_name_yearly">Год</string>
@@ -442,5 +443,6 @@
         <item quantity="few">%d дня без сигарет. %s сэкономлено</item>
         <item quantity="other">%d дней без сигарет. %s сэкономлено</item>
     </plurals>
+    <string name="paywall_feature_journey_calendar_title">Календарь пути</string>
 
 </resources>
