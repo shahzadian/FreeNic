@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.extensions.MainSubmitButton
-import com.freenic.ui.extensions.mainGradientBackground
 import com.freenic.ui.theme.Smoke
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
@@ -44,7 +43,6 @@ fun DataFillScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(mainGradientBackground())
     ) {
         ScreenByState(
             state = state,
