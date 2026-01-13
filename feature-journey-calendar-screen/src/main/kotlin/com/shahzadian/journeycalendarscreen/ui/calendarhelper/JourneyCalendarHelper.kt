@@ -94,6 +94,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
                 events = date?.let { localDate ->
                     eventsFinders.map { it.findEventsForDate(localDate) }.flatten()
                 } ?: emptyList(),
+                maxDisplayableEvents = MAX_DISPLAYABLE_EVENTS,
             )
         }
 
@@ -170,5 +171,9 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
             _userDataHelper = helper
             helper
         }
+    }
+
+    private companion object {
+        const val MAX_DISPLAYABLE_EVENTS: Int = 3
     }
 }

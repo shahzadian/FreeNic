@@ -69,13 +69,17 @@ internal fun DayCellView(
             modifier = Modifier.padding(bottom = if (cell.events.isNotEmpty()) 4.dp else 0.dp)
         )
         if (cell.isInCurrentMonth) {
-            cell.events.forEachIndexed { index, model ->
-                Image(
-                    painter = imageFromWrapper(model.icon),
-                    contentDescription = "Event ${index + 1}",
-                    modifier = Modifier.padding(bottom = if (index < cell.events.lastIndex) 2.dp else 0.dp)
-                )
-            }
+            cell
+                .events
+                .distinctBy { it.icon }
+                .take(cell.maxDisplayableEvents)
+                .forEachIndexed { index, model ->
+                    Image(
+                        painter = imageFromWrapper(model.icon),
+                        contentDescription = "Event ${index + 1}",
+                        modifier = Modifier.padding(bottom = if (index < cell.events.lastIndex) 2.dp else 0.dp)
+                    )
+                }
         }
     }
 }

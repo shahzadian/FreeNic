@@ -13,6 +13,7 @@ internal data class DayCellUiModel(
     val isInFuture: Boolean,
     val noCigData: NoCigData?,
     val events: List<DayEventUiModel>,
+    val maxDisplayableEvents: Int,
 ) {
 
     data class NoCigData(
