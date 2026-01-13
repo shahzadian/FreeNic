@@ -422,5 +422,17 @@
     <string name="journey_calendar_legend_slip">Срыв</string>
     <string name="journey_calendar_legend_smoke_free">Без сигарет</string>
     <string name="journey_calendar_legend_savings">Копилка</string>
+    <string name="journey_calendar_event_achievement_title">Важный рубеж</string>
+    <plurals name="journey_calendar_event_achievement_subtitle">
+        <item quantity="one">Вы не курили %d день</item>
+        <item quantity="few">Вы не курили %d дня</item>
+        <item quantity="other">Вы не курили %d дней</item>
+    </plurals>
+    <string name="journey_calendar_event_quit_start_title">Начало пути</string>
+    <string name="journey_calendar_event_quit_start_subtitle">Вы решили отказаться от сигарет</string>
+    <string name="journey_calendar_event_slip_title">Случился срыв</string>
+    <string name="journey_calendar_event_slip_subtitle">В этот день вы покурили</string>
+    <string name="journey_calendar_event_savings_goal_title">Цель накоплений достигнута</string>
+    <string name="journey_calendar_event_savings_goal_subtitle">Вы накопили %1$s на цель %1$s</string>
 
 </resources>

@@ -1,9 +1,13 @@
 package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
 
+import com.freenic.ui.wrapper.ImageWrapper
+import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
 import com.shahzadian.savingsgoal.domain.GetCurrentSavingsGoalUseCase
 import com.shahzadian.savingsgoal.domain.SavingsGoal
 import java.time.LocalDate
+import java.util.Currency
 
 internal class SavingsEventFinder(
     private val getCurrentSavingsGoalUseCase: GetCurrentSavingsGoalUseCase,
@@ -15,17 +19,29 @@ internal class SavingsEventFinder(
         val goal = getCurrentSavingsGoal() ?: return emptyList()
         val today = LocalDate.now()
         if (today == date && goal.daysLeft == 0) {
-            return listOf(
-                DayEventUiModel.SavingsGoal
-            )
+            return listOf(composeEvent(goal))
         }
         val achieveDay = today.plusDays(goal.daysLeft.toLong())
         if (achieveDay == date) {
-            return listOf(
-                DayEventUiModel.SavingsGoal
-            )
+            return listOf(composeEvent(goal))
         }
         return emptyList()
+    }
+
+    private fun composeEvent(
+        savingsGoal: SavingsGoal,
+    ): DayEventUiModel {
+        val displayableCurrency = savingsGoal.currency
+            ?.let { Currency.getInstance(it).symbol } ?: ""
+        val displayableAmount = "${savingsGoal.currentAmount}$displayableCurrency"
+        return DayEventUiModel(
+            title = TextWrapper.FromString(savingsGoal.name),
+            subtitle = TextWrapper.FromRes(
+                R.string.journey_calendar_event_savings_goal_subtitle,
+                arrayListOf(displayableAmount, savingsGoal.name)
+            ),
+            icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_legend_savings)
+        )
     }
 
     private suspend fun getCurrentSavingsGoal(): SavingsGoal? {

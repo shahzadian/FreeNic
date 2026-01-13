@@ -1,8 +1,11 @@
 package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
 
+import com.freenic.ui.wrapper.ImageWrapper
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.achievements.domain.Achievement
 import com.shahzadian.achievements.domain.AchievementItem
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
+import com.shahzadian.baseui.R
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.model.UserData
@@ -27,9 +30,19 @@ internal class AchievementEventsFinder(
                     ?: return@firstOrNull false
             val achievementDay = quitDate.plusDays(necessaryDays.toLong())
             achievementDay == date
-        }?.let {
+        }?.let { achievement ->
+            val necessaryDays =
+                (achievement.achievementItem as AchievementItem.Days).necessaryCount
             listOf(
-                DayEventUiModel.Achievement
+                DayEventUiModel(
+                    title = TextWrapper.FromRes(R.string.journey_calendar_event_achievement_title),
+                    subtitle = TextWrapper.FromPlural(
+                        R.plurals.journey_calendar_event_achievement_subtitle,
+                        quantity = necessaryDays,
+                        args = arrayListOf(necessaryDays)
+                    ),
+                    icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_event_achievement)
+                )
             )
         } ?: emptyList()
     }

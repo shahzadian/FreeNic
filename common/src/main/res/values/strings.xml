@@ -430,5 +430,16 @@
     <string name="journey_calendar_legend_slip">Slip</string>
     <string name="journey_calendar_legend_smoke_free">Smoke-free</string>
     <string name="journey_calendar_legend_savings">Savings</string>
+    <string name="journey_calendar_event_achievement_title">Milestone reached</string>
+    <plurals name="journey_calendar_event_achievement_subtitle">
+        <item quantity="one">You stayed smoke-free for %d day</item>
+        <item quantity="other">You stayed smoke-free for %d days</item>
+    </plurals>
+    <string name="journey_calendar_event_quit_start_title">Journey started</string>
+    <string name="journey_calendar_event_quit_start_subtitle">You decided to quit smoking</string>
+    <string name="journey_calendar_event_slip_title">A slip happened</string>
+    <string name="journey_calendar_event_slip_subtitle">You smoked on this day</string>
+    <string name="journey_calendar_event_savings_goal_title">Savings goal reached</string>
+    <string name="journey_calendar_event_savings_goal_subtitle">You saved %1$s toward %2$s</string>
 
 </resources>
