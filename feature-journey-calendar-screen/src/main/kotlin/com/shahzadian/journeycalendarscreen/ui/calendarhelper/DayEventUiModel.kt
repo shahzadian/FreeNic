@@ -30,4 +30,11 @@ internal sealed interface DayEventUiModel {
             ImageWrapper.FromRes(R.drawable.ic_journey_calendar_event_achievement)
         }
     }
+
+    data object SavingsGoal : DayEventUiModel {
+
+        override val icon: ImageWrapper by lazyUnsafe {
+            ImageWrapper.FromRes(R.drawable.ic_journey_calendar_legend_savings)
+        }
+    }
 }

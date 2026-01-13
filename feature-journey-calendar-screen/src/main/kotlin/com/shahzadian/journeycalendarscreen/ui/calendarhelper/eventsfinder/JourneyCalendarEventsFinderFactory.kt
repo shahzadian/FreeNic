@@ -1,6 +1,7 @@
 package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
 
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
+import com.shahzadian.savingsgoal.domain.GetCurrentSavingsGoalUseCase
 import com.shahzadian.slip.slipcase.domain.GetSlipCasesUseCase
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import javax.inject.Inject
@@ -14,6 +15,7 @@ internal class JourneyCalendarEventsFinderFactoryImpl @Inject constructor(
     private val getSlipCasesUseCase: GetSlipCasesUseCase,
     private val getUserDataUseCase: GetUserDataUseCase,
     private val getAchievementsUseCase: GetAchievementsUseCase,
+    private val getCurrentSavingsGoalUseCase: GetCurrentSavingsGoalUseCase,
 ) : JourneyCalendarEventsFinderFactory {
 
     override fun getAll(): List<JourneyCalendarEventsFinder> {
@@ -27,6 +29,9 @@ internal class JourneyCalendarEventsFinderFactoryImpl @Inject constructor(
             AchievementEventsFinder(
                 getAchievementsUseCase = getAchievementsUseCase,
                 getUserDataUseCase = getUserDataUseCase,
+            ),
+            SavingsEventFinder(
+                getCurrentSavingsGoalUseCase = getCurrentSavingsGoalUseCase,
             )
         )
     }
