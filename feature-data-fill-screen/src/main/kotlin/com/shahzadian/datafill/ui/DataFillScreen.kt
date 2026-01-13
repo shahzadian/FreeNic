@@ -100,7 +100,7 @@ private fun ScreenByState(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(24.dp),
-                data = state as DataFillViewState.About,
+                data = state,
                 onNameChanged = { onViewEvent(DataFillViewEvent.OnNameChanged(it)) },
                 onAgeChanged = { onViewEvent(DataFillViewEvent.OnAgeChanged(it)) },
             )
@@ -108,7 +108,7 @@ private fun ScreenByState(
 
         is DataFillViewState.CigarettesPerDay -> {
             DataFillCigarettesPerDayPagePage(
-                data = state as DataFillViewState.CigarettesPerDay,
+                data = state,
                 onCigarettesCountChanged = {
                     onViewEvent(
                         DataFillViewEvent.OnCigarettesPerDayChanged(
@@ -124,7 +124,7 @@ private fun ScreenByState(
 
         is DataFillViewState.PackPrice -> {
             DataFillPackPricePage(
-                data = state as DataFillViewState.PackPrice,
+                data = state,
                 onPriceChanged = { price, currency ->
                     onViewEvent(
                         DataFillViewEvent.OnPackPriceChanged(
@@ -141,7 +141,7 @@ private fun ScreenByState(
 
         is DataFillViewState.Result -> {
             DataFillResultPage(
-                userData = (state as DataFillViewState.Result).userData,
+                userData = state.userData,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(24.dp)

@@ -23,9 +23,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.noIndicationClick
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.datafill.ui.DataFillViewState
 
@@ -35,8 +38,14 @@ internal fun DataFillPackPricePage(
     onPriceChanged: (price: String, currency: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .noIndicationClick {
+                focusManager.clearFocus()
+                keyboardController?.hide()
+            },
     ) {
         DataFillHeader(
             title = TextWrapper.FromRes(com.shahzadian.baseui.R.string.data_fill_price_title),

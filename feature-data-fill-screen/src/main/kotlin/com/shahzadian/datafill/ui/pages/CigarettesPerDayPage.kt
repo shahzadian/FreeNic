@@ -24,9 +24,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.noIndicationClick
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.datafill.ui.DataFillViewState
@@ -38,9 +41,15 @@ internal fun DataFillCigarettesPerDayPagePage(
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
     Column(
         modifier = modifier
             .verticalScroll(scrollState)
+            .noIndicationClick {
+                focusManager.clearFocus()
+                keyboardController?.hide()
+            }
     ) {
         DataFillHeader(
             title = TextWrapper.FromRes(R.string.data_fill_smoking_habits_title),

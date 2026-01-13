@@ -5,6 +5,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -180,6 +181,17 @@ fun Modifier.mainCardBackground(
             color = mainCardBorderColor,
             shape = shape,
         )
+}
+
+@Composable
+fun Modifier.noIndicationClick(
+    onClick: () -> Unit,
+): Modifier {
+    return clickable(
+        onClick = onClick,
+        indication = null,
+        interactionSource = null,
+    )
 }
 
 val mainCardBackground: Color
