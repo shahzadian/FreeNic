@@ -28,4 +28,7 @@ internal sealed interface ProfileViewEvent : ViewEvent {
 
     @Immutable
     data object OnDebugPanelOpenClicked : ProfileViewEvent
+
+    @Immutable
+    data object OnClearAllDataConfirmed : ProfileViewEvent
 }

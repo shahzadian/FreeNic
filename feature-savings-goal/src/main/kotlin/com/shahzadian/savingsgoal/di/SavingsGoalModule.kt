@@ -6,6 +6,8 @@ import com.shahzadian.savingsgoal.data.category.SavingsGoalCategoryRepository
 import com.shahzadian.savingsgoal.data.category.SavingsGoalCategoryRepositoryImpl
 import com.shahzadian.savingsgoal.data.datastore.SavingsGoalDataStoreProvider
 import com.shahzadian.savingsgoal.data.datastore.SavingsGoalDataStoreProviderImpl
+import com.shahzadian.savingsgoal.domain.ClearSavingsGoalUseCase
+import com.shahzadian.savingsgoal.domain.ClearSavingsGoalUseCaseImpl
 import com.shahzadian.savingsgoal.domain.GetCurrentSavingsGoalUseCase
 import com.shahzadian.savingsgoal.domain.GetCurrentSavingsGoalUseCaseImpl
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
@@ -45,4 +47,7 @@ internal interface SavingsGoalModule {
     fun bindGetCurrentSavingsGoalUseCase(
         impl: GetCurrentSavingsGoalUseCaseImpl
     ): GetCurrentSavingsGoalUseCase
+
+    @Binds
+    fun bindClearSavingsGoalUseCase(impl: ClearSavingsGoalUseCaseImpl): ClearSavingsGoalUseCase
 }

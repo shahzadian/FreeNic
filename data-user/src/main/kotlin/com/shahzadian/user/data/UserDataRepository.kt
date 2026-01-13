@@ -13,4 +13,6 @@ interface UserDataRepository {
     suspend fun getUserData(): UserData?
 
     suspend fun updateUserData(userData: UserData)
+
+    suspend fun clearAllData()
 }

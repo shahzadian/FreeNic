@@ -6,6 +6,8 @@ import com.shahzadian.user.datastore.UserDataStoreProvider
 import com.shahzadian.user.datastore.UserDataStoreProviderImpl
 import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.UserDataHelperFactoryImpl
+import com.shahzadian.user.domain.getuserdata.ClearUserDataUseCase
+import com.shahzadian.user.domain.getuserdata.ClearUserDataUseCaseImpl
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCaseImpl
 import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
@@ -35,4 +37,7 @@ internal interface UserDataModule {
 
     @Binds
     fun bindUserDataHelperFactory(impl: UserDataHelperFactoryImpl): UserDataHelperFactory
+
+    @Binds
+    fun bindClearUserDataUseCase(impl: ClearUserDataUseCaseImpl): ClearUserDataUseCase
 }

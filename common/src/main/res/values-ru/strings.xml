@@ -444,5 +444,11 @@
         <item quantity="other">%d дней без сигарет. %s сэкономлено</item>
     </plurals>
     <string name="paywall_feature_journey_calendar_title">Календарь пути</string>
+    <string name="profile_clear_all_data_title">Очистить мои данные</string>
+    <string name="profile_clear_all_data_subtitle">Это сбросит ваш прогресс и историю</string>
+    <string name="profile_clear_all_data_confirmation_title">Очистить все данные?</string>
+    <string name="profile_clear_all_data_confirmation_subtitle">Это удалит ваш прогресс, историю и инсайты. Вы сможете начать заново в любой момент.</string>
+    <string name="profile_clear_all_data_confirmation_submit">Да</string>
+    <string name="profile_clear_all_data_confirmation_cancel">Нет</string>
 
 </resources>

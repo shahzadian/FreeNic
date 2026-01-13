@@ -1,6 +1,5 @@
 package com.shahzadian.journeycalendarscreen.ui.calendarhelper
 
-import android.util.Log
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder.JourneyCalendarEventsFinderFactory
@@ -54,8 +53,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     override suspend fun getMonth(): MonthDataUiModel {
         val title = TextWrapper.FromString(
             currentMonth.month.getDisplayName(
-                TextStyle.FULL_STANDALONE,
-                Locale.getDefault()
+                TextStyle.FULL_STANDALONE, Locale.getDefault()
             ).plus(" ").plus(currentMonth.year)
         )
 
@@ -94,8 +92,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
                 isInSmokeQuitPeriod = date?.isInSmokeQuitPeriod() ?: false,
                 noCigData = date?.toNoCigData(),
                 events = date?.let { localDate ->
-                    eventsFinders
-                        .map { it.findEventsForDate(localDate) }.flatten()
+                    eventsFinders.map { it.findEventsForDate(localDate) }.flatten()
                 } ?: emptyList(),
             )
         }
@@ -116,24 +113,17 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     }
 
     private suspend fun LocalDate?.toNoCigData(): DayCellUiModel.NoCigData? {
-        val dateMillis = this?.atStartOfDay(ZoneId.systemDefault())
-            ?.toInstant()
-            ?.toEpochMilli()
-            ?.let { it + 1000 * 60 * 60 * 24 }
-            ?: return null
+        val dateMillis = this?.atStartOfDay(ZoneId.systemDefault())?.toInstant()?.toEpochMilli()
+            ?.let { it + 1000 * 60 * 60 * 24 } ?: return null
         val userData = getUserData() ?: return null
         val userDataHelper = getUserDataHelper() ?: return null
-        val noCigDays = dateMillis
-            .takeIf { this.isInSmokeQuitPeriod() }
-            ?.let { millis ->
-                userDataHelper.calculateSkippedDaysForMillis(millis)
-            } ?: return null
-        val savedMoney = dateMillis
-            .takeIf { this.isInSmokeQuitPeriod() }
-            ?.let { millis ->
-                val userDataHelper = getUserDataHelper() ?: return@let null
-                userDataHelper.calculateSavedMoneyForMillis(millis)
-            } ?: return null
+        val noCigDays = dateMillis.takeIf { this.isInSmokeQuitPeriod() }?.let { millis ->
+            userDataHelper.calculateSkippedDaysForMillis(millis)
+        } ?: return null
+        val savedMoney = dateMillis.takeIf { this.isInSmokeQuitPeriod() }?.let { millis ->
+            val userDataHelper = getUserDataHelper() ?: return@let null
+            userDataHelper.calculateSavedMoneyForMillis(millis)
+        } ?: return null
         val currency = userData.cigarettesData.priceData.currency.let {
             try {
                 Currency.getInstance(it).symbol
@@ -141,10 +131,6 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
                 return null
             }
         }
-        Log.d(
-            "LogMog",
-            "millis: ${dateMillis}, date: ${this.dayOfYear}, noCigDays: $noCigDays, savedMoney: $savedMoney, currency: $currency"
-        )
         val displayableSavedMoney = "${savedMoney}$currency"
         return DayCellUiModel.NoCigData(
             noCigDays = noCigDays,
@@ -153,9 +139,8 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     }
 
     private fun LocalDate.getFullDayText(): TextWrapper {
-        val formatter = DateTimeFormatter
-            .ofLocalizedDate(FormatStyle.MEDIUM)
-            .withLocale(Locale.getDefault())
+        val formatter =
+            DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.getDefault())
 
         return TextWrapper.FromString(formatter.format(this))
     }

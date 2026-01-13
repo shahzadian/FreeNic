@@ -13,7 +13,7 @@ internal sealed interface ProfileViewState : ViewState {
     data class Data(
         val userNameLetter: String,
         val appVersion: String,
-        val isPremiumActive: Boolean,
+        val hasPaidSubscription: Boolean,
         val personalData: PersonalData,
         val smokingDetails: SmokingDetails,
         val isDebugBuild: Boolean,

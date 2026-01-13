@@ -12,6 +12,8 @@ internal interface SlipCaseRepository {
     suspend fun getSlipCases(): List<SlipCase>
 
     suspend fun insertSlipCase(slipCase: SlipCase)
+
+    suspend fun clearAll()
 }
 
 internal class SlipCaseRepositoryImpl @Inject constructor(
@@ -28,6 +30,12 @@ internal class SlipCaseRepositoryImpl @Inject constructor(
     override suspend fun insertSlipCase(slipCase: SlipCase) {
         withContext(coroutineContexts.io) {
             slipCaseDatabase.slipCaseDao().insert(slipCase.toEntity())
+        }
+    }
+
+    override suspend fun clearAll() {
+        withContext(coroutineContexts.io) {
+            slipCaseDatabase.clearAllTables()
         }
     }
 

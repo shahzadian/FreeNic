@@ -450,5 +450,11 @@
         <item quantity="one">%d day smoke-free. %s saved</item>
         <item quantity="other">%d days smoke-free. %s saved</item>
     </plurals>
+    <string name="profile_clear_all_data_title">Clear my data</string>
+    <string name="profile_clear_all_data_subtitle">This will reset your progress and history</string>
+    <string name="profile_clear_all_data_confirmation_title">Clear all data?</string>
+    <string name="profile_clear_all_data_confirmation_subtitle">This will remove your progress, history, and insights. You can start fresh anytime.</string>
+    <string name="profile_clear_all_data_confirmation_submit">Yes</string>
+    <string name="profile_clear_all_data_confirmation_cancel">No</string>
 
 </resources>

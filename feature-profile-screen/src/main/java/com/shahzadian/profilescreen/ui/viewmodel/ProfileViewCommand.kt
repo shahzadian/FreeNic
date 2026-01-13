@@ -8,5 +8,8 @@ import com.freenic.ui.vm.ViewCommand
 internal sealed interface ProfileViewCommand : ViewCommand {
 
     @Immutable
-    data class NavigateTo(val screen: AppScreen) : ProfileViewCommand
+    data class NavigateTo(
+        val screen: AppScreen,
+        val clearFromStack: Boolean = false,
+    ) : ProfileViewCommand
 }

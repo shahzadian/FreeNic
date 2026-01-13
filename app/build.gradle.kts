@@ -62,6 +62,7 @@ dependencies {
     implementation(project(":feature-recovery-calculator"))
     implementation(project(":feature-debug-panel-screen"))
     implementation(project(":feature-debug-params"))
+    implementation(project(":feature-savings-goal"))
     implementation(project(":feature-savings-goal-screen"))
     implementation(project(":feature-widget"))
     implementation(project(":feature-ad"))

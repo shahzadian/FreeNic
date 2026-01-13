@@ -99,6 +99,14 @@ class UserDataRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun clearAllData() {
+        withContext(coroutineContexts.io) {
+            userDataStore.edit { prefs ->
+                prefs.clear()
+            }
+        }
+    }
+
     private companion object {
         val KEY_NAME = stringPreferencesKey("name")
         val KEY_AGE = intPreferencesKey("age")

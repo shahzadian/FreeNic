@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
@@ -55,7 +56,9 @@ fun ProfileScreen(
             .collect { command ->
                 when (command) {
                     is ProfileViewCommand.NavigateTo -> {
-                        navController.navigate(command.screen.route)
+                        navController.navigate(command.screen.route) {
+                            popUpTo(AppScreen.WelcomeScreen.route) { inclusive = true }
+                        }
                     }
                 }
             }
@@ -108,7 +111,7 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-        if (data.isPremiumActive.not()) {
+        if (data.hasPaidSubscription.not()) {
             ProfileSubscriptionView(
                 onPremiumClicked = {
                     onEvent(ProfileViewEvent.OnPremiumClicked)
@@ -129,6 +132,12 @@ private fun ContentView(
                     .padding(bottom = 16.dp),
             )
         }
+        ProfileClearAllDataView(
+            onClicked = {
+                onEvent(ProfileViewEvent.OnClearAllDataConfirmed)
+            },
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
         AppVersionTextView(
             appVersion = data.appVersion,
             modifier = Modifier

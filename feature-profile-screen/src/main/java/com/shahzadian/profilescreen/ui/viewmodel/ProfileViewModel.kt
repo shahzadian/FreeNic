@@ -2,12 +2,14 @@ package com.shahzadian.profilescreen.ui.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.freenic.domain.ClearAppDataUseCase
 import com.freenic.ui.AppScreen
 import com.freenic.ui.appinfo.AppInfoHelper
 import com.freenic.ui.extensions.extractMainDisplayableDate
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.baseui.R
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
 import com.shahzadian.user.model.UserCigarettesData
@@ -24,6 +26,8 @@ internal class ProfileViewModel @Inject constructor(
     private val getUserDataUseCase: GetUserDataUseCase,
     private val updateUserDataUseCase: UpdateUserDataUseCase,
     private val appInfoHelper: AppInfoHelper,
+    private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
+    private val clearAppDataUseCase: ClearAppDataUseCase,
 ) : BaseViewModel<ProfileViewState, ProfileViewEvent, ProfileViewCommand>() {
 
     override val initState: ProfileViewState by lazyUnsafe { ProfileViewState.Loading }
@@ -49,6 +53,7 @@ internal class ProfileViewModel @Inject constructor(
             is ProfileViewEvent.OnCigsPerDayEdited -> onCigsPerDayEdited(event.cigarettesPerDay)
             is ProfileViewEvent.OnPriceEdited -> onPriceEdited(event.price)
             is ProfileViewEvent.OnDebugPanelOpenClicked -> onDebugPanelClicked()
+            is ProfileViewEvent.OnClearAllDataConfirmed -> onClearAllDataConfirmed()
         }
     }
 
@@ -65,12 +70,12 @@ internal class ProfileViewModel @Inject constructor(
             val appName = context.getString(R.string.app_name)
             val appVersion = appInfoHelper.getAppVersion()
             val displayableVersion = "$appName v${appVersion.versionName}"
+            val hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null
             setViewState(
                 ProfileViewState.Data(
                     userNameLetter = userNameLetter,
                     appVersion = displayableVersion,
-//                    TODO
-                    isPremiumActive = false,
+                    hasPaidSubscription = hasPaidSubscription,
                     personalData = ProfileViewState.Data.PersonalData(
                         name = userData.personalData.name,
                         age = userData.personalData.age,
@@ -197,5 +202,18 @@ internal class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.DebugPanelScreen))
         }
+    }
+
+    private fun onClearAllDataConfirmed() {
+        viewModelScope
+            .launch {
+                clearAppDataUseCase()
+                sendViewCommand(
+                    command = ProfileViewCommand.NavigateTo(
+                        screen = AppScreen.WelcomeScreen,
+                        clearFromStack = true,
+                    ),
+                )
+            }
     }
 }
