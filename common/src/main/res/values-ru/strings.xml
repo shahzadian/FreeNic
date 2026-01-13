@@ -75,6 +75,7 @@
     <string name="main_page_cravings_name">Тяга</string>
 
     <string name="achievement_desc_12_months">Вы не курили один год!</string>
+    <string name="achievement_desc_1000_cigs">Вы не выкурили 1000 сигарет!</string>
     <string name="main_page_insights_name">Аналитика</string>
     <string name="main_page_goals_name">Цели</string>
     <string name="main_page_profile_name">Профиль</string>
@@ -457,5 +458,22 @@
     <string name="achievement_desc_6_months">Вы не курили 6 месяцев!</string>
     <string name="achievement_title_12_months">Один год</string>
     <string name="achievements_header_title">Достижения</string>
+    <string name="achievement_title_100_cigs">100 сигарет</string>
+    <string name="achievement_desc_100_cigs">Вы не выкурили 100 сигарет!</string>
+    <string name="achievement_title_200_cigs">200 сигарет</string>
+    <string name="achievement_desc_200_cigs">Вы не выкурили 200 сигарет!</string>
+    <string name="achievement_title_500_cigs">500 сигарет</string>
+    <string name="achievement_desc_500_cigs">Вы не выкурили 500 сигарет!</string>
+    <string name="achievement_title_1000_cigs">1000 сигарет</string>
+    <string name="achievement_title_10_bucks">Первые сбережения</string>
+    <string name="achievement_desc_10_bucks">Вы сэкономили 10$</string>
+    <string name="achievement_title_20_bucks">20$</string>
+    <string name="achievement_desc_20_bucks">Вы сэкономили 20$</string>
+    <string name="achievement_title_30_bucks">30$</string>
+    <string name="achievement_desc_30_bucks">Вы сэкономили 30$</string>
+    <string name="achievement_title_40_bucks">40$</string>
+    <string name="achievement_desc_40_bucks">Вы сэкономили 40$</string>
+    <string name="achievement_title_50_bucks">50$</string>
+    <string name="achievement_desc_50_bucks">Вы сэкономили 50$</string>
 
 </resources>

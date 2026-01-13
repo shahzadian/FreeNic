@@ -204,6 +204,14 @@
     <string name="achievement_desc_6_months">You stayed smoke-free for 180 days!</string>
     <string name="achievement_title_12_months">One year</string>
     <string name="achievement_desc_12_months">You stayed smoke-free for one year!</string>
+    <string name="achievement_title_100_cigs">100 cigarettes</string>
+    <string name="achievement_desc_100_cigs">You avoided 100 cigarettes!</string>
+    <string name="achievement_title_200_cigs">200 cigarettes</string>
+    <string name="achievement_desc_200_cigs">You avoided 200 cigarettes!</string>
+    <string name="achievement_title_500_cigs">500 cigarettes</string>
+    <string name="achievement_desc_500_cigs">You avoided 500 cigarettes!</string>
+    <string name="achievement_title_1000_cigs">1000 cigarettes</string>
+    <string name="achievement_desc_1000_cigs">You avoided 1000 cigarettes!</string>
 
 
     <string name="main_page_insights_name">Insights</string>
@@ -465,5 +473,15 @@
     <string name="profile_clear_all_data_confirmation_submit">Yes</string>
     <string name="profile_clear_all_data_confirmation_cancel">No</string>
     <string name="achievements_header_title">Achievements</string>
+    <string name="achievement_title_10_bucks">10$</string>
+    <string name="achievement_desc_10_bucks">You saved 10$</string>
+    <string name="achievement_title_20_bucks">20$</string>
+    <string name="achievement_desc_20_bucks">You saved 20$</string>
+    <string name="achievement_title_30_bucks">30$</string>
+    <string name="achievement_desc_30_bucks">You saved 30$</string>
+    <string name="achievement_title_40_bucks">40$</string>
+    <string name="achievement_desc_40_bucks">You saved 40$</string>
+    <string name="achievement_title_50_bucks">50$</string>
+    <string name="achievement_desc_50_bucks">You saved 50$</string>
 
 </resources>

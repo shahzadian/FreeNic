@@ -15,7 +15,7 @@ internal interface AchievementRepository {
 internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepository {
 
     override suspend fun getAchievements(): List<Achievement> {
-        return getCigsCountBasedAchievements() + getDayBasedAchievements()
+        return getCigsCountBasedAchievements() + getDayBasedAchievements() + getMoneyBasedAchievements()
     }
 
     private fun getCigsCountBasedAchievements(): List<Achievement> {
@@ -40,6 +40,34 @@ internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepo
                 description = TextWrapper.FromRes(R.string.achievement_desc_fifty_victories),
                 icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_fifty_victories),
                 achievementItem = AchievementItem.Cigs(50),
+            ),
+            Achievement(
+                id = "100 cigs",
+                name = TextWrapper.FromRes(R.string.achievement_title_100_cigs),
+                description = TextWrapper.FromRes(R.string.achievement_desc_100_cigs),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_cigs),
+                achievementItem = AchievementItem.Cigs(100)
+            ),
+            Achievement(
+                id = "200 cigs",
+                name = TextWrapper.FromRes(R.string.achievement_title_200_cigs),
+                description = TextWrapper.FromRes(R.string.achievement_desc_200_cigs),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_cigs),
+                achievementItem = AchievementItem.Cigs(200)
+            ),
+            Achievement(
+                id = "500 cigs",
+                name = TextWrapper.FromRes(R.string.achievement_title_500_cigs),
+                description = TextWrapper.FromRes(R.string.achievement_desc_500_cigs),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_cigs),
+                achievementItem = AchievementItem.Cigs(500)
+            ),
+            Achievement(
+                id = "1000 cigs",
+                name = TextWrapper.FromRes(R.string.achievement_title_1000_cigs),
+                description = TextWrapper.FromRes(R.string.achievement_desc_1000_cigs),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_cigs),
+                achievementItem = AchievementItem.Cigs(1000)
             ),
         )
     }
@@ -87,7 +115,61 @@ internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepo
                 description = TextWrapper.FromRes(R.string.achievement_desc_3_months),
                 icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_3_months),
                 achievementItem = AchievementItem.Days(90),
+            ),
+            Achievement(
+                id = "6 months",
+                name = TextWrapper.FromRes(R.string.achievement_title_6_months),
+                description = TextWrapper.FromRes(R.string.achievement_desc_6_months),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_6_months),
+                achievementItem = AchievementItem.Days(180),
+            ),
+            Achievement(
+                id = "one year",
+                name = TextWrapper.FromRes(R.string.achievement_title_12_months),
+                description = TextWrapper.FromRes(R.string.achievement_desc_12_months),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_12_months),
+                achievementItem = AchievementItem.Days(365),
             )
+        )
+    }
+
+    private fun getMoneyBasedAchievements(): List<Achievement> {
+        return listOf(
+            Achievement(
+                id = "10 bucks",
+                name = TextWrapper.FromRes(R.string.achievement_title_10_bucks),
+                description = TextWrapper.FromRes(R.string.achievement_desc_10_bucks),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
+                achievementItem = AchievementItem.Money(10f)
+            ),
+            Achievement(
+                id = "20 bucks",
+                name = TextWrapper.FromRes(R.string.achievement_title_20_bucks),
+                description = TextWrapper.FromRes(R.string.achievement_desc_20_bucks),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
+                achievementItem = AchievementItem.Money(20f)
+            ),
+            Achievement(
+                id = "30 bucks",
+                name = TextWrapper.FromRes(R.string.achievement_title_30_bucks),
+                description = TextWrapper.FromRes(R.string.achievement_desc_30_bucks),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
+                achievementItem = AchievementItem.Money(30f)
+            ),
+            Achievement(
+                id = "40 bucks",
+                name = TextWrapper.FromRes(R.string.achievement_title_40_bucks),
+                description = TextWrapper.FromRes(R.string.achievement_desc_40_bucks),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
+                achievementItem = AchievementItem.Money(40f)
+            ),
+            Achievement(
+                id = "50 bucks",
+                name = TextWrapper.FromRes(R.string.achievement_title_50_bucks),
+                description = TextWrapper.FromRes(R.string.achievement_desc_50_bucks),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
+                achievementItem = AchievementItem.Money(50f)
+            ),
         )
     }
 }

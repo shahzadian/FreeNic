@@ -46,6 +46,10 @@ internal data class AchievementUiModel(
             override val count: Int
         ) : AchievementItemUiModel, CountBasedUiModel
 
+        data class Money(
+            val necessaryAmount: Float,
+        ) : AchievementItemUiModel
+
         interface CountBasedUiModel {
             val count: Int
         }

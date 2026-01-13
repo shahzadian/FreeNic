@@ -1,14 +1,12 @@
 package com.shahzadian.goalsscreen.ui.achievementsscreen
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
@@ -77,10 +75,11 @@ private fun ContentView(
         title = TextWrapper.FromRes(R.string.achievements_header_title),
         hasBackIcon = true,
         onBackIconClicked = onBackIconClick,
+        modifier = modifier,
     ) {
         AchievementsBlockView(
             data = data.achievementsData,
-            modifier = modifier.padding(16.dp),
+            modifier = Modifier.fillMaxSize(),
             onAchievementShareClicked = onShareClick,
         )
     }

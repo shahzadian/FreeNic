@@ -20,6 +20,10 @@ sealed interface AchievementItem {
     class Days(
         val necessaryCount: Int,
     ) : AchievementItem
+
+    class Money(
+        val necessaryAmount: Float,
+    ) : AchievementItem
 }
 
 sealed interface AchievementState {

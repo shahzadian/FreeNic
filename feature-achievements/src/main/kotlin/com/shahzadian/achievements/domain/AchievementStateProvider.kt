@@ -40,6 +40,18 @@ internal class AchievementStateProviderImpl(
                     )
                 }
             }
+
+            is AchievementItem.Money -> {
+                val savedMoney = userDataHelper.getSavedMoney()
+                if (savedMoney >= item.necessaryAmount) {
+                    return AchievementState.Unlocked
+                } else {
+                    val percents = savedMoney / item.necessaryAmount * 100f
+                    return AchievementState.Locked(
+                        percentsReached = percents,
+                    )
+                }
+            }
         }
     }
 }

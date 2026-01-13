@@ -36,9 +36,16 @@ internal class AchievementMapperImpl @Inject constructor(
                         count = (achievement.achievementItem as AchievementItem.Cigs).necessaryCount
                     )
                 }
+
                 is AchievementItem.Days -> {
                     AchievementUiModel.AchievementItemUiModel.Days(
                         count = (achievement.achievementItem as AchievementItem.Days).necessaryCount
+                    )
+                }
+
+                is AchievementItem.Money -> {
+                    AchievementUiModel.AchievementItemUiModel.Money(
+                        necessaryAmount = (achievement.achievementItem as AchievementItem.Money).necessaryAmount
                     )
                 }
             }

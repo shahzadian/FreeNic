@@ -217,6 +217,10 @@ private fun AchievementShareContentView(
                         .padding(bottom = 16.dp),
                 )
             }
+
+            is AchievementUiModel.AchievementItemUiModel.Money -> {
+//                TODO
+            }
         }
     }
 }
