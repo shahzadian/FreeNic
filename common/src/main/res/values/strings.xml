@@ -483,7 +483,9 @@
     <string name="achievement_desc_40_bucks">You saved 40$</string>
     <string name="achievement_title_50_bucks">50$</string>
     <string name="achievement_desc_50_bucks">You saved 50$</string>
-    <string name="achievement_share_money_based_title">Money saved</string>
+    <string name="achievement_share_money_based_title">MONEY SAVED!</string>
     <string name="achievement_share_money_based_subtitle">Money not spent on cigarettes</string>
+    <string name="achievement_share_money_based_celebratory_title">MONEY SAVED!</string>
+    <string name="achievement_share_money_based_celebratory_subtitle">I saved money by not smoking! Tracked with FreeNic</string>
 
 </resources>

@@ -475,7 +475,9 @@
     <string name="achievement_desc_40_bucks">Вы сэкономили 40$</string>
     <string name="achievement_title_50_bucks">50$</string>
     <string name="achievement_desc_50_bucks">Вы сэкономили 50$</string>
-    <string name="achievement_share_money_based_title">Сэкономлено</string>
+    <string name="achievement_share_money_based_title">СЭКОНОМЛЕНО!</string>
     <string name="achievement_share_money_based_subtitle">Деньги, не потраченные на сигареты</string>
+    <string name="achievement_share_money_based_celebratory_title">СЭКОНОМЛЕНО!</string>
+    <string name="achievement_share_money_based_celebratory_subtitle">Я сэкономил деньги, отказавшись от курения. Отслеживаю с FreeNic.</string>
 
 </resources>
