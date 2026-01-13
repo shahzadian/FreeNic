@@ -9,24 +9,24 @@
     <string name="onboarding_1_subtitle">Курение разрушает тело медленно, незаметно, но неотвратимо. Сегодня - лучший день, чтобы остановиться</string>
     <string name="onboarding_1_submit">Далее</string>
 
-    <string name="onboarding_2_title">Ты не держишь сигарету - она держит тебя</string>
+    <string name="onboarding_2_title">Вы не держите сигарету - она держит вас</string>
     <string name="onboarding_2_subtitle">Курение притупляет волю и крадёт свободу. FreeNic поможет вернуть контроль над собой</string>
     <string name="onboarding_2_submit">Далее</string>
 
-    <string name="onboarding_3_title">Ты платишь за привычку каждый день</string>
-    <string name="onboarding_3_subtitle">Сигареты незаметно крадут твои деньги. Подумай, сколько могло остаться у тебя, если бы ты бросил</string>
+    <string name="onboarding_3_title">Вы платите за привычку каждый день</string>
+    <string name="onboarding_3_subtitle">Сигареты незаметно крадут ваши деньги. Подумайте, сколько могло остаться у вас, если бы вы бросили</string>
     <string name="onboarding_3_submit">Далее</string>
 
-    <string name="onboarding_4_title">Ты можешь изменить всё. Мы поможем!</string>
-    <string name="onboarding_4_subtitle">FreeNic — это твой первый шаг к свободе. Поддержка, мотивация и путь без дыма начинаются прямо здесь</string>
+    <string name="onboarding_4_title">Вы можете изменить всё. Мы поможем!</string>
+    <string name="onboarding_4_subtitle">FreeNic — это ваш первый шаг к свободе. Поддержка, мотивация и путь без дыма начинаются прямо здесь</string>
     <string name="onboarding_4_submit">Я готов!</string>
 
     <!--    Data fill-->
     <string name="data_fill_start_title">Расскажи немного о себе</string>
-    <string name="data_fill_start_subtitle">Чтобы мы помогли тебе бросить эффективнее</string>
+    <string name="data_fill_start_subtitle">Чтобы мы помогли вам бросить эффективнее</string>
     <string name="data_fill_submit_button">Продолжить</string>
     <string name="data_fill_about_title">Немного о Вас</string>
-    <string name="data_fill_about_subtitle">Эти данные помогут рассчитать, как твоё тело восстанавливается после отказа от курения</string>
+    <string name="data_fill_about_subtitle">Эти данные помогут рассчитать, как ваше тело восстанавливается после отказа от курения</string>
 
     <string name="data_fill_about_field_name_label">Имя</string>
     <string name="data_fill_about_field_name_hint">Введите имя</string>
@@ -36,15 +36,15 @@
     <string name="data_fill_about_field_age_hint">Введите возраст</string>
     <string name="data_fill_about_field_age_desc">Возраст помогает рассчитать скорость восстановления</string>
     <string name="data_fill_about_confidential_info">Все данные конфиденциальны и используются только для анализа</string>
-    <string name="data_fill_smoking_habits_subtitle">Мы используем эти данные, чтобы рассчитать твой прогресс и экономию</string>
-    <string name="data_fill_cigarettes_per_day_label">Сколько сигарет ты курил(а) в день?</string>
+    <string name="data_fill_smoking_habits_subtitle">Мы используем эти данные, чтобы рассчитать ваш прогресс и экономию</string>
+    <string name="data_fill_cigarettes_per_day_label">Сколько сигарет вы курили в день?</string>
     <string name="data_fill_cigarettes_per_day_desc">В среднем за последние недели</string>
     <string name="data_fill_cigarettes_per_day_packs_per_day_suffix">Пачек в день</string>
-    <string name="data_fill_price_label">Сколько стоит твоя пачка сигарет?</string>
+    <string name="data_fill_price_label">Сколько стоит ваша пачка сигарет в долларах США?</string>
     <string name="data_fill_price_title">Побольше информации</string>
-    <string name="data_fill_price_subtitle">Это поможет рассчитать, сколько ты экономишь</string>
+    <string name="data_fill_price_subtitle">Это поможет рассчитать, сколько вы экономите</string>
     <string name="data_fill_smoking_habits_title">Твои привычки курения</string>
-    <string name="data_fill_price_input_hint">Введите цену</string>
+    <string name="data_fill_price_input_hint">Введите цену в долларах США</string>
     <string name="data_fill_result_title">Готово</string>
     <string name="data_fill_result_subtitle">Мы создали персональный план для Вас</string>
     <string name="data_fill_result_card_title">Ваш профиль</string>
@@ -194,9 +194,9 @@
     <string name="achievement_title_month_of_victory">Месяц победы</string>
     <string name="achievement_desc_month_of_victory">Месяц без сигарет!</string>
     <string name="achievement_title_first_skipped_pack">Первая пачка</string>
-    <string name="achievement_desc_first_skipped_pack">Ты избежал первую пачку!</string>
+    <string name="achievement_desc_first_skipped_pack">Вы избежали первую пачку!</string>
     <string name="achievement_title_fifty_victories">Пятьдесят побед</string>
-    <string name="achievement_desc_fifty_victories">Ты отказался 50 раз!</string>
+    <string name="achievement_desc_fifty_victories">Вы отказались 50 раз!</string>
     <string name="validation_price_min">Цена должна быть не менее 0.1</string>
     <string name="achievement_show_more">Еще</string>
     <string name="date_picker_dialog_cancel">Отмена</string>
@@ -293,7 +293,7 @@
     <string name="goals_savings_goal_create_button">Создать копилку</string>
     <string name="goals_savings_goal_premium_info">Премиум функция</string>
     <string name="savings_goal_header_title">Задайте цель накоплений</string>
-    <string name="savings_goal_create_hint_title">Твое будущее впереди!</string>
+    <string name="savings_goal_create_hint_title">Ваше будущее впереди!</string>
     <string name="savings_goal_create_hint_desc">Превратите каждый день без сигарет во что-то значимое. Задайте цель и наблюдайте, как растут ваши накопления</string>
     <string name="savings_goal_create_label_name">Название цели</string>
     <string name="savings_goal_create_label_amount">Нужная сумма</string>
@@ -404,7 +404,7 @@
     <string name="slip_reason_date_title">Когда это случилось?</string>
     <string name="slip_reason_date_subtitle">(необязательно)</string>
     <string name="slip_reason_date_today">Сегодня</string>
-    <string name="slip_result_title">Это не отменяет твой прогресс</string>
+    <string name="slip_result_title">Это не отменяет ваш прогресс</string>
     <string name="slip_result_subtitle">Вы не курили %s. Этот опыт по-прежнему имеет значение.</string>
     <string name="slip_result_secondary">Новая серия начинается сейчас - и это нормально.</string>
     <string name="slip_result_read_motvation_note">Прочитать поддерживающую заметку</string>

@@ -67,7 +67,6 @@ internal class DataFillViewModel @Inject constructor(
                 fillableInfoHelper.sendEvent(
                     PackPriceFillableInfoEvent.OnPriceChanged(
                         price = event.price,
-                        currency = event.currency
                     )
                 )
             }
@@ -106,10 +105,10 @@ internal class DataFillViewModel @Inject constructor(
     private fun onAllDataFilled() {
         viewModelScope.launch {
             fillableInfoHelper.sharedState.toSaveableUserData()?.let {
-                  updateUserDataUseCase(it)
-                  updateUserDataUseCase.setUserRegistered(true)
+                updateUserDataUseCase(it)
+                updateUserDataUseCase.setUserRegistered(true)
             }
-               sendViewCommand(DataFillCommand.NavigateTo(AppScreen.MainScreen))
+            sendViewCommand(DataFillCommand.NavigateTo(AppScreen.MainScreen))
         }
     }
 
@@ -157,7 +156,6 @@ internal class DataFillViewModel @Inject constructor(
                 price = DataFillViewState.PackPrice.PriceData(
                     price = info.price?.toString() ?: "",
                     currency = info.currency,
-                    currencies = info.currencies,
                 ),
             )
 

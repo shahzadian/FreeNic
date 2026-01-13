@@ -113,7 +113,6 @@ internal fun DataFillInputField(
     modifier: Modifier = Modifier,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     hasNextField: Boolean = false,
-    trailingContent: (@Composable (() -> Unit))? = null,
 ) {
     // Throttle rapid value changes so we don't call the external callback too frequently
     val coroutineScope = rememberCoroutineScope()
@@ -153,7 +152,6 @@ internal fun DataFillInputField(
                 keyboardController?.hide()
             }
         ),
-        trailingIcon = trailingContent,
         placeholder = {
             Text(
                 text = hint,

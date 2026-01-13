@@ -10,7 +10,6 @@ import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoShare
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -68,7 +67,7 @@ internal class FillableInfoHelperImpl @Inject constructor(
                 coroutineScope?.let { scope ->
                     currentProviderCollectionJob = scope.launch {
                         @Suppress("UNCHECKED_CAST")
-                        (providers[currentPageIndex].fillableInfoStateFlow as StateFlow<FillableInfo>)
+                        providers[currentPageIndex].fillableInfoStateFlow
                             .collect { newInfo ->
                                 currentInfoFlow.emit(newInfo)
                             }
@@ -98,7 +97,7 @@ internal class FillableInfoHelperImpl @Inject constructor(
         coroutineScope?.let { scope ->
             currentProviderCollectionJob = scope.launch {
                 @Suppress("UNCHECKED_CAST")
-                (providers[currentPageIndex].fillableInfoStateFlow as StateFlow<FillableInfo>)
+                providers[currentPageIndex].fillableInfoStateFlow
                     .collect { newInfo ->
                         currentInfoFlow.emit(newInfo)
                     }

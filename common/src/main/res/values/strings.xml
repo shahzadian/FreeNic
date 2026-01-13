@@ -49,8 +49,8 @@
 
     <string name="data_fill_price_title">More info</string>
     <string name="data_fill_price_subtitle">We will use this to calculate how much you save</string>
-    <string name="data_fill_price_label">How much does your cigarette pack cost?</string>
-    <string name="data_fill_price_input_hint">Enter price</string>
+    <string name="data_fill_price_label">How much does your cigarette pack cost in US dollars?</string>
+    <string name="data_fill_price_input_hint">Enter price in USD</string>
 
     <string name="data_fill_result_title">You are all set</string>
     <string name="data_fill_result_subtitle">We have created a personalized plan for you</string>

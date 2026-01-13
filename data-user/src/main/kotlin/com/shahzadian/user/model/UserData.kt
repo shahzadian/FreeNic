@@ -26,7 +26,11 @@ class UserCigarettesData(
     ) {
 
         fun getValidCurrencyOrNull(): Currency? {
-            return if (isValidCurrency()) Currency.getInstance(currency) else null
+            return try {
+                Currency.getInstance(currency)
+            } catch (e: Exception) {
+                null
+            }
         }
 
         private fun isValidCurrency(): Boolean {

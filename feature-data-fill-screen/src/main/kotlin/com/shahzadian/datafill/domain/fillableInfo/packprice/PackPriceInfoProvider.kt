@@ -6,7 +6,6 @@ import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProvider
 import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
-import com.shahzadian.user.model.UserCigarettesData
 import kotlinx.coroutines.CoroutineScope
 import java.time.Instant
 import java.time.ZoneId
@@ -26,8 +25,6 @@ internal class PackPriceInfoProvider(
             currency = Currency.getInstance(Locale.US).currencyCode,
             quitDateMillis = System.currentTimeMillis(),
             displayableQuitDate = getDisplayableDateByMillis(System.currentTimeMillis()),
-            currencies = UserCigarettesData.PriceData.getAvailableCurrencies().sorted()
-                .plus("Other"),
         )
     }
 
@@ -48,7 +45,7 @@ internal class PackPriceInfoProvider(
             is PackPriceFillableInfoEvent.OnPriceChanged -> {
                 currentInfo.copy(
                     price = event.price.toFloatOrNull(),
-                    currency = event.currency
+                    currency = Currency.getInstance(Locale.US).currencyCode
                 )
             }
 

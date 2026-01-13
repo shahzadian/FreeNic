@@ -53,7 +53,6 @@ internal sealed interface DataFillViewState : ViewState {
         data class PriceData(
             val price: String,
             val currency: String,
-            val currencies: List<String>,
         )
 
         @Immutable

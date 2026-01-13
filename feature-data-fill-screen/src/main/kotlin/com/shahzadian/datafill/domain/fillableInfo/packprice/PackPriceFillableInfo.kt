@@ -11,7 +11,6 @@ import com.shahzadian.datafill.domain.fillableInfo.FillableInfoEvent
 internal data class PackPriceFillableInfo(
     val price: Float? = null,
     val currency: String,
-    val currencies: List<String>,
     val quitDateMillis: Long,
     val displayableQuitDate: TextWrapper,
 ) : FillableInfo {
@@ -22,6 +21,6 @@ internal data class PackPriceFillableInfo(
 }
 
 internal sealed interface PackPriceFillableInfoEvent : FillableInfoEvent {
-    data class OnPriceChanged(val price: String, val currency: String) : PackPriceFillableInfoEvent
+    data class OnPriceChanged(val price: String) : PackPriceFillableInfoEvent
     data class OnQuitDateChanged(val quitDateMillis: Long) : PackPriceFillableInfoEvent
 }

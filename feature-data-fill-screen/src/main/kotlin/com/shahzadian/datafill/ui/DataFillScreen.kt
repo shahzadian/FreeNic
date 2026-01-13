@@ -125,11 +125,10 @@ private fun ScreenByState(
         is DataFillViewState.PackPrice -> {
             DataFillPackPricePage(
                 data = state,
-                onPriceChanged = { price, currency ->
+                onPriceChanged = { price ->
                     onViewEvent(
                         DataFillViewEvent.OnPackPriceChanged(
                             price = price,
-                            currency = currency
                         )
                     )
                 },
