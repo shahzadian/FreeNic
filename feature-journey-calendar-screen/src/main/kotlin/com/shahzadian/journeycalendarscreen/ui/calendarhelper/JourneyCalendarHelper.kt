@@ -1,8 +1,11 @@
 package com.shahzadian.journeycalendarscreen.ui.calendarhelper
 
+import android.util.Log
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder.JourneyCalendarEventsFinderFactory
+import com.shahzadian.user.domain.UserDataHelper
+import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.model.UserData
 import java.time.Instant
@@ -12,6 +15,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
+import java.util.Currency
 import java.util.Locale
 import javax.inject.Inject
 
@@ -29,6 +33,7 @@ internal interface JourneyCalendarHelper {
 internal class JourneyCalendarHelperImpl @Inject constructor(
     private val eventsFinderFactory: JourneyCalendarEventsFinderFactory,
     private val getUserDataUseCase: GetUserDataUseCase,
+    private val userDataHelperFactory: UserDataHelperFactory,
 ) : JourneyCalendarHelper {
 
     private var currentMonth: YearMonth = YearMonth.now()
@@ -38,6 +43,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     }
 
     private var _userData: UserData? = null
+    private var _userDataHelper: UserDataHelper? = null
 
     override suspend fun hasPreviousMonth(): Boolean {
         val quitDate = getQuitDate() ?: return false
@@ -86,6 +92,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
                 isToday = date == today,
                 isInFuture = date?.isAfter(today) ?: false,
                 isInSmokeQuitPeriod = date?.isInSmokeQuitPeriod() ?: false,
+                noCigData = date?.toNoCigData(),
                 events = date?.let { localDate ->
                     eventsFinders
                         .map { it.findEventsForDate(localDate) }.flatten()
@@ -106,6 +113,43 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
 
     override suspend fun incrementMonth() {
         currentMonth = currentMonth.plusMonths(1)
+    }
+
+    private suspend fun LocalDate?.toNoCigData(): DayCellUiModel.NoCigData? {
+        val dateMillis = this?.atStartOfDay(ZoneId.systemDefault())
+            ?.toInstant()
+            ?.toEpochMilli()
+            ?.let { it + 1000 * 60 * 60 * 24 }
+            ?: return null
+        val userData = getUserData() ?: return null
+        val userDataHelper = getUserDataHelper() ?: return null
+        val noCigDays = dateMillis
+            .takeIf { this.isInSmokeQuitPeriod() }
+            ?.let { millis ->
+                userDataHelper.calculateSkippedDaysForMillis(millis)
+            } ?: return null
+        val savedMoney = dateMillis
+            .takeIf { this.isInSmokeQuitPeriod() }
+            ?.let { millis ->
+                val userDataHelper = getUserDataHelper() ?: return@let null
+                userDataHelper.calculateSavedMoneyForMillis(millis)
+            } ?: return null
+        val currency = userData.cigarettesData.priceData.currency.let {
+            try {
+                Currency.getInstance(it).symbol
+            } catch (t: Throwable) {
+                return null
+            }
+        }
+        Log.d(
+            "LogMog",
+            "millis: ${dateMillis}, date: ${this.dayOfYear}, noCigDays: $noCigDays, savedMoney: $savedMoney, currency: $currency"
+        )
+        val displayableSavedMoney = "${savedMoney}$currency"
+        return DayCellUiModel.NoCigData(
+            noCigDays = noCigDays,
+            displayableSavedMoney = displayableSavedMoney,
+        )
     }
 
     private fun LocalDate.getFullDayText(): TextWrapper {
@@ -131,6 +175,15 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
         return _userData ?: run {
             _userData = getUserDataUseCase.invoke()
             _userData
+        }
+    }
+
+    private suspend fun getUserDataHelper(): UserDataHelper? {
+        val userData = getUserData() ?: return null
+        return _userDataHelper ?: let {
+            val helper = userDataHelperFactory.create(userData)
+            _userDataHelper = helper
+            helper
         }
     }
 }

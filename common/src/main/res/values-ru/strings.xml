@@ -436,5 +436,11 @@
     <string name="journey_calendar_event_savings_goal_subtitle">Вы накопили %1$s на цель %2$s</string>
     <string name="fillable_info_pack_price_quit_date">Дата отказа от сигарет</string>
     <string name="data_fill_quit_date_today">Сегодня</string>
+    <string name="journey_calendar_event_no_cig_title">День без сигарет</string>
+    <plurals name="journey_calendar_event_no_cig_subtitle">
+        <item quantity="one">%d день без сигарет. %s сэкономлено</item>
+        <item quantity="few">%d дня без сигарет. %s сэкономлено</item>
+        <item quantity="other">%d дней без сигарет. %s сэкономлено</item>
+    </plurals>
 
 </resources>

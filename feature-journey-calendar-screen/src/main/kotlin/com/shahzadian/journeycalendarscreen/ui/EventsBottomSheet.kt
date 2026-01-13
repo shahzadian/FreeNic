@@ -24,12 +24,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.journeycalendarscreen.R
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
@@ -100,6 +103,14 @@ private fun EventsView(
         modifier = modifier
             .verticalScroll(scrollState),
     ) {
+        cell.noCigData?.let { noCigData ->
+            NoCigDaysEventView(
+                data = noCigData,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp)
+            )
+        }
         cell.events.forEach { event ->
             EventView(
                 model = event,
@@ -109,6 +120,29 @@ private fun EventsView(
             )
         }
     }
+}
+
+@Composable
+private fun NoCigDaysEventView(
+    data: DayCellUiModel.NoCigData,
+    modifier: Modifier = Modifier,
+) {
+    val title = stringResource(com.shahzadian.baseui.R.string.journey_calendar_event_no_cig_title)
+    val subtitle = pluralStringResource(
+        com.shahzadian.baseui.R.plurals.journey_calendar_event_no_cig_subtitle,
+        data.noCigDays,
+        data.noCigDays, data.displayableSavedMoney
+    )
+    EventView(
+        model = DayEventUiModel(
+            title = TextWrapper.FromString(title),
+            subtitle = TextWrapper.FromString(subtitle),
+            icon = ImageWrapper.FromRes(
+                R.drawable.ic_journey_calendar_event_no_cig_days
+            )
+        ),
+        modifier = modifier,
+    )
 }
 
 @Composable

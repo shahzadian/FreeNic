@@ -443,5 +443,10 @@
     <string name="journey_calendar_event_savings_goal_subtitle">You saved %1$s toward %2$s</string>
     <string name="fillable_info_pack_price_quit_date">Quit date</string>
     <string name="data_fill_quit_date_today">Today</string>
+    <string name="journey_calendar_event_no_cig_title">Smoke-free day</string>
+    <plurals name="journey_calendar_event_no_cig_subtitle">
+        <item quantity="one">%d day smoke-free. %s saved</item>
+        <item quantity="other">%d days smoke-free. %s saved</item>
+    </plurals>
 
 </resources>

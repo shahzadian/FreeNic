@@ -11,6 +11,13 @@ internal data class DayCellUiModel(
     val isInSmokeQuitPeriod: Boolean,
     val isToday: Boolean,
     val isInFuture: Boolean,
+    val noCigData: NoCigData?,
     val events: List<DayEventUiModel>,
-)
+) {
+
+    data class NoCigData(
+        val noCigDays: Int,
+        val displayableSavedMoney: String,
+    )
+}
 

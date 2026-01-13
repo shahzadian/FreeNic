@@ -9,6 +9,10 @@ interface UserDataHelper {
 
     fun getSkippedDaysCount(): Int
 
+    fun calculateSkippedDaysForMillis(millis: Long): Int
+
+    fun calculateSavedMoneyForMillis(millis: Long): Float
+
     fun getSavedMoney(): Float
 
     fun getSavedMoneyPerDay(): Float
@@ -18,19 +22,20 @@ internal class UserDataHelperImpl(
     private val userData: UserData
 ) : UserDataHelper {
 
-    private var skippedDaysCount: Int? = null
-
     override fun getSkippedCigsCount(): Int {
-        return resolveSkippedDays() * userData.cigarettesData.cigarettesPerDay
+        return resolveSkippedDays(getTodayMillis()) * userData.cigarettesData.cigarettesPerDay
     }
 
     override fun getSkippedDaysCount(): Int {
-        return resolveSkippedDays()
+        return resolveSkippedDays(getTodayMillis())
     }
 
     override fun getSavedMoney(): Float {
-        val skippedDaysCount = resolveSkippedDays()
-        return skippedDaysCount * getSavedMoneyPerDay()
+        return resolveSavedMoney(getTodayMillis())
+    }
+
+    override fun calculateSavedMoneyForMillis(millis: Long): Float {
+        return resolveSavedMoney(millis)
     }
 
     override fun getSavedMoneyPerDay(): Float {
@@ -39,16 +44,23 @@ internal class UserDataHelperImpl(
         return pricePerPack * packsPerDay
     }
 
-    private fun resolveSkippedDays(): Int {
-        return skippedDaysCount ?: let {
-            val quitMillis = userData.quitData.quitDateMillis
-            val todayMillis = System.currentTimeMillis()
-            val delta = todayMillis - quitMillis
-            val skippedDays = (delta / (1000 * 60 * 60 * 24)).toInt()
-            skippedDaysCount = skippedDays
-            skippedDays
-        }
+    override fun calculateSkippedDaysForMillis(millis: Long): Int {
+        return resolveSkippedDays(millis)
     }
+
+    private fun resolveSavedMoney(millis: Long): Float {
+        val skippedDaysCount = resolveSkippedDays(millis)
+        return skippedDaysCount * getSavedMoneyPerDay()
+    }
+
+    private fun resolveSkippedDays(millis: Long): Int {
+        val quitMillis = userData.quitData.quitDateMillis
+        val delta = millis - quitMillis
+        val skippedDays = (delta / (1000 * 60 * 60 * 24)).toInt()
+        return skippedDays
+    }
+
+    private fun getTodayMillis(): Long = System.currentTimeMillis()
 }
 
 interface UserDataHelperFactory {
