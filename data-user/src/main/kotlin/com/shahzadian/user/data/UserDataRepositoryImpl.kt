@@ -94,6 +94,7 @@ class UserDataRepositoryImpl @Inject constructor(
                 prefs[KEY_PPD] = userData.cigarettesData.packsPerDay
                 prefs[KEY_CURRENCY] = userData.cigarettesData.priceData.currency
                 prefs[KEY_PRICE] = userData.cigarettesData.priceData.price
+                prefs[KEY_QUIT_DATE] = userData.quitData.quitDateMillis
             }
         }
     }

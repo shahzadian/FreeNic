@@ -34,7 +34,6 @@ internal class FillableInfoProviderFactoryImpl @Inject constructor(
             ResultInfoProvider(
                 coroutineScope = coroutineScope,
                 sharedStateHolder = sharedStateHolder,
-                updateUserDataUseCase = updateUserDataUseCase,
             )
         )
     }

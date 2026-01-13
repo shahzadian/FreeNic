@@ -12,6 +12,7 @@ internal data class ResultFillableInfo(
         val name: String,
         val age: Int,
         val cigarettesPerDay: Int,
+        val quitDateMillis: Long,
     )
 }
 

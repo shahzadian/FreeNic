@@ -4,13 +4,11 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.datafill.domain.fillableInfo.FillableInfoProvider
 import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableDataSharedStateHolder
 import com.shahzadian.datafill.domain.fillableInfo.sharedstate.FillableInfoSharedState
-import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
 import kotlinx.coroutines.CoroutineScope
 
 internal class ResultInfoProvider(
     coroutineScope: CoroutineScope,
     private val sharedStateHolder: FillableDataSharedStateHolder,
-    private val updateUserDataUseCase: UpdateUserDataUseCase,
 ) : FillableInfoProvider<ResultFillableInfo, ResultFillableInfoEvent>(
     coroutineScope
 ) {
@@ -28,7 +26,7 @@ internal class ResultInfoProvider(
         currentSharedState: FillableInfoSharedState
     ): FillableInfoSharedState {
         return currentSharedState.copy(
-            quitDate = System.currentTimeMillis()
+            quitDate = currentInfo.userInfo.quitDateMillis,
         )
     }
 
@@ -44,7 +42,8 @@ internal class ResultInfoProvider(
             userInfo = ResultFillableInfo.UserInfo(
                 name = name,
                 age = age,
-                cigarettesPerDay = cigarettesPerDay
+                cigarettesPerDay = cigarettesPerDay,
+                quitDateMillis = System.currentTimeMillis(),
             )
         )
     }
