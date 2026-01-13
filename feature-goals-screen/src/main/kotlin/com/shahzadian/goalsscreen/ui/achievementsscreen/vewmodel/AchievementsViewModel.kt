@@ -31,6 +31,12 @@ internal class AchievementsViewModel @Inject constructor(
                     )
                 }
             }
+
+            is AchievementsViewEvent.OnBackIconClicked -> {
+                viewModelScope.launch {
+                    sendViewCommand(AchievementsViewCommand.NavigateBack)
+                }
+            }
         }
     }
 

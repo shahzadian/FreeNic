@@ -74,6 +74,7 @@
     <string name="main_page_home_name">Главная</string>
     <string name="main_page_cravings_name">Тяга</string>
 
+    <string name="achievement_desc_12_months">Вы не курили один год!</string>
     <string name="main_page_insights_name">Аналитика</string>
     <string name="main_page_goals_name">Цели</string>
     <string name="main_page_profile_name">Профиль</string>
@@ -450,5 +451,11 @@
     <string name="profile_clear_all_data_confirmation_subtitle">Это удалит ваш прогресс, историю и инсайты. Вы сможете начать заново в любой момент.</string>
     <string name="profile_clear_all_data_confirmation_submit">Да</string>
     <string name="profile_clear_all_data_confirmation_cancel">Нет</string>
+    <string name="achievement_title_3_months">Новый этап</string>
+    <string name="achievement_desc_3_months">Вы не курили 90 дней!</string>
+    <string name="achievement_title_6_months">Шесть месяцев</string>
+    <string name="achievement_desc_6_months">Вы не курили 6 месяцев!</string>
+    <string name="achievement_title_12_months">Один год</string>
+    <string name="achievements_header_title">Достижения</string>
 
 </resources>

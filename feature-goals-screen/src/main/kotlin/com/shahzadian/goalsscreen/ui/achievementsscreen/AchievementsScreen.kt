@@ -13,6 +13,9 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.AppScreen
+import com.freenic.ui.extensions.HeaderScreen
+import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
 import com.shahzadian.goalsscreen.ui.AchievementsBlockView
 import com.shahzadian.goalsscreen.ui.achievementsscreen.vewmodel.AchievementsViewCommand
 import com.shahzadian.goalsscreen.ui.achievementsscreen.vewmodel.AchievementsViewEvent
@@ -50,6 +53,9 @@ fun AchievementsScreen(
                     is AchievementsViewCommand.NavigateToAchievementShareScreen -> {
                         navController.navigate(AppScreen.AchievementShareScreen.composeRoute(command.id))
                     }
+                    is AchievementsViewCommand.NavigateBack -> {
+                        navController.popBackStack()
+                    }
                 }
             }
     }
@@ -64,9 +70,18 @@ private fun ContentView(
     val onShareClick: (String) -> Unit = remember {
         { onEvent(AchievementsViewEvent.OnAchievementShareClicked(it)) }
     }
-    AchievementsBlockView(
-        data = data.achievementsData,
-        modifier = modifier.padding(16.dp),
-        onAchievementShareClicked = onShareClick,
-    )
+    val onBackIconClick: () -> Unit = remember {
+        { onEvent(AchievementsViewEvent.OnBackIconClicked) }
+    }
+    HeaderScreen(
+        title = TextWrapper.FromRes(R.string.achievements_header_title),
+        hasBackIcon = true,
+        onBackIconClicked = onBackIconClick,
+    ) {
+        AchievementsBlockView(
+            data = data.achievementsData,
+            modifier = modifier.padding(16.dp),
+            onAchievementShareClicked = onShareClick,
+        )
+    }
 }

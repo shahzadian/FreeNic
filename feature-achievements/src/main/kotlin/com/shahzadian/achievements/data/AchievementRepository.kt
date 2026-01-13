@@ -15,6 +15,10 @@ internal interface AchievementRepository {
 internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepository {
 
     override suspend fun getAchievements(): List<Achievement> {
+        return getCigsCountBasedAchievements() + getDayBasedAchievements()
+    }
+
+    private fun getCigsCountBasedAchievements(): List<Achievement> {
         return listOf(
             Achievement(
                 id = "First step",
@@ -37,6 +41,11 @@ internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepo
                 icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_fifty_victories),
                 achievementItem = AchievementItem.Cigs(50),
             ),
+        )
+    }
+
+    private fun getDayBasedAchievements(): List<Achievement> {
+        return listOf(
             Achievement(
                 id = "Stability",
                 name = TextWrapper.FromRes(R.string.achievement_title_stability),
@@ -72,6 +81,13 @@ internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepo
                 icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_month_of_victory),
                 achievementItem = AchievementItem.Days(30),
             ),
+            Achievement(
+                id = "3 months",
+                name = TextWrapper.FromRes(R.string.achievement_title_3_months),
+                description = TextWrapper.FromRes(R.string.achievement_desc_3_months),
+                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_3_months),
+                achievementItem = AchievementItem.Days(90),
+            )
         )
     }
 }
