@@ -53,7 +53,7 @@ internal fun DayCellView(
         verticalArrangement = Arrangement.Top
     ) {
         Text(
-            text = cell.dayText?.let { textFromWrapper(it) } ?: "",
+            text = cell.calendarDayText?.let { textFromWrapper(it) } ?: "",
             style = MaterialTheme.typography.bodyLarge,
             color = when {
                 !cell.isInCurrentMonth -> MaterialTheme.colorScheme.onSecondary.copy(alpha = 0.3f)

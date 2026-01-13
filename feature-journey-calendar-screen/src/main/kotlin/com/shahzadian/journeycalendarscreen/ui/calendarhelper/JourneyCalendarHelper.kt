@@ -9,6 +9,8 @@ import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
 import javax.inject.Inject
@@ -66,11 +68,12 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
                 null
             }
             DayCellUiModel(
-                dayText = if (inCurrentMonth) {
+                calendarDayText = if (inCurrentMonth) {
                     TextWrapper.FromString(dayNumber.toString())
                 } else {
                     null
                 },
+                fullDayText = date?.getFullDayText(),
                 isInCurrentMonth = inCurrentMonth,
                 isToday = date == today,
                 isInSmokeQuitPeriod = date?.isInSmokeQuitPeriod() ?: false,
@@ -94,6 +97,14 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
 
     override suspend fun incrementMonth() {
         currentMonth = currentMonth.plusMonths(1)
+    }
+
+    private fun LocalDate.getFullDayText(): TextWrapper {
+        val formatter = DateTimeFormatter
+            .ofLocalizedDate(FormatStyle.MEDIUM)
+            .withLocale(Locale.getDefault())
+
+        return TextWrapper.FromString(formatter.format(this))
     }
 
     private suspend fun LocalDate.isInSmokeQuitPeriod(): Boolean {

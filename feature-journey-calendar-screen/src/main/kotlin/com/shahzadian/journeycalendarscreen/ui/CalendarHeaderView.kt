@@ -32,22 +32,22 @@ internal fun CalendarHeaderView(
         Icon(
             painter = painterResource(R.drawable.ic_journey_calendar_arrow_prev),
             contentDescription = "prev",
-            tint = MaterialTheme.colorScheme.onSecondary,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier
-                .clickable(onClick = prevClick)
+                .clickable(onClick = prevClick),
         )
 
         Text(
             text = textFromWrapper(title),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.onPrimary,
+            color = MaterialTheme.colorScheme.primary,
             modifier = Modifier,
         )
 
         Icon(
             painter = painterResource(R.drawable.ic_journey_calendar_arrow_next),
             contentDescription = "next",
-            tint = MaterialTheme.colorScheme.onSecondary,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .clickable(onClick = nextClick)
         )

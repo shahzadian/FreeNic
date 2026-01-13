@@ -31,11 +31,15 @@ internal class SavingsEventFinder(
     private fun composeEvent(
         savingsGoal: SavingsGoal,
     ): DayEventUiModel {
-        val displayableCurrency = savingsGoal.currency
-            ?.let { Currency.getInstance(it).symbol } ?: ""
-        val displayableAmount = "${savingsGoal.currentAmount}$displayableCurrency"
+        val displayableCurrency = try {
+            savingsGoal.currency
+                ?.let { Currency.getInstance(it).symbol } ?: ""
+        } catch (t: Throwable) {
+            ""
+        }
+        val displayableAmount = "${savingsGoal.necessaryAmount}$displayableCurrency"
         return DayEventUiModel(
-            title = TextWrapper.FromString(savingsGoal.name),
+            title = TextWrapper.FromRes(R.string.journey_calendar_event_savings_goal_title),
             subtitle = TextWrapper.FromRes(
                 R.string.journey_calendar_event_savings_goal_subtitle,
                 arrayListOf(displayableAmount, savingsGoal.name)

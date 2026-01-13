@@ -14,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -23,7 +25,7 @@ import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.MainToolbarView
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.JourneyCalendarLegendsView
+import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewCommand
 import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewEvent
 import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewModel
@@ -60,6 +62,15 @@ private fun ContentView(
     onEvent: (JourneyCalendarViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var bottomSheetCell: DayCellUiModel? by remember { mutableStateOf(null) }
+    val dayClick: (DayCellUiModel) -> Unit = remember { { cell -> bottomSheetCell = cell } }
+    bottomSheetCell?.let { cell ->
+        EventsBottomSheet(
+            cell = cell,
+            onSheetDismissRequested = { bottomSheetCell = null },
+            modifier = Modifier.fillMaxSize()
+        )
+    }
     Column(
         modifier = modifier
             .padding(16.dp),
@@ -72,7 +83,7 @@ private fun ContentView(
             onBackIconClicked = onBackIconClickEvent,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = 32.dp)
         )
         if (state is JourneyCalendarViewState.Loading) {
             AppLoaderView(
@@ -116,7 +127,9 @@ private fun ContentView(
             ) { _, cell ->
                 Box {
                     DayCellView(
-                        onDayClicked = {},
+                        onDayClicked = {
+                            dayClick(cell)
+                        },
                         cell = cell,
                         modifier = Modifier
                             .fillMaxWidth()

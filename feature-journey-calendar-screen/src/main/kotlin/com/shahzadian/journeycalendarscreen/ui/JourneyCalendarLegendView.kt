@@ -1,4 +1,4 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper
+package com.shahzadian.journeycalendarscreen.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

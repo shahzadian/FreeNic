@@ -433,6 +433,6 @@
     <string name="journey_calendar_event_slip_title">Случился срыв</string>
     <string name="journey_calendar_event_slip_subtitle">В этот день вы покурили</string>
     <string name="journey_calendar_event_savings_goal_title">Цель накоплений достигнута</string>
-    <string name="journey_calendar_event_savings_goal_subtitle">Вы накопили %1$s на цель %1$s</string>
+    <string name="journey_calendar_event_savings_goal_subtitle">Вы накопили %1$s на цель %2$s</string>
 
 </resources>
