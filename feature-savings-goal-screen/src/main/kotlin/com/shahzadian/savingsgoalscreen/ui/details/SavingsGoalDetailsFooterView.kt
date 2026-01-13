@@ -1,5 +1,6 @@
 package com.shahzadian.savingsgoalscreen.ui.details
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -54,9 +55,13 @@ private fun EditButton(
         modifier = modifier
             .height(56.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
+            containerColor = MaterialTheme.colorScheme.background,
         ),
         shape = MaterialTheme.shapes.medium,
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.primary,
+        )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

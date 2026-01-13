@@ -3,7 +3,6 @@ package com.shahzadian.savingsgoalscreen.ui.details
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.ComposeConst
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.wrapper.ImageWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
@@ -37,10 +37,7 @@ internal fun SavingsGoalDetailsCardView(
 ) {
     Column(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = MaterialTheme.shapes.medium,
-            )
+            .mainCardBackground()
             .padding(16.dp),
     ) {
         HeaderView(

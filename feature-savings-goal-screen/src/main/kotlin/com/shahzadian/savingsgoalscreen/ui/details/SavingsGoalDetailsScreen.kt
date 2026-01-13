@@ -104,15 +104,16 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-        SavingsGoalDetailsInfoView(
+        SavingsGoalDetailsFooterView(
+            onEditClicked = editClick,
+            onDeleteClicked = deleteClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-        SavingsGoalDetailsFooterView(
-            onEditClicked = editClick,
-            onDeleteClicked = deleteClick,
-            modifier = Modifier.fillMaxWidth()
+        SavingsGoalDetailsInfoView(
+            modifier = Modifier
+                .fillMaxWidth()
         )
     }
 
