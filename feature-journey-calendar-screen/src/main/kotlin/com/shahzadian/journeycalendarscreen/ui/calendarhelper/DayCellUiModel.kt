@@ -10,6 +10,7 @@ internal data class DayCellUiModel(
     val isInCurrentMonth: Boolean,
     val isInSmokeQuitPeriod: Boolean,
     val isToday: Boolean,
+    val isInFuture: Boolean,
     val events: List<DayEventUiModel>,
 )
 

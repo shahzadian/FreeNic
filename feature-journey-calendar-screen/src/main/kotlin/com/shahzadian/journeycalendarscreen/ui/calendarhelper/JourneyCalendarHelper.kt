@@ -76,6 +76,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
                 fullDayText = date?.getFullDayText(),
                 isInCurrentMonth = inCurrentMonth,
                 isToday = date == today,
+                isInFuture = date?.isAfter(today) ?: false,
                 isInSmokeQuitPeriod = date?.isInSmokeQuitPeriod() ?: false,
                 events = date?.let { localDate ->
                     eventsFinders

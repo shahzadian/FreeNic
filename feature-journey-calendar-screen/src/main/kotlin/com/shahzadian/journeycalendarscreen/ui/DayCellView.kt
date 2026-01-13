@@ -36,17 +36,23 @@ internal fun DayCellView(
                 color = background, shape = MaterialTheme.shapes.small,
             )
             .then(
-                if (cell.isInCurrentMonth) Modifier.clickable(onClick = onDayClicked) else Modifier
+                if (cell.isInCurrentMonth) {
+                    Modifier.clickable(onClick = onDayClicked)
+                } else {
+                    Modifier
+                }
             )
             .then(
-                if (cell.isInSmokeQuitPeriod) {
+                if (cell.isInSmokeQuitPeriod && !cell.isInFuture) {
                     Modifier
                         .border(
                             width = 1.dp,
                             color = MaterialTheme.colorScheme.primary,
                             shape = MaterialTheme.shapes.small,
                         )
-                } else Modifier
+                } else {
+                    Modifier
+                }
             )
             .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
