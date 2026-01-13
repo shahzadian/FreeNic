@@ -409,7 +409,7 @@
     <string name="slip_result_title">Это не отменяет ваш прогресс</string>
     <string name="slip_result_subtitle">Вы не курили %s. Этот опыт по-прежнему имеет значение.</string>
     <string name="slip_result_secondary">Новая серия начинается сейчас - и это нормально.</string>
-    <string name="slip_result_read_motvation_note">Прочитать поддерживающую заметку</string>
+    <string name="slip_result_read_motvation_note">Прочитать заметку</string>
     <string name="slip_result_back_to_dashboard">На главный экран</string>
     <string name="slip_result_hint">Ваш прогресс за всё время, улучшения в здоровье и сэкономленные деньги остаются без изменений.</string>
     <string name="journey_calendar_weekday_monday">Пн</string>
