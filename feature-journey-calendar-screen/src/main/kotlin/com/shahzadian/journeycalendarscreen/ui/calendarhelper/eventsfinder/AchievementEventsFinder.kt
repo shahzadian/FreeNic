@@ -7,6 +7,8 @@ import com.shahzadian.achievements.domain.AchievementItem
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
 import com.shahzadian.baseui.R
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
+import com.shahzadian.user.domain.UserDataHelper
+import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.model.UserData
 import java.time.Instant
@@ -15,13 +17,16 @@ import java.time.LocalDate
 internal class AchievementEventsFinder(
     private val getAchievementsUseCase: GetAchievementsUseCase,
     private val getUserDataUseCase: GetUserDataUseCase,
+    private val userDataHelperFactory: UserDataHelperFactory,
 ) : JourneyCalendarEventsFinder() {
 
     private var _achievements: List<Achievement>? = null
     private var _userData: UserData? = null
+    private var _userDataHelper: UserDataHelper? = null
 
     override suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel> {
         val userData = getUserData() ?: return emptyList()
+        val userDataHelper = getUserDataHelper() ?: return emptyList()
         val achievements = getAchievements()
         return getDayBasedAchievementEvents(
             date = date,
@@ -31,7 +36,38 @@ internal class AchievementEventsFinder(
             date = date,
             achievements = achievements,
             userData = userData,
+        ) + getMoneyBasedAchievementEvents(
+            date = date,
+            achievements = achievements,
+            userData = userData,
+            userDataHelper = userDataHelper,
         )
+    }
+
+    private fun getMoneyBasedAchievementEvents(
+        date: LocalDate,
+        achievements: List<Achievement>,
+        userData: UserData,
+        userDataHelper: UserDataHelper,
+    ): List<DayEventUiModel> {
+        return achievements.mapNotNull { achievement ->
+            val item = achievement.achievementItem as? AchievementItem.Money
+                ?: return@mapNotNull null
+            val necessaryAmount = item.necessaryAmount
+            val quitDate = userData.getQuitDate()
+            val moneyPerDay = userDataHelper.getSavedMoneyPerDay()
+            val necessaryDaysToAchieve = necessaryAmount / moneyPerDay
+            val achievementDay = quitDate.plusDays(necessaryDaysToAchieve.toLong())
+            if (achievementDay != date) return@mapNotNull null
+            DayEventUiModel(
+                title = TextWrapper.FromRes(R.string.journey_calendar_event_achievement_title),
+                subtitle = TextWrapper.FromRes(
+                    R.string.journey_calendar_event_money_based_achievement_subtitle,
+                    args = arrayListOf(item.getDisplayableAmount())
+                ),
+                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_event_achievement)
+            )
+        }
     }
 
     private fun getCigsBasedAchievementEvents(
@@ -97,6 +133,15 @@ internal class AchievementEventsFinder(
             val userData = getUserDataUseCase()
             _userData = userData
             userData
+        }
+    }
+
+    private suspend fun getUserDataHelper(): UserDataHelper? {
+        val userData = getUserData() ?: return null
+        return _userDataHelper ?: let {
+            val helper = userDataHelperFactory.create(userData)
+            _userDataHelper = helper
+            helper
         }
     }
 

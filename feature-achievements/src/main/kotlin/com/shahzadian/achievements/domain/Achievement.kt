@@ -25,7 +25,13 @@ sealed interface AchievementItem {
     class Money(
         val necessaryAmount: Float,
         val currency: Currency,
-    ) : AchievementItem
+    ) : AchievementItem {
+
+        fun getDisplayableAmount(): String {
+            val currency = currency.symbol ?: ""
+            return "$necessaryAmount$currency"
+        }
+    }
 }
 
 sealed interface AchievementState {

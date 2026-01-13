@@ -457,6 +457,7 @@
         <item quantity="one">You skipped %d cigarette</item>
         <item quantity="other">You skipped %d cigarettes</item>
     </plurals>
+    <string name="journey_calendar_event_money_based_achievement_subtitle">You saved %s</string>
     <string name="journey_calendar_event_quit_start_title">Journey started</string>
     <string name="journey_calendar_event_quit_start_subtitle">You decided to quit smoking</string>
     <string name="journey_calendar_event_slip_title">A slip happened</string>

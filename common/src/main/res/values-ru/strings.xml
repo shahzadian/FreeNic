@@ -436,6 +436,7 @@
         <item quantity="few">Вы не выкурили %d сигареты</item>
         <item quantity="other">Вы не выкурили %d сигарет</item>
     </plurals>
+    <string name="journey_calendar_event_money_based_achievement_subtitle">Вы сэкономили %s</string>
     <string name="journey_calendar_event_quit_start_title">Начало пути</string>
     <string name="journey_calendar_event_quit_start_subtitle">Вы решили отказаться от сигарет</string>
     <string name="journey_calendar_event_slip_title">Случился срыв</string>
