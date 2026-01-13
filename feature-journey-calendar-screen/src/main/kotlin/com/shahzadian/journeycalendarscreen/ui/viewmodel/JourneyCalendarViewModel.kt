@@ -44,6 +44,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
             val model = journeyCalendarHelper.getMonth()
             setViewState(
                 state = JourneyCalendarViewState.Data(
+                    hasPreviousMonth = journeyCalendarHelper.hasPreviousMonth(),
                     monthDataUiModel = model,
                 )
             )

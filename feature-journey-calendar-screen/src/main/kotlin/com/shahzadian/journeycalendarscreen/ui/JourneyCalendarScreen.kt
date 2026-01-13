@@ -99,6 +99,7 @@ private fun ContentView(
 
         CalendarHeaderView(
             title = month.monthTitle,
+            hasPreviousMonth = data.hasPreviousMonth,
             onPrevClicked = onPrevMonthEvent,
             onNextClicked = onNextMonthEvent,
             modifier = Modifier

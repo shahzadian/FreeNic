@@ -17,6 +17,8 @@ import javax.inject.Inject
 
 internal interface JourneyCalendarHelper {
 
+    suspend fun hasPreviousMonth(): Boolean
+
     suspend fun getMonth(): MonthDataUiModel
 
     suspend fun decrementMonth()
@@ -36,6 +38,12 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     }
 
     private var _userData: UserData? = null
+
+    override suspend fun hasPreviousMonth(): Boolean {
+        val quitDate = getQuitDate() ?: return false
+        if (quitDate.year < currentMonth.year) return true
+        return quitDate.month < currentMonth.month
+    }
 
     override suspend fun getMonth(): MonthDataUiModel {
         val title = TextWrapper.FromString(
@@ -109,11 +117,14 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     }
 
     private suspend fun LocalDate.isInSmokeQuitPeriod(): Boolean {
-        val userData = getUserData() ?: return false
+        return this >= getQuitDate()
+    }
+
+    private suspend fun getQuitDate(): LocalDate? {
+        val userData = getUserData() ?: return null
         val instant = Instant.ofEpochMilli(userData.quitData.quitDateMillis)
         val zone = ZoneId.systemDefault()
-        val quitDate = instant.atZone(zone).toLocalDate()
-        return this >= quitDate
+        return instant.atZone(zone).toLocalDate()
     }
 
     private suspend fun getUserData(): UserData? {
