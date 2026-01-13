@@ -37,6 +37,7 @@ import com.shahzadian.goalsscreen.ui.achievementsharescreen.cigsbased.CigsBasedM
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedCelebratoryView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedMinimalView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedMotivationalView
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.moneybased.MoneyBasedMinimalView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewCommand
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewModel
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewState
@@ -219,7 +220,20 @@ private fun AchievementShareContentView(
             }
 
             is AchievementUiModel.AchievementItemUiModel.Money -> {
-//                TODO
+                val minimalViewTag = "minimalViewTag"
+                val celebratoryViewTag = "celebratoryViewTag"
+                val motivationalViewTag = "motivationalViewTag"
+                var selectedItemTag: String by remember { mutableStateOf(minimalViewTag) }
+                MoneyBasedMinimalView(
+                    achievementUiModel = data.achievementToShare,
+                    isSelected = selectedItemTag == minimalViewTag,
+                    shouldRecord = shouldRecord && selectedItemTag == minimalViewTag,
+                    onClick = { selectedItemTag = minimalViewTag },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    onRecorded = onBitmapRecord
+                )
             }
         }
     }

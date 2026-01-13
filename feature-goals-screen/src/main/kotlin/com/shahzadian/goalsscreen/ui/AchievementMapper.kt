@@ -44,8 +44,10 @@ internal class AchievementMapperImpl @Inject constructor(
                 }
 
                 is AchievementItem.Money -> {
+                    val item = achievement.achievementItem as AchievementItem.Money
                     AchievementUiModel.AchievementItemUiModel.Money(
-                        necessaryAmount = (achievement.achievementItem as AchievementItem.Money).necessaryAmount
+                        necessaryAmount = item.necessaryAmount,
+                        currency = item.currency.symbol
                     )
                 }
             }

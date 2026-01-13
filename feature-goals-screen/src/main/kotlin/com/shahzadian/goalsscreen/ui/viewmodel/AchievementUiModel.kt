@@ -48,7 +48,11 @@ internal data class AchievementUiModel(
 
         data class Money(
             val necessaryAmount: Float,
-        ) : AchievementItemUiModel
+            val currency: String,
+        ) : AchievementItemUiModel {
+
+            fun displayableAmount(): String = "$necessaryAmount$currency"
+        }
 
         interface CountBasedUiModel {
             val count: Int

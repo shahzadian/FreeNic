@@ -2,6 +2,7 @@ package com.shahzadian.achievements.domain
 
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
+import java.util.Currency
 
 class Achievement(
     val id: String,
@@ -23,6 +24,7 @@ sealed interface AchievementItem {
 
     class Money(
         val necessaryAmount: Float,
+        val currency: Currency,
     ) : AchievementItem
 }
 
