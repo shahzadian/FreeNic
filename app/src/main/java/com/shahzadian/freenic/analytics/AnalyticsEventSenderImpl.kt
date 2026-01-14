@@ -1,12 +1,19 @@
 package com.shahzadian.freenic.analytics
 
+import android.util.Log
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventSender
-import javax.inject.Inject
 
-internal class AnalyticsEventSenderImpl @Inject constructor() : AnalyticsEventSender {
+internal class AnalyticsEventSenderProd : AnalyticsEventSender {
 
     override fun send(event: AnalyticsEvent) {
-        TODO("Not yet implemented")
+
+    }
+}
+
+internal class AnalyticsEventSenderDebug : AnalyticsEventSender {
+
+    override fun send(event: AnalyticsEvent) {
+        Log.d("analytics", "Event: ${event.name}, params: ${event.params}")
     }
 }

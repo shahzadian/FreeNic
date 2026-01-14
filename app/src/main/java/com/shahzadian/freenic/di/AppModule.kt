@@ -3,7 +3,8 @@ package com.shahzadian.freenic.di
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.domain.ClearAppDataUseCase
 import com.freenic.ui.appinfo.AppInfoHelper
-import com.shahzadian.freenic.analytics.AnalyticsEventSenderImpl
+import com.shahzadian.freenic.analytics.AnalyticsEventSenderDebug
+import com.shahzadian.freenic.analytics.AnalyticsEventSenderProd
 import com.shahzadian.freenic.appinfohelper.AppInfoHelperImpl
 import com.shahzadian.freenic.domain.clearappdata.ClearAppDataUseCaseImpl
 import com.shahzadian.freenic.domain.clearappdata.appclearabledata.AppClearableDataFactory
@@ -12,6 +13,7 @@ import com.shahzadian.freenic.navigation.AppNavigatorFactory
 import com.shahzadian.freenic.navigation.AppNavigatorFactoryImpl
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
@@ -30,9 +32,20 @@ internal interface AppModule {
     fun bindClearAppDataUseCase(impl: ClearAppDataUseCaseImpl): ClearAppDataUseCase
 
     @Binds
-    @Singleton
-    fun bindAnalyticsEventSender(impl: AnalyticsEventSenderImpl): AnalyticsEventSender
-
-    @Binds
     fun bindAppNavigatorFactory(impl: AppNavigatorFactoryImpl): AppNavigatorFactory
+
+    companion object {
+
+        @Provides
+        @Singleton
+        fun provideAnalyticsEventSender(
+            appInfoHelper: AppInfoHelper
+        ): AnalyticsEventSender {
+            return if (appInfoHelper.isDebugBuild()) {
+                AnalyticsEventSenderDebug()
+            } else {
+                AnalyticsEventSenderProd()
+            }
+        }
+    }
 }
