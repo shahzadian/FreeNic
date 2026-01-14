@@ -25,7 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.mainGradientBackground
@@ -35,7 +35,7 @@ import com.shahzadian.welcomescreen.ui.UiUtils.DURATION_ANIMATION_VISIBILITY
 
 @Composable
 fun WelcomeScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: WelcomeViewModel = hiltViewModel()
@@ -66,7 +66,7 @@ fun WelcomeScreen(
             .collect { command ->
                 when (command) {
                     is WelcomeViewCommand.Navigate -> {
-                        navController.navigate(command.screen.route) {
+                        navigator.navigateToScreen(command.screen) {
                             if (!command.keepInStack) {
                                 popUpTo(AppScreen.WelcomeScreen.route) {
                                     inclusive = true

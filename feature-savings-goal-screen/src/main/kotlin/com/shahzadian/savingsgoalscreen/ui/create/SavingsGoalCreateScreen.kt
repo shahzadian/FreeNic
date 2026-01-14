@@ -40,7 +40,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
@@ -64,7 +64,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SavingsGoalCreateScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: SavingsGoalCreateViewModel = hiltViewModel()
@@ -90,7 +90,7 @@ fun SavingsGoalCreateScreen(
             .collect { command ->
                 when (command) {
                     is SavingsGoalCreateViewCommand.NavigateBack -> {
-                        navController.popBackStack()
+                        navigator.navigateBack()
                     }
                 }
             }

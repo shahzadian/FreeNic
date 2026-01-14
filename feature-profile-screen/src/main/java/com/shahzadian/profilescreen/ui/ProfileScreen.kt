@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.TextWrapper
@@ -35,7 +35,7 @@ import com.shahzadian.profilescreen.ui.viewmodel.ProfileViewState
 
 @Composable
 fun ProfileScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: ProfileViewModel = hiltViewModel()
@@ -56,7 +56,7 @@ fun ProfileScreen(
             .collect { command ->
                 when (command) {
                     is ProfileViewCommand.NavigateTo -> {
-                        navController.navigate(command.screen.route) {
+                        navigator.navigateToScreen(command.screen) {
                             popUpTo(AppScreen.WelcomeScreen.route) { inclusive = true }
                         }
                     }

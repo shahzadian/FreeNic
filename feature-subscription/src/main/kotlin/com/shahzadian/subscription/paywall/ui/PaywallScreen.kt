@@ -31,7 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
@@ -44,7 +44,7 @@ import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewState
 
 @Composable
 fun PaywallScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: PaywallViewModel = hiltViewModel()
@@ -69,7 +69,7 @@ fun PaywallScreen(
     LaunchedEffect(viewModel.viewCommandFlow) {
         viewModel.viewCommandFlow.collect { command ->
             when (command) {
-                is PaywallViewCommand.NavigateBack -> navController.popBackStack()
+                is PaywallViewCommand.NavigateBack -> navigator.navigateBack()
             }
         }
     }

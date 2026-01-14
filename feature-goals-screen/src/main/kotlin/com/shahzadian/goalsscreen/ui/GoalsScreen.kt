@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.HeaderScreen
@@ -30,7 +30,7 @@ import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
 
 @Composable
 fun GoalsScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     LocalView.current
@@ -57,11 +57,11 @@ fun GoalsScreen(
             .collect { command ->
                 when (command) {
                     is GoalsViewCommand.NavigateTo -> {
-                        navController.navigate(command.appScreen.route)
+                        navigator.navigateToScreen(command.appScreen)
                     }
 
                     is GoalsViewCommand.NavigateToAchievementShareScreen -> {
-                        navController.navigate(AppScreen.AchievementShareScreen.composeRoute(command.id))
+                        navigator.navigateToRoute(AppScreen.AchievementShareScreen.composeRoute(command.id))
                     }
                 }
             }

@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
@@ -36,11 +36,11 @@ import java.io.FileOutputStream
 
 @Composable
 fun SavingsGoalShareScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val backClick: () -> Unit = remember {
-        { navController.popBackStack() }
+        { navigator.navigateBack() }
     }
     val viewModel: SavingsGoalShareViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()

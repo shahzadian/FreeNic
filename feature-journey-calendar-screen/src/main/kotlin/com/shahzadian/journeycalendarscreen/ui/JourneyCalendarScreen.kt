@@ -20,7 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.MainToolbarView
 import com.freenic.ui.wrapper.TextWrapper
@@ -33,7 +33,7 @@ import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewStat
 
 @Composable
 fun JourneyCalendarScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier
 ) {
     val viewModel: JourneyCalendarViewModel = hiltViewModel()
@@ -49,7 +49,7 @@ fun JourneyCalendarScreen(
             .collect { command ->
                 when (command) {
                     is JourneyCalendarViewCommand.NavigateBack -> {
-                        navController.popBackStack()
+                        navigator.navigateBack()
                     }
                 }
             }

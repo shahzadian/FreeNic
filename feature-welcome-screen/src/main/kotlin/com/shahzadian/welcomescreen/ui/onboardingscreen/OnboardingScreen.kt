@@ -33,7 +33,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.mainGradientBackground
@@ -50,7 +50,7 @@ private const val DELAY_ANIMATION_TEXT_SLIDE: Int = 1000
 
 @Composable
 fun OnboardingScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: OnboardingViewModel = hiltViewModel()
@@ -78,7 +78,7 @@ fun OnboardingScreen(
             .collect { command ->
                 when (command) {
                     is OnboardingViewCommand.NavigateTo -> {
-                        navController.navigate(command.screen.route)
+                        navigator.navigateToScreen(command.screen)
                     }
                 }
             }

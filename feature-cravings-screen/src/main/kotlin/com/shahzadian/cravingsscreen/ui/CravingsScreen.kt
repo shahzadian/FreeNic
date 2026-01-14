@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.shahzadian.cravingsscreen.R
 import com.shahzadian.cravingsscreen.ui.viewmodel.CravingsViewCommand
 import com.shahzadian.cravingsscreen.ui.viewmodel.CravingsViewModel
@@ -31,7 +31,7 @@ import com.shahzadian.cravingsscreen.ui.viewmodel.CravingsViewState
 
 @Composable
 fun CravingsScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: CravingsViewModel = hiltViewModel()
@@ -51,7 +51,7 @@ fun CravingsScreen(
             .collect { command ->
                 when (command) {
                     is CravingsViewCommand.NavigateTo -> {
-                        navController.navigate(command.screen.route)
+                        navigator.navigateToScreen(command.screen)
                     }
                 }
             }

@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.theme.Smoke
 import com.freenic.ui.wrapper.TextWrapper
@@ -35,7 +35,7 @@ import com.shahzadian.datafill.ui.pages.result.DataFillResultPage
 
 @Composable
 fun DataFillScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: DataFillViewModel = hiltViewModel()
@@ -73,7 +73,7 @@ fun DataFillScreen(
             .collect { command ->
                 when (command) {
                     is DataFillCommand.NavigateTo -> {
-                        navController.navigate(command.screen.route)
+                        navigator.navigateToScreen(command.screen)
                     }
                 }
             }

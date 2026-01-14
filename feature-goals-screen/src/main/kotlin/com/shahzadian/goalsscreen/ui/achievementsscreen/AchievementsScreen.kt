@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.HeaderScreen
@@ -22,7 +22,7 @@ import com.shahzadian.goalsscreen.ui.achievementsscreen.vewmodel.AchievementsVie
 
 @Composable
 fun AchievementsScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: AchievementsViewModel = hiltViewModel()
@@ -49,10 +49,10 @@ fun AchievementsScreen(
             .collect { command ->
                 when (command) {
                     is AchievementsViewCommand.NavigateToAchievementShareScreen -> {
-                        navController.navigate(AppScreen.AchievementShareScreen.composeRoute(command.id))
+                        navigator.navigateToRoute(AppScreen.AchievementShareScreen.composeRoute(command.id))
                     }
                     is AchievementsViewCommand.NavigateBack -> {
-                        navController.popBackStack()
+                        navigator.navigateBack()
                     }
                 }
             }

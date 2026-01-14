@@ -20,8 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.mainscreen.R
@@ -29,7 +28,7 @@ import com.shahzadian.mainscreen.ui.model.MainScreenItemUiModel
 
 @Composable
 fun MainBottomBar(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: MainViewModel = hiltViewModel()
@@ -46,7 +45,7 @@ fun MainBottomBar(
             )
             NavBarView(
                 pages = pages,
-                navController = navController,
+                navigator = navigator,
             )
         }
     }
@@ -55,17 +54,16 @@ fun MainBottomBar(
 @Composable
 private fun NavBarView(
     pages: List<MainScreenItemUiModel>,
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
-    val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = backStackEntry?.destination?.route
+    val currentRoute = navigator.currentRoute()
     NavigationBar(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
     ) {
         pages.forEach { item ->
-            val isSelected = currentRoute == item.route
+            val isSelected = currentRoute == item.screen.route
             NavigationBarItem(
                 selected = isSelected,
                 colors = NavigationBarItemDefaults.colors(
@@ -77,7 +75,7 @@ private fun NavBarView(
                 ),
                 onClick = {
                     if (!isSelected) {
-                        navController.navigate(item.route) {
+                        navigator.navigateToScreen(item.screen) {
                             launchSingleTop = true
                             restoreState = true
                         }

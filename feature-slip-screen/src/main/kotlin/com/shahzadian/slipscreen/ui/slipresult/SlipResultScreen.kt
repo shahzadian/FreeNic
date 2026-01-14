@@ -34,7 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.mainHintBackground
 import com.shahzadian.slipscreen.R
@@ -45,7 +45,7 @@ import com.shahzadian.slipscreen.ui.slipresult.viewmodel.SlipResultViewState
 
 @Composable
 fun SlipResultScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: SlipResultViewModel = hiltViewModel()
@@ -71,7 +71,7 @@ fun SlipResultScreen(
             .collect { command ->
                 when (command) {
                     is SlipResultViewCommand.NavigateTo -> {
-                        navController.navigate(command.screen.route)
+                        navigator.navigateToScreen(command.screen)
                     }
                 }
             }

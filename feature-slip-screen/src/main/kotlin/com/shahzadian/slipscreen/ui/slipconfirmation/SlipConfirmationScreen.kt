@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.screenHeight
 import com.freenic.ui.wrapper.TextWrapper
@@ -40,7 +40,7 @@ import com.shahzadian.slipscreen.ui.slipconfirmation.viewmodel.SlipConfirmationV
 
 @Composable
 fun SlipConfirmationScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: SLipConfirmationViewModel = hiltViewModel()
@@ -60,11 +60,11 @@ fun SlipConfirmationScreen(
             .collect { command ->
                 when (command) {
                     is SlipConfirmationViewCommand.NavigateBack -> {
-                        navController.popBackStack()
+                        navigator.navigateBack()
                     }
 
                     is SlipConfirmationViewCommand.NavigateTo -> {
-                        navController.navigate(command.screen.route)
+                        navigator.navigateToScreen(command.screen)
                     }
                 }
             }

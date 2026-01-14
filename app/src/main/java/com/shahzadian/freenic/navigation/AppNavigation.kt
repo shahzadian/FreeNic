@@ -55,10 +55,17 @@ import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
 @Composable
 fun AppNavigation(
     targetScreen: String?,
+    appNavigatorFactory: AppNavigatorFactory,
 ) {
     val navController = rememberNavController()
     // Keep explicit remembered state for bottom bar visibility to avoid timing issues
     val showBottomBarState = remember { mutableStateOf(false) }
+
+    val appNavigator = remember {
+        appNavigatorFactory.create(
+            navController = navController,
+        )
+    }
 
     val bottomBarRoutes = remember {
         AppScreen
@@ -109,7 +116,9 @@ fun AppNavigation(
                             targetOffsetY = { it / 3 }
                         )
             ) {
-                MainBottomBar(navController = navController)
+                MainBottomBar(
+                    navigator = appNavigator,
+                )
             }
         }
     ) { innerPadding ->
@@ -131,19 +140,19 @@ fun AppNavigation(
                 )
             ) {
                 WelcomeScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
             composable(route = AppScreen.OnboardingScreen.route) {
                 OnboardingScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
             composable(route = AppScreen.DataFillScreen.route) {
                 DataFillScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -153,7 +162,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 MainScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                 )
             }
             composable(
@@ -162,7 +171,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 DashboardScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -174,7 +183,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 CravingsScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -183,7 +192,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 BreatheExerciseScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                 )
             }
             composable(
@@ -192,7 +201,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 DistractionActivityScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                 )
             }
             composable(
@@ -201,7 +210,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 GuessShapeScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -212,7 +221,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 ProfileScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -223,7 +232,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 PaywallScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -234,7 +243,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 GoalsScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -252,7 +261,7 @@ fun AppNavigation(
                 )
             ) {
                 SavingsGoalCreateScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -263,7 +272,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 SavingsGoalDetailsScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -274,7 +283,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 SavingsGoalShareScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -285,7 +294,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 AchievementsScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -301,7 +310,7 @@ fun AppNavigation(
                 )
             ) { _ ->
                 AchievementShareScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -332,7 +341,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 MotivationalNotesScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -343,7 +352,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 SlipConfirmationScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -354,7 +363,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 SlipReasonScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -365,7 +374,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 SlipResultScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }
@@ -376,7 +385,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 JourneyCalendarScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }

@@ -27,7 +27,7 @@ internal class MainViewModel @Inject constructor(
                 MainScreenItemUiModel(
                     title = it.name,
                     icon = it.icon,
-                    route = it.screen.route,
+                    screen = it.screen,
                     isPaid = it.screen.shouldShowWithPremiumIcon()
                 )
             }

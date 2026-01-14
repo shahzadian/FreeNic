@@ -25,7 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.textFromWrapper
@@ -48,7 +48,7 @@ import java.io.FileOutputStream
 
 @Composable
 fun AchievementShareScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: AchievementShareViewModel = hiltViewModel()
@@ -82,7 +82,7 @@ fun AchievementShareScreen(
                     }
 
                     is AchievementShareViewCommand.NavigateBack -> {
-                        navController.popBackStack()
+                        navigator.navigateBack()
                     }
                 }
             }

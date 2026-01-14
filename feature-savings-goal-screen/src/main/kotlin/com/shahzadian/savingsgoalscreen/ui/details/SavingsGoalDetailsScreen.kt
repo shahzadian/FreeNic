@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.HeaderScreen
@@ -32,7 +32,7 @@ import com.shahzadian.savingsgoalscreen.ui.details.viewmodel.SavingsGoalDetailsV
 
 @Composable
 fun SavingsGoalDetailsScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: SavingsGoalDetailsViewModel = hiltViewModel()
@@ -47,15 +47,13 @@ fun SavingsGoalDetailsScreen(
         is SavingsGoalDetailsViewState.Data -> {
             ContentView(
                 data = (state as SavingsGoalDetailsViewState.Data),
-                onBackIconClicked = { navController.popBackStack() },
+                onBackIconClicked = { navigator.navigateBack() },
                 onShareClicked = {
-                    navController.navigate(AppScreen.SavingsGoalShareScreen.route)
+                    navigator.navigateToScreen(AppScreen.SavingsGoalShareScreen)
                 },
                 onEditClicked = {
                     // Navigate to create screen in edit mode
-                    navController.navigate(
-                        AppScreen.SavingsGoalCreateScreen.composeRoute(true)
-                    )
+                    navigator.navigateToRoute(AppScreen.SavingsGoalCreateScreen.composeRoute(true))
                 },
                 onDeleteClicked = {
                     viewModel.onViewEvent(SavingsGoalDetailsViewEvent.OnDeleteClicked)
@@ -68,7 +66,7 @@ fun SavingsGoalDetailsScreen(
     LaunchedEffect(viewModel.viewCommandFlow) {
         viewModel.viewCommandFlow.collect { command ->
             when (command) {
-                is SavingsGoalDetailsViewCommand.NavigateBack -> navController.popBackStack()
+                is SavingsGoalDetailsViewCommand.NavigateBack -> navigator.navigateBack()
             }
         }
     }

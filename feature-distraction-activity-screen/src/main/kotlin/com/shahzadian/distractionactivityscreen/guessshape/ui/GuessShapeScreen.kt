@@ -12,14 +12,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.shahzadian.distractionactivityscreen.guessshape.ui.viewmodel.GuessShapeViewEvent
 import com.shahzadian.distractionactivityscreen.guessshape.ui.viewmodel.GuessShapeViewModel
 import com.shahzadian.distractionactivityscreen.guessshape.ui.viewmodel.GuessShapeViewState
 
 @Composable
 fun GuessShapeScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: GuessShapeViewModel = hiltViewModel()
@@ -66,7 +66,7 @@ fun GuessShapeScreen(
                         onEvent(GuessShapeViewEvent.OnRestartClicked)
                     },
                     onCloseClicked = {
-                        navController.popBackStack()
+                        navigator.navigateBack()
                     },
                     modifier = modifier
                         .fillMaxWidth()

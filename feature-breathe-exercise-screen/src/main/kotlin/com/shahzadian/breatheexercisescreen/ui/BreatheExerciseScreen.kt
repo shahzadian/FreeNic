@@ -41,7 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.screenHeight
 import com.freenic.ui.extensions.textFromWrapper
@@ -68,7 +68,7 @@ internal fun breatheExerciseBackground(): Brush {
 
 @Composable
 fun BreatheExerciseScreen(
-    navController: NavController,
+    navigator: AppNavigator,
 ) {
     val viewModel: BreatheExerciseViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()
@@ -106,7 +106,7 @@ fun BreatheExerciseScreen(
             .collect { command ->
                 when (command) {
                     is BreatheExerciseViewCommand.NavigateBack -> {
-                        navController.navigateUp()
+                        navigator.navigateUp()
                     }
                 }
             }

@@ -10,6 +10,7 @@ import com.freenic.ui.model.CoroutineContexts
 import com.freenic.ui.theme.FreeNicTheme
 import com.shahzadian.ad.AdHelper
 import com.shahzadian.freenic.navigation.AppNavigation
+import com.shahzadian.freenic.navigation.AppNavigatorFactory
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -32,6 +33,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase
 
+    @Inject
+    lateinit var appNavigatorFactory: AppNavigatorFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,6 +45,7 @@ class MainActivity : ComponentActivity() {
             FreeNicTheme {
                 AppNavigation(
                     targetScreen = targetScreen,
+                    appNavigatorFactory = appNavigatorFactory,
                 )
             }
         }

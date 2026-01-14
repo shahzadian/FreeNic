@@ -16,7 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.MainToolbarView
 import com.freenic.ui.extensions.screenHeight
@@ -27,11 +27,11 @@ import com.shahzadian.motivationalnotesscreen.ui.viewmodel.MotivationalNotesView
 
 @Composable
 fun MotivationalNotesScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val onBackIconClicked: () -> Unit = remember {
-        { navController.popBackStack() }
+        { navigator.navigateBack() }
     }
     val viewModel: MotivationalNotesViewModel = hiltViewModel()
     val state by viewModel.viewStateFlow.collectAsState()

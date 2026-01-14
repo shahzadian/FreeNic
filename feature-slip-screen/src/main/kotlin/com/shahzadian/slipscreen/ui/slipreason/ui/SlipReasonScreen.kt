@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.MainToolbarView
@@ -35,7 +35,7 @@ import com.shahzadian.slipscreen.ui.slipreason.ui.viewmodel.SlipReasonViewState
 
 @Composable
 fun SlipReasonScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: SlipReasonViewModel = hiltViewModel()
@@ -51,7 +51,7 @@ fun SlipReasonScreen(
             ContentView(
                 data = (state as SlipReasonViewState.Data),
                 onBackIconClicked = {
-                    navController.popBackStack()
+                    navigator.navigateBack()
                 },
                 onEvent = viewModel::onViewEvent,
                 modifier = modifier.fillMaxSize()
@@ -64,11 +64,11 @@ fun SlipReasonScreen(
             .collect { command ->
                 when (command) {
                     is SlipReasonViewCommand.NavigateBack -> {
-                        navController.popBackStack()
+                        navigator.navigateBack()
                     }
 
                     is SlipReasonViewCommand.NavigateTo -> {
-                        navController.navigate(command.screen.route)
+                        navigator.navigateToScreen(command.screen)
                     }
                 }
             }
