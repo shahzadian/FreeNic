@@ -1,8 +1,8 @@
 package com.shahzadian.freenic.analytics
 
-import android.util.Log
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.logger.AppLogger
 
 internal class AnalyticsEventSenderProd : AnalyticsEventSender {
 
@@ -11,9 +11,11 @@ internal class AnalyticsEventSenderProd : AnalyticsEventSender {
     }
 }
 
-internal class AnalyticsEventSenderDebug : AnalyticsEventSender {
+internal class AnalyticsEventSenderDebug(
+    private val appLogger: AppLogger,
+) : AnalyticsEventSender {
 
     override fun send(event: AnalyticsEvent) {
-        Log.d("analytics", "Event: ${event.name}, params: ${event.params}")
+        appLogger.logDebug("analytics", "Event: ${event.name}, params: ${event.params}")
     }
 }
