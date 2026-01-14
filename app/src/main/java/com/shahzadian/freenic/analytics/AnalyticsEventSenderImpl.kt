@@ -1,5 +1,7 @@
 package com.shahzadian.freenic.analytics
 
+import android.content.Context
+import android.os.Bundle
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEvent.EventParams.PARAM_APP_BUILD_NUMBER
 import com.freenic.analytics.AnalyticsEvent.EventParams.PARAM_APP_VERSION
@@ -9,6 +11,7 @@ import com.freenic.logger.AppLogger
 import com.freenic.ui.appinfo.AppInfoHelper
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.model.CoroutineContexts
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -23,16 +26,31 @@ internal abstract class BaseAnalyticsEventSender(
         CoroutineScope(coroutineContexts.io)
     }
 
-    protected suspend fun composeBaseParams(): Map<String, Any> {
+    final override fun send(event: AnalyticsEvent) {
+        launchInScope {
+            val params = composeBaseParams() + event.params
+            sendEvent(
+                eventName = event.name,
+                params = params,
+            )
+        }
+    }
+
+    protected abstract fun sendEvent(
+        eventName: String,
+        params: Map<String, AnalyticsEvent.PropertyType<*>>,
+    )
+
+    protected suspend fun composeBaseParams(): Map<String, AnalyticsEvent.PropertyType<*>> {
         val currentSubscription = getUserCurrentSubscriptionUseCase()?.id
             ?: AnalyticsEvent.EventParams.PARAM_VALUE_SUBSCRIPTION_ID_NO_SUBSCRIPTION
         val (appVersion, buildNumber) = appInfoHelper.getAppVersion().let {
             it.versionName to it.buildNumber
         }
         return mapOf(
-            PARAM_APP_VERSION to appVersion,
-            PARAM_APP_BUILD_NUMBER to buildNumber,
-            PARAM_SUBSCRIPTION_ID to currentSubscription
+            PARAM_APP_VERSION to AnalyticsEvent.PropertyType.StringProperty(appVersion),
+            PARAM_APP_BUILD_NUMBER to AnalyticsEvent.PropertyType.IntProperty(buildNumber),
+            PARAM_SUBSCRIPTION_ID to AnalyticsEvent.PropertyType.StringProperty(currentSubscription)
         )
     }
 
@@ -42,6 +60,7 @@ internal abstract class BaseAnalyticsEventSender(
 }
 
 internal class AnalyticsEventSenderProd(
+    private val context: Context,
     getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     appInfoHelper: AppInfoHelper,
     coroutineContexts: CoroutineContexts,
@@ -51,8 +70,20 @@ internal class AnalyticsEventSenderProd(
     coroutineContexts = coroutineContexts,
 ) {
 
-    override fun send(event: AnalyticsEvent) {
+    private val firebaseAnalytics by lazyUnsafe {
+        FirebaseAnalytics.getInstance(context)
+    }
 
+    override fun sendEvent(
+        eventName: String,
+        params: Map<String, AnalyticsEvent.PropertyType<*>>
+    ) {
+        val bundle = Bundle()
+            .apply {
+                params.forEach { (key, value) ->
+                    value.putIntoBundle(key, this)
+                }
+            }
     }
 }
 
@@ -67,10 +98,7 @@ internal class AnalyticsEventSenderDebug(
     coroutineContexts = coroutineContexts,
 ) {
 
-    override fun send(event: AnalyticsEvent) {
-        launchInScope {
-            val params = composeBaseParams() + event.params
-            appLogger.logDebug("analytics", "Event: ${event.name}, params: $params")
-        }
+    override fun sendEvent(eventName: String, params: Map<String, AnalyticsEvent.PropertyType<*>>) {
+        appLogger.logDebug("analytics", "Event: ${eventName}, params: $params")
     }
 }

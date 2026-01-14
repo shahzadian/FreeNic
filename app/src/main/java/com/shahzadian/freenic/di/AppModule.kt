@@ -1,5 +1,6 @@
 package com.shahzadian.freenic.di
 
+import android.content.Context
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.domain.ClearAppDataUseCase
 import com.freenic.logger.AppLogger
@@ -19,6 +20,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -50,6 +52,8 @@ internal interface AppModule {
             appLogger: AppLogger,
             getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
             coroutineContexts: CoroutineContexts,
+            @ApplicationContext
+            context: Context,
         ): AnalyticsEventSender {
             return if (appInfoHelper.isDebugBuild()) {
                 AnalyticsEventSenderDebug(
@@ -60,6 +64,7 @@ internal interface AppModule {
                 )
             } else {
                 AnalyticsEventSenderProd(
+                    context = context,
                     getUserCurrentSubscriptionUseCase = getUserCurrentSubscriptionUseCase,
                     appInfoHelper = appInfoHelper,
                     coroutineContexts = coroutineContexts,

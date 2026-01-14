@@ -71,8 +71,12 @@ internal class AppNavigatorImpl(
             AnalyticsEvent(
                 name = AnalyticsEvent.EventNames.SCREEN_VIEW,
                 params = mapOf(
-                    AnalyticsEvent.EventParams.PARAM_SCREEN_NAME to screenName,
-                    AnalyticsEvent.EventParams.PARAM_NAV_IS_BACK to isBack,
+                    AnalyticsEvent.EventParams.PARAM_SCREEN_NAME to AnalyticsEvent.PropertyType.StringProperty(
+                        screenName
+                    ),
+                    AnalyticsEvent.EventParams.PARAM_NAV_IS_BACK to AnalyticsEvent.PropertyType.BooleanProperty(
+                        isBack
+                    ),
                 )
             )
         )
