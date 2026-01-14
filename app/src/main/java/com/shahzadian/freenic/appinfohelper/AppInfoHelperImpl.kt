@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 internal class AppInfoHelperImpl @Inject constructor() : AppInfoHelper {
 
-    override suspend fun getAppVersion(): AppVersion {
+    override fun getAppVersion(): AppVersion {
         return AppVersion(
             versionName = BuildConfig.VERSION_NAME,
             buildNumber = BuildConfig.VERSION_CODE

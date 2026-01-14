@@ -29,10 +29,22 @@ internal class AppNavigatorImpl(
 
     override fun navigateBack() {
         navController.popBackStack()
+        navController.currentBackStack.value.lastOrNull()?.destination?.route?.let {
+            trackScreenView(
+                screenName = it,
+                isBack = true,
+            )
+        }
     }
 
     override fun navigateUp() {
         navController.navigateUp()
+        navController.currentBackStack.value.lastOrNull()?.destination?.route?.let {
+            trackScreenView(
+                screenName = it,
+                isBack = true,
+            )
+        }
     }
 
     override fun navigateToRoute(
@@ -51,11 +63,17 @@ internal class AppNavigatorImpl(
         trackScreenView(route)
     }
 
-    private fun trackScreenView(screenName: String) {
+    private fun trackScreenView(
+        screenName: String,
+        isBack: Boolean = false
+    ) {
         analyticsEventSender.send(
             AnalyticsEvent(
                 name = AnalyticsEvent.EventNames.SCREEN_VIEW,
-                params = mapOf(AnalyticsEvent.EventParams.SCREEN_NAME to screenName)
+                params = mapOf(
+                    AnalyticsEvent.EventParams.PARAM_SCREEN_NAME to screenName,
+                    AnalyticsEvent.EventParams.PARAM_NAV_IS_BACK to isBack,
+                )
             )
         )
     }

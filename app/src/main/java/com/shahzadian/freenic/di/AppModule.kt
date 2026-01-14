@@ -4,6 +4,7 @@ import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.domain.ClearAppDataUseCase
 import com.freenic.logger.AppLogger
 import com.freenic.ui.appinfo.AppInfoHelper
+import com.freenic.ui.model.CoroutineContexts
 import com.shahzadian.freenic.analytics.AnalyticsEventSenderDebug
 import com.shahzadian.freenic.analytics.AnalyticsEventSenderProd
 import com.shahzadian.freenic.appinfohelper.AppInfoHelperImpl
@@ -13,6 +14,7 @@ import com.shahzadian.freenic.domain.clearappdata.appclearabledata.AppClearableD
 import com.shahzadian.freenic.logger.AppLoggerImpl
 import com.shahzadian.freenic.navigation.AppNavigatorFactory
 import com.shahzadian.freenic.navigation.AppNavigatorFactoryImpl
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -46,13 +48,22 @@ internal interface AppModule {
         fun provideAnalyticsEventSender(
             appInfoHelper: AppInfoHelper,
             appLogger: AppLogger,
+            getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
+            coroutineContexts: CoroutineContexts,
         ): AnalyticsEventSender {
             return if (appInfoHelper.isDebugBuild()) {
                 AnalyticsEventSenderDebug(
                     appLogger = appLogger,
+                    getUserCurrentSubscriptionUseCase = getUserCurrentSubscriptionUseCase,
+                    appInfoHelper = appInfoHelper,
+                    coroutineContexts = coroutineContexts,
                 )
             } else {
-                AnalyticsEventSenderProd()
+                AnalyticsEventSenderProd(
+                    getUserCurrentSubscriptionUseCase = getUserCurrentSubscriptionUseCase,
+                    appInfoHelper = appInfoHelper,
+                    coroutineContexts = coroutineContexts,
+                )
             }
         }
     }
