@@ -3,6 +3,8 @@ package com.shahzadian.datafill.ui
 import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
 import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventNames
+import com.freenic.analytics.AnalyticsEventParams
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
@@ -216,13 +218,13 @@ internal class DataFillViewModel @Inject constructor(
 
     private fun createAnalyticsEvent(userData: UserData): AnalyticsEvent {
         return AnalyticsEvent(
-            name = AnalyticsEvent.EventNames.EVENT_USER_REGISTERED,
+            name = AnalyticsEventNames.REGISTRATION_FINISH,
             params = mapOf(
-                AnalyticsEvent.EventParams.PARAM_AGE to userData.personalData.age.asAnalyticsProperty(),
-                AnalyticsEvent.EventParams.PARAM_IS_QUIT_TODAY to DateUtils.isToday(userData.quitData.quitDateMillis)
+                AnalyticsEventParams.PARAM_AGE to userData.personalData.age.asAnalyticsProperty(),
+                AnalyticsEventParams.PARAM_IS_QUIT_TODAY to DateUtils.isToday(userData.quitData.quitDateMillis)
                     .asAnalyticsProperty(),
-                AnalyticsEvent.EventParams.PARAM_CIGS_PER_DAY to userData.cigarettesData.cigarettesPerDay.asAnalyticsProperty(),
-                AnalyticsEvent.EventParams.PARAM_PACK_PRICE to userData.cigarettesData.priceData.price.asAnalyticsProperty(),
+                AnalyticsEventParams.PARAM_CIGS_PER_DAY to userData.cigarettesData.cigarettesPerDay.asAnalyticsProperty(),
+                AnalyticsEventParams.PARAM_PACK_PRICE to userData.cigarettesData.priceData.price.asAnalyticsProperty(),
             )
         )
     }

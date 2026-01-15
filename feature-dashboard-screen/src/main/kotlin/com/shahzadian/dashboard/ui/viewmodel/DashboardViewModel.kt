@@ -1,6 +1,9 @@
 package com.shahzadian.dashboard.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventNames
+import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -21,6 +24,7 @@ internal class DashboardViewModel @Inject constructor(
     private val getCravingToolsUseCase: GetCravingToolsUseCase,
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val getMotivationalNotesUseCase: GetMotivationalNotesUseCase,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
     private var latestCravingToolId: String? = null
@@ -74,6 +78,11 @@ internal class DashboardViewModel @Inject constructor(
     private fun onMotivationalNoteRefreshClicked() {
         val state = viewState as? DashboardViewState.Data ?: return
         viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventNames.DASHBOARD_MOTIVATION_NOTE_REFRESH_TAP,
+                )
+            )
             setViewState(
                 state.copy(
                     motivationalNote = getMotivationalNotesUseCase().random().toUiModel(),
@@ -92,6 +101,11 @@ internal class DashboardViewModel @Inject constructor(
 
     private fun onWantToSmokeClicked() {
         viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventNames.DASHBOARD_WANT_TO_SMOKE_TAP,
+                )
+            )
             val cravingTools = getCravingToolsUseCase()
             val tool = cravingTools
                 .filter {
@@ -111,6 +125,11 @@ internal class DashboardViewModel @Inject constructor(
 
     private fun onDetailedInsightsClicked() {
         viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventNames.DASHBOARD_DETAILED_INSIGHTS_TAP,
+                )
+            )
             val screen = if (hasUserPaidSubscription()) {
                 AppScreen.InsightsScreen
             } else {
@@ -126,6 +145,11 @@ internal class DashboardViewModel @Inject constructor(
 
     private fun onJourneyCalendarClicked() {
         viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventNames.DASHBOARD_JOURNEY_CALENDAR_TAP,
+                )
+            )
             val screen = if (hasUserPaidSubscription()) {
                 AppScreen.JourneyCalendarScreen
             } else {
@@ -141,6 +165,11 @@ internal class DashboardViewModel @Inject constructor(
 
     private fun onISmokedClicked() {
         viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventNames.DASHBOARD_I_SMOKED_TAP,
+                )
+            )
             sendViewCommand(
                 DashboardViewCommand.NavigateTo(
                     screen = AppScreen.SlipConfirmationScreen,
