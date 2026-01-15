@@ -2,6 +2,10 @@ package com.shahzadian.savingsgoalscreen.ui.create.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -16,6 +20,7 @@ import javax.inject.Inject
 internal class SavingsGoalCreateViewModel @Inject constructor(
     private val savingsGoalHelper: SavingsGoalHelper,
     private val savedStateHandle: SavedStateHandle,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<SavingsGoalCreateViewState, SavingsGoalCreateViewEvent, SavingsGoalCreateViewCommand>() {
 
     override val initState: SavingsGoalCreateViewState by lazyUnsafe {
@@ -133,6 +138,17 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                 currentAmount = currentAmount,
             )
         } else {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.SAVINGS_GOAL_CREATED,
+                    params = mapOf(
+                        AnalyticsEventConst.PARAM_GOAL_NAME to name.asAnalyticsProperty(),
+                        AnalyticsEventConst.PARAM_GOAL_PRICE to amount.asAnalyticsProperty(),
+                        AnalyticsEventConst.PARAM_CURRENT_AMOUNT to currentAmount.asAnalyticsProperty(),
+                        AnalyticsEventConst.PARAM_CATEGORY_ID to category.id.asAnalyticsProperty()
+                    )
+                )
+            )
             savingsGoalHelper.createSavingsGoal(
                 name = name,
                 amount = amount.toDouble(),

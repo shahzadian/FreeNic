@@ -46,6 +46,12 @@ object AnalyticsEventConst {
 //    guess_shape_started params
     const val PARAM_PLAY_CYCLE: String = "play_cycle"
 
+//    savings_goal_created params
+    const val PARAM_GOAL_NAME: String = "goal_name"
+    const val PARAM_GOAL_PRICE: String = "goal_amount"
+    const val PARAM_CURRENT_AMOUNT: String = "current_amount"
+    const val PARAM_CATEGORY_ID: String = "category_id"
+
     const val SCREEN_VIEW: String = "screen_view"
     const val REGISTRATION_START: String = "registration_start"
     const val REGISTRATION_FINISH: String = "registration_finish"
@@ -73,4 +79,5 @@ object AnalyticsEventConst {
     const val BREATHE_EXERCISE_START_TAP: String = "breathe_exercise_start_tap"
     const val BREATHE_EXERCISE_FINISH_TAP: String = "breathe_exercise_finish_tap"
     const val GUESS_SHAPE_STARTED: String = "guess_shape_started"
+    const val SAVINGS_GOAL_CREATED: String = "savings_goal_created"
 }
