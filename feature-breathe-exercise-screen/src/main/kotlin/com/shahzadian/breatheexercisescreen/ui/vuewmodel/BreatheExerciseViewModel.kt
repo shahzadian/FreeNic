@@ -8,6 +8,7 @@ import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.ad.AdHelper
+import com.shahzadian.breatheexercisescreen.domain.BreatheExerciseSettings
 import com.shahzadian.breatheexercisescreen.domain.GetBreatheExerciseSettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,27 +25,21 @@ internal class BreatheExerciseViewModel @Inject constructor(
         BreatheExerciseViewState.Loading
     }
 
+    private var _exerciseSettings: BreatheExerciseSettings? = null
+
     init {
         viewModelScope.launch {
-            val settings = getBreatheExerciseSettingsUseCase()
-            setViewState(
-                BreatheExerciseViewState.Process(
-                    inhaleSeconds = settings.inhaleSeconds,
-                    holdSeconds = settings.holdSeconds,
-                    exhaleSeconds = settings.exhaleSeconds,
-                    cyclesCount = settings.cyclesCount,
-                    currentCycle = 1,
-                    helpingTexts = settings.helpingTexts.shuffled(),
-                    exerciseState = BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE,
-                )
-            )
+            setViewState(getInitProcessState())
         }
     }
 
     override fun onViewEventHappened(event: BreatheExerciseViewEvent) {
         when (event) {
             is BreatheExerciseViewEvent.OnCircleClick -> {
-                startExercise(1)
+                startExercise(
+                    cycle = 1,
+                    isUserTriggered = true,
+                )
             }
 
             is BreatheExerciseViewEvent.OnInhaleFinish -> {
@@ -65,14 +60,19 @@ internal class BreatheExerciseViewModel @Inject constructor(
         }
     }
 
-    private fun startExercise(cycle: Int) {
+    private fun startExercise(
+        cycle: Int,
+        isUserTriggered: Boolean,
+    ) {
         (viewState as? BreatheExerciseViewState.Process)?.let { state ->
             viewModelScope.launch {
-                analyticsEventSender.send(
-                    AnalyticsEvent(
-                        name = AnalyticsEventConst.BREATHE_EXERCISE_START_TAP
+                if (isUserTriggered) {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.BREATHE_EXERCISE_START_TAP
+                        )
                     )
-                )
+                }
                 setViewState(
                     state.copy(
                         currentCycle = cycle,
@@ -110,7 +110,16 @@ internal class BreatheExerciseViewModel @Inject constructor(
     private fun onExhaleFinished() {
         (viewState as? BreatheExerciseViewState.Process)?.let { state ->
             if (state.currentCycle < state.cyclesCount) {
-                startExercise(state.currentCycle + 1)
+                startExercise(
+                    cycle = state.currentCycle + 1,
+                    isUserTriggered = false,
+                )
+            } else {
+                viewModelScope.launch {
+                    setViewState(
+                        getInitProcessState()
+                    )
+                }
             }
         }
     }
@@ -135,9 +144,29 @@ internal class BreatheExerciseViewModel @Inject constructor(
             AnalyticsEvent(
                 name = AnalyticsEventConst.BREATHE_EXERCISE_FINISH_TAP,
                 params = mapOf(
+                    AnalyticsEventConst.PARAM_CYCLE to state.currentCycle.asAnalyticsProperty(),
                     AnalyticsEventConst.PARAM_FINISHED_STEP_STATE to finishedStepState.asAnalyticsProperty()
                 )
             )
         )
+    }
+
+    private suspend fun getInitProcessState(): BreatheExerciseViewState.Process {
+        val settings = getBreatheExerciseSettings()
+        return BreatheExerciseViewState.Process(
+            inhaleSeconds = settings.inhaleSeconds,
+            holdSeconds = settings.holdSeconds,
+            exhaleSeconds = settings.exhaleSeconds,
+            cyclesCount = settings.cyclesCount,
+            currentCycle = 1,
+            helpingTexts = settings.helpingTexts.shuffled(),
+            exerciseState = BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE,
+        )
+    }
+
+    private suspend fun getBreatheExerciseSettings(): BreatheExerciseSettings {
+        return _exerciseSettings ?: getBreatheExerciseSettingsUseCase.invoke().also {
+            _exerciseSettings = it
+        }
     }
 }

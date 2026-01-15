@@ -36,6 +36,7 @@ object AnalyticsEventConst {
     const val PARAM_VALUE_DAY_TYPE_FUTURE: String = "future"
 
 //    breathe_exercise_finish_tap params
+    const val PARAM_CYCLE: String = "cycle"
     const val PARAM_FINISHED_STEP_STATE: String = "finished_step_state"
     const val PARAM_VALUE_FINISHED_STEP_STATE_READY_FOR_EXERCISE: String = "ready_for_exercise"
     const val PARAM_VALUE_FINISHED_STEP_STATE_INHALE: String = "inhale"
