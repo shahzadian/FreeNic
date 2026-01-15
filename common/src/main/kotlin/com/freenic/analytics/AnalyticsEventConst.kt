@@ -35,6 +35,13 @@ object AnalyticsEventConst {
     const val PARAM_VALUE_DAY_TYPE_TODAY: String = "today"
     const val PARAM_VALUE_DAY_TYPE_FUTURE: String = "future"
 
+//    breathe_exercise_finish_tap params
+    const val PARAM_FINISHED_STEP_STATE: String = "finished_step_state"
+    const val PARAM_VALUE_FINISHED_STEP_STATE_READY_FOR_EXERCISE: String = "ready_for_exercise"
+    const val PARAM_VALUE_FINISHED_STEP_STATE_INHALE: String = "inhale"
+    const val PARAM_VALUE_FINISHED_STEP_STATE_EXHALE: String = "exhale"
+    const val PARAM_VALUE_FINISHED_STEP_STATE_HOLD: String = "hold"
+
     const val SCREEN_VIEW: String = "screen_view"
     const val REGISTRATION_START: String = "registration_start"
     const val REGISTRATION_FINISH: String = "registration_finish"
@@ -59,4 +66,6 @@ object AnalyticsEventConst {
     const val SLIP_RESULT_READ_NOTES_TAP: String = "slip_result_read_notes_tap"
     const val SLIP_RESULT_BACK_TO_DASHBOARD_TAP: String = "slip_result_back_to_dashboard_tap"
     const val JOURNEY_CALENDAR_DAY_TAP: String = "journey_calendar_day_tap"
+    const val BREATHE_EXERCISE_START_TAP: String = "breathe_exercise_start_tap"
+    const val BREATHE_EXERCISE_FINISH_TAP: String = "breathe_exercise_finish_tap"
 }

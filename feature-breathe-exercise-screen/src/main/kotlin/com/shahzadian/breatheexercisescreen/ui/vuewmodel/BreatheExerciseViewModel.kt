@@ -1,6 +1,10 @@
 package com.shahzadian.breatheexercisescreen.ui.vuewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.ad.AdHelper
@@ -13,6 +17,7 @@ import javax.inject.Inject
 internal class BreatheExerciseViewModel @Inject constructor(
     private val getBreatheExerciseSettingsUseCase: GetBreatheExerciseSettingsUseCase,
     private val adHelper: AdHelper,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<BreatheExerciseViewState, BreatheExerciseViewEvent, BreatheExerciseViewCommand>() {
 
     override val initState: BreatheExerciseViewState by lazyUnsafe {
@@ -55,10 +60,7 @@ internal class BreatheExerciseViewModel @Inject constructor(
             }
 
             is BreatheExerciseViewEvent.OnFinishClick -> {
-                viewModelScope.launch {
-                    adHelper.requestAdShow()
-                    sendViewCommand(BreatheExerciseViewCommand.NavigateBack)
-                }
+                onFinishClicked()
             }
         }
     }
@@ -66,6 +68,11 @@ internal class BreatheExerciseViewModel @Inject constructor(
     private fun startExercise(cycle: Int) {
         (viewState as? BreatheExerciseViewState.Process)?.let { state ->
             viewModelScope.launch {
+                analyticsEventSender.send(
+                    AnalyticsEvent(
+                        name = AnalyticsEventConst.BREATHE_EXERCISE_START_TAP
+                    )
+                )
                 setViewState(
                     state.copy(
                         currentCycle = cycle,
@@ -106,5 +113,31 @@ internal class BreatheExerciseViewModel @Inject constructor(
                 startExercise(state.currentCycle + 1)
             }
         }
+    }
+
+    private fun onFinishClicked() {
+        viewModelScope.launch {
+            sendFinishAnalyticsEvent()
+            adHelper.requestAdShow()
+            sendViewCommand(BreatheExerciseViewCommand.NavigateBack)
+        }
+    }
+
+    private fun sendFinishAnalyticsEvent() {
+        val state = (viewState as? BreatheExerciseViewState.Process) ?: return
+        val finishedStepState = when (state.exerciseState) {
+            BreatheExerciseViewState.ExerciseState.INHALE -> AnalyticsEventConst.PARAM_VALUE_FINISHED_STEP_STATE_INHALE
+            BreatheExerciseViewState.ExerciseState.HOLD -> AnalyticsEventConst.PARAM_VALUE_FINISHED_STEP_STATE_HOLD
+            BreatheExerciseViewState.ExerciseState.EXHALE -> AnalyticsEventConst.PARAM_VALUE_FINISHED_STEP_STATE_EXHALE
+            BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE -> AnalyticsEventConst.PARAM_VALUE_FINISHED_STEP_STATE_READY_FOR_EXERCISE
+        }
+        analyticsEventSender.send(
+            AnalyticsEvent(
+                name = AnalyticsEventConst.BREATHE_EXERCISE_FINISH_TAP,
+                params = mapOf(
+                    AnalyticsEventConst.PARAM_FINISHED_STEP_STATE to finishedStepState.asAnalyticsProperty()
+                )
+            )
+        )
     }
 }
