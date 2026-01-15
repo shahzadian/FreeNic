@@ -136,15 +136,15 @@ sealed class AppScreen {
     }
 
     object SlipConfirmationScreen : AppScreen() {
-        override val route: String = "slide_confirmation_screen"
+        override val route: String = "slip_confirmation_screen"
     }
 
     object SlipReasonScreen : AppScreen() {
-        override val route: String = "slide_reason_screen"
+        override val route: String = "slip_reason_screen"
     }
 
     object SlipResultScreen : AppScreen() {
-        override val route: String = "slide_result_screen"
+        override val route: String = "slip_result_screen"
     }
 
     object JourneyCalendarScreen : AppScreen() {

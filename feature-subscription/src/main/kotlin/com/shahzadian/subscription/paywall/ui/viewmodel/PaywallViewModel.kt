@@ -1,6 +1,7 @@
 package com.shahzadian.subscription.paywall.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
@@ -16,6 +17,7 @@ internal class PaywallViewModel @Inject constructor(
     private val getPaidFeaturesUseCase: GetPaidFeaturesUseCase,
     private val getSubscriptionPlansUseCase: GetSubscriptionPlansUseCase,
     private val subscriptionPlanMapper: SubscriptionPlanMapper,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<PaywallViewState, PaywallViewEvent, PaywallViewCommand>() {
 
     override val initState: PaywallViewState by lazyUnsafe { PaywallViewState.Loading }

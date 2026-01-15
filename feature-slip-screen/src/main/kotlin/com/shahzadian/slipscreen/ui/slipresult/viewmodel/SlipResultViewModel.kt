@@ -1,6 +1,9 @@
 package com.shahzadian.slipscreen.ui.slipresult.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -16,6 +19,7 @@ import javax.inject.Inject
 internal class SlipResultViewModel @Inject constructor(
     private val getUserDataUseCase: GetUserDataUseCase,
     private val userDataHelperFactory: UserDataHelperFactory,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<SlipResultViewState, SlipResultViewEvent, SlipResultViewCommand>() {
 
     private var userData: UserData? = null
@@ -73,6 +77,11 @@ internal class SlipResultViewModel @Inject constructor(
     private fun onReadMotivationalNotesClicked() {
         viewModelScope
             .launch {
+                analyticsEventSender.send(
+                    AnalyticsEvent(
+                        name = AnalyticsEventConst.SLIP_RESULT_READ_NOTES_TAP,
+                    )
+                )
                 sendViewCommand(
                     SlipResultViewCommand.NavigateTo(AppScreen.MotivationalNotesScreen)
                 )
@@ -82,6 +91,11 @@ internal class SlipResultViewModel @Inject constructor(
     private fun onBackToDashboardClicked() {
         viewModelScope
             .launch {
+                analyticsEventSender.send(
+                    AnalyticsEvent(
+                        name = AnalyticsEventConst.SLIP_RESULT_BACK_TO_DASHBOARD_TAP,
+                    )
+                )
                 sendViewCommand(
                     SlipResultViewCommand.NavigateTo(AppScreen.DashboardScreen)
                 )

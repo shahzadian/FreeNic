@@ -2,6 +2,10 @@ package com.shahzadian.slipscreen.ui.slipreason.ui.viewmodel
 
 import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -23,6 +27,7 @@ import javax.inject.Inject
 internal class SlipReasonViewModel @Inject constructor(
     private val getSlipReasonsUseCase: GetSlipReasonsUseCase,
     private val createSlipCaseUseCase: CreateSlipCaseUseCase,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<SlipReasonViewState, SlipReasonViewEvent, SlipReasonViewCommand>() {
 
     private var selectedReasonId: String? = null
@@ -95,6 +100,18 @@ internal class SlipReasonViewModel @Inject constructor(
 
     private fun onConfirmClicked() {
         viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.SLIP_REASON_CONFIRM_TAP,
+                    params = mapOf(
+                        AnalyticsEventConst.PARAM_REASON_ID to requireNotNull(selectedReasonId) {
+                            "Selected reason id is null."
+                        }.asAnalyticsProperty(),
+                        AnalyticsEventConst.PARAM_WAS_SLIP_TODAY to DateUtils.isToday(slipDate)
+                            .asAnalyticsProperty()
+                    )
+                )
+            )
             createSlipCaseUseCase(
                 slipCase = SlipCase(
                     reasonId = requireNotNull(selectedReasonId) {
@@ -109,6 +126,11 @@ internal class SlipReasonViewModel @Inject constructor(
 
     private fun onSkipClicked() {
         viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.SLIP_REASON_SKIP_TAP,
+                )
+            )
             sendViewCommand(SlipReasonViewCommand.NavigateTo(AppScreen.SlipResultScreen))
         }
     }
