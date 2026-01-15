@@ -1,6 +1,9 @@
 package com.shahzadian.savingsgoalscreen.ui.details.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.savingsgoal.domain.SavingsGoal
@@ -17,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SavingsGoalDetailsViewModel @Inject constructor(
     private val savingsGoalHelper: SavingsGoalHelper,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<SavingsGoalDetailsViewState, SavingsGoalDetailsViewEvent, SavingsGoalDetailsViewCommand>() {
 
     override val initState: SavingsGoalDetailsViewState by lazyUnsafe {
@@ -32,6 +36,11 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
         when (event) {
             SavingsGoalDetailsViewEvent.OnDeleteClicked -> {
                 viewModelScope.launch {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.SAVINGS_GOAL_DELETED,
+                        )
+                    )
                     savingsGoalHelper.deleteSavingsGoal()
                 }
             }
@@ -77,6 +86,7 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
                     is SavingsGoalHelper.SavingsGoalEvent.OnSavingsGoalDeleted -> {
                         sendViewCommand(SavingsGoalDetailsViewCommand.NavigateBack)
                     }
+
                     is SavingsGoalHelper.SavingsGoalEvent.OnSavingsGoalCreated,
                     is SavingsGoalHelper.SavingsGoalEvent.OnSavingsGoalUpdated -> {
                         setData()

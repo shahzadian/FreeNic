@@ -74,4 +74,5 @@ object AnalyticsEventConst {
     const val GUESS_SHAPE_STARTED: String = "guess_shape_started"
     const val SAVINGS_GOAL_CREATED: String = "savings_goal_created"
     const val SAVINGS_GOAL_SHARE_TAP: String = "savings_goal_share_tap"
+    const val SAVINGS_GOAL_DELETED: String = "savings_goal_deleted"
 }
