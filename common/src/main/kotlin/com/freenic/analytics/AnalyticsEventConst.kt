@@ -43,6 +43,9 @@ object AnalyticsEventConst {
     const val PARAM_VALUE_FINISHED_STEP_STATE_EXHALE: String = "exhale"
     const val PARAM_VALUE_FINISHED_STEP_STATE_HOLD: String = "hold"
 
+//    guess_shape_started params
+    const val PARAM_PLAY_CYCLE: String = "play_cycle"
+
     const val SCREEN_VIEW: String = "screen_view"
     const val REGISTRATION_START: String = "registration_start"
     const val REGISTRATION_FINISH: String = "registration_finish"
@@ -69,4 +72,5 @@ object AnalyticsEventConst {
     const val JOURNEY_CALENDAR_DAY_TAP: String = "journey_calendar_day_tap"
     const val BREATHE_EXERCISE_START_TAP: String = "breathe_exercise_start_tap"
     const val BREATHE_EXERCISE_FINISH_TAP: String = "breathe_exercise_finish_tap"
+    const val GUESS_SHAPE_STARTED: String = "guess_shape_started"
 }

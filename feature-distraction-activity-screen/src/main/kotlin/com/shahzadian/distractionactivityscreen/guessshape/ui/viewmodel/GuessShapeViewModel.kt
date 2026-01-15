@@ -1,6 +1,10 @@
 package com.shahzadian.distractionactivityscreen.guessshape.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.ad.AdHelper
@@ -18,6 +22,7 @@ import javax.inject.Inject
 internal class GuessShapeViewModel @Inject constructor(
     private val guessShapeProgressHelperFactory: GuessShapeProgressHelperFactory,
     private val adHelper: AdHelper,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<GuessShapeViewState, GuessShapeViewEvent, GuessShapeViewCommand>() {
 
     override val initState: GuessShapeViewState by lazyUnsafe {
@@ -27,6 +32,8 @@ internal class GuessShapeViewModel @Inject constructor(
     private var progressHelper: GuessShapeProgressHelper? = null
 
     private var currentProgressJob: Job? = null
+
+    private var playCycle: Int = 1
 
     init {
         startActivity()
@@ -56,6 +63,16 @@ internal class GuessShapeViewModel @Inject constructor(
             .progressStateFlow
             .onEach { state ->
                 val viewState = state.toUiState()
+                if (viewState is GuessShapeViewState.ShowShapes) {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.GUESS_SHAPE_STARTED,
+                            params = mapOf(
+                                AnalyticsEventConst.PARAM_PLAY_CYCLE to (playCycle++).asAnalyticsProperty()
+                            )
+                        )
+                    )
+                }
                 if (viewState is GuessShapeViewState.Result) {
                     adHelper.requestAdShow()
                 }
