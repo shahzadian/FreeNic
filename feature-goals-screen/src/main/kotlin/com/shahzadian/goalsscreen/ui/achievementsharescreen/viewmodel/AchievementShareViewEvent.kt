@@ -6,5 +6,7 @@ import com.freenic.ui.vm.ViewEvent
 @Immutable
 internal sealed interface AchievementShareViewEvent : ViewEvent {
 
-    data object OnAchievementShared : AchievementShareViewEvent
+    data class OnAchievementShareClicked(
+        val templateId: String,
+    ) : AchievementShareViewEvent
 }

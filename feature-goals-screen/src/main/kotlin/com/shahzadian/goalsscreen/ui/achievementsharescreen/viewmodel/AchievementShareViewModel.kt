@@ -2,6 +2,10 @@ package com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -16,6 +20,7 @@ import javax.inject.Inject
 internal class AchievementShareViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val achievementsUiModelFetcher: AchievementsUiModelFetcher,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<AchievementShareViewState, AchievementShareViewEvent, AchievementShareViewCommand>() {
 
     override val initState: AchievementShareViewState by lazyUnsafe { AchievementShareViewState.Loading }
@@ -31,10 +36,10 @@ internal class AchievementShareViewModel @Inject constructor(
 
     override fun onViewEventHappened(event: AchievementShareViewEvent) {
         when (event) {
-            is AchievementShareViewEvent.OnAchievementShared -> {
-                viewModelScope.launch {
-                    sendViewCommand(AchievementShareViewCommand.NavigateBack)
-                }
+            is AchievementShareViewEvent.OnAchievementShareClicked -> {
+                onShareTapped(
+                    templateId = event.templateId
+                )
             }
         }
     }
@@ -59,5 +64,17 @@ internal class AchievementShareViewModel @Inject constructor(
                 )
             )
         }
+    }
+
+    private fun onShareTapped(templateId: String) {
+        analyticsEventSender.send(
+            event = AnalyticsEvent(
+                name = AnalyticsEventConst.ACHIEVEMENT_SHARE_TAP,
+                params = mapOf(
+                    AnalyticsEventConst.ACHIEVEMENT_SHARE_TAP_PARAM_ACHIEVEMENT_ID to achievementId.asAnalyticsProperty(),
+                    AnalyticsEventConst.ACHIEVEMENT_SHARE_TAP_PARAM_TEMPLATE_ID to templateId.asAnalyticsProperty()
+                )
+            )
+        )
     }
 }

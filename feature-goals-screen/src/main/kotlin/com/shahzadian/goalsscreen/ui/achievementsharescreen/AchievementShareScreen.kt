@@ -40,6 +40,7 @@ import com.shahzadian.goalsscreen.ui.achievementsharescreen.daybased.DayBasedMot
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.moneybased.MoneyBasedCelebratoryView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.moneybased.MoneyBasedMinimalView
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewCommand
+import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewEvent
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewModel
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.viewmodel.AchievementShareViewState
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
@@ -63,6 +64,7 @@ fun AchievementShareScreen(
         is AchievementShareViewState.Data -> {
             ContentView(
                 data = (state as AchievementShareViewState.Data),
+                onEvent = viewModel::onViewEvent,
                 modifier = modifier,
             )
         }
@@ -92,9 +94,16 @@ fun AchievementShareScreen(
 @Composable
 private fun ContentView(
     data: AchievementShareViewState.Data,
+    onEvent: (AchievementShareViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var shouldRecord by remember { mutableStateOf(false) }
+    var selectedTemplateId = ""
+    val shareClickEvent = remember {
+        {
+            onEvent(AchievementShareViewEvent.OnAchievementShareClicked(selectedTemplateId))
+        }
+    }
     Box(
         modifier = modifier
             .padding(16.dp)
@@ -102,6 +111,9 @@ private fun ContentView(
         AchievementShareContentView(
             data = data,
             shouldRecord = shouldRecord,
+            onTemplateSelected = { templateId ->
+                selectedTemplateId = templateId
+            },
             onImageShared = {
                 shouldRecord = false
             },
@@ -113,6 +125,7 @@ private fun ContentView(
             text = TextWrapper.FromRes(R.string.ic_achievement_share_submit_button),
             onClick = {
                 shouldRecord = true
+                shareClickEvent()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -124,6 +137,7 @@ private fun ContentView(
 @Composable
 private fun AchievementShareContentView(
     data: AchievementShareViewState.Data,
+    onTemplateSelected: (String) -> Unit,
     shouldRecord: Boolean,
     onImageShared: () -> Unit,
     modifier: Modifier = Modifier,
@@ -136,21 +150,25 @@ private fun AchievementShareContentView(
             onImageShared()
         }
     }
+    val templateSelect = remember { { templateId: String -> onTemplateSelected(templateId) } }
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState()),
     ) {
         when (data.achievementToShare.item) {
             is AchievementUiModel.AchievementItemUiModel.Days -> {
-                val minimalViewTag = "minimalViewTag"
-                val celebratoryViewTag = "celebratoryViewTag"
-                val motivationalViewTag = "motivationalViewTag"
-                var selectedItemTag: String by remember { mutableStateOf(minimalViewTag) }
+                val minimalTemplateId = "minimal_template"
+                val celebratoryTemplateId = "celebratory_template"
+                val motivationalTemplateId = "motivational_template"
+                var selectedTemplateId: String by remember { mutableStateOf(minimalTemplateId) }
                 DayBasedMinimalView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = selectedItemTag == minimalViewTag,
-                    shouldRecord = shouldRecord && selectedItemTag == minimalViewTag,
-                    onClick = { selectedItemTag = minimalViewTag },
+                    isSelected = selectedTemplateId == minimalTemplateId,
+                    shouldRecord = shouldRecord && selectedTemplateId == minimalTemplateId,
+                    onClick = {
+                        selectedTemplateId = minimalTemplateId
+                        templateSelect(minimalTemplateId)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
@@ -158,9 +176,12 @@ private fun AchievementShareContentView(
                 )
                 DayBasedCelebratoryView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = selectedItemTag == celebratoryViewTag,
-                    shouldRecord = shouldRecord && selectedItemTag == celebratoryViewTag,
-                    onClick = { selectedItemTag = celebratoryViewTag },
+                    isSelected = selectedTemplateId == celebratoryTemplateId,
+                    shouldRecord = shouldRecord && selectedTemplateId == celebratoryTemplateId,
+                    onClick = {
+                        selectedTemplateId = celebratoryTemplateId
+                        templateSelect(celebratoryTemplateId)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
@@ -168,9 +189,12 @@ private fun AchievementShareContentView(
                 )
                 DayBasedMotivationalView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = selectedItemTag == motivationalViewTag,
-                    shouldRecord = shouldRecord && selectedItemTag == motivationalViewTag,
-                    onClick = { selectedItemTag = motivationalViewTag },
+                    isSelected = selectedTemplateId == motivationalTemplateId,
+                    shouldRecord = shouldRecord && selectedTemplateId == motivationalTemplateId,
+                    onClick = {
+                        selectedTemplateId = motivationalTemplateId
+                        templateSelect(motivationalTemplateId)
+                    },
                     modifier = Modifier
                         .fillMaxWidth(),
                     onRecorded = onBitmapRecord
@@ -178,16 +202,17 @@ private fun AchievementShareContentView(
             }
 
             is AchievementUiModel.AchievementItemUiModel.Cigs -> {
-                val minimalViewTag = "minimalViewTag"
-                val celebratoryViewTag = "celebratoryViewTag"
-                val motivationalViewTag = "motivationalViewTag"
-                var selectedItemTag: String by remember { mutableStateOf(minimalViewTag) }
+                val minimalTemplateId = "minimal_template"
+                val celebratoryTemplateId = "celebratory_template"
+                val motivationalTemplateId = "motivational_template"
+                var selectedTemplateId: String by remember { mutableStateOf(minimalTemplateId) }
                 CigsBasedMinimalView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = selectedItemTag == minimalViewTag,
-                    shouldRecord = shouldRecord && selectedItemTag == minimalViewTag,
+                    isSelected = selectedTemplateId == minimalTemplateId,
+                    shouldRecord = shouldRecord && selectedTemplateId == minimalTemplateId,
                     onCardClicked = {
-                        selectedItemTag = minimalViewTag
+                        selectedTemplateId = minimalTemplateId
+                        templateSelect(minimalTemplateId)
                     },
                     onRecorded = onBitmapRecord,
                     modifier = Modifier
@@ -196,10 +221,11 @@ private fun AchievementShareContentView(
                 )
                 CigsBasedCelebratoryView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = selectedItemTag == celebratoryViewTag,
-                    shouldRecord = shouldRecord && selectedItemTag == celebratoryViewTag,
+                    isSelected = selectedTemplateId == celebratoryTemplateId,
+                    shouldRecord = shouldRecord && selectedTemplateId == celebratoryTemplateId,
                     onCardClicked = {
-                        selectedItemTag = celebratoryViewTag
+                        selectedTemplateId = celebratoryTemplateId
+                        templateSelect(celebratoryTemplateId)
                     },
                     onRecorded = onBitmapRecord,
                     modifier = Modifier
@@ -208,10 +234,11 @@ private fun AchievementShareContentView(
                 )
                 CigsBasedMotivationalView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = selectedItemTag == motivationalViewTag,
-                    shouldRecord = shouldRecord && selectedItemTag == motivationalViewTag,
+                    isSelected = selectedTemplateId == motivationalTemplateId,
+                    shouldRecord = shouldRecord && selectedTemplateId == motivationalTemplateId,
                     onCardClicked = {
-                        selectedItemTag = motivationalViewTag
+                        selectedTemplateId = motivationalTemplateId
+                        templateSelect(motivationalTemplateId)
                     },
                     onRecorded = onBitmapRecord,
                     modifier = Modifier
@@ -221,15 +248,17 @@ private fun AchievementShareContentView(
             }
 
             is AchievementUiModel.AchievementItemUiModel.Money -> {
-                val minimalViewTag = "minimalViewTag"
-                val celebratoryViewTag = "celebratoryViewTag"
-                val motivationalViewTag = "motivationalViewTag"
-                var selectedItemTag: String by remember { mutableStateOf(minimalViewTag) }
+                val minimalTemplateId = "minimal_template"
+                val celebratoryTemplateId = "celebratory_template"
+                var selectedTemplateId: String by remember { mutableStateOf(minimalTemplateId) }
                 MoneyBasedMinimalView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = selectedItemTag == minimalViewTag,
-                    shouldRecord = shouldRecord && selectedItemTag == minimalViewTag,
-                    onClick = { selectedItemTag = minimalViewTag },
+                    isSelected = selectedTemplateId == minimalTemplateId,
+                    shouldRecord = shouldRecord && selectedTemplateId == minimalTemplateId,
+                    onClick = {
+                        selectedTemplateId = minimalTemplateId
+                        templateSelect(minimalTemplateId)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
@@ -237,9 +266,12 @@ private fun AchievementShareContentView(
                 )
                 MoneyBasedCelebratoryView(
                     achievementUiModel = data.achievementToShare,
-                    isSelected = selectedItemTag == celebratoryViewTag,
-                    shouldRecord = shouldRecord && selectedItemTag == celebratoryViewTag,
-                    onClick = { selectedItemTag = celebratoryViewTag },
+                    isSelected = selectedTemplateId == celebratoryTemplateId,
+                    shouldRecord = shouldRecord && selectedTemplateId == celebratoryTemplateId,
+                    onClick = {
+                        selectedTemplateId = celebratoryTemplateId
+                        templateSelect(celebratoryTemplateId)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 16.dp),
