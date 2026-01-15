@@ -4,25 +4,8 @@ import android.os.Bundle
 
 class AnalyticsEvent(
     val name: String,
-    val params: Map<String, PropertyType<*>>,
+    val params: Map<String, PropertyType<*>> = emptyMap(),
 ) {
-
-    object EventNames {
-        const val SCREEN_VIEW: String = "screen_view"
-    }
-
-    object EventParams {
-
-        //        Base params
-        const val PARAM_APP_VERSION: String = "app_version"
-        const val PARAM_APP_BUILD_NUMBER: String = "app_build_number"
-        const val PARAM_SUBSCRIPTION_ID: String = "subscription_id"
-        const val PARAM_VALUE_SUBSCRIPTION_ID_NO_SUBSCRIPTION: String = "no_subscription"
-        const val PARAM_NAV_IS_BACK: String = "is_back"
-
-
-        const val PARAM_SCREEN_NAME: String = "screen_name"
-    }
 
     sealed class PropertyType<T> {
 
@@ -70,4 +53,47 @@ class AnalyticsEvent(
             }
         }
     }
+
+    object EventNames {
+
+        //        Screen view
+        const val SCREEN_VIEW: String = "screen_view"
+
+        //      Registration start
+        const val EVENT_REGISTRATION_START: String = "registration_start"
+
+        //        Registration finish
+        const val EVENT_USER_REGISTERED: String = "user_registered"
+    }
+
+    object EventParams {
+
+        //        Base params
+        const val PARAM_APP_VERSION: String = "app_version"
+        const val PARAM_APP_BUILD_NUMBER: String = "app_build_number"
+        const val PARAM_SUBSCRIPTION_ID: String = "subscription_id"
+        const val PARAM_VALUE_SUBSCRIPTION_ID_NO_SUBSCRIPTION: String = "no_subscription"
+
+        //        User registered
+        const val PARAM_AGE: String = "age"
+        const val PARAM_IS_QUIT_TODAY: String = "is_quit_today"
+        const val PARAM_CIGS_PER_DAY: String = "cigs_per_day"
+        const val PARAM_PACK_PRICE: String = "pack_price"
+
+        //        Screen view
+        const val PARAM_NAV_IS_BACK: String = "is_back"
+        const val PARAM_SCREEN_NAME: String = "screen_name"
+    }
 }
+
+fun String.asAnalyticsProperty(): AnalyticsEvent.PropertyType<String> =
+    AnalyticsEvent.PropertyType.StringProperty(this)
+
+fun Int.asAnalyticsProperty(): AnalyticsEvent.PropertyType<Int> =
+    AnalyticsEvent.PropertyType.IntProperty(this)
+
+fun Boolean.asAnalyticsProperty(): AnalyticsEvent.PropertyType<Boolean> =
+    AnalyticsEvent.PropertyType.BooleanProperty(this)
+
+fun Float.asAnalyticsProperty(): AnalyticsEvent.PropertyType<Float> =
+    AnalyticsEvent.PropertyType.FloatProperty(this)

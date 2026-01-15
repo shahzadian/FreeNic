@@ -2,6 +2,8 @@ package com.shahzadian.welcomescreen.ui.welcomescreen
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -15,6 +17,7 @@ import javax.inject.Inject
 internal class WelcomeViewModel @Inject constructor(
     private val getUserDataUseCase: GetUserDataUseCase,
     private val savedStateHandle: SavedStateHandle,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<WelcomeViewState, WelcomeViewEvent, WelcomeViewCommand>() {
 
     override val initState: WelcomeViewState by lazyUnsafe {
@@ -72,6 +75,11 @@ internal class WelcomeViewModel @Inject constructor(
         when (event) {
             is WelcomeViewEvent.OnGetStartedClicked -> {
                 viewModelScope.launch {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEvent.EventNames.EVENT_REGISTRATION_START,
+                        )
+                    )
                     sendViewCommand(
                         WelcomeViewCommand.Navigate(
                             screen = AppScreen.DataFillScreen

@@ -1,6 +1,10 @@
 package com.shahzadian.datafill.ui
 
+import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -29,7 +33,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class DataFillViewModel @Inject constructor(
     private val fillableInfoHelper: FillableInfoHelper,
-    private val updateUserDataUseCase: UpdateUserDataUseCase
+    private val updateUserDataUseCase: UpdateUserDataUseCase,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<DataFillViewState, DataFillViewEvent, DataFillCommand>() {
 
     override val initState: DataFillViewState by lazyUnsafe {
@@ -105,6 +110,8 @@ internal class DataFillViewModel @Inject constructor(
     private fun onAllDataFilled() {
         viewModelScope.launch {
             fillableInfoHelper.sharedState.toSaveableUserData()?.let {
+                val analyticsEvent = createAnalyticsEvent(it)
+                analyticsEventSender.send(analyticsEvent)
                 updateUserDataUseCase(it)
                 updateUserDataUseCase.setUserRegistered(true)
             }
@@ -203,6 +210,19 @@ internal class DataFillViewModel @Inject constructor(
             ),
             quitData = QuitData(
                 quitDateMillis = quitDate,
+            )
+        )
+    }
+
+    private fun createAnalyticsEvent(userData: UserData): AnalyticsEvent {
+        return AnalyticsEvent(
+            name = AnalyticsEvent.EventNames.EVENT_USER_REGISTERED,
+            params = mapOf(
+                AnalyticsEvent.EventParams.PARAM_AGE to userData.personalData.age.asAnalyticsProperty(),
+                AnalyticsEvent.EventParams.PARAM_IS_QUIT_TODAY to DateUtils.isToday(userData.quitData.quitDateMillis)
+                    .asAnalyticsProperty(),
+                AnalyticsEvent.EventParams.PARAM_CIGS_PER_DAY to userData.cigarettesData.cigarettesPerDay.asAnalyticsProperty(),
+                AnalyticsEvent.EventParams.PARAM_PACK_PRICE to userData.cigarettesData.priceData.price.asAnalyticsProperty(),
             )
         )
     }
