@@ -21,6 +21,9 @@ object AnalyticsEventConst {
 //    cravings_tool_tap params
     const val PARAM_CRAVING_TOOL_ID: String = "craving_tool_id"
 
+//    goals_achievement_share_tap params
+    const val PARAM_ACHIEVEMENT_ID: String = "achievement_id"
+
     const val SCREEN_VIEW: String = "screen_view"
     const val REGISTRATION_START: String = "registration_start"
     const val REGISTRATION_FINISH: String = "registration_finish"
@@ -30,4 +33,8 @@ object AnalyticsEventConst {
     const val DASHBOARD_DETAILED_INSIGHTS_TAP: String = "dashboard_detailed_insights_tap"
     const val DASHBOARD_MOTIVATION_NOTE_REFRESH_TAP: String = "dashboard_motivation_note_refresh_tap"
     const val CRAVINGS_TOOL_TAP: String = "cravings_tool_tap"
+    const val GOALS_SAVINGS_GOAL_CREATE_TAP: String = "goals_savings_goal_create_tap"
+    const val GOALS_SAVINGS_GOAL_DETAILS_TAP: String = "goals_savings_goal_details_tap"
+    const val GOALS_SAVINGS_GOAL_UPGRADE_TAP: String = "goals_savings_goal_upgrade_tap"
+    const val GOALS_ACHIEVEMENT_SHARE_TAP: String = "goals_achievement_share_tap"
 }

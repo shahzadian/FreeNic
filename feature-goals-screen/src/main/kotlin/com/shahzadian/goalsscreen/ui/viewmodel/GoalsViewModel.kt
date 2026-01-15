@@ -1,6 +1,10 @@
 package com.shahzadian.goalsscreen.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
@@ -20,6 +24,7 @@ internal class GoalsViewModel @Inject constructor(
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val savingsGoalHelper: SavingsGoalHelper,
     private val adHelper: AdHelper,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<GoalsViewState, GoalsViewEvent, GoalsViewCommand>() {
 
     override val initState: GoalsViewState by lazyUnsafe { GoalsViewState.Loading }
@@ -34,6 +39,11 @@ internal class GoalsViewModel @Inject constructor(
         when (event) {
             is GoalsViewEvent.OnSavingsGoalsUpgradeClicked -> {
                 viewModelScope.launch {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.GOALS_SAVINGS_GOAL_UPGRADE_TAP
+                        )
+                    )
                     sendViewCommand(GoalsViewCommand.NavigateTo(AppScreen.PaywallScreen))
                 }
             }
@@ -46,6 +56,14 @@ internal class GoalsViewModel @Inject constructor(
 
             is GoalsViewEvent.OnAchievementShareClicked -> {
                 viewModelScope.launch {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.GOALS_ACHIEVEMENT_SHARE_TAP,
+                            params = mapOf(
+                                AnalyticsEventConst.PARAM_ACHIEVEMENT_ID to event.id.asAnalyticsProperty()
+                            )
+                        ),
+                    )
                     sendViewCommand(
                         GoalsViewCommand.NavigateToAchievementShareScreen(
                             id = event.id
@@ -56,6 +74,11 @@ internal class GoalsViewModel @Inject constructor(
 
             is GoalsViewEvent.OnSavingsGoalCreateClicked -> {
                 viewModelScope.launch {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.GOALS_SAVINGS_GOAL_CREATE_TAP,
+                        )
+                    )
                     sendViewCommand(
                         GoalsViewCommand.NavigateTo(
                             appScreen = AppScreen.SavingsGoalCreateScreen,
@@ -66,6 +89,11 @@ internal class GoalsViewModel @Inject constructor(
 
             is GoalsViewEvent.OnSavingsGoalDetailsClicked -> {
                 viewModelScope.launch {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.GOALS_SAVINGS_GOAL_DETAILS_TAP,
+                        )
+                    )
                     sendViewCommand(GoalsViewCommand.NavigateTo(AppScreen.SavingsGoalDetailsScreen))
                 }
             }
