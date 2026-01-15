@@ -2,7 +2,7 @@ package com.shahzadian.dashboard.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.freenic.analytics.AnalyticsEvent
-import com.freenic.analytics.AnalyticsEventNames
+import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
@@ -80,7 +80,7 @@ internal class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             analyticsEventSender.send(
                 AnalyticsEvent(
-                    name = AnalyticsEventNames.DASHBOARD_MOTIVATION_NOTE_REFRESH_TAP,
+                    name = AnalyticsEventConst.DASHBOARD_MOTIVATION_NOTE_REFRESH_TAP,
                 )
             )
             setViewState(
@@ -103,7 +103,7 @@ internal class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             analyticsEventSender.send(
                 AnalyticsEvent(
-                    name = AnalyticsEventNames.DASHBOARD_WANT_TO_SMOKE_TAP,
+                    name = AnalyticsEventConst.DASHBOARD_WANT_TO_SMOKE_TAP,
                 )
             )
             val cravingTools = getCravingToolsUseCase()
@@ -127,7 +127,7 @@ internal class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             analyticsEventSender.send(
                 AnalyticsEvent(
-                    name = AnalyticsEventNames.DASHBOARD_DETAILED_INSIGHTS_TAP,
+                    name = AnalyticsEventConst.DASHBOARD_DETAILED_INSIGHTS_TAP,
                 )
             )
             val screen = if (hasUserPaidSubscription()) {
@@ -147,7 +147,7 @@ internal class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             analyticsEventSender.send(
                 AnalyticsEvent(
-                    name = AnalyticsEventNames.DASHBOARD_JOURNEY_CALENDAR_TAP,
+                    name = AnalyticsEventConst.DASHBOARD_JOURNEY_CALENDAR_TAP,
                 )
             )
             val screen = if (hasUserPaidSubscription()) {
@@ -167,7 +167,7 @@ internal class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             analyticsEventSender.send(
                 AnalyticsEvent(
-                    name = AnalyticsEventNames.DASHBOARD_I_SMOKED_TAP,
+                    name = AnalyticsEventConst.DASHBOARD_I_SMOKED_TAP,
                 )
             )
             sendViewCommand(

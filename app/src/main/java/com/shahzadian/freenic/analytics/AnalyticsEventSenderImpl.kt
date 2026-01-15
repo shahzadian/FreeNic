@@ -3,10 +3,10 @@ package com.shahzadian.freenic.analytics
 import android.content.Context
 import android.os.Bundle
 import com.freenic.analytics.AnalyticsEvent
-import com.freenic.analytics.AnalyticsEventParams
-import com.freenic.analytics.AnalyticsEventParams.PARAM_APP_BUILD_NUMBER
-import com.freenic.analytics.AnalyticsEventParams.PARAM_APP_VERSION
-import com.freenic.analytics.AnalyticsEventParams.PARAM_SUBSCRIPTION_ID
+import com.freenic.analytics.AnalyticsEventConst.PARAM_APP_BUILD_NUMBER
+import com.freenic.analytics.AnalyticsEventConst.PARAM_APP_VERSION
+import com.freenic.analytics.AnalyticsEventConst.PARAM_SUBSCRIPTION_ID
+import com.freenic.analytics.AnalyticsEventConst.PARAM_VALUE_SUBSCRIPTION_ID_NO_SUBSCRIPTION
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.AnalyticsProperty
 import com.freenic.logger.AppLogger
@@ -45,7 +45,7 @@ internal abstract class BaseAnalyticsEventSender(
 
     protected suspend fun composeBaseParams(): Map<String, AnalyticsProperty<*>> {
         val currentSubscription = getUserCurrentSubscriptionUseCase()?.id
-            ?: AnalyticsEventParams.PARAM_VALUE_SUBSCRIPTION_ID_NO_SUBSCRIPTION
+            ?: PARAM_VALUE_SUBSCRIPTION_ID_NO_SUBSCRIPTION
         val (appVersion, buildNumber) = appInfoHelper.getAppVersion().let {
             it.versionName to it.buildNumber
         }

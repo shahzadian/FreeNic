@@ -3,7 +3,7 @@ package com.shahzadian.welcomescreen.ui.welcomescreen
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.freenic.analytics.AnalyticsEvent
-import com.freenic.analytics.AnalyticsEventNames
+import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
@@ -78,7 +78,7 @@ internal class WelcomeViewModel @Inject constructor(
                 viewModelScope.launch {
                     analyticsEventSender.send(
                         AnalyticsEvent(
-                            name = AnalyticsEventNames.REGISTRATION_START,
+                            name = AnalyticsEventConst.REGISTRATION_START,
                         )
                     )
                     sendViewCommand(

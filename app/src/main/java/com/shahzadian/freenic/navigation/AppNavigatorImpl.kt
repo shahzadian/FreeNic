@@ -6,8 +6,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavOptionsBuilder
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.freenic.analytics.AnalyticsEvent
-import com.freenic.analytics.AnalyticsEventNames
-import com.freenic.analytics.AnalyticsEventParams
+import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.navigation.AppNavigator
@@ -72,10 +71,10 @@ internal class AppNavigatorImpl(
     ) {
         analyticsEventSender.send(
             AnalyticsEvent(
-                name = AnalyticsEventNames.SCREEN_VIEW,
+                name = AnalyticsEventConst.SCREEN_VIEW,
                 params = mapOf(
-                    AnalyticsEventParams.PARAM_SCREEN_NAME to screenName.asAnalyticsProperty(),
-                    AnalyticsEventParams.PARAM_NAV_IS_BACK to isBack.asAnalyticsProperty(),
+                    AnalyticsEventConst.PARAM_SCREEN_NAME to screenName.asAnalyticsProperty(),
+                    AnalyticsEventConst.PARAM_NAV_IS_BACK to isBack.asAnalyticsProperty(),
                 )
             )
         )
