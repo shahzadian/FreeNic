@@ -68,7 +68,7 @@ internal class GuessShapeViewModel @Inject constructor(
                         AnalyticsEvent(
                             name = AnalyticsEventConst.GUESS_SHAPE_STARTED,
                             params = mapOf(
-                                AnalyticsEventConst.PARAM_PLAY_CYCLE to (playCycle++).asAnalyticsProperty()
+                                AnalyticsEventConst.GUESS_SHAPE_STARTED_PARAM_PLAY_CYCLE to (playCycle++).asAnalyticsProperty()
                             )
                         )
                     )

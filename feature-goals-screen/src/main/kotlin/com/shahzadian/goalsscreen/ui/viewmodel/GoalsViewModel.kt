@@ -60,7 +60,7 @@ internal class GoalsViewModel @Inject constructor(
                         AnalyticsEvent(
                             name = AnalyticsEventConst.GOALS_ACHIEVEMENT_SHARE_TAP,
                             params = mapOf(
-                                AnalyticsEventConst.PARAM_ACHIEVEMENT_ID to event.id.asAnalyticsProperty()
+                                AnalyticsEventConst.GOALS_ACHIEVEMENT_SHARE_PARAM_ACHIEVEMENT_ID to event.id.asAnalyticsProperty()
                             )
                         ),
                     )

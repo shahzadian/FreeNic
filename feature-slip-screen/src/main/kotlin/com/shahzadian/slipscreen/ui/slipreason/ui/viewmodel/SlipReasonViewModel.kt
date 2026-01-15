@@ -104,10 +104,10 @@ internal class SlipReasonViewModel @Inject constructor(
                 AnalyticsEvent(
                     name = AnalyticsEventConst.SLIP_REASON_CONFIRM_TAP,
                     params = mapOf(
-                        AnalyticsEventConst.PARAM_REASON_ID to requireNotNull(selectedReasonId) {
+                        AnalyticsEventConst.SLIP_REASON_CONFIRM_PARAM_REASON_ID to requireNotNull(selectedReasonId) {
                             "Selected reason id is null."
                         }.asAnalyticsProperty(),
-                        AnalyticsEventConst.PARAM_WAS_SLIP_TODAY to DateUtils.isToday(slipDate)
+                        AnalyticsEventConst.SLIP_REASON_CONFIRM_PARAM_WAS_SLIP_TODAY to DateUtils.isToday(slipDate)
                             .asAnalyticsProperty()
                     )
                 )

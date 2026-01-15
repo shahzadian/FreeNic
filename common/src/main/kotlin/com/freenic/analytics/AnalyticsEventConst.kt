@@ -8,49 +8,42 @@ object AnalyticsEventConst {
     const val PARAM_SUBSCRIPTION_ID: String = "subscription_id"
     const val PARAM_VALUE_SUBSCRIPTION_ID_NO_SUBSCRIPTION: String = "no_subscription"
 
-    //        registration_finish params
-    const val PARAM_AGE: String = "age"
-    const val PARAM_IS_QUIT_TODAY: String = "is_quit_today"
-    const val PARAM_CIGS_PER_DAY: String = "cigs_per_day"
-    const val PARAM_PACK_PRICE: String = "pack_price"
+    const val REGISTRATION_FINISH_PARAM_AGE: String = "age"
+    const val REGISTRATION_FINISH_PARAM_IS_QUIT_TODAY: String = "is_quit_today"
+    const val REGISTRATION_FINISH_PARAM_CIGS_PER_DAY: String = "cigs_per_day"
+    const val REGISTRATION_FINISH_PARAM_PACK_PRICE: String = "pack_price"
 
-    //        screen_view params
-    const val PARAM_NAV_IS_BACK: String = "is_back"
-    const val PARAM_SCREEN_NAME: String = "screen_name"
+    const val SCREEN_VIEW_PARAM_NAV_IS_BACK: String = "is_back"
+    const val SCREEN_VIEW_PARAM_SCREEN_NAME: String = "screen_name"
 
-    //    cravings_tool_tap params
-    const val PARAM_CRAVING_TOOL_ID: String = "craving_tool_id"
+    const val CRAVINGS_TOOL_PARAM_CRAVING_TOOL_ID: String = "craving_tool_id"
 
-    //    goals_achievement_share_tap params
-    const val PARAM_ACHIEVEMENT_ID: String = "achievement_id"
+    const val GOALS_ACHIEVEMENT_SHARE_PARAM_ACHIEVEMENT_ID: String = "achievement_id"
 
-    //    slip_reason_confirm_tap params
-    const val PARAM_REASON_ID: String = "reason_id"
-    const val PARAM_WAS_SLIP_TODAY: String = "was_slip_today"
+    const val SLIP_REASON_CONFIRM_PARAM_REASON_ID: String = "reason_id"
+    const val SLIP_REASON_CONFIRM_PARAM_WAS_SLIP_TODAY: String = "was_slip_today"
 
-//    journey_calendar_day_tap params
-    const val PARAM_HAS_EVENTS: String = "has_events"
-    const val PARAM_DAY_TYPE: String = "day_type"
-    const val PARAM_VALUE_DAY_TYPE_PAST: String = "past"
-    const val PARAM_VALUE_DAY_TYPE_TODAY: String = "today"
-    const val PARAM_VALUE_DAY_TYPE_FUTURE: String = "future"
+    const val JOURNEY_CALENDAR_DAY_TAP_PARAM_HAS_EVENTS: String = "has_events"
+    const val JOURNEY_CALENDAR_DAY_TAP_PARAM_DAY_TYPE: String = "day_type"
+    const val JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_PAST: String = "past"
+    const val JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_TODAY: String = "today"
+    const val JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_FUTURE: String = "future"
 
-//    breathe_exercise_finish_tap params
-    const val PARAM_CYCLE: String = "cycle"
-    const val PARAM_FINISHED_STEP_STATE: String = "finished_step_state"
-    const val PARAM_VALUE_FINISHED_STEP_STATE_READY_FOR_EXERCISE: String = "ready_for_exercise"
-    const val PARAM_VALUE_FINISHED_STEP_STATE_INHALE: String = "inhale"
-    const val PARAM_VALUE_FINISHED_STEP_STATE_EXHALE: String = "exhale"
-    const val PARAM_VALUE_FINISHED_STEP_STATE_HOLD: String = "hold"
+    const val BREATHE_EXERCISE_FINISH_PARAM_CYCLE: String = "cycle"
+    const val BREATHE_EXERCISE_FINISH_PARAM_FINISHED_STEP_STATE: String = "finished_step_state"
+    const val BREATHE_EXERCISE_FINISH_PARAM_VALUE_FINISHED_STEP_STATE_READY_FOR_EXERCISE: String = "ready_for_exercise"
+    const val BREATHE_EXERCISE_FINISH_PARAM_VALUE_FINISHED_STEP_STATE_INHALE: String = "inhale"
+    const val BREATHE_EXERCISE_FINISH_PARAM_VALUE_FINISHED_STEP_STATE_EXHALE: String = "exhale"
+    const val BREATHE_EXERCISE_FINISH_PARAM_VALUE_FINISHED_STEP_STATE_HOLD: String = "hold"
 
-//    guess_shape_started params
-    const val PARAM_PLAY_CYCLE: String = "play_cycle"
+    const val GUESS_SHAPE_STARTED_PARAM_PLAY_CYCLE: String = "play_cycle"
 
-//    savings_goal_created params
-    const val PARAM_GOAL_NAME: String = "goal_name"
-    const val PARAM_GOAL_PRICE: String = "goal_amount"
-    const val PARAM_CURRENT_AMOUNT: String = "current_amount"
-    const val PARAM_CATEGORY_ID: String = "category_id"
+    const val SAVINGS_GOAL_CREATED_PARAM_GOAL_NAME: String = "goal_name"
+    const val SAVINGS_GOAL_CREATED_PARAM_GOAL_PRICE: String = "goal_amount"
+    const val SAVINGS_GOAL_CREATED_PARAM_CURRENT_AMOUNT: String = "current_amount"
+    const val SAVINGS_GOAL_CREATED_PARAM_CATEGORY_ID: String = "category_id"
+
+    const val SAVINGS_GOAL_SHARE_TAP_PARAM_TEMPLATE_ID: String = "template_id"
 
     const val SCREEN_VIEW: String = "screen_view"
     const val REGISTRATION_START: String = "registration_start"
@@ -80,4 +73,5 @@ object AnalyticsEventConst {
     const val BREATHE_EXERCISE_FINISH_TAP: String = "breathe_exercise_finish_tap"
     const val GUESS_SHAPE_STARTED: String = "guess_shape_started"
     const val SAVINGS_GOAL_CREATED: String = "savings_goal_created"
+    const val SAVINGS_GOAL_SHARE_TAP: String = "savings_goal_share_tap"
 }

@@ -135,17 +135,17 @@ internal class BreatheExerciseViewModel @Inject constructor(
     private fun sendFinishAnalyticsEvent() {
         val state = (viewState as? BreatheExerciseViewState.Process) ?: return
         val finishedStepState = when (state.exerciseState) {
-            BreatheExerciseViewState.ExerciseState.INHALE -> AnalyticsEventConst.PARAM_VALUE_FINISHED_STEP_STATE_INHALE
-            BreatheExerciseViewState.ExerciseState.HOLD -> AnalyticsEventConst.PARAM_VALUE_FINISHED_STEP_STATE_HOLD
-            BreatheExerciseViewState.ExerciseState.EXHALE -> AnalyticsEventConst.PARAM_VALUE_FINISHED_STEP_STATE_EXHALE
-            BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE -> AnalyticsEventConst.PARAM_VALUE_FINISHED_STEP_STATE_READY_FOR_EXERCISE
+            BreatheExerciseViewState.ExerciseState.INHALE -> AnalyticsEventConst.BREATHE_EXERCISE_FINISH_PARAM_VALUE_FINISHED_STEP_STATE_INHALE
+            BreatheExerciseViewState.ExerciseState.HOLD -> AnalyticsEventConst.BREATHE_EXERCISE_FINISH_PARAM_VALUE_FINISHED_STEP_STATE_HOLD
+            BreatheExerciseViewState.ExerciseState.EXHALE -> AnalyticsEventConst.BREATHE_EXERCISE_FINISH_PARAM_VALUE_FINISHED_STEP_STATE_EXHALE
+            BreatheExerciseViewState.ExerciseState.READY_FOR_EXERCISE -> AnalyticsEventConst.BREATHE_EXERCISE_FINISH_PARAM_VALUE_FINISHED_STEP_STATE_READY_FOR_EXERCISE
         }
         analyticsEventSender.send(
             AnalyticsEvent(
                 name = AnalyticsEventConst.BREATHE_EXERCISE_FINISH_TAP,
                 params = mapOf(
-                    AnalyticsEventConst.PARAM_CYCLE to state.currentCycle.asAnalyticsProperty(),
-                    AnalyticsEventConst.PARAM_FINISHED_STEP_STATE to finishedStepState.asAnalyticsProperty()
+                    AnalyticsEventConst.BREATHE_EXERCISE_FINISH_PARAM_CYCLE to state.currentCycle.asAnalyticsProperty(),
+                    AnalyticsEventConst.BREATHE_EXERCISE_FINISH_PARAM_FINISHED_STEP_STATE to finishedStepState.asAnalyticsProperty()
                 )
             )
         )

@@ -219,11 +219,11 @@ internal class DataFillViewModel @Inject constructor(
         return AnalyticsEvent(
             name = AnalyticsEventConst.REGISTRATION_FINISH,
             params = mapOf(
-                AnalyticsEventConst.PARAM_AGE to userData.personalData.age.asAnalyticsProperty(),
-                AnalyticsEventConst.PARAM_IS_QUIT_TODAY to DateUtils.isToday(userData.quitData.quitDateMillis)
+                AnalyticsEventConst.REGISTRATION_FINISH_PARAM_AGE to userData.personalData.age.asAnalyticsProperty(),
+                AnalyticsEventConst.REGISTRATION_FINISH_PARAM_IS_QUIT_TODAY to DateUtils.isToday(userData.quitData.quitDateMillis)
                     .asAnalyticsProperty(),
-                AnalyticsEventConst.PARAM_CIGS_PER_DAY to userData.cigarettesData.cigarettesPerDay.asAnalyticsProperty(),
-                AnalyticsEventConst.PARAM_PACK_PRICE to userData.cigarettesData.priceData.price.asAnalyticsProperty(),
+                AnalyticsEventConst.REGISTRATION_FINISH_PARAM_CIGS_PER_DAY to userData.cigarettesData.cigarettesPerDay.asAnalyticsProperty(),
+                AnalyticsEventConst.REGISTRATION_FINISH_PARAM_PACK_PRICE to userData.cigarettesData.priceData.price.asAnalyticsProperty(),
             )
         )
     }

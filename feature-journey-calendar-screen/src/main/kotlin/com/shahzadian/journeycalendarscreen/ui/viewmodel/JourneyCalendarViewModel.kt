@@ -98,17 +98,17 @@ internal class JourneyCalendarViewModel @Inject constructor(
                 state = currentState.copy(tappedDay = dayCellUiModel)
             )
             val dayType = when {
-                dayCellUiModel.isToday -> AnalyticsEventConst.PARAM_VALUE_DAY_TYPE_TODAY
-                dayCellUiModel.isInFuture -> AnalyticsEventConst.PARAM_VALUE_DAY_TYPE_FUTURE
-                else -> AnalyticsEventConst.PARAM_VALUE_DAY_TYPE_PAST
+                dayCellUiModel.isToday -> AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_TODAY
+                dayCellUiModel.isInFuture -> AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_FUTURE
+                else -> AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_PAST
             }
             analyticsEventSender.send(
                 event = AnalyticsEvent(
                     name = AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP,
                     params = mapOf(
-                        AnalyticsEventConst.PARAM_HAS_EVENTS to dayCellUiModel.events.isNotEmpty()
+                        AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_HAS_EVENTS to dayCellUiModel.events.isNotEmpty()
                             .asAnalyticsProperty(),
-                        AnalyticsEventConst.PARAM_DAY_TYPE to dayType.asAnalyticsProperty(),
+                        AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_DAY_TYPE to dayType.asAnalyticsProperty(),
                     )
                 ),
             )

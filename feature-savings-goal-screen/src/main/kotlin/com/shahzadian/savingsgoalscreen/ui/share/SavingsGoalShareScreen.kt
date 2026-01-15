@@ -29,6 +29,7 @@ import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.share.templates.SavingsGoalShareBlueTemplate
 import com.shahzadian.savingsgoalscreen.ui.share.templates.SavingsGoalShareClassicTemplate
 import com.shahzadian.savingsgoalscreen.ui.share.templates.SavingsGoalShareOrangeTemplate
+import com.shahzadian.savingsgoalscreen.ui.share.viewmodel.SavingsGoalShareViewEvent
 import com.shahzadian.savingsgoalscreen.ui.share.viewmodel.SavingsGoalShareViewModel
 import com.shahzadian.savingsgoalscreen.ui.share.viewmodel.SavingsGoalShareViewState
 import java.io.File
@@ -54,6 +55,7 @@ fun SavingsGoalShareScreen(
         is SavingsGoalShareViewState.Data -> {
             ContentView(
                 data = (state as SavingsGoalShareViewState.Data),
+                onEvent = viewModel::onViewEvent,
                 onBackIconClicked = backClick,
                 modifier = modifier
                     .fillMaxSize(),
@@ -65,6 +67,7 @@ fun SavingsGoalShareScreen(
 @Composable
 private fun ContentView(
     data: SavingsGoalShareViewState.Data,
+    onEvent: (SavingsGoalShareViewEvent) -> Unit,
     onBackIconClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -81,10 +84,19 @@ private fun ContentView(
             shouldRecord = false
         }
     }
-    val orangeTemplateId = 0
-    val classicTemplateId = 1
-    val blueTemplateId = 2
+    val orangeTemplateId = "orange_template"
+    val classicTemplateId = "classic_template"
+    val blueTemplateId = "blue_template"
     var selectedTemplateId by remember { mutableStateOf(orangeTemplateId) }
+    val shareClickEvent = remember {
+        {
+            onEvent(
+                SavingsGoalShareViewEvent.OnShareClicked(
+                    selectedTemplateId = selectedTemplateId,
+                )
+            )
+        }
+    }
     Box(
         modifier = modifier,
     ) {
@@ -133,6 +145,7 @@ private fun ContentView(
         MainSubmitButton(
             text = TextWrapper.FromRes(R.string.savings_goal_share_submit_button),
             onClick = {
+                shareClickEvent()
                 shouldRecord = true
             },
             modifier = Modifier

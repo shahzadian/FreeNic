@@ -5,4 +5,9 @@ import com.freenic.ui.vm.ViewEvent
 
 @Immutable
 internal sealed interface SavingsGoalShareViewEvent : ViewEvent {
+
+    @Immutable
+    data class OnShareClicked(
+        val selectedTemplateId: String,
+    ) : SavingsGoalShareViewEvent
 }

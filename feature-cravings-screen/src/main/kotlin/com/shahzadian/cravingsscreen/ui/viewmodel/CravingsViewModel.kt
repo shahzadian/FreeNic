@@ -3,7 +3,7 @@ package com.shahzadian.cravingsscreen.ui.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
-import com.freenic.analytics.AnalyticsEventConst.PARAM_CRAVING_TOOL_ID
+import com.freenic.analytics.AnalyticsEventConst.CRAVINGS_TOOL_PARAM_CRAVING_TOOL_ID
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
@@ -47,7 +47,7 @@ internal class CravingsViewModel @Inject constructor(
                             AnalyticsEvent(
                                 name = AnalyticsEventConst.CRAVINGS_TOOL_TAP,
                                 params = mapOf(
-                                    PARAM_CRAVING_TOOL_ID to tool.id.asAnalyticsProperty()
+                                    CRAVINGS_TOOL_PARAM_CRAVING_TOOL_ID to tool.id.asAnalyticsProperty()
                                 )
                             )
                         )

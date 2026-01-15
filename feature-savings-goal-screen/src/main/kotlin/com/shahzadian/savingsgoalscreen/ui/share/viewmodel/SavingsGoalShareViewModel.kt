@@ -1,6 +1,10 @@
 package com.shahzadian.savingsgoalscreen.ui.share.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.savingsgoal.domain.SavingsGoal
@@ -14,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SavingsGoalShareViewModel @Inject constructor(
     private val savingsGoalHelper: SavingsGoalHelper,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<SavingsGoalShareViewState, SavingsGoalShareViewEvent, SavingsGoalShareViewCommand>() {
 
     override val initState: SavingsGoalShareViewState by lazyUnsafe {
@@ -25,7 +30,18 @@ internal class SavingsGoalShareViewModel @Inject constructor(
     }
 
     override fun onViewEventHappened(event: SavingsGoalShareViewEvent) {
-
+        when (event) {
+            is SavingsGoalShareViewEvent.OnShareClicked -> {
+                analyticsEventSender.send(
+                    AnalyticsEvent(
+                        name = AnalyticsEventConst.SAVINGS_GOAL_SHARE_TAP,
+                        params = mapOf(
+                            AnalyticsEventConst.SAVINGS_GOAL_SHARE_TAP_PARAM_TEMPLATE_ID to event.selectedTemplateId.asAnalyticsProperty()
+                        )
+                    )
+                )
+            }
+        }
     }
 
     private fun setData() {
