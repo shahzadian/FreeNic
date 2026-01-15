@@ -1,6 +1,10 @@
 package com.shahzadian.journeycalendarscreen.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
@@ -12,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class JourneyCalendarViewModel @Inject constructor(
     private val journeyCalendarHelper: JourneyCalendarHelper,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<JourneyCalendarViewState, JourneyCalendarViewEvent, JourneyCalendarViewCommand>() {
 
     override val initState: JourneyCalendarViewState by lazyUnsafe {
@@ -91,6 +96,21 @@ internal class JourneyCalendarViewModel @Inject constructor(
         viewModelScope.launch {
             setViewState(
                 state = currentState.copy(tappedDay = dayCellUiModel)
+            )
+            val dayType = when {
+                dayCellUiModel.isToday -> AnalyticsEventConst.PARAM_VALUE_DAY_TYPE_TODAY
+                dayCellUiModel.isInFuture -> AnalyticsEventConst.PARAM_VALUE_DAY_TYPE_FUTURE
+                else -> AnalyticsEventConst.PARAM_VALUE_DAY_TYPE_PAST
+            }
+            analyticsEventSender.send(
+                event = AnalyticsEvent(
+                    name = AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP,
+                    params = mapOf(
+                        AnalyticsEventConst.PARAM_HAS_EVENTS to dayCellUiModel.events.isNotEmpty()
+                            .asAnalyticsProperty(),
+                        AnalyticsEventConst.PARAM_DAY_TYPE to dayType.asAnalyticsProperty(),
+                    )
+                ),
             )
         }
     }
