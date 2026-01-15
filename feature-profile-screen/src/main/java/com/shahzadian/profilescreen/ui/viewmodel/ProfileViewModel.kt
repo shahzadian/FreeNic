@@ -2,6 +2,9 @@ package com.shahzadian.profilescreen.ui.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.domain.ClearAppDataUseCase
 import com.freenic.ui.AppScreen
 import com.freenic.ui.appinfo.AppInfoHelper
@@ -28,6 +31,7 @@ internal class ProfileViewModel @Inject constructor(
     private val appInfoHelper: AppInfoHelper,
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val clearAppDataUseCase: ClearAppDataUseCase,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : BaseViewModel<ProfileViewState, ProfileViewEvent, ProfileViewCommand>() {
 
     override val initState: ProfileViewState by lazyUnsafe { ProfileViewState.Loading }
@@ -40,6 +44,11 @@ internal class ProfileViewModel @Inject constructor(
         when (event) {
             is ProfileViewEvent.OnPremiumClicked -> {
                 viewModelScope.launch {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.PROFILE_SUBSCRIPTION_UPGRADE_TAP,
+                        )
+                    )
                     sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.PaywallScreen))
                 }
             }
@@ -95,6 +104,11 @@ internal class ProfileViewModel @Inject constructor(
 
     private fun onQuitDateUpdated(event: ProfileViewEvent.OnQuitDateSelected) {
         viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.PROFILE_QUIT_DATE_EDITED,
+                )
+            )
             val currentState = viewStateFlow.value
             if (currentState is ProfileViewState.Data) {
                 val formatted = extractMainDisplayableDate(event.millis)
@@ -207,6 +221,11 @@ internal class ProfileViewModel @Inject constructor(
     private fun onClearAllDataConfirmed() {
         viewModelScope
             .launch {
+                analyticsEventSender.send(
+                    AnalyticsEvent(
+                        name = AnalyticsEventConst.PROFILE_CLEAR_ALL_DATA_CONFIRMATION,
+                    )
+                )
                 clearAppDataUseCase()
                 sendViewCommand(
                     command = ProfileViewCommand.NavigateTo(

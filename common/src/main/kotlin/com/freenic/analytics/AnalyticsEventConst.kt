@@ -37,4 +37,7 @@ object AnalyticsEventConst {
     const val GOALS_SAVINGS_GOAL_DETAILS_TAP: String = "goals_savings_goal_details_tap"
     const val GOALS_SAVINGS_GOAL_UPGRADE_TAP: String = "goals_savings_goal_upgrade_tap"
     const val GOALS_ACHIEVEMENT_SHARE_TAP: String = "goals_achievement_share_tap"
+    const val PROFILE_QUIT_DATE_EDITED: String = "profile_quit_date_edited"
+    const val PROFILE_SUBSCRIPTION_UPGRADE_TAP: String = "profile_subscription_upgrade_tap"
+    const val PROFILE_CLEAR_ALL_DATA_CONFIRMATION: String = "profile_clear_all_data_confirmation"
 }
