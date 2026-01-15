@@ -2,6 +2,7 @@ package com.shahzadian.journeycalendarscreen.ui.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
+import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.MonthDataUiModel
 
 @Immutable
@@ -14,6 +15,7 @@ internal sealed interface JourneyCalendarViewState : ViewState {
     data class Data(
         val monthDataUiModel: MonthDataUiModel,
         val hasPreviousMonth: Boolean,
+        val tappedDay: DayCellUiModel?,
         // changeId гарантирует, что при каждом setData будет новый экземпляр состояния,
         // даже если вложенные модели равны по equals -> заставляет Compose перерисовать контент
         val changeId: Long = System.nanoTime(),

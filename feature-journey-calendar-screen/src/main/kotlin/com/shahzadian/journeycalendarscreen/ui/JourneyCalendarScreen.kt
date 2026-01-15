@@ -14,9 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -62,15 +60,6 @@ private fun ContentView(
     onEvent: (JourneyCalendarViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var bottomSheetCell: DayCellUiModel? by remember { mutableStateOf(null) }
-    val dayClick: (DayCellUiModel) -> Unit = remember { { cell -> bottomSheetCell = cell } }
-    bottomSheetCell?.let { cell ->
-        EventsBottomSheet(
-            cell = cell,
-            onSheetDismissRequested = { bottomSheetCell = null },
-            modifier = Modifier.fillMaxSize()
-        )
-    }
     Column(
         modifier = modifier
             .padding(16.dp),
@@ -93,6 +82,17 @@ private fun ContentView(
         }
         val data = state as JourneyCalendarViewState.Data
         val month = data.monthDataUiModel
+        val dayClick: (DayCellUiModel) -> Unit =
+            remember { { cell -> onEvent(JourneyCalendarViewEvent.OnDayTapped(cell)) } }
+        val bottomSheetDismissRequired =
+            remember { { onEvent(JourneyCalendarViewEvent.OnBottomSheetDismissRequired) } }
+        data.tappedDay?.let { cell ->
+            EventsBottomSheet(
+                cell = cell,
+                onSheetDismissRequested = bottomSheetDismissRequired,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
         val onPrevMonthEvent =
             remember { { onEvent(JourneyCalendarViewEvent.OnPreviousMonthClicked) } }
         val onNextMonthEvent = remember { { onEvent(JourneyCalendarViewEvent.OnNextMonthClicked) } }

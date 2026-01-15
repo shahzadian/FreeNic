@@ -3,6 +3,7 @@ package com.shahzadian.journeycalendarscreen.ui.viewmodel
 import androidx.lifecycle.viewModelScope
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.JourneyCalendarHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,6 +17,8 @@ internal class JourneyCalendarViewModel @Inject constructor(
     override val initState: JourneyCalendarViewState by lazyUnsafe {
         JourneyCalendarViewState.Loading
     }
+
+    private var tappetDay: DayCellUiModel? = null
 
     init {
         viewModelScope.launch {
@@ -36,6 +39,14 @@ internal class JourneyCalendarViewModel @Inject constructor(
             is JourneyCalendarViewEvent.OnBackIconClicked -> {
                 onBackIconClicked()
             }
+
+            is JourneyCalendarViewEvent.OnDayTapped -> {
+                onDayTapped(event.day)
+            }
+
+            is JourneyCalendarViewEvent.OnBottomSheetDismissRequired -> {
+                onBottomSheetDismissRequired()
+            }
         }
     }
 
@@ -45,6 +56,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
             setViewState(
                 state = JourneyCalendarViewState.Data(
                     hasPreviousMonth = journeyCalendarHelper.hasPreviousMonth(),
+                    tappedDay = tappetDay,
                     monthDataUiModel = model,
                 )
             )
@@ -69,6 +81,26 @@ internal class JourneyCalendarViewModel @Inject constructor(
         viewModelScope.launch {
             sendViewCommand(
                 JourneyCalendarViewCommand.NavigateBack
+            )
+        }
+    }
+
+    private fun onDayTapped(dayCellUiModel: DayCellUiModel) {
+        tappetDay = dayCellUiModel
+        val currentState = viewState as? JourneyCalendarViewState.Data ?: return
+        viewModelScope.launch {
+            setViewState(
+                state = currentState.copy(tappedDay = dayCellUiModel)
+            )
+        }
+    }
+
+    private fun onBottomSheetDismissRequired() {
+        tappetDay = null
+        val currentState = viewState as? JourneyCalendarViewState.Data ?: return
+        viewModelScope.launch {
+            setViewState(
+                state = currentState.copy(tappedDay = null)
             )
         }
     }

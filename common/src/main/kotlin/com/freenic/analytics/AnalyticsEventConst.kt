@@ -28,6 +28,13 @@ object AnalyticsEventConst {
     const val PARAM_REASON_ID: String = "reason_id"
     const val PARAM_WAS_SLIP_TODAY: String = "was_slip_today"
 
+//    journey_calendar_day_tap params
+    const val PARAM_HAS_EVENTS: String = "has_events"
+    const val PARAM_DAY_TYPE: String = "day_type"
+    const val PARAM_VALUE_DAY_TYPE_PAST: String = "past"
+    const val PARAM_VALUE_DAY_TYPE_TODAY: String = "today"
+    const val PARAM_VALUE_DAY_TYPE_FUTURE: String = "future"
+
     const val SCREEN_VIEW: String = "screen_view"
     const val REGISTRATION_START: String = "registration_start"
     const val REGISTRATION_FINISH: String = "registration_finish"
@@ -51,4 +58,5 @@ object AnalyticsEventConst {
     const val SLIP_REASON_SKIP_TAP: String = "slip_reason_skip_tap"
     const val SLIP_RESULT_READ_NOTES_TAP: String = "slip_result_read_notes_tap"
     const val SLIP_RESULT_BACK_TO_DASHBOARD_TAP: String = "slip_result_back_to_dashboard_tap"
+    const val JOURNEY_CALENDAR_DAY_TAP: String = "journey_calendar_day_tap"
 }
