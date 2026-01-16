@@ -38,7 +38,6 @@ object AnalyticsEventConst {
 
     const val GUESS_SHAPE_STARTED_PARAM_PLAY_CYCLE: String = "play_cycle"
 
-    const val SAVINGS_GOAL_CREATED_PARAM_GOAL_NAME: String = "goal_name"
     const val SAVINGS_GOAL_CREATED_PARAM_GOAL_PRICE: String = "goal_amount"
     const val SAVINGS_GOAL_CREATED_PARAM_CURRENT_AMOUNT: String = "current_amount"
     const val SAVINGS_GOAL_CREATED_PARAM_CATEGORY_ID: String = "category_id"

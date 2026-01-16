@@ -142,7 +142,6 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                 AnalyticsEvent(
                     name = AnalyticsEventConst.SAVINGS_GOAL_CREATED,
                     params = mapOf(
-                        AnalyticsEventConst.SAVINGS_GOAL_CREATED_PARAM_GOAL_NAME to name.asAnalyticsProperty(),
                         AnalyticsEventConst.SAVINGS_GOAL_CREATED_PARAM_GOAL_PRICE to amount.asAnalyticsProperty(),
                         AnalyticsEventConst.SAVINGS_GOAL_CREATED_PARAM_CURRENT_AMOUNT to currentAmount.asAnalyticsProperty(),
                         AnalyticsEventConst.SAVINGS_GOAL_CREATED_PARAM_CATEGORY_ID to category.id.asAnalyticsProperty()
