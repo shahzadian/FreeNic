@@ -86,6 +86,7 @@ internal class AnalyticsEventSenderProd(
                     value.putIntoBundle(key, this)
                 }
             }
+        firebaseAnalytics.logEvent(eventName, bundle)
     }
 }
 
