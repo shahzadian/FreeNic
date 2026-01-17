@@ -6,6 +6,8 @@ import com.freenic.domain.ClearAppDataUseCase
 import com.freenic.logger.AppLogger
 import com.freenic.ui.appinfo.AppInfoHelper
 import com.freenic.ui.model.CoroutineContexts
+import com.shahzadian.freenic.activityeventhandler.ActivityEventHandlerFactory
+import com.shahzadian.freenic.activityeventhandler.ActivityEventHandlerFactoryImpl
 import com.shahzadian.freenic.analytics.AnalyticsEventSenderDebug
 import com.shahzadian.freenic.analytics.AnalyticsEventSenderProd
 import com.shahzadian.freenic.appinfohelper.AppInfoHelperImpl
@@ -42,6 +44,11 @@ internal interface AppModule {
 
     @Binds
     fun bindAppLogger(impl: AppLoggerImpl): AppLogger
+
+    @Binds
+    fun bindActivityEventHandlerFactory(
+        impl: ActivityEventHandlerFactoryImpl
+    ): ActivityEventHandlerFactory
 
     companion object {
 

@@ -2,13 +2,13 @@ package com.shahzadian.subscription.subscription
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,26 +25,33 @@ internal class BillingDataSourceImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : BillingDataSource {
 
+    // Обязательный listener для обновлений покупок. Для текущей задачи — минимальная обработка (логирование).
+    private val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, purchases ->
+        // Здесь в будущем можно триггерить refresh/acknowledge.
+    }
+
     private fun newClient(): BillingClient =
         BillingClient.newBuilder(context)
+            .setListener(purchasesUpdatedListener)
             .enablePendingPurchases()
             .build()
 
-    private suspend fun BillingClient.ensureConnected(): Boolean = suspendCancellableCoroutine { cont ->
-        if (isReady) {
-            cont.resume(true)
-            return@suspendCancellableCoroutine
-        }
-        startConnection(object : BillingClientStateListener {
-            override fun onBillingServiceDisconnected() {
-                if (cont.isActive) cont.resume(false)
+    private suspend fun BillingClient.ensureConnected(): Boolean =
+        suspendCancellableCoroutine { cont ->
+            if (isReady) {
+                cont.resume(true)
+                return@suspendCancellableCoroutine
             }
+            startConnection(object : BillingClientStateListener {
+                override fun onBillingServiceDisconnected() {
+                    if (cont.isActive) cont.resume(false)
+                }
 
-            override fun onBillingSetupFinished(billingResult: BillingResult) {
-                cont.resume(billingResult.responseCode == BillingClient.BillingResponseCode.OK)
-            }
-        })
-    }
+                override fun onBillingSetupFinished(billingResult: BillingResult) {
+                    cont.resume(billingResult.responseCode == BillingClient.BillingResponseCode.OK)
+                }
+            })
+        }
 
     override suspend fun queryActiveSubscriptionProductId(): String? {
         val client = newClient()
@@ -61,10 +68,11 @@ internal class BillingDataSourceImpl @Inject constructor(
                     return@queryPurchasesAsync
                 }
                 val purchases: List<Purchase> = purchasesList ?: emptyList()
-                val productId = purchases.firstOrNull { it.purchaseState == Purchase.PurchaseState.PURCHASED && !it.isAcknowledged }
-                    ?.products?.firstOrNull()
-                    ?: purchases.firstOrNull { it.purchaseState == Purchase.PurchaseState.PURCHASED }
+                val productId =
+                    purchases.firstOrNull { it.purchaseState == Purchase.PurchaseState.PURCHASED && !it.isAcknowledged }
                         ?.products?.firstOrNull()
+                        ?: purchases.firstOrNull { it.purchaseState == Purchase.PurchaseState.PURCHASED }
+                            ?.products?.firstOrNull()
                 cont.resume(productId)
             }
         }
@@ -72,7 +80,9 @@ internal class BillingDataSourceImpl @Inject constructor(
 
     override suspend fun launchBillingFlow(activity: Activity, productId: String): Boolean {
         val client = newClient()
-        if (!client.ensureConnected()) return false
+        if (!client.ensureConnected()) {
+            return false
+        }
 
         // Query product details first
         val queryParams = QueryProductDetailsParams.newBuilder()
@@ -95,7 +105,8 @@ internal class BillingDataSourceImpl @Inject constructor(
             }
         } ?: return false
 
-        val offerToken = productDetails.subscriptionOfferDetails?.firstOrNull()?.offerToken ?: return false
+        val offerToken =
+            productDetails.subscriptionOfferDetails?.firstOrNull()?.offerToken ?: return false
         val productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
             .setProductDetails(productDetails)
             .setOfferToken(offerToken)
@@ -106,7 +117,6 @@ internal class BillingDataSourceImpl @Inject constructor(
             .build()
 
         val result = client.launchBillingFlow(activity, flowParams)
-        Log.d("LogMog", "result.responseCode: ${result.responseCode}")
         return result.responseCode == BillingClient.BillingResponseCode.OK
     }
 }

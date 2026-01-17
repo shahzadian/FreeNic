@@ -1,0 +1,39 @@
+package com.shahzadian.freenic.activityeventhandler
+
+import com.freenic.activityevent.ActivityEvent
+import com.freenic.activityevent.ActivityEventResult
+import com.freenic.ui.extensions.lazyUnsafe
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
+import kotlin.reflect.KClass
+
+@Suppress("UNCHECKED_CAST")
+internal abstract class ActivityEventHandler<E : ActivityEvent>(
+    private val coroutineScope: CoroutineScope,
+) {
+
+    protected abstract val eventClass: KClass<E>
+
+    private val _resultFlow: MutableSharedFlow<ActivityEventResult> by lazyUnsafe {
+        MutableSharedFlow()
+    }
+    val resultFlow: Flow<ActivityEventResult> = _resultFlow
+
+    fun handle(event: ActivityEvent) {
+        onEvent(event as E)
+    }
+
+    protected abstract fun onEvent(event: E)
+
+    protected fun sendResult(result: ActivityEventResult) {
+        coroutineScope.launch {
+            _resultFlow.emit(result)
+        }
+    }
+
+    protected fun launchInScope(scope: suspend () -> Unit) {
+        coroutineScope.launch { scope() }
+    }
+}

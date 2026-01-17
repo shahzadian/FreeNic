@@ -1,6 +1,8 @@
 package com.shahzadian.subscription.paywall.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.activityevent.ActivityEvent
+import com.freenic.activityevent.ActivityEventSender
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
@@ -10,7 +12,6 @@ import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
 import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCase
 import com.shahzadian.subscription.domain.PaidFeature
-import com.shahzadian.subscription.domain.SubscribeToPremiumUseCase
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,7 +23,7 @@ internal class PaywallViewModel @Inject constructor(
     private val getSubscriptionPlansUseCase: GetSubscriptionPlansUseCase,
     private val subscriptionPlanMapper: SubscriptionPlanMapper,
     private val analyticsEventSender: AnalyticsEventSender,
-    private val subscribeToPremiumUseCase: SubscribeToPremiumUseCase,
+    private val activityEventSender: ActivityEventSender,
 ) : BaseViewModel<PaywallViewState, PaywallViewEvent, PaywallViewCommand>() {
 
     override val initState: PaywallViewState by lazyUnsafe { PaywallViewState.Loading }
@@ -92,5 +93,12 @@ internal class PaywallViewModel @Inject constructor(
                 )
             )
         )
+        viewModelScope.launch {
+            activityEventSender.sendEvent(
+                ActivityEvent.AppSubscriptionRequest(
+                    planId = planId,
+                )
+            )
+        }
     }
 }

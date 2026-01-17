@@ -6,10 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import com.freenic.AppLaunchConst
+import com.freenic.activityevent.ActivityEventReceiver
 import com.freenic.logger.AppLogger
 import com.freenic.ui.model.CoroutineContexts
 import com.freenic.ui.theme.FreeNicTheme
 import com.shahzadian.ad.AdHelper
+import com.shahzadian.freenic.activityeventhandler.ActivityEventHandlerFactory
 import com.shahzadian.freenic.navigation.AppNavigation
 import com.shahzadian.freenic.navigation.AppNavigatorFactory
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
@@ -24,7 +26,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+internal class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var coroutineContexts: CoroutineContexts
@@ -44,6 +46,12 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var appLogger: AppLogger
 
+    @Inject
+    lateinit var activityEventReceiver: ActivityEventReceiver
+
+    @Inject
+    lateinit var activityEventHandlerFactory: ActivityEventHandlerFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -58,6 +66,7 @@ class MainActivity : ComponentActivity() {
             }
         }
         initializeAdSdk()
+        subscribeToEvents()
     }
 
     override fun onStart() {
@@ -114,5 +123,18 @@ class MainActivity : ComponentActivity() {
 //                    Result is not needed
                 }
         }
+    }
+
+    private fun subscribeToEvents() {
+        val activityEventHandlers = activityEventHandlerFactory.create(
+            activity = this,
+            coroutineScope = lifecycleScope,
+        )
+        activityEventReceiver
+            .eventFlow
+            .onEach { event ->
+                activityEventHandlers.forEach { it.handle(event) }
+            }
+            .launchIn(lifecycleScope)
     }
 }

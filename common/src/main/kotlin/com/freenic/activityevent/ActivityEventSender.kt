@@ -1,0 +1,51 @@
+package com.freenic.activityevent
+
+import com.freenic.ui.extensions.lazyUnsafe
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import javax.inject.Inject
+import javax.inject.Singleton
+
+interface ActivityEventSender {
+
+    val resultFlow: Flow<ActivityEventResult>
+
+    suspend fun sendEvent(event: ActivityEvent)
+}
+
+interface ActivityEventReceiver {
+
+    val eventFlow: Flow<ActivityEvent>
+
+    suspend fun sendResult(result: ActivityEventResult)
+}
+
+sealed interface ActivityEvent {
+
+    data class AppSubscriptionRequest(
+        val planId: String,
+    ) : ActivityEvent
+}
+
+sealed interface ActivityEventResult
+
+@Singleton
+internal class ActivityEventHelper @Inject constructor() : ActivityEventSender,
+    ActivityEventReceiver {
+
+    override val resultFlow: MutableSharedFlow<ActivityEventResult> by lazyUnsafe {
+        MutableSharedFlow()
+    }
+
+    override val eventFlow: MutableSharedFlow<ActivityEvent> by lazyUnsafe {
+        MutableSharedFlow()
+    }
+
+    override suspend fun sendEvent(event: ActivityEvent) {
+        eventFlow.emit(event)
+    }
+
+    override suspend fun sendResult(result: ActivityEventResult) {
+        resultFlow.emit(result)
+    }
+}
