@@ -58,6 +58,12 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    // DataStore for offline-first persistence
+    implementation(libs.androidx.datastore.preferences)
+
+    // Google Play Billing
+    implementation(libs.billing.ktx)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

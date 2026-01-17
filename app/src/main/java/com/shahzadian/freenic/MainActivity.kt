@@ -6,12 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.lifecycleScope
 import com.freenic.AppLaunchConst
+import com.freenic.logger.AppLogger
 import com.freenic.ui.model.CoroutineContexts
 import com.freenic.ui.theme.FreeNicTheme
 import com.shahzadian.ad.AdHelper
 import com.shahzadian.freenic.navigation.AppNavigation
 import com.shahzadian.freenic.navigation.AppNavigatorFactory
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -36,6 +38,12 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var appNavigatorFactory: AppNavigatorFactory
 
+    @Inject
+    lateinit var refreshSubscriptionStatusUseCase: RefreshSubscriptionStatusUseCase
+
+    @Inject
+    lateinit var appLogger: AppLogger
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -50,6 +58,22 @@ class MainActivity : ComponentActivity() {
             }
         }
         initializeAdSdk()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Обновляем статус подписки из Billing SDK при каждом запуске на экран
+        lifecycleScope.launch(coroutineContexts.io) {
+            try {
+                refreshSubscriptionStatusUseCase()
+            } catch (t: Throwable) {
+                appLogger.logError(
+                    tag = "BillingDataSource",
+                    message = "Failed to refresh subscription status",
+                    throwable = t,
+                )
+            }
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

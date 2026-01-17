@@ -10,8 +10,18 @@ import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCase
 import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCaseImpl
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCaseImpl
+import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
+import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCaseImpl
+import com.shahzadian.subscription.domain.SubscribeToPremiumUseCase
+import com.shahzadian.subscription.domain.SubscribeToPremiumUseCaseImpl
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapper
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapperImpl
+import com.shahzadian.subscription.subscription.BillingDataSource
+import com.shahzadian.subscription.subscription.BillingDataSourceImpl
+import com.shahzadian.subscription.subscription.SubscriptionLocalDataSource
+import com.shahzadian.subscription.subscription.SubscriptionLocalDataSourceImpl
+import com.shahzadian.subscription.subscription.SubscriptionRepository
+import com.shahzadian.subscription.subscription.SubscriptionRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -40,4 +50,25 @@ internal interface SubscriptionModule {
     fun bindGetUserCurrentSubscriptionUseCase(
         impl: GetUserCurrentSubscriptionUseCaseImpl
     ): GetUserCurrentSubscriptionUseCase
+
+    // Subscription offline-first infrastructure
+    @Binds
+    fun bindSubscriptionLocalDataSource(impl: SubscriptionLocalDataSourceImpl): SubscriptionLocalDataSource
+
+    @Binds
+    fun bindBillingDataSource(impl: BillingDataSourceImpl): BillingDataSource
+
+    @Binds
+    fun bindSubscriptionRepository(impl: SubscriptionRepositoryImpl): SubscriptionRepository
+
+    // Use cases
+    @Binds
+    fun bindRefreshSubscriptionStatusUseCase(
+        impl: RefreshSubscriptionStatusUseCaseImpl
+    ): RefreshSubscriptionStatusUseCase
+
+    @Binds
+    fun bindSubscribeToPremiumUseCase(
+        impl: SubscribeToPremiumUseCaseImpl
+    ): SubscribeToPremiumUseCase
 }
