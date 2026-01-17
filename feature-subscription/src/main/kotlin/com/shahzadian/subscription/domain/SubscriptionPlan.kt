@@ -13,13 +13,13 @@ class SubscriptionPlan(
 
     enum class PaymentFrequency {
         MONTHLY,
-        YEARLY;
+        ANNUAL;
     }
 }
 
 fun SubscriptionPlan.getPriceForYear(): BigDecimal {
     return  when (this.paymentFrequency) {
         SubscriptionPlan.PaymentFrequency.MONTHLY -> this.totalPrice.multiply(BigDecimal(12))
-        SubscriptionPlan.PaymentFrequency.YEARLY -> this.totalPrice
+        SubscriptionPlan.PaymentFrequency.ANNUAL -> this.totalPrice
     }
 }

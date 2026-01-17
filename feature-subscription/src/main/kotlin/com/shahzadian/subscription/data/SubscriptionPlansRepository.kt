@@ -23,20 +23,20 @@ internal class SubscriptionPlansRepositoryImpl @Inject constructor() : Subscript
                 currency = Currency.getInstance("USD")
             ),
             SubscriptionPlan(
-                id = ID_YEARLY,
-                paymentFrequency = SubscriptionPlan.PaymentFrequency.YEARLY,
-                totalPrice = BigDecimal.valueOf(PRICE_YEARLY_PER_MONTH * 12),
-                pricePerMonth = BigDecimal.valueOf(PRICE_YEARLY_PER_MONTH),
+                id = ID_ANNUAL,
+                paymentFrequency = SubscriptionPlan.PaymentFrequency.ANNUAL,
+                totalPrice = BigDecimal.valueOf(PRICE_ANNUAL),
+                pricePerMonth = BigDecimal.valueOf(PRICE_ANNUAL),
                 currency = Currency.getInstance("USD")
             )
         )
     }
 
     companion object {
-        private const val ID_MONTHLY: String = "MONTHLY_PLAN"
-        private const val ID_YEARLY: String = "YEARLY_PLAN"
+        private const val ID_MONTHLY: String = "monthly_plan"
+        private const val ID_ANNUAL: String = "annual_plan"
 
         private const val PRICE_MONTHLY_PER_MONTH: Double = 5.0
-        private const val PRICE_YEARLY_PER_MONTH: Double = 3.0
+        private const val PRICE_ANNUAL: Double = 50.0
     }
 }

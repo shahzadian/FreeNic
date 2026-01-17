@@ -43,7 +43,7 @@ internal class SubscriptionPlanMapperImpl @Inject constructor(
                 TextWrapper.FromRes(R.string.subscription_plan_name_monthly)
             }
 
-            SubscriptionPlan.PaymentFrequency.YEARLY -> {
+            SubscriptionPlan.PaymentFrequency.ANNUAL -> {
                 TextWrapper.FromRes(R.string.subscription_plan_name_yearly)
             }
         }
@@ -55,7 +55,7 @@ internal class SubscriptionPlanMapperImpl @Inject constructor(
                 TextWrapper.FromRes(R.string.subscription_plan_price_per_month)
             }
 
-            SubscriptionPlan.PaymentFrequency.YEARLY -> {
+            SubscriptionPlan.PaymentFrequency.ANNUAL -> {
                 val textFromRes = context.getString(
                     R.string.subscription_plan_price_per_month_postfix,
                     plan.pricePerMonth.toFloat()
