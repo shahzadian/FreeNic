@@ -19,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -58,10 +57,12 @@ fun PaywallScreen(
                 modifier = modifier.fillMaxSize()
             )
         }
+
         is PaywallViewState.Data -> {
             ContentView(
                 data = state as PaywallViewState.Data,
                 onBackIconClicked = backIconClickEvent,
+                onEvent = viewModel::onViewEvent,
                 modifier = modifier.fillMaxSize()
             )
         }
@@ -79,10 +80,14 @@ fun PaywallScreen(
 private fun ContentView(
     data: PaywallViewState.Data,
     onBackIconClicked: () -> Unit,
+    onEvent: (PaywallViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val backIconClick = remember {
         { onBackIconClicked() }
+    }
+    val upgradeClickEvent: (String) -> Unit = remember {
+        { planId -> onEvent(PaywallViewEvent.OnUpgradeClicked(planId = planId)) }
     }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.paywall_page_title),
@@ -97,7 +102,8 @@ private fun ContentView(
         )
         SubscriptionPlansView(
             plans = data.subscriptionPlans,
-            defaultPlanIndex = data.defaultSelectedPlanIndex,
+            defaultPlanId = data.defaultSelectedPlanId,
+            onUpgradeClicked = upgradeClickEvent,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
@@ -223,10 +229,14 @@ private fun PaidFeaturesCarousel(
 @Composable
 private fun SubscriptionPlansView(
     plans: List<PaywallViewState.SubscriptionPlanUiModel>,
-    defaultPlanIndex: Int,
+    defaultPlanId: String,
+    onUpgradeClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedPlanIndex by remember { mutableIntStateOf(defaultPlanIndex) }
+    var selectedPlanId by remember { mutableStateOf(defaultPlanId) }
+    val upgradeClick = remember {
+        { onUpgradeClicked(selectedPlanId) }
+    }
     Column(
         modifier = modifier,
     ) {
@@ -240,15 +250,15 @@ private fun SubscriptionPlansView(
             SubscriptionPlanView(
                 plan = plan,
                 modifier = Modifier.padding(bottom = if (index == plans.size - 1) 16.dp else 8.dp),
-                selected = selectedPlanIndex == index,
+                selected = selectedPlanId == plan.id,
                 onClick = {
-                    selectedPlanIndex = index
+                    selectedPlanId = plan.id
                 }
             )
         }
         MainSubmitButton(
             text = TextWrapper.FromRes(R.string.profile_subscription_submit_button),
-            onClick = {},
+            onClick = upgradeClick,
             modifier = Modifier
                 .fillMaxWidth()
         )

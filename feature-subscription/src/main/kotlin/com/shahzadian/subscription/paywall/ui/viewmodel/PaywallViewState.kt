@@ -4,7 +4,6 @@ import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
-import java.math.BigDecimal
 
 @Immutable
 internal sealed interface PaywallViewState : ViewState {
@@ -16,7 +15,7 @@ internal sealed interface PaywallViewState : ViewState {
     data class Data(
         val paidFeatures: List<PaidFeatureUiModel>,
         val subscriptionPlans: List<SubscriptionPlanUiModel>,
-        val defaultSelectedPlanIndex: Int,
+        val defaultSelectedPlanId: String,
     ) : PaywallViewState
 
     @Immutable
@@ -28,6 +27,7 @@ internal sealed interface PaywallViewState : ViewState {
 
     @Immutable
     data class SubscriptionPlanUiModel(
+        val id: String,
         val title: TextWrapper,
         val priceDetails: TextWrapper,
         val totalPrice: Float,

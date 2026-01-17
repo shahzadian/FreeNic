@@ -2,6 +2,7 @@ package com.shahzadian.subscription.subscription
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
@@ -105,6 +106,7 @@ internal class BillingDataSourceImpl @Inject constructor(
             .build()
 
         val result = client.launchBillingFlow(activity, flowParams)
+        Log.d("LogMog", "result.responseCode: ${result.responseCode}")
         return result.responseCode == BillingClient.BillingResponseCode.OK
     }
 }

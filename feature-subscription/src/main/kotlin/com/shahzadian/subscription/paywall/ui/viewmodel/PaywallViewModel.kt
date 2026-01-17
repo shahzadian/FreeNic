@@ -1,12 +1,16 @@
 package com.shahzadian.subscription.paywall.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
 import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCase
 import com.shahzadian.subscription.domain.PaidFeature
+import com.shahzadian.subscription.domain.SubscribeToPremiumUseCase
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,6 +22,7 @@ internal class PaywallViewModel @Inject constructor(
     private val getSubscriptionPlansUseCase: GetSubscriptionPlansUseCase,
     private val subscriptionPlanMapper: SubscriptionPlanMapper,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val subscribeToPremiumUseCase: SubscribeToPremiumUseCase,
 ) : BaseViewModel<PaywallViewState, PaywallViewEvent, PaywallViewCommand>() {
 
     override val initState: PaywallViewState by lazyUnsafe { PaywallViewState.Loading }
@@ -34,6 +39,12 @@ internal class PaywallViewModel @Inject constructor(
                         PaywallViewCommand.NavigateBack
                     )
                 }
+            }
+
+            is PaywallViewEvent.OnUpgradeClicked -> {
+                onUpgradeClicked(
+                    planId = event.planId,
+                )
             }
         }
     }
@@ -53,10 +64,10 @@ internal class PaywallViewModel @Inject constructor(
                 PaywallViewState.Data(
                     paidFeatures = paidFeatures,
                     subscriptionPlans = planUiModels,
-                    defaultSelectedPlanIndex = planUiModels
-                        .indexOfFirst { it.savingPercents != null }
-                        .takeIf { it != -1 }
-                        ?: 0
+                    defaultSelectedPlanId = planUiModels
+                        .firstOrNull { it.savingPercents != null }
+                        ?.id
+                        ?: planUiModels.first().id
                 )
             )
         }
@@ -67,6 +78,19 @@ internal class PaywallViewModel @Inject constructor(
             title = this.name,
             subtitle = this.description,
             icon = this.icon,
+        )
+    }
+
+    private fun onUpgradeClicked(
+        planId: String,
+    ) {
+        analyticsEventSender.send(
+            AnalyticsEvent(
+                name = AnalyticsEventConst.PAYWALL_UPGRADE_TAP,
+                params = mapOf(
+                    AnalyticsEventConst.PAYWALL_UPGRADE_TAP_PARAM_PLAN_ID to planId.asAnalyticsProperty(),
+                )
+            )
         )
     }
 }

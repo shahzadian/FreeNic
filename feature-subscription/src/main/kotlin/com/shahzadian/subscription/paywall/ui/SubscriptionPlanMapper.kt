@@ -27,6 +27,7 @@ internal class SubscriptionPlanMapperImpl @Inject constructor(
     ): PaywallViewState.SubscriptionPlanUiModel {
         val title = getTitle(plan)
         return PaywallViewState.SubscriptionPlanUiModel(
+            id = plan.id,
             title = title,
             priceDetails = getPriceDetails(plan),
             totalPrice = plan.totalPrice.toFloat(),

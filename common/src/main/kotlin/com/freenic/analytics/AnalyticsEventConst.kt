@@ -47,6 +47,8 @@ object AnalyticsEventConst {
     const val ACHIEVEMENT_SHARE_TAP_PARAM_ACHIEVEMENT_ID: String = "achievement_id"
     const val ACHIEVEMENT_SHARE_TAP_PARAM_TEMPLATE_ID: String = "template_id"
 
+    const val PAYWALL_UPGRADE_TAP_PARAM_PLAN_ID: String = "template_id"
+
     const val SCREEN_VIEW: String = "screen_view"
     const val REGISTRATION_START: String = "registration_start"
     const val REGISTRATION_FINISH: String = "registration_finish"
@@ -78,4 +80,5 @@ object AnalyticsEventConst {
     const val SAVINGS_GOAL_SHARE_TAP: String = "savings_goal_share_tap"
     const val SAVINGS_GOAL_DELETED: String = "savings_goal_deleted"
     const val ACHIEVEMENT_SHARE_TAP: String = "achievement_share_tap"
+    const val PAYWALL_UPGRADE_TAP: String = "paywall_upgrade_tap"
 }
