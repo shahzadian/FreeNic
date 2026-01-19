@@ -27,6 +27,8 @@ internal class JourneyCalendarViewModel @Inject constructor(
 
     private var tappetDay: DayCellUiModel? = null
 
+    private var shouldShowAddNoteBottomSheet: Boolean = false
+
     init {
         viewModelScope.launch {
             setData()
@@ -53,7 +55,15 @@ internal class JourneyCalendarViewModel @Inject constructor(
             }
 
             is JourneyCalendarViewEvent.OnBottomSheetDismissRequired -> {
-                onBottomSheetDismissRequired()
+                onEventsSheetDismissRequired()
+            }
+
+            is JourneyCalendarViewEvent.OnAddNoteClicked -> {
+                onAddNoteClicked()
+            }
+
+            is JourneyCalendarViewEvent.OnAddNoteSheetDismissRequired -> {
+                onAddNoteSheetDismissRequired()
             }
         }
     }
@@ -65,6 +75,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
                 state = JourneyCalendarViewState.Data(
                     hasPreviousMonth = journeyCalendarHelper.hasPreviousMonth(),
                     tappedDay = tappetDay,
+                    shouldShowAddNoteBottomSheet = false,
                     monthDataUiModel = model,
                 )
             )
@@ -118,12 +129,41 @@ internal class JourneyCalendarViewModel @Inject constructor(
         }
     }
 
-    private fun onBottomSheetDismissRequired() {
+    private fun onEventsSheetDismissRequired() {
         tappetDay = null
         val currentState = viewState as? JourneyCalendarViewState.Data ?: return
         viewModelScope.launch {
             setViewState(
                 state = currentState.copy(tappedDay = null)
+            )
+        }
+    }
+
+    private fun onAddNoteClicked() {
+        analyticsEventSender.send(
+            event = AnalyticsEvent(
+                name = AnalyticsEventConst.JOURNEY_CALENDAR_ADD_NOTE_TAP
+            )
+        )
+        shouldShowAddNoteBottomSheet = true
+        val currentState = viewState as? JourneyCalendarViewState.Data ?: return
+        viewModelScope.launch {
+            setViewState(
+                state = currentState.copy(
+                    shouldShowAddNoteBottomSheet = shouldShowAddNoteBottomSheet,
+                )
+            )
+        }
+    }
+
+    private fun onAddNoteSheetDismissRequired() {
+        shouldShowAddNoteBottomSheet = false
+        val currentState = viewState as? JourneyCalendarViewState.Data ?: return
+        viewModelScope.launch {
+            setViewState(
+                state = currentState.copy(
+                    shouldShowAddNoteBottomSheet = shouldShowAddNoteBottomSheet,
+                )
             )
         }
     }

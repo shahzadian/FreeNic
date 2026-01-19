@@ -37,6 +37,7 @@ import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.journeycalendarscreen.R
+import com.shahzadian.journeycalendarscreen.ui.addnote.AddNoteBottomSheet
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
 
@@ -44,17 +45,24 @@ import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
 @Composable
 internal fun EventsBottomSheet(
     cell: DayCellUiModel,
-    onSheetDismissRequested: () -> Unit,
+    shouldShowAddNoteBottomSheet: Boolean,
+    onAddNoteClicked: () -> Unit,
+    onEventsSheetDismissRequested: () -> Unit,
+    onAddNoteSheetDismissRequested: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val dismissRequest = remember {
-        { onSheetDismissRequested() }
+    val eventsSheetDismissRequest = remember {
+        { onEventsSheetDismissRequested() }
+    }
+    val addNoteClicked = remember { { onAddNoteClicked() } }
+    val addNoteSheetDismissRequest = remember {
+        { onAddNoteSheetDismissRequested() }
     }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
     )
     ModalBottomSheet(
-        onDismissRequest = dismissRequest,
+        onDismissRequest = eventsSheetDismissRequest,
         sheetState = sheetState,
         containerColor = MaterialTheme.colorScheme.background,
         shape = MaterialTheme.shapes.medium,
@@ -67,18 +75,28 @@ internal fun EventsBottomSheet(
         ) {
             EventsView(
                 cell = cell,
-                dismissRequest = dismissRequest,
+                dismissRequest = eventsSheetDismissRequest,
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(bottom = 8.dp)
             )
             AddNoteView(
-                onClicked = {},
+                onClicked = addNoteClicked,
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .height(65.dp)
             )
+        }
+        cell.fullDayText?.let { dayText ->
+            if (shouldShowAddNoteBottomSheet) {
+                AddNoteBottomSheet(
+                    dayText = dayText,
+                    onNoteAdded = {},
+                    onSheetDismissRequested = addNoteSheetDismissRequest,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
         }
     }
 }

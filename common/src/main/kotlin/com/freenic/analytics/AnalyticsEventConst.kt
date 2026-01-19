@@ -74,6 +74,7 @@ object AnalyticsEventConst {
     const val SLIP_RESULT_READ_NOTES_TAP: String = "slip_result_read_notes_tap"
     const val SLIP_RESULT_BACK_TO_DASHBOARD_TAP: String = "slip_result_back_to_dashboard_tap"
     const val JOURNEY_CALENDAR_DAY_TAP: String = "journey_calendar_day_tap"
+    const val JOURNEY_CALENDAR_ADD_NOTE_TAP: String = "journey_calendar_add_note_tap"
     const val BREATHE_EXERCISE_START_TAP: String = "breathe_exercise_start_tap"
     const val BREATHE_EXERCISE_FINISH_TAP: String = "breathe_exercise_finish_tap"
     const val GUESS_SHAPE_STARTED: String = "guess_shape_started"

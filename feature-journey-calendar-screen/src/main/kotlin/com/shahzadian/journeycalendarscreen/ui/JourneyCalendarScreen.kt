@@ -86,10 +86,17 @@ private fun ContentView(
             remember { { cell -> onEvent(JourneyCalendarViewEvent.OnDayTapped(cell)) } }
         val bottomSheetDismissRequired =
             remember { { onEvent(JourneyCalendarViewEvent.OnBottomSheetDismissRequired) } }
+        val addNoteClick = remember { { onEvent(JourneyCalendarViewEvent.OnAddNoteClicked) } }
+        val addNoteSheetDismissRequired = remember {
+            { onEvent(JourneyCalendarViewEvent.OnAddNoteSheetDismissRequired) }
+        }
         data.tappedDay?.let { cell ->
             EventsBottomSheet(
                 cell = cell,
-                onSheetDismissRequested = bottomSheetDismissRequired,
+                shouldShowAddNoteBottomSheet = data.shouldShowAddNoteBottomSheet,
+                onAddNoteClicked = addNoteClick,
+                onEventsSheetDismissRequested = bottomSheetDismissRequired,
+                onAddNoteSheetDismissRequested = addNoteSheetDismissRequired,
                 modifier = Modifier.fillMaxSize()
             )
         }

@@ -501,5 +501,15 @@
     <string name="manage_subscription_current_plan_premium_active_until">Активно до %s</string>
     <string name="journey_calendar_add_note_title">Добавить заметку</string>
     <string name="journey_calendar_add_note_subtitle">Сохраните свои мысли или моменты про этот день</string>
+    <string name="journey_calendar_add_note_locked_title">Заметки для вашего пути</string>
+    <string name="journey_calendar_add_note_locked_subtitle">Сохраните мысли, триггеры и моменты про любой день</string>
+    <string name="journey_calendar_add_note_note_1_title">Размышляйте о сложных днях</string>
+    <string name="journey_calendar_add_note_note_1_subtitle">Отмечайте, что вызывало тягу и как вы с ней справились</string>
+    <string name="journey_calendar_add_note_note_2_title">Запоминайте, что вам помогло</string>
+    <string name="journey_calendar_add_note_note_2_subtitle">Формируйте личную коллекцию способов справляться с тягой</string>
+    <string name="journey_calendar_add_note_note_3_title">Просматривайте заметки вместе с вашим прогрессом</string>
+    <string name="journey_calendar_add_note_note_3_subtitle">Изучайте инсайты рядом с вашим путём без сигарет</string>
+    <string name="journey_calendar_add_note_unlock_button">Разблокировать заметки</string>
+    <string name="journey_calendar_add_note_not_now">Не сейчас</string>
 
 </resources>
