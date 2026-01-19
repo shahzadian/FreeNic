@@ -28,7 +28,8 @@ internal class GetUserCurrentSubscriptionUseCaseImpl @Inject constructor(
                 ?: return UserSubscriptionStatus.NoSubscription
             return UserSubscriptionStatus.HasSubscription(
                 plan = plan,
-                expiresAtMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 365
+                expiresAtMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 365,
+                isAutoRenewing = true,
             )
         }
 

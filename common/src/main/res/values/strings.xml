@@ -505,5 +505,6 @@
     <string name="manage_subscription_cancel_confirmation_subtitle">Premium features will remain available until %s. After that, your account will switch to the free version.</string>
     <string name="manage_subscription_cancel_confirmation_confirm">Yes</string>
     <string name="manage_subscription_cancel_confirmation_cancel">No</string>
+    <string name="manage_subscription_current_plan_premium_active_until">Active until %s</string>
 
 </resources>

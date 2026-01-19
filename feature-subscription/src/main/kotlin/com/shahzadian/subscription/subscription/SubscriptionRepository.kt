@@ -62,7 +62,8 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
                 val plan = plansRepository.getPlans().firstOrNull { it.id == active.productId }
                 if (plan != null) UserSubscriptionStatus.HasSubscription(
                     plan = plan,
-                    expiresAtMillis = expiresAt
+                    expiresAtMillis = expiresAt,
+                    isAutoRenewing = active.isAutoRenewing,
                 ) else null
             }
             if (status != null) return status
@@ -76,7 +77,12 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
                     ?: throw IllegalStateException("Unknown plan ID: $planId")
             val expiresAt = local.getCurrentExpiresAtMillis()
                 ?: throw IllegalStateException("No expiresAtMillis for plan ID: $planId")
-            UserSubscriptionStatus.HasSubscription(plan = plan, expiresAtMillis = expiresAt)
+            val isAutoRenewing = local.getIsAutoRenewing()
+            UserSubscriptionStatus.HasSubscription(
+                plan = plan,
+                expiresAtMillis = expiresAt,
+                isAutoRenewing = isAutoRenewing,
+            )
         }
     }
 

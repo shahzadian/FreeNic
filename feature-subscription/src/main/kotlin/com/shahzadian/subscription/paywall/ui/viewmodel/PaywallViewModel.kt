@@ -2,6 +2,7 @@ package com.shahzadian.subscription.paywall.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.freenic.activityevent.ActivityEvent
+import com.freenic.activityevent.ActivityEventResult
 import com.freenic.activityevent.ActivityEventSender
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
@@ -14,6 +15,8 @@ import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCase
 import com.shahzadian.subscription.domain.PaidFeature
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +33,7 @@ internal class PaywallViewModel @Inject constructor(
 
     init {
         setDataViewState()
+        setupObservers()
     }
 
     override fun onViewEventHappened(event: PaywallViewEvent) {
@@ -72,6 +76,21 @@ internal class PaywallViewModel @Inject constructor(
                 )
             )
         }
+    }
+
+    private fun setupObservers() {
+        activityEventSender
+            .resultFlow
+            .onEach { event ->
+                when (event) {
+                    is ActivityEventResult.OnUserSubscribed -> {
+                        sendViewCommand(
+                            PaywallViewCommand.NavigateBack
+                        )
+                    }
+                }
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun PaidFeature.toUiModel(): PaywallViewState.PaidFeatureUiModel {

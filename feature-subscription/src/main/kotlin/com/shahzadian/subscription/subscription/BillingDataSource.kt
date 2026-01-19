@@ -23,7 +23,8 @@ internal interface BillingDataSource {
      */
     data class ActiveSubscriptionInfo(
         val productId: String,
-        val purchaseTimeMillis: Long
+        val purchaseTimeMillis: Long,
+        val isAutoRenewing: Boolean,
     )
 
     /** Возвращает активную подписку (productId + время покупки) или null. */
@@ -92,7 +93,8 @@ internal class BillingDataSourceImpl @Inject constructor(
                     cont.resume(
                         BillingDataSource.ActiveSubscriptionInfo(
                             productId = productId,
-                            purchaseTimeMillis = chosen.purchaseTime
+                            purchaseTimeMillis = chosen.purchaseTime,
+                            isAutoRenewing = chosen.isAutoRenewing,
                         )
                     )
                 }

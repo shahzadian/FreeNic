@@ -57,6 +57,7 @@ internal class ManageSubscriptionViewModel @Inject constructor(
                         plan = currentSubscription.plan,
                     ),
                     activeUntil = extractMainDisplayableDate(currentSubscription.expiresAtMillis),
+                    isAutoRenewing = currentSubscription.isAutoRenewing,
                     paidFeatures = getPaidFeaturesUseCase().map {
                         it.name
                     }

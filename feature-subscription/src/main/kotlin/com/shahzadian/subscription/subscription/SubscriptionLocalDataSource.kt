@@ -9,10 +9,12 @@ internal interface SubscriptionLocalDataSource {
     fun setCurrentPlanId(planId: String?)
     fun getCurrentExpiresAtMillis(): Long?
     fun setCurrentExpiresAtMillis(expiresAtMillis: Long?)
+    fun getIsAutoRenewing(): Boolean
+    fun setIsAutoRenewing(isAutoRenewing: Boolean)
 }
 
 internal class SubscriptionLocalDataSourceImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : SubscriptionLocalDataSource {
 
     private val prefs by lazy {
@@ -40,9 +42,18 @@ internal class SubscriptionLocalDataSourceImpl @Inject constructor(
         }.apply()
     }
 
+    override fun getIsAutoRenewing(): Boolean {
+        return prefs.getBoolean(KEY_IS_AUTO_RENEWING, false)
+    }
+
+    override fun setIsAutoRenewing(isAutoRenewing: Boolean) {
+        prefs.edit().putBoolean(KEY_IS_AUTO_RENEWING, isAutoRenewing).apply()
+    }
+
     private companion object {
         const val PREFS_NAME = "subscription_prefs"
         const val KEY_PLAN_ID = "current_plan_id"
         const val KEY_EXPIRES_AT = "current_expires_at"
+        const val KEY_IS_AUTO_RENEWING = "is_auto_renewing"
     }
 }

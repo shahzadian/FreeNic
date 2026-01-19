@@ -498,5 +498,6 @@
     <string name="manage_subscription_cancel_confirmation_subtitle">Премиум-функции будут доступны до %s. После этого аккаунт перейдёт на бесплатную версию.</string>
     <string name="manage_subscription_cancel_confirmation_confirm">Да</string>
     <string name="manage_subscription_cancel_confirmation_cancel">Нет</string>
+    <string name="manage_subscription_current_plan_premium_active_until">Активно до %s</string>
 
 </resources>

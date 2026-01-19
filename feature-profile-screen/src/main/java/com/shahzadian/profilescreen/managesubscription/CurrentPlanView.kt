@@ -51,11 +51,19 @@ internal fun CurrentPlanView(
                 contentDescription = "Renewal date",
                 modifier = Modifier.padding(end = 8.dp)
             )
-            Text(
-                text = stringResource(
+            val text = if (data.isAutoRenewing) {
+                stringResource(
                     R.string.manage_subscription_current_plan_premium_renewal,
                     data.activeUntil
-                ),
+                )
+            } else {
+                stringResource(
+                    R.string.manage_subscription_current_plan_premium_active_until,
+                    data.activeUntil
+                )
+            }
+            Text(
+                text = text,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondary,
             )
