@@ -1,6 +1,7 @@
 package com.shahzadian.profilescreen.managesubscription
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -66,5 +67,11 @@ private fun ContentView(
         title = TextWrapper.FromRes(R.string.manage_subscription_header_title),
         hasBackIcon = true,
         onBackIconClicked = backIconClick,
-    ) { }
+        modifier = modifier,
+    ) {
+        CurrentPlanView(
+            data = data,
+            modifier = Modifier.fillMaxWidth()
+        )
+    }
 }

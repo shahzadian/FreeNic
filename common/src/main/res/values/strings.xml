@@ -493,8 +493,8 @@
     <string name="achievement_share_money_based_celebratory_title">MONEY SAVED!</string>
     <string name="achievement_share_money_based_celebratory_subtitle">I saved money by not smoking! Tracked with FreeNic</string>
     <string name="manage_subscription_header_title">Manage subscription</string>
-    <string name="manage_subscription_current_plan_premium_badge">Premium is active</string>
-    <string name="manage_subscription_current_plan_premium_renew">Renews on %s</string>
+    <string name="manage_subscription_current_plan_premium_badge">• Premium is active</string>
+    <string name="manage_subscription_current_plan_premium_renewal">Renews on %s</string>
     <string name="manage_subscription_current_plan_premium_info">Managed through Google Play</string>
     <string name="manage_subscription_premium_features_title">What\'s included</string>
     <string name="profile_premium_active">Premium is active</string>
