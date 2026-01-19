@@ -41,6 +41,7 @@ import com.shahzadian.journeycalendarscreen.ui.JourneyCalendarScreen
 import com.shahzadian.mainscreen.ui.MainBottomBar
 import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.motivationalnotesscreen.ui.MotivationalNotesScreen
+import com.shahzadian.profilescreen.managesubscription.ManageSubscriptionScreen
 import com.shahzadian.profilescreen.ui.ProfileScreen
 import com.shahzadian.savingsgoalscreen.ui.create.SavingsGoalCreateScreen
 import com.shahzadian.savingsgoalscreen.ui.details.SavingsGoalDetailsScreen
@@ -385,6 +386,17 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 JourneyCalendarScreen(
+                    navigator = appNavigator,
+                    modifier = BaseModifier,
+                )
+            }
+
+            composable(
+                route = AppScreen.ManageSubscriptionScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                ManageSubscriptionScreen(
                     navigator = appNavigator,
                     modifier = BaseModifier,
                 )

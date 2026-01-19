@@ -1,6 +1,7 @@
 package com.shahzadian.freenic.activityeventhandler
 
 import android.app.Activity
+import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import com.shahzadian.subscription.domain.SubscribeToPremiumUseCase
 import kotlinx.coroutines.CoroutineScope
 import javax.inject.Inject
@@ -15,6 +16,7 @@ internal interface ActivityEventHandlerFactory {
 
 internal class ActivityEventHandlerFactoryImpl @Inject constructor(
     private val subscribeToPremiumUseCase: SubscribeToPremiumUseCase,
+    private val refreshSubscriptionStatusUseCase: RefreshSubscriptionStatusUseCase,
 ) : ActivityEventHandlerFactory {
 
     override fun create(
@@ -26,6 +28,7 @@ internal class ActivityEventHandlerFactoryImpl @Inject constructor(
                 activity = activity,
                 coroutineScope = coroutineScope,
                 subscribeToPremiumUseCase = subscribeToPremiumUseCase,
+                refreshSubscriptionStatusUseCase = refreshSubscriptionStatusUseCase,
             )
         )
     }

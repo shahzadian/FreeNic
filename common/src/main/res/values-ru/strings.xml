@@ -485,5 +485,10 @@
     <string name="achievement_share_money_based_subtitle">Деньги, не потраченные на сигареты</string>
     <string name="achievement_share_money_based_celebratory_title">СЭКОНОМЛЕНО!</string>
     <string name="achievement_share_money_based_celebratory_subtitle">Я сэкономил деньги, отказавшись от курения. Отслеживаю с FreeNic.</string>
+    <string name="manage_subscription_header_title">Управление подпиской</string>
+    <string name="manage_subscription_current_plan_premium_badge">Премиум активен</string>
+    <string name="manage_subscription_current_plan_premium_renew">Продлевается</string>
+    <string name="manage_subscription_current_plan_premium_info">Управляется через Google Play</string>
+    <string name="manage_subscription_premium_features_title">Что включено</string>
 
 </resources>

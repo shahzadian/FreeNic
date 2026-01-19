@@ -27,7 +27,10 @@ sealed interface ActivityEvent {
     ) : ActivityEvent
 }
 
-sealed interface ActivityEventResult
+sealed interface ActivityEventResult {
+
+    data object OnUserSubscribed : ActivityEventResult
+}
 
 @Singleton
 internal class ActivityEventHelper @Inject constructor() : ActivityEventSender,
