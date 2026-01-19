@@ -47,6 +47,7 @@ internal fun EventsBottomSheet(
     cell: DayCellUiModel,
     shouldShowAddNoteBottomSheet: Boolean,
     onAddNoteClicked: () -> Unit,
+    onAddNoteUnlockClicked: () -> Unit,
     onEventsSheetDismissRequested: () -> Unit,
     onAddNoteSheetDismissRequested: () -> Unit,
     modifier: Modifier = Modifier
@@ -58,6 +59,7 @@ internal fun EventsBottomSheet(
     val addNoteSheetDismissRequest = remember {
         { onAddNoteSheetDismissRequested() }
     }
+    val addNoteUnlockClick = remember { { onAddNoteUnlockClicked() } }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
     )
@@ -93,6 +95,7 @@ internal fun EventsBottomSheet(
                 AddNoteBottomSheet(
                     dayText = dayText,
                     onNoteAdded = {},
+                    onAddNoteUnlockClicked = addNoteUnlockClick,
                     onSheetDismissRequested = addNoteSheetDismissRequest,
                     modifier = Modifier.fillMaxSize()
                 )

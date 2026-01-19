@@ -15,11 +15,16 @@ import com.freenic.ui.wrapper.TextWrapper
 internal fun AddNoteBottomSheet(
     dayText: TextWrapper,
     onNoteAdded: () -> Unit,
+    onAddNoteUnlockClicked: () -> Unit,
     onSheetDismissRequested: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val dismissRequest = remember {
         { onSheetDismissRequested() }
+    }
+    val noteAdded = remember { { onNoteAdded() } }
+    val addNoteUnlockClick = remember {
+        { onAddNoteUnlockClicked() }
     }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
@@ -33,7 +38,7 @@ internal fun AddNoteBottomSheet(
     ) {
         AddNoteLockedView(
             dayText = dayText,
-            onUnlockClicked = {},
+            onUnlockClicked = addNoteUnlockClick,
             onCloseClicked = dismissRequest,
             onNotNowClicked = dismissRequest,
             modifier = Modifier.fillMaxSize()

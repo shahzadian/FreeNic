@@ -27,4 +27,7 @@ internal sealed interface JourneyCalendarViewEvent : ViewEvent {
 
     @Immutable
     data object OnAddNoteSheetDismissRequired : JourneyCalendarViewEvent
+
+    @Immutable
+    data object OnAddNoteUnlockClicked : JourneyCalendarViewEvent
 }

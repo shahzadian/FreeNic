@@ -49,6 +49,9 @@ fun JourneyCalendarScreen(
                     is JourneyCalendarViewCommand.NavigateBack -> {
                         navigator.navigateBack()
                     }
+                    is JourneyCalendarViewCommand.NavigateTo -> {
+                        navigator.navigateToScreen(command.screen)
+                    }
                 }
             }
     }
@@ -90,11 +93,13 @@ private fun ContentView(
         val addNoteSheetDismissRequired = remember {
             { onEvent(JourneyCalendarViewEvent.OnAddNoteSheetDismissRequired) }
         }
+        val addNoteUnlockClick = remember { { onEvent(JourneyCalendarViewEvent.OnAddNoteUnlockClicked) } }
         data.tappedDay?.let { cell ->
             EventsBottomSheet(
                 cell = cell,
                 shouldShowAddNoteBottomSheet = data.shouldShowAddNoteBottomSheet,
                 onAddNoteClicked = addNoteClick,
+                onAddNoteUnlockClicked = addNoteUnlockClick,
                 onEventsSheetDismissRequested = bottomSheetDismissRequired,
                 onAddNoteSheetDismissRequested = addNoteSheetDismissRequired,
                 modifier = Modifier.fillMaxSize()

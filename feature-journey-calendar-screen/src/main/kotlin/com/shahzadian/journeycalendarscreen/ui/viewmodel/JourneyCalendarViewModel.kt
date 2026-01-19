@@ -5,6 +5,7 @@ import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.ad.AdHelper
@@ -60,6 +61,10 @@ internal class JourneyCalendarViewModel @Inject constructor(
 
             is JourneyCalendarViewEvent.OnAddNoteClicked -> {
                 onAddNoteClicked()
+            }
+
+            is JourneyCalendarViewEvent.OnAddNoteUnlockClicked -> {
+                onAddNoteUnlockClicked()
             }
 
             is JourneyCalendarViewEvent.OnAddNoteSheetDismissRequired -> {
@@ -146,6 +151,26 @@ internal class JourneyCalendarViewModel @Inject constructor(
             )
         )
         shouldShowAddNoteBottomSheet = true
+        val currentState = viewState as? JourneyCalendarViewState.Data ?: return
+        viewModelScope.launch {
+            setViewState(
+                state = currentState.copy(
+                    shouldShowAddNoteBottomSheet = shouldShowAddNoteBottomSheet,
+                )
+            )
+        }
+    }
+
+    private fun onAddNoteUnlockClicked() {
+        analyticsEventSender.send(
+            event = AnalyticsEvent(
+                name = AnalyticsEventConst.JOURNEY_CALENDAR_ADD_NOTE_UNLOCK_TAP
+            )
+        )
+        viewModelScope.launch {
+            sendViewCommand(JourneyCalendarViewCommand.NavigateTo(AppScreen.PaywallScreen))
+        }
+        shouldShowAddNoteBottomSheet = false
         val currentState = viewState as? JourneyCalendarViewState.Data ?: return
         viewModelScope.launch {
             setViewState(
