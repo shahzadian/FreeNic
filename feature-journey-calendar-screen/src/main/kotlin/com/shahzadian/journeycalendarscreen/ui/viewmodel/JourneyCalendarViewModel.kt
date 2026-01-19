@@ -7,6 +7,7 @@ import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.shahzadian.ad.AdHelper
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.JourneyCalendarHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +18,7 @@ import javax.inject.Inject
 internal class JourneyCalendarViewModel @Inject constructor(
     private val journeyCalendarHelper: JourneyCalendarHelper,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val adHelper: AdHelper,
 ) : BaseViewModel<JourneyCalendarViewState, JourneyCalendarViewEvent, JourneyCalendarViewCommand>() {
 
     override val initState: JourneyCalendarViewState by lazyUnsafe {
@@ -28,6 +30,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             setData()
+            adHelper.requestAdShow()
         }
     }
 
