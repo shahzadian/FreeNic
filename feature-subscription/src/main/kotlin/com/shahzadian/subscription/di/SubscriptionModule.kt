@@ -12,8 +12,6 @@ import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCase
 import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCaseImpl
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCaseImpl
-import com.shahzadian.subscription.domain.GetUserSubscriptionStatusUseCase
-import com.shahzadian.subscription.domain.GetUserSubscriptionStatusUseCaseImpl
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCaseImpl
 import com.shahzadian.subscription.domain.SubscribeToPremiumUseCase
@@ -54,11 +52,6 @@ internal interface SubscriptionModule {
     fun bindGetUserCurrentSubscriptionUseCase(
         impl: GetUserCurrentSubscriptionUseCaseImpl
     ): GetUserCurrentSubscriptionUseCase
-
-    @Binds
-    fun bindGetUserSubscriptionStatusUseCase(
-        impl: GetUserSubscriptionStatusUseCaseImpl
-    ): GetUserSubscriptionStatusUseCase
 
     // Subscription offline-first infrastructure
     @Binds

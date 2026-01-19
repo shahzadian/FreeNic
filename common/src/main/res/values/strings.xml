@@ -145,7 +145,7 @@
     <string name="profile_cigs_currency">Currency</string>
 
     <string name="profile_subscription_title">Premium</string>
-    <string name="profile_subscription_desc">Unlock detailed insights and advanced statistics</string>
+    <string name="profile_subscription_desc">Unlock all the premium features</string>
     <string name="profile_subscription_badge">PREMIUM</string>
     <string name="profile_subscription_submit_button">Upgrade to premium</string>
 
@@ -497,5 +497,8 @@
     <string name="manage_subscription_current_plan_premium_renew">Renews on %s</string>
     <string name="manage_subscription_current_plan_premium_info">Managed through Google Play</string>
     <string name="manage_subscription_premium_features_title">What\'s included</string>
+    <string name="profile_premium_active">Premium is active</string>
+    <string name="profile_premium_active_until">Active until %s</string>
+    <string name="profile_premium_manage_button">Manage subscription</string>
 
 </resources>

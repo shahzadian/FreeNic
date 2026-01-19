@@ -28,6 +28,7 @@ import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.profilescreen.ui.subscriptionview.ProfileSubscriptionView
 import com.shahzadian.profilescreen.ui.viewmodel.ProfileViewCommand
 import com.shahzadian.profilescreen.ui.viewmodel.ProfileViewEvent
 import com.shahzadian.profilescreen.ui.viewmodel.ProfileViewModel
@@ -111,16 +112,18 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
-        if (data.hasPaidSubscription.not()) {
-            ProfileSubscriptionView(
-                onPremiumClicked = {
-                    onEvent(ProfileViewEvent.OnPremiumClicked)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
-            )
-        }
+        ProfileSubscriptionView(
+            state = data.subscriptionState,
+            onPremiumClicked = {
+                onEvent(ProfileViewEvent.OnUpgradeSubscriptionClicked)
+            },
+            onManageSubscriptionClicked = {
+                onEvent(ProfileViewEvent.OnManageSubscriptionClicked)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
         if (data.isDebugBuild) {
             DebugBuildView(
                 onDebugClicked = {

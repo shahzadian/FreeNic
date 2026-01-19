@@ -15,6 +15,7 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.model.CoroutineContexts
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -44,8 +45,9 @@ internal abstract class BaseAnalyticsEventSender(
     )
 
     protected suspend fun composeBaseParams(): Map<String, AnalyticsProperty<*>> {
-        val currentSubscription = getUserCurrentSubscriptionUseCase()?.id
-            ?: PARAM_VALUE_SUBSCRIPTION_ID_NO_SUBSCRIPTION
+        val currentSubscription =
+            (getUserCurrentSubscriptionUseCase() as? UserSubscriptionStatus.HasSubscription)?.plan?.id
+                ?: PARAM_VALUE_SUBSCRIPTION_ID_NO_SUBSCRIPTION
         val (appVersion, buildNumber) = appInfoHelper.getAppVersion().let {
             it.versionName to it.buildNumber
         }

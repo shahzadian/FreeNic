@@ -16,6 +16,7 @@ import com.shahzadian.freenic.navigation.AppNavigation
 import com.shahzadian.freenic.navigation.AppNavigatorFactory
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
+import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -88,7 +89,7 @@ internal class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalCoroutinesApi::class)
     private fun initializeAdSdk() {
         lifecycleScope.launch(coroutineContexts.main) {
-            if (getUserCurrentSubscriptionUseCase() != null) {
+            if (getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription) {
                 return@launch
             }
             delay(1000)

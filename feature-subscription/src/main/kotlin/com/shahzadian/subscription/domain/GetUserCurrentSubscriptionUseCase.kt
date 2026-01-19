@@ -11,7 +11,7 @@ interface GetUserCurrentSubscriptionUseCase {
     /**
      * @return null if user is not subscribed
      */
-    suspend operator fun invoke(): SubscriptionPlan?
+    suspend operator fun invoke(): UserSubscriptionStatus
 }
 
 internal class GetUserCurrentSubscriptionUseCaseImpl @Inject constructor(
@@ -21,13 +21,18 @@ internal class GetUserCurrentSubscriptionUseCaseImpl @Inject constructor(
     private val subscriptionRepository: SubscriptionRepository
 ) : GetUserCurrentSubscriptionUseCase {
 
-    override suspend fun invoke(): SubscriptionPlan? {
+    override suspend fun invoke(): UserSubscriptionStatus {
         // Debug override: emulate subscription if enabled in debug params
         if (appInfoHelper.isDebugBuild() && debugParamsHelper.getParams()?.hasPaidSubscription == true) {
-            return subscriptionPlansRepository.getPlans().firstOrNull()
+            val plan = subscriptionPlansRepository.getPlans().firstOrNull()
+                ?: return UserSubscriptionStatus.NoSubscription
+            return UserSubscriptionStatus.HasSubscription(
+                plan = plan,
+                expiresAtMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 365
+            )
         }
 
         // Billing-first with 5s timeout inside repository, fallback to local; map to plan
-        return subscriptionRepository.getCurrentSubscription()?.plan
+        return subscriptionRepository.getCurrentSubscription()
     }
 }

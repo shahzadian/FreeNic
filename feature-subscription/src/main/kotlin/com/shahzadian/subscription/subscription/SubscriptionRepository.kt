@@ -25,7 +25,7 @@ internal interface SubscriptionRepository {
      * - Сначала пытается получить данные из Google Play Billing (таймаут 5 секунд).
      * - Если не удалось (таймаут/ошибка/нет соединения) — отдаёт локально кэшированные данные.
      */
-    suspend fun getCurrentSubscription(): UserSubscriptionStatus?
+    suspend fun getCurrentSubscription(): UserSubscriptionStatus
 
     /** Открывает экран управления подписками в Google Play (для отмены/управления). */
     suspend fun cancelSubscription(): Boolean
@@ -48,7 +48,7 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCurrentSubscription(): UserSubscriptionStatus? {
+    override suspend fun getCurrentSubscription(): UserSubscriptionStatus {
         // 1) Пытаемся получить из Billing с таймаутом 5 секунд (вне мьютекса)
         val active = withTimeoutOrNull(5_000) {
             billing.queryActiveSubscription()
@@ -60,18 +60,23 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
                 val expiresAt = estimateExpiryMillis(active.productId, active.purchaseTimeMillis)
                 local.setCurrentExpiresAtMillis(expiresAt)
                 val plan = plansRepository.getPlans().firstOrNull { it.id == active.productId }
-                if (plan != null) UserSubscriptionStatus(plan = plan, expiresAtMillis = expiresAt) else null
+                if (plan != null) UserSubscriptionStatus.HasSubscription(
+                    plan = plan,
+                    expiresAtMillis = expiresAt
+                ) else null
             }
             if (status != null) return status
-            // Если не смогли замапить план — попробуем локальные данные ниже
         }
 
-        // 2) Фоллбэк: локальный кэш
         return stateMutex.withLock {
-            val planId = local.getCurrentPlanId() ?: return@withLock null
-            val plan = plansRepository.getPlans().firstOrNull { it.id == planId } ?: return@withLock null
+            val planId =
+                local.getCurrentPlanId() ?: return@withLock UserSubscriptionStatus.NoSubscription
+            val plan =
+                plansRepository.getPlans().firstOrNull { it.id == planId }
+                    ?: throw IllegalStateException("Unknown plan ID: $planId")
             val expiresAt = local.getCurrentExpiresAtMillis()
-            UserSubscriptionStatus(plan = plan, expiresAtMillis = expiresAt)
+                ?: throw IllegalStateException("No expiresAtMillis for plan ID: $planId")
+            UserSubscriptionStatus.HasSubscription(plan = plan, expiresAtMillis = expiresAt)
         }
     }
 
@@ -88,7 +93,8 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
             Uri.parse("https://play.google.com/store/account/subscriptions")
         }
 
-        val intent = Intent(Intent.ACTION_VIEW, uri).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+        val intent =
+            Intent(Intent.ACTION_VIEW, uri).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
         return try {
             appContext.startActivity(intent)
             true
@@ -97,8 +103,9 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun estimateExpiryMillis(productId: String, purchaseTimeMillis: Long): Long? {
-        val plan = plansRepository.getPlans().firstOrNull { it.id == productId } ?: return null
+    private suspend fun estimateExpiryMillis(productId: String, purchaseTimeMillis: Long): Long {
+        val plan = plansRepository.getPlans().firstOrNull { it.id == productId }
+            ?: throw IllegalArgumentException("Unknown plan ID: $productId")
         return when (plan.paymentFrequency) {
             SubscriptionPlan.PaymentFrequency.MONTHLY -> addMonthsMillis(purchaseTimeMillis, 1)
             SubscriptionPlan.PaymentFrequency.ANNUAL -> addYearsMillis(purchaseTimeMillis, 1)

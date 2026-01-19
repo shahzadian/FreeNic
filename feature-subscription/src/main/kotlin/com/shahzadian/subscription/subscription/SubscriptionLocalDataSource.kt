@@ -33,7 +33,10 @@ internal class SubscriptionLocalDataSourceImpl @Inject constructor(
 
     override fun setCurrentExpiresAtMillis(expiresAtMillis: Long?) {
         prefs.edit().apply {
-            if (expiresAtMillis == null) remove(KEY_EXPIRES_AT) else putLong(KEY_EXPIRES_AT, expiresAtMillis)
+            if (expiresAtMillis == null) remove(KEY_EXPIRES_AT) else putLong(
+                KEY_EXPIRES_AT,
+                expiresAtMillis
+            )
         }.apply()
     }
 

@@ -1,9 +1,8 @@
-package com.shahzadian.profilescreen.ui
+package com.shahzadian.profilescreen.ui.subscriptionview
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,10 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.wrapper.TextWrapper
-import com.shahzadian.profilescreen.R
 
 @Composable
-internal fun ProfileSubscriptionView(
+internal fun NoSubscriptionView(
     onPremiumClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -45,7 +43,7 @@ internal fun ProfileSubscriptionView(
         HeaderView(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
+                .padding(bottom = 8.dp)
         )
         Text(
             text = stringResource(com.shahzadian.baseui.R.string.profile_subscription_desc),
@@ -68,10 +66,9 @@ private fun HeaderView(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_profile_subscription_premium),
+            painter = painterResource(com.shahzadian.baseui.R.drawable.ic_premium),
             contentDescription = "premium",
             modifier = Modifier.padding(end = 8.dp),
         )
@@ -79,18 +76,6 @@ private fun HeaderView(
             text = stringResource(com.shahzadian.baseui.R.string.profile_subscription_title),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier.weight(1f),
-        )
-        Text(
-            text = stringResource(com.shahzadian.baseui.R.string.profile_subscription_badge),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier
-                .background(
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
-                    shape = MaterialTheme.shapes.large
-                )
-                .padding(8.dp)
         )
     }
 

@@ -8,15 +8,15 @@ import javax.inject.Inject
  * Рекомендуется вызывать при onStart приложения (offline-first: локально читаем, затем обновляем из SDK).
  */
 interface RefreshSubscriptionStatusUseCase {
-    suspend operator fun invoke(): SubscriptionPlan?
+    suspend operator fun invoke(): UserSubscriptionStatus
 }
 
 internal class RefreshSubscriptionStatusUseCaseImpl @Inject constructor(
     private val subscriptionRepository: SubscriptionRepository
 ) : RefreshSubscriptionStatusUseCase {
 
-    override suspend fun invoke(): SubscriptionPlan? {
+    override suspend fun invoke(): UserSubscriptionStatus {
         // Триггерим обновление статуса через Billing-first (5с) внутри репозитория
-        return subscriptionRepository.getCurrentSubscription()?.plan
+        return subscriptionRepository.getCurrentSubscription()
     }
 }

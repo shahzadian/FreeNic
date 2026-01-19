@@ -151,7 +151,7 @@
     <string name="profile_cigs_price">Цена за пачку</string>
     <string name="profile_cigs_currency">Валюта</string>
     <string name="profile_subscription_title">Премиум</string>
-    <string name="profile_subscription_desc">Откройте доступ к подробной аналитике и расширенной статистике</string>
+    <string name="profile_subscription_desc">Откройте доступ ко всем премиум-функциям</string>
     <string name="profile_subscription_badge">ПРЕМИУМ</string>
     <string name="profile_subscription_submit_button">Перейти на премиум</string>
     <string name="paywall_header_title">Откройте полный доступ</string>
@@ -490,5 +490,8 @@
     <string name="manage_subscription_current_plan_premium_renew">Продлевается</string>
     <string name="manage_subscription_current_plan_premium_info">Управляется через Google Play</string>
     <string name="manage_subscription_premium_features_title">Что включено</string>
+    <string name="profile_premium_active">Премиум активен</string>
+    <string name="profile_premium_active_until">Активен до %s</string>
+    <string name="profile_premium_manage_button">Управление подпиской</string>
 
 </resources>

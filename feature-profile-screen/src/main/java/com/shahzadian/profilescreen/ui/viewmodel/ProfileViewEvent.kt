@@ -7,7 +7,10 @@ import com.freenic.ui.vm.ViewEvent
 internal sealed interface ProfileViewEvent : ViewEvent {
 
     @Immutable
-    data object OnPremiumClicked : ProfileViewEvent
+    data object OnManageSubscriptionClicked : ProfileViewEvent
+
+    @Immutable
+    data object OnUpgradeSubscriptionClicked : ProfileViewEvent
 
     @Immutable
     data class OnQuitDateSelected(

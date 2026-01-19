@@ -11,8 +11,11 @@ import com.freenic.ui.appinfo.AppInfoHelper
 import com.freenic.ui.extensions.extractMainDisplayableDate
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.SubscriptionPlan
+import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.domain.updateuserdata.UpdateUserDataUseCase
 import com.shahzadian.user.model.UserCigarettesData
@@ -42,7 +45,7 @@ internal class ProfileViewModel @Inject constructor(
 
     override fun onViewEventHappened(event: ProfileViewEvent) {
         when (event) {
-            is ProfileViewEvent.OnPremiumClicked -> {
+            is ProfileViewEvent.OnUpgradeSubscriptionClicked -> {
                 viewModelScope.launch {
                     analyticsEventSender.send(
                         AnalyticsEvent(
@@ -50,6 +53,17 @@ internal class ProfileViewModel @Inject constructor(
                         )
                     )
                     sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.PaywallScreen))
+                }
+            }
+
+            is ProfileViewEvent.OnManageSubscriptionClicked -> {
+                viewModelScope.launch {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.PROFILE_SUBSCRIPTION_MANAGE_TAP,
+                        )
+                    )
+                    sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.ManageSubscriptionScreen))
                 }
             }
 
@@ -79,12 +93,26 @@ internal class ProfileViewModel @Inject constructor(
             val appName = context.getString(R.string.app_name)
             val appVersion = appInfoHelper.getAppVersion()
             val displayableVersion = "$appName v${appVersion.versionName}"
-            val hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null
+            val subscriptionStatus =
+                getUserCurrentSubscriptionUseCase()
             setViewState(
                 ProfileViewState.Data(
                     userNameLetter = userNameLetter,
                     appVersion = displayableVersion,
-                    hasPaidSubscription = hasPaidSubscription,
+                    subscriptionState = when (subscriptionStatus) {
+                        is UserSubscriptionStatus.NoSubscription -> {
+                            ProfileViewState.Data.SubscriptionState.NoSubscription
+                        }
+
+                        is UserSubscriptionStatus.HasSubscription -> {
+                            ProfileViewState.Data.SubscriptionState.HasSubscription(
+                                title = getSubscriptionTitle(
+                                    plan = subscriptionStatus.plan
+                                ),
+                                activeUntil = extractMainDisplayableDate(subscriptionStatus.expiresAtMillis)
+                            )
+                        }
+                    },
                     personalData = ProfileViewState.Data.PersonalData(
                         name = userData.personalData.name,
                         age = userData.personalData.age,
@@ -234,5 +262,17 @@ internal class ProfileViewModel @Inject constructor(
                     ),
                 )
             }
+    }
+
+    private fun getSubscriptionTitle(plan: SubscriptionPlan): TextWrapper {
+        return when (plan.paymentFrequency) {
+            SubscriptionPlan.PaymentFrequency.MONTHLY -> {
+                TextWrapper.FromRes(R.string.subscription_plan_name_monthly)
+            }
+
+            SubscriptionPlan.PaymentFrequency.ANNUAL -> {
+                TextWrapper.FromRes(R.string.subscription_plan_name_yearly)
+            }
+        }
     }
 }

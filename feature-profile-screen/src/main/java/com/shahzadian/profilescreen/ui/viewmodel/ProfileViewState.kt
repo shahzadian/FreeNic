@@ -2,6 +2,7 @@ package com.shahzadian.profilescreen.ui.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
+import com.freenic.ui.wrapper.TextWrapper
 
 @Immutable
 internal sealed interface ProfileViewState : ViewState {
@@ -13,7 +14,7 @@ internal sealed interface ProfileViewState : ViewState {
     data class Data(
         val userNameLetter: String,
         val appVersion: String,
-        val hasPaidSubscription: Boolean,
+        val subscriptionState: SubscriptionState,
         val personalData: PersonalData,
         val smokingDetails: SmokingDetails,
         val isDebugBuild: Boolean,
@@ -33,5 +34,15 @@ internal sealed interface ProfileViewState : ViewState {
             val price: Float,
             val currency: String?,
         )
+
+        sealed interface SubscriptionState {
+
+            data object NoSubscription : SubscriptionState
+
+            data class HasSubscription(
+                val title: TextWrapper,
+                val activeUntil: String,
+            ) : SubscriptionState
+        }
     }
 }
