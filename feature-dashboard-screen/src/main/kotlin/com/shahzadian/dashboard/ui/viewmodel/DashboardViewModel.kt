@@ -14,6 +14,7 @@ import com.shahzadian.dashboard.domain.UserDashboard
 import com.shahzadian.helpfulnotes.domain.GetMotivationalNotesUseCase
 import com.shahzadian.helpfulnotes.domain.MotivationalNote
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -186,9 +187,10 @@ internal class DashboardViewModel @Inject constructor(
 
     private suspend fun hasUserPaidSubscription(): Boolean {
         return _hasPaidSubscription ?: let {
-            val subscription = getUserCurrentSubscriptionUseCase()
-            _hasPaidSubscription = subscription != null
-            subscription != null
+            val hasPaidSubscription =
+                getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription
+            _hasPaidSubscription = hasPaidSubscription
+            hasPaidSubscription
         }
     }
 }

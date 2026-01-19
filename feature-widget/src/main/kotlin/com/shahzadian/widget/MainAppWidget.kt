@@ -40,6 +40,7 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.theme.AppTypography
 import com.freenic.ui.theme.FreeNicTheme
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import com.shahzadian.user.domain.UserDataHelper
 import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
@@ -61,7 +62,8 @@ class MainAppWidget(
             var userDataHelper: UserDataHelper? by remember { mutableStateOf(null) }
             LaunchedEffect(Unit) {
                 // Check subscription first
-                hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null
+                hasPaidSubscription =
+                    getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription
                 if (hasPaidSubscription == true) {
                     userData = getUserDataUseCase()
                         ?: throw IllegalStateException("UserData is null")

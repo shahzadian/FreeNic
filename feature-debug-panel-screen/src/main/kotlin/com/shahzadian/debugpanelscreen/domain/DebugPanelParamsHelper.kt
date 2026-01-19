@@ -3,6 +3,7 @@ package com.shahzadian.debugpanelscreen.domain
 import com.shahzadian.debugparams.domain.DebugParams
 import com.shahzadian.debugparams.domain.DebugParamsHelper
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import javax.inject.Inject
 
 internal interface DebugPanelParamsHelper {
@@ -19,7 +20,7 @@ internal class DebugPanelParamsHelperImpl @Inject constructor(
 
     override suspend fun getParams(): DebugPanelParams {
         return debugParamsHelper.getParams()?.toPanelParams() ?: DebugPanelParams(
-            hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null
+            hasPaidSubscription = getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription
         )
     }
 

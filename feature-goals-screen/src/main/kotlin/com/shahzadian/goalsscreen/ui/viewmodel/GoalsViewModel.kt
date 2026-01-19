@@ -14,6 +14,7 @@ import com.shahzadian.goalsscreen.ui.AchievementsUiModelFetcher
 import com.shahzadian.savingsgoal.domain.SavingsGoal
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -105,7 +106,7 @@ internal class GoalsViewModel @Inject constructor(
             val achievementsResult = achievementsUiModelFetcher.fetch()
             setViewState(
                 GoalsViewState.Data(
-                    hasPaidSubscription = getUserCurrentSubscriptionUseCase() != null,
+                    hasPaidSubscription = getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription,
                     achievementsData = AchievementsData(
                         achievements = achievementsResult.achievements,
                         shouldShowMoreAchievementsButton = achievementsResult.initialAchievementsCount > AchievementsConst.MAX_ACHIEVEMENTS_ON_SCREEN,

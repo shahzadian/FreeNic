@@ -13,6 +13,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
@@ -182,8 +183,7 @@ internal class AdHelperImpl @Inject constructor(
         if (lastTimeAdWasShown != null && System.currentTimeMillis() - lastTimeAdWasShown!! < AD_SHOW_MINIMAL_INTERVAL_MILLIS) {
             return false
         }
-        val currentSubscription = getUserCurrentSubscriptionUseCase()
-        return currentSubscription == null
+        return getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.NoSubscription
     }
 
     private fun getAppAdId(): String {
