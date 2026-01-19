@@ -65,6 +65,9 @@ private fun ContentView(
     val backIconClick = remember {
         { onEvent(ManageSubscriptionViewEvent.OnBackIconClicked) }
     }
+    val cancelSubscriptionClick = remember {
+        { onEvent(ManageSubscriptionViewEvent.OnSubscriptionCancelClicked) }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.manage_subscription_header_title),
         hasBackIcon = true,
@@ -79,6 +82,13 @@ private fun ContentView(
         )
         PaidFeaturesView(
             data = data,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        CancelSubscriptionView(
+            activeUntilDate = data.activeUntil,
+            onCancelConfirmed = cancelSubscriptionClick,
             modifier = Modifier.fillMaxWidth()
         )
     }

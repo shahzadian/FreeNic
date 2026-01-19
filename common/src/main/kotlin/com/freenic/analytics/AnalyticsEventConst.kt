@@ -82,4 +82,5 @@ object AnalyticsEventConst {
     const val SAVINGS_GOAL_DELETED: String = "savings_goal_deleted"
     const val ACHIEVEMENT_SHARE_TAP: String = "achievement_share_tap"
     const val PAYWALL_UPGRADE_TAP: String = "paywall_upgrade_tap"
+    const val MANAGE_SUBSCRIPTION_CANCEL_TAP: String = "manage_subscription_cancel_tap"
 }

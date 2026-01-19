@@ -1,11 +1,15 @@
 package com.shahzadian.profilescreen.managesubscription.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.ui.extensions.extractMainDisplayableDate
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.subscription.domain.CancelSubscriptionUseCase
 import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.SubscriptionPlan
@@ -18,6 +22,8 @@ import javax.inject.Inject
 internal class ManageSubscriptionViewModel @Inject constructor(
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val getPaidFeaturesUseCase: GetPaidFeaturesUseCase,
+    private val analyticsEventSender: AnalyticsEventSender,
+    private val cancelSubscriptionUseCase: CancelSubscriptionUseCase,
 ) : BaseViewModel<ManageSubscriptionViewState, ManageSubscriptionViewEvent, ManageSubscriptionViewCommand>() {
 
     override val initState: ManageSubscriptionViewState by lazyUnsafe {
@@ -32,6 +38,10 @@ internal class ManageSubscriptionViewModel @Inject constructor(
         when (event) {
             is ManageSubscriptionViewEvent.OnBackIconClicked -> {
                 onBackIconClicked()
+            }
+
+            is ManageSubscriptionViewEvent.OnSubscriptionCancelClicked -> {
+                onCancelSubscriptionClicked()
             }
         }
     }
@@ -58,6 +68,20 @@ internal class ManageSubscriptionViewModel @Inject constructor(
     private fun onBackIconClicked() {
         viewModelScope.launch {
             sendViewCommand(ManageSubscriptionViewCommand.NavigateBack)
+        }
+    }
+
+    private fun onCancelSubscriptionClicked() {
+        analyticsEventSender.send(
+            AnalyticsEvent(
+                name = AnalyticsEventConst.MANAGE_SUBSCRIPTION_CANCEL_TAP,
+            )
+        )
+        viewModelScope.launch {
+            val isCancelOpened = cancelSubscriptionUseCase()
+            if (isCancelOpened) {
+                sendViewCommand(ManageSubscriptionViewCommand.NavigateBack)
+            }
         }
     }
 

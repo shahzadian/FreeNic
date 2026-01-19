@@ -493,5 +493,10 @@
     <string name="profile_premium_active">Премиум активен</string>
     <string name="profile_premium_active_until">Активен до %s</string>
     <string name="profile_premium_manage_button">Управление подпиской</string>
+    <string name="manage_subscription_cancel_button">Отменить подписку</string>
+    <string name="manage_subscription_cancel_confirmation_title">Отменить подписку?</string>
+    <string name="manage_subscription_cancel_confirmation_subtitle">Премиум-функции будут доступны до %s. После этого аккаунт перейдёт на бесплатную версию.</string>
+    <string name="manage_subscription_cancel_confirmation_confirm">Да</string>
+    <string name="manage_subscription_cancel_confirmation_cancel">Нет</string>
 
 </resources>
