@@ -8,6 +8,7 @@ import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.shahzadian.ad.AdHelper
 import com.shahzadian.cravingsscreen.domain.CravingTool
 import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +19,7 @@ import javax.inject.Inject
 internal class CravingsViewModel @Inject constructor(
     private val getCravingToolsUseCase: GetCravingToolsUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val adHelper: AdHelper,
 ) : BaseViewModel<CravingsViewState, CravingsViewEvent, CravingsViewCommand>() {
 
     override val initState: CravingsViewState by lazyUnsafe {
@@ -26,6 +28,7 @@ internal class CravingsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            adHelper.requestAdShow()
             val tools = getCravingToolsUseCase()
             setViewState(tools.toViewState())
         }

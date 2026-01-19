@@ -51,6 +51,7 @@ internal class GoalsViewModel @Inject constructor(
 
             is GoalsViewEvent.OnShowMoreAchievementsClicked -> {
                 viewModelScope.launch {
+                    adHelper.requestAdShow()
                     sendViewCommand(GoalsViewCommand.NavigateTo(AppScreen.AchievementsScreen))
                 }
             }

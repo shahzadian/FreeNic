@@ -197,6 +197,6 @@ internal class AdHelperImpl @Inject constructor(
     private companion object {
         const val ADS_TEST_ID: String = "ca-app-pub-3940256099942544/1033173712"
         const val ADS_PROD_ID: String = "ca-app-pub-3104359766953553/8805483242"
-        const val AD_SHOW_MINIMAL_INTERVAL_MILLIS: Long = 1000 * 60
+        const val AD_SHOW_MINIMAL_INTERVAL_MILLIS: Long = 1000 * 60 * 2
     }
 }
