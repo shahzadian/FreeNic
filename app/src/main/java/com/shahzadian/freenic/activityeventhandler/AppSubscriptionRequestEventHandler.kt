@@ -2,10 +2,10 @@ package com.shahzadian.freenic.activityeventhandler
 
 import android.app.Activity
 import com.freenic.activityevent.ActivityEvent
-import com.freenic.activityevent.ActivityEventResult
 import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import com.shahzadian.subscription.domain.SubscribeToPremiumUseCase
+import com.shahzadian.subscription.domain.UserSubscriptionStatusChanged
 import kotlinx.coroutines.CoroutineScope
 import kotlin.reflect.KClass
 
@@ -26,9 +26,13 @@ internal class AppSubscriptionRequestEventHandler(
         launchInScope {
             val isSubscribed = subscribeToPremiumUseCase(activity, event.planId)
             if (isSubscribed) {
-                refreshSubscriptionStatusUseCase()
+                val status = refreshSubscriptionStatusUseCase()
+                sendResult(
+                    UserSubscriptionStatusChanged(
+                        status = status,
+                    )
+                )
             }
-            sendResult(ActivityEventResult.OnUserSubscribed)
         }
     }
 }

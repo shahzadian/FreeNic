@@ -17,6 +17,7 @@ import com.shahzadian.freenic.navigation.AppNavigatorFactory
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
+import com.shahzadian.subscription.domain.UserSubscriptionStatusChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -53,6 +54,8 @@ internal class MainActivity : ComponentActivity() {
     @Inject
     lateinit var activityEventHandlerFactory: ActivityEventHandlerFactory
 
+    private var latestSubscriptionStatus: UserSubscriptionStatus? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -75,7 +78,15 @@ internal class MainActivity : ComponentActivity() {
         // Обновляем статус подписки из Billing SDK при каждом запуске на экран
         lifecycleScope.launch(coroutineContexts.io) {
             try {
-                refreshSubscriptionStatusUseCase()
+                val subscriptionStatus = refreshSubscriptionStatusUseCase()
+                if (latestSubscriptionStatus != subscriptionStatus) {
+                    latestSubscriptionStatus = subscriptionStatus
+                    activityEventReceiver.sendResult(
+                        UserSubscriptionStatusChanged(
+                            status = subscriptionStatus,
+                        )
+                    )
+                }
             } catch (t: Throwable) {
                 appLogger.logError(
                     tag = "BillingDataSource",
