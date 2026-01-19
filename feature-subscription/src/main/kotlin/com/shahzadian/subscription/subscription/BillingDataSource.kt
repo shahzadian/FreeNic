@@ -17,7 +17,21 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 
 internal interface BillingDataSource {
+    /**
+     * Подробная информация об активной подписке из BillingClient (без серверной верификации).
+     * [purchaseTimeMillis] берётся из [Purchase.getPurchaseTime].
+     */
+    data class ActiveSubscriptionInfo(
+        val productId: String,
+        val purchaseTimeMillis: Long
+    )
+
+    /** Возвращает активную подписку (productId + время покупки) или null. */
+    suspend fun queryActiveSubscription(): ActiveSubscriptionInfo?
+
+    /** Утилита для обратной совместимости: только productId. */
     suspend fun queryActiveSubscriptionProductId(): String?
+
     suspend fun launchBillingFlow(activity: Activity, productId: String): Boolean
 }
 
@@ -53,7 +67,7 @@ internal class BillingDataSourceImpl @Inject constructor(
             })
         }
 
-    override suspend fun queryActiveSubscriptionProductId(): String? {
+    override suspend fun queryActiveSubscription(): BillingDataSource.ActiveSubscriptionInfo? {
         val client = newClient()
         if (!client.ensureConnected()) return null
 
@@ -67,15 +81,27 @@ internal class BillingDataSourceImpl @Inject constructor(
                     cont.resume(null)
                     return@queryPurchasesAsync
                 }
-                val purchases: List<Purchase> = purchasesList ?: emptyList()
-                val productId =
+                val purchases: List<Purchase> = purchasesList
+                val chosen =
                     purchases.firstOrNull { it.purchaseState == Purchase.PurchaseState.PURCHASED && !it.isAcknowledged }
-                        ?.products?.firstOrNull()
                         ?: purchases.firstOrNull { it.purchaseState == Purchase.PurchaseState.PURCHASED }
-                            ?.products?.firstOrNull()
-                cont.resume(productId)
+                val productId = chosen?.products?.firstOrNull()
+                if (productId == null) {
+                    cont.resume(null)
+                } else {
+                    cont.resume(
+                        BillingDataSource.ActiveSubscriptionInfo(
+                            productId = productId,
+                            purchaseTimeMillis = chosen.purchaseTime
+                        )
+                    )
+                }
             }
         }
+    }
+
+    override suspend fun queryActiveSubscriptionProductId(): String? {
+        return queryActiveSubscription()?.productId
     }
 
     override suspend fun launchBillingFlow(activity: Activity, productId: String): Boolean {

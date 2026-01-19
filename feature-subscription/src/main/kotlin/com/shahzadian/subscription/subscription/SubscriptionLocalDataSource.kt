@@ -7,6 +7,8 @@ import javax.inject.Inject
 internal interface SubscriptionLocalDataSource {
     fun getCurrentPlanId(): String?
     fun setCurrentPlanId(planId: String?)
+    fun getCurrentExpiresAtMillis(): Long?
+    fun setCurrentExpiresAtMillis(expiresAtMillis: Long?)
 }
 
 internal class SubscriptionLocalDataSourceImpl @Inject constructor(
@@ -26,8 +28,18 @@ internal class SubscriptionLocalDataSourceImpl @Inject constructor(
         }.apply()
     }
 
+    override fun getCurrentExpiresAtMillis(): Long? =
+        if (!prefs.contains(KEY_EXPIRES_AT)) null else prefs.getLong(KEY_EXPIRES_AT, 0L)
+
+    override fun setCurrentExpiresAtMillis(expiresAtMillis: Long?) {
+        prefs.edit().apply {
+            if (expiresAtMillis == null) remove(KEY_EXPIRES_AT) else putLong(KEY_EXPIRES_AT, expiresAtMillis)
+        }.apply()
+    }
+
     private companion object {
         const val PREFS_NAME = "subscription_prefs"
         const val KEY_PLAN_ID = "current_plan_id"
+        const val KEY_EXPIRES_AT = "current_expires_at"
     }
 }

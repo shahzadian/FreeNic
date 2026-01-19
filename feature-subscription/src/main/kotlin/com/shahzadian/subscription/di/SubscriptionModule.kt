@@ -4,12 +4,16 @@ import com.shahzadian.subscription.data.PaidFeaturesRepository
 import com.shahzadian.subscription.data.PaidFeaturesRepositoryImpl
 import com.shahzadian.subscription.data.SubscriptionPlansRepository
 import com.shahzadian.subscription.data.SubscriptionPlansRepositoryImpl
+import com.shahzadian.subscription.domain.CancelSubscriptionUseCase
+import com.shahzadian.subscription.domain.CancelSubscriptionUseCaseImpl
 import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
 import com.shahzadian.subscription.domain.GetPaidFeaturesUseCaseImpl
 import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCase
 import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCaseImpl
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCaseImpl
+import com.shahzadian.subscription.domain.GetUserSubscriptionStatusUseCase
+import com.shahzadian.subscription.domain.GetUserSubscriptionStatusUseCaseImpl
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCaseImpl
 import com.shahzadian.subscription.domain.SubscribeToPremiumUseCase
@@ -51,6 +55,11 @@ internal interface SubscriptionModule {
         impl: GetUserCurrentSubscriptionUseCaseImpl
     ): GetUserCurrentSubscriptionUseCase
 
+    @Binds
+    fun bindGetUserSubscriptionStatusUseCase(
+        impl: GetUserSubscriptionStatusUseCaseImpl
+    ): GetUserSubscriptionStatusUseCase
+
     // Subscription offline-first infrastructure
     @Binds
     fun bindSubscriptionLocalDataSource(impl: SubscriptionLocalDataSourceImpl): SubscriptionLocalDataSource
@@ -71,4 +80,9 @@ internal interface SubscriptionModule {
     fun bindSubscribeToPremiumUseCase(
         impl: SubscribeToPremiumUseCaseImpl
     ): SubscribeToPremiumUseCase
+
+    @Binds
+    fun bindCancelSubscriptionUseCase(
+        impl: CancelSubscriptionUseCaseImpl
+    ): CancelSubscriptionUseCase
 }

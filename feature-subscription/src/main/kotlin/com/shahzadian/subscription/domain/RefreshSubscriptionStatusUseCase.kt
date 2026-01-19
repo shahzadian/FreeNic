@@ -16,6 +16,7 @@ internal class RefreshSubscriptionStatusUseCaseImpl @Inject constructor(
 ) : RefreshSubscriptionStatusUseCase {
 
     override suspend fun invoke(): SubscriptionPlan? {
-        return subscriptionRepository.refreshFromBilling()
+        // Триггерим обновление статуса через Billing-first (5с) внутри репозитория
+        return subscriptionRepository.getCurrentSubscription()?.plan
     }
 }

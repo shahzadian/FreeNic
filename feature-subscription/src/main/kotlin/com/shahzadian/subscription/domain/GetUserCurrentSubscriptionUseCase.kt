@@ -27,7 +27,7 @@ internal class GetUserCurrentSubscriptionUseCaseImpl @Inject constructor(
             return subscriptionPlansRepository.getPlans().firstOrNull()
         }
 
-        // Offline-first: read locally cached subscription (refreshed on app start by separate use case)
-        return subscriptionRepository.getCurrentSubscription()
+        // Billing-first with 5s timeout inside repository, fallback to local; map to plan
+        return subscriptionRepository.getCurrentSubscription()?.plan
     }
 }
