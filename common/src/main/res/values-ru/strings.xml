@@ -499,5 +499,7 @@
     <string name="manage_subscription_cancel_confirmation_confirm">Да</string>
     <string name="manage_subscription_cancel_confirmation_cancel">Нет</string>
     <string name="manage_subscription_current_plan_premium_active_until">Активно до %s</string>
+    <string name="journey_calendar_add_note_title">Добавить заметку</string>
+    <string name="journey_calendar_add_note_subtitle">Сохраните свои мысли или моменты про этот день</string>
 
 </resources>

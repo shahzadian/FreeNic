@@ -2,6 +2,7 @@ package com.shahzadian.journeycalendarscreen.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -49,7 +51,7 @@ internal fun EventsBottomSheet(
         { onSheetDismissRequested() }
     }
     val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = false,
+        skipPartiallyExpanded = true,
     )
     ModalBottomSheet(
         onDismissRequest = dismissRequest,
@@ -58,38 +60,65 @@ internal fun EventsBottomSheet(
         shape = MaterialTheme.shapes.medium,
         modifier = modifier
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .padding(16.dp)
         ) {
-            cell.fullDayText?.let { dayText ->
-                Row(
+            EventsView(
+                cell = cell,
+                dismissRequest = dismissRequest,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 8.dp)
+            )
+            AddNoteView(
+                onClicked = {},
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+                    .height(65.dp)
+            )
+        }
+    }
+}
+
+@Composable
+private fun EventsView(
+    cell: DayCellUiModel,
+    dismissRequest: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .padding(bottom = 64.dp),
+    ) {
+        cell.fullDayText?.let { dayText ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = textFromWrapper(dayText),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Text(
-                        text = textFromWrapper(dayText),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        modifier = Modifier
-                            .padding(end = 4.dp)
-                            .weight(1f)
-                    )
-                    Image(
-                        painter = painterResource(R.drawable.ic_journey_calendar_events_bottom_sheet_close),
-                        contentDescription = "Close bottom sheet",
-                        modifier = Modifier.clickable(onClick = dismissRequest)
-                    )
-                }
-                EventsView(
-                    cell = cell,
-                    modifier = Modifier.fillMaxWidth()
+                        .padding(end = 4.dp)
+                        .weight(1f)
+                )
+                Image(
+                    painter = painterResource(R.drawable.ic_journey_calendar_events_bottom_sheet_close),
+                    contentDescription = "Close bottom sheet",
+                    modifier = Modifier.clickable(onClick = dismissRequest)
                 )
             }
+            EventsView(
+                cell = cell,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
@@ -211,6 +240,46 @@ private fun EventIconView(
             modifier = Modifier
                 .size(24.dp)
                 .align(Alignment.Center),
+        )
+    }
+}
+
+@Composable
+private fun AddNoteView(
+    onClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val onClick = remember { { onClicked() } }
+    Row(
+        modifier = modifier
+            .clickable(onClick = onClick)
+            .background(
+                color = MaterialTheme.colorScheme.background.copy(alpha = 0.1f),
+                shape = MaterialTheme.shapes.medium,
+            )
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = MaterialTheme.shapes.medium
+            )
+            .padding(8.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            painter = painterResource(R.drawable.ic_journey_calendar_add_note),
+            contentDescription = "Add note",
+            modifier = Modifier.padding(end = 8.dp)
+        )
+        Text(
+            text = stringResource(com.shahzadian.baseui.R.string.journey_calendar_add_note_title),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.padding(end = 8.dp)
+        )
+        Image(
+            painter = painterResource(com.shahzadian.baseui.R.drawable.ic_premium),
+            contentDescription = "Premium",
         )
     }
 }

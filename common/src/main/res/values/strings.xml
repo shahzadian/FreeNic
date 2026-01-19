@@ -506,5 +506,7 @@
     <string name="manage_subscription_cancel_confirmation_confirm">Yes</string>
     <string name="manage_subscription_cancel_confirmation_cancel">No</string>
     <string name="manage_subscription_current_plan_premium_active_until">Active until %s</string>
+    <string name="journey_calendar_add_note_title">Add note</string>
+    <string name="journey_calendar_add_note_subtitle">Save thoughts or moments for this day</string>
 
 </resources>
