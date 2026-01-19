@@ -84,12 +84,15 @@ private fun ContentView(
             data = data,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp)
         )
-        CancelSubscriptionView(
-            activeUntilDate = data.activeUntil,
-            onCancelConfirmed = cancelSubscriptionClick,
-            modifier = Modifier.fillMaxWidth()
-        )
+        if (data.isAutoRenewing) {
+            CancelSubscriptionView(
+                activeUntilDate = data.activeUntil,
+                onCancelConfirmed = cancelSubscriptionClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp)
+            )
+        }
     }
 }
