@@ -6,6 +6,7 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.SubscriptionPlan
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
@@ -16,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ManageSubscriptionViewModel @Inject constructor(
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
+    private val getPaidFeaturesUseCase: GetPaidFeaturesUseCase,
 ) : BaseViewModel<ManageSubscriptionViewState, ManageSubscriptionViewEvent, ManageSubscriptionViewCommand>() {
 
     override val initState: ManageSubscriptionViewState by lazyUnsafe {
@@ -44,7 +46,10 @@ internal class ManageSubscriptionViewModel @Inject constructor(
                     currentPlanTitle = getSubscriptionTitle(
                         plan = currentSubscription.plan,
                     ),
-                    activeUntil = extractMainDisplayableDate(currentSubscription.expiresAtMillis)
+                    activeUntil = extractMainDisplayableDate(currentSubscription.expiresAtMillis),
+                    paidFeatures = getPaidFeaturesUseCase().map {
+                        it.name
+                    }
                 )
             )
         }

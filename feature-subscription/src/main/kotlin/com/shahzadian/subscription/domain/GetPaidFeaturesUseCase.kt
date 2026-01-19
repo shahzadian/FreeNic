@@ -3,7 +3,7 @@ package com.shahzadian.subscription.domain
 import com.shahzadian.subscription.data.PaidFeaturesRepository
 import javax.inject.Inject
 
-internal interface GetPaidFeaturesUseCase {
+interface GetPaidFeaturesUseCase {
 
     suspend operator fun invoke() : List<PaidFeature>
 }

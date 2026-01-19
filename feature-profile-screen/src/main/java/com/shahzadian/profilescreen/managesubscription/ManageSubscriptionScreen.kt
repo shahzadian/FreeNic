@@ -2,12 +2,14 @@ package com.shahzadian.profilescreen.managesubscription
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
@@ -70,6 +72,12 @@ private fun ContentView(
         modifier = modifier,
     ) {
         CurrentPlanView(
+            data = data,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        PaidFeaturesView(
             data = data,
             modifier = Modifier.fillMaxWidth()
         )

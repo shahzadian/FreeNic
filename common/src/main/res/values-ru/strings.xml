@@ -489,7 +489,7 @@
     <string name="manage_subscription_current_plan_premium_badge">• Премиум активен</string>
     <string name="manage_subscription_current_plan_premium_renewal">Продлевается</string>
     <string name="manage_subscription_current_plan_premium_info">Управляется через Google Play</string>
-    <string name="manage_subscription_premium_features_title">Что включено</string>
+    <string name="manage_subscription_paid_features_title">Что включено</string>
     <string name="profile_premium_active">Премиум активен</string>
     <string name="profile_premium_active_until">Активен до %s</string>
     <string name="profile_premium_manage_button">Управление подпиской</string>

@@ -496,7 +496,7 @@
     <string name="manage_subscription_current_plan_premium_badge">• Premium is active</string>
     <string name="manage_subscription_current_plan_premium_renewal">Renews on %s</string>
     <string name="manage_subscription_current_plan_premium_info">Managed through Google Play</string>
-    <string name="manage_subscription_premium_features_title">What\'s included</string>
+    <string name="manage_subscription_paid_features_title">What\'s included</string>
     <string name="profile_premium_active">Premium is active</string>
     <string name="profile_premium_active_until">Active until %s</string>
     <string name="profile_premium_manage_button">Manage subscription</string>

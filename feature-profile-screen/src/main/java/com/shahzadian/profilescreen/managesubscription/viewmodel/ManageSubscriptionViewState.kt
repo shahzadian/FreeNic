@@ -15,5 +15,6 @@ internal sealed interface ManageSubscriptionViewState : ViewState {
     data class Data(
         val currentPlanTitle: TextWrapper,
         val activeUntil: String,
+        val paidFeatures: List<TextWrapper>,
     ) : ManageSubscriptionViewState
 }
