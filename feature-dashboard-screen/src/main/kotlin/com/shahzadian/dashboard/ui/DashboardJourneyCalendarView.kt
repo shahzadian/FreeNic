@@ -57,9 +57,5 @@ internal fun DashboardJourneyCalendarView(
             modifier = Modifier
                 .padding(start = 4.dp, end = 8.dp)
         )
-        Image(
-            painter = painterResource(R.drawable.ic_premium),
-            contentDescription = "premium",
-        )
     }
 }

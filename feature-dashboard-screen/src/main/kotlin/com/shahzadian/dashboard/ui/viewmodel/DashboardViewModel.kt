@@ -151,14 +151,9 @@ internal class DashboardViewModel @Inject constructor(
                     name = AnalyticsEventConst.DASHBOARD_JOURNEY_CALENDAR_TAP,
                 )
             )
-            val screen = if (hasUserPaidSubscription()) {
-                AppScreen.JourneyCalendarScreen
-            } else {
-                AppScreen.PaywallScreen
-            }
             sendViewCommand(
                 DashboardViewCommand.NavigateTo(
-                    screen = screen,
+                    screen = AppScreen.JourneyCalendarScreen,
                 )
             )
         }
