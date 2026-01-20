@@ -26,7 +26,9 @@ internal class InsightChartsRepositoryImpl(
         return listOf(
             getMedicalBlock(),
             getHealthProgressBlock(),
-            getLongTermRisksBlock(),
+            getWhoBlock(),
+            getEstimatedBlock()
+            //  getLongTermRisksBlock(),
 //            TODO premium
         )
     }
@@ -61,6 +63,38 @@ internal class InsightChartsRepositoryImpl(
                     badge = InsightChartBadge.MedicalEvidence,
                     percents = recoveryCalculator.calculateLungSelfCleaningPercent()
                 ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Blood pressure stabilization",
+                    title = TextWrapper.FromRes(R.string.insights_blood_pressure_title),
+                    description = TextWrapper.FromRes(R.string.insights_blood_pressure_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_blood_pressure),
+                    badge = InsightChartBadge.MedicalEvidence,
+                    percents = recoveryCalculator.calculateBloodPressureStabilizationPercent()
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Immune system recovery",
+                    title = TextWrapper.FromRes(R.string.insights_immune_recovery_title),
+                    description = TextWrapper.FromRes(R.string.insights_immune_recovery_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_immune_recovery),
+                    badge = InsightChartBadge.MedicalEvidence,
+                    percents = recoveryCalculator.calculateImmuneRecoveryPercent()
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Sleep quality improvement",
+                    title = TextWrapper.FromRes(R.string.insights_sleep_quality_title),
+                    description = TextWrapper.FromRes(R.string.insights_sleep_quality_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_sleep_quality),
+                    badge = InsightChartBadge.MedicalEvidence,
+                    percents = recoveryCalculator.calculateSleepQualityPercent()
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Taste and smell recovery",
+                    title = TextWrapper.FromRes(R.string.insights_taste_and_smell_title),
+                    description = TextWrapper.FromRes(R.string.insights_taste_and_smell_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_smell_recovery),
+                    badge = InsightChartBadge.MedicalEvidence,
+                    percents = recoveryCalculator.calculateTasteAndSmellRecoveryPercent()
+                )
             )
         )
     }
@@ -99,12 +133,54 @@ internal class InsightChartsRepositoryImpl(
         )
     }
 
-    private fun getLongTermRisksBlock(): InsightChartsBlock {
+    private fun getEstimatedBlock(): InsightChartsBlock {
         return InsightChartsBlock(
-            id = "Long-term risks",
-            title = TextWrapper.FromRes(R.string.insights_chart_long_term_risk),
-            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_tab_long_term),
+            id = "Estimated",
+            title = TextWrapper.FromRes(R.string.insight_chart_block_estimated),
+            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_estimated),
             charts = listOf(
+                InsightChart.TitleAndPercentsChart(
+                    id = "Stress regulation",
+                    title = TextWrapper.FromRes(R.string.insights_stress_regulation_title),
+                    description = TextWrapper.FromRes(R.string.insights_stress_regulation_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_stress_regulation),
+                    badge = InsightChartBadge.MedicalEvidence,
+                    percents = recoveryCalculator.calculateStressRegulationPercent()
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Skin improvement",
+                    title = TextWrapper.FromRes(R.string.insights_skin_title),
+                    description = TextWrapper.FromRes(R.string.insights_skin_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_skin_improvement),
+                    badge = InsightChartBadge.Estimated,
+                    percents = recoveryCalculator.calculateSkinImprovementPercent()
+                )
+            )
+        )
+    }
+
+    private fun getWhoBlock(): InsightChartsBlock {
+        return InsightChartsBlock(
+            id = "WHO",
+            title = TextWrapper.FromRes(R.string.insight_chart_who),
+            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_who),
+            charts = listOf(
+                InsightChart.TitleAndPercentsChart(
+                    id = "Stroke risk reduction",
+                    title = TextWrapper.FromRes(R.string.insights_stroke_title),
+                    description = TextWrapper.FromRes(R.string.insights_stroke_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_stroke),
+                    badge = InsightChartBadge.Who,
+                    percents = recoveryCalculator.calculateStrokeRiskReductionPercent()
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Cancer risk reduction",
+                    title = TextWrapper.FromRes(R.string.insights_cancer_title),
+                    description = TextWrapper.FromRes(R.string.insights_cancer_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_cancer),
+                    badge = InsightChartBadge.Who,
+                    percents = recoveryCalculator.calculateCancerRiskReductionPercent()
+                ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Long-term risk reduction",
                     title = TextWrapper.FromRes(R.string.insights_long_term_risk_reduction_title),

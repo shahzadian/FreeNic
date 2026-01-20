@@ -17,4 +17,20 @@ interface HealthRecoveryCalculator {
     fun calculatePhysicalEndurancePercent(): Int
 
     fun calculateMinutesRegained(): Long
+
+    fun calculateBloodPressureStabilizationPercent(): Int
+
+    fun calculateImmuneRecoveryPercent(): Int
+
+    fun calculateStressRegulationPercent(): Int
+
+    fun calculateSleepQualityPercent(): Int
+
+    fun calculateTasteAndSmellRecoveryPercent(): Int
+
+    fun calculateSkinImprovementPercent(): Int
+
+    fun calculateStrokeRiskReductionPercent(): Int
+
+    fun calculateCancerRiskReductionPercent(): Int
 }

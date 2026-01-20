@@ -262,6 +262,7 @@
     </plurals>
     <string name="insights_header_title">Инсайты о здоровье</string>
     <string name="insights_header_subtitle">Ваш прогресс восстановления на основе медицинских данных</string>
+    <string name="insights_blood_pressure_subtitle">Сосудистый тонус постепенно приходит в норму, и давление становится стабильнее в течение первых недель</string>
     <string name="insights_badge_medical">Медицинские данные</string>
     <string name="insights_oxygen_title">Нормализация кислорода и CO</string>
     <string name="insights_oxygen_subtitle">Уровень угарного газа обычно нормализуется в течение 24–48 часов</string>
@@ -509,5 +510,22 @@
     <string name="journey_calendar_preview_feature_2">Удобная визуализация вашего пути</string>
     <string name="journey_calendar_preview_header_premium">Премиум функция</string>
     <string name="journey_calendar_preview_submit_button">Оформить подписку</string>
+    <string name="insights_blood_pressure_title">Стабилизация давления</string>
+    <string name="insights_immune_recovery_title">Восстановление иммунитета</string>
+    <string name="insights_immune_recovery_subtitle">За недели и месяцы иммунная система постепенно укрепляется, а восстановление тканей становится эффективнее</string>
+    <string name="insights_stress_regulation_title">Регуляция стресса</string>
+    <string name="insights_stress_regulation_subtitle">Со временем нервная система становится устойчивее, и эмоциональные “качели” от никотина обычно уменьшаются за недели</string>
+    <string name="insights_sleep_quality_title">Улучшение качества сна</string>
+    <string name="insights_sleep_quality_subtitle">Когда никотин уходит из режима дня, сон часто становится глубже и стабильнее в течение первых недель</string>
+    <string name="insights_taste_and_smell_title">Восстановление вкуса и обоняния</string>
+    <string name="insights_taste_and_smell_subtitle">Рецепторы начинают оживать уже в первые дни, и вкус с запахами часто становятся ярче за 1–2 недели</string>
+    <string name="insights_skin_title">Улучшение кожи</string>
+    <string name="insights_skin_subtitle">Кровообращение и восстановление тканей постепенно улучшаются, и внешний вид может меняться к лучшему в течение месяцев</string>
+    <string name="insights_stroke_title">Снижение риска инсульта</string>
+    <string name="insights_stroke_subtitle">Долгосрочно риск инсульта уменьшается, и польза накапливается годами после отказа</string>
+    <string name="insights_cancer_title">Снижение риска рака</string>
+    <string name="insights_cancer_subtitle">Со временем снижается риск ряда видов рака, и заметный эффект накапливается в течение лет</string>
+    <string name="insight_chart_block_estimated">Расчетный</string>
+    <string name="insight_chart_who">ВОЗ</string>
 
 </resources>

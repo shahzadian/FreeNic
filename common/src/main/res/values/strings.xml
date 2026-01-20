@@ -303,6 +303,8 @@
     <string name="insights_endurance_subtitle">Physical endurance typically improves as oxygen delivery and circulation recover</string>
     <string name="insights_minutes_regained_title">Life time regained</string>
     <string name="insights_minutes_regained_subtitle">Quitting smoking is associated with regaining time otherwise lost to smoking</string>
+    <string name="insights_blood_pressure_title">Blood pressure stabilization</string>
+    <string name="insights_blood_pressure_subtitle">Blood vessel tone gradually normalizes, and blood pressure becomes more stable over the first weeks</string>
     <string name="insights_badge_medical">Medical</string>
     <string name="insights_badge_who">WHO</string>
     <string name="insights_badge_studies">Studies</string>
@@ -516,5 +518,21 @@
     <string name="journey_calendar_preview_feature_2">Clear visualization of your journey</string>
     <string name="journey_calendar_preview_header_premium">Premium feature</string>
     <string name="journey_calendar_preview_submit_button">Subscribe now</string>
+    <string name="insights_immune_recovery_title">Immune system recovery</string>
+    <string name="insights_immune_recovery_subtitle">Over weeks and months, the immune system gradually strengthens and tissue repair becomes more effective</string>
+    <string name="insights_stress_regulation_title">Stress regulation improvement</string>
+    <string name="insights_stress_regulation_subtitle">Over time, the nervous system becomes more resilient and nicotine-driven mood swings typically ease over the weeks</string>
+    <string name="insights_sleep_quality_title">Sleep quality improvement</string>
+    <string name="insights_sleep_quality_subtitle">As nicotine leaves your routine, sleep often becomes deeper and more stable over the first weeks</string>
+    <string name="insights_taste_and_smell_title">Taste &amp; smell recovery</string>
+    <string name="insights_taste_and_smell_subtitle">Sensory receptors start recovering within days, and taste and smell often become sharper within 1–2 weeks</string>
+    <string name="insights_skin_title">Skin improvement</string>
+    <string name="insights_skin_subtitle">Circulation and tissue repair gradually improve, and appearance may noticeably change for the better over the months</string>
+    <string name="insights_stroke_title">Stroke risk reduction</string>
+    <string name="insights_stroke_subtitle">Long term, stroke risk declines and the benefit continues to build over the years after quitting</string>
+    <string name="insights_cancer_title">Cancer risk reduction</string>
+    <string name="insights_cancer_subtitle">Over time, the risk of several cancers decreases, with meaningful benefits building over years</string>
+    <string name="insight_chart_block_estimated">Estimated</string>
+    <string name="insight_chart_who">WHO</string>
 
 </resources>

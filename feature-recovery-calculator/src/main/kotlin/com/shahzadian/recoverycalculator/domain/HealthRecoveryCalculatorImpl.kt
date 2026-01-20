@@ -3,6 +3,7 @@ package com.shahzadian.recoverycalculator.domain
 import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.user.domain.UserDataHelper
 import com.shahzadian.user.model.UserData
+import kotlin.math.exp
 import kotlin.math.roundToInt
 
 internal class HealthRecoveryCalculatorImpl(
@@ -125,6 +126,384 @@ internal class HealthRecoveryCalculatorImpl(
         return cigsAvoided * 11L
     }
 
+    override fun calculateBloodPressureStabilizationPercent(): Int {
+        val daysSinceQuitClamped = getDaysSinceQuit().coerceAtLeast(0)
+        // Ensure we never use negative time (just in case input millisSinceQuit is negative).
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Convert cigarettes/day into a multiplier:
+        // heavier smoking -> slightly slower stabilization progress, lighter smoking -> slightly faster.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Convert age into a multiplier:
+        // younger age -> slightly faster stabilization progress, older age -> slightly slower.
+
+        val effectiveRecoveryDays = daysSinceQuitClamped * smokingLoadFactor * ageRecoveryFactor
+        // "Effective days" = real days adjusted by smoking intensity and age.
+        // This makes the curve mildly personalized without going extreme.
+
+        val rawProgress01 = exponentialApproachToOne(effectiveRecoveryDays, timeConstantDays = 7.0)
+        // Compute progress in 0..1 using an exponential curve:
+        // p = 1 - exp(-t / tau), where tau=7 days (fast improvement in first weeks).
+
+        val progressCappedForFirstDay01 = when {
+            effectiveRecoveryDays < 0.25 -> 0.02
+            // First 6 hours: show tiny but non-zero progress (UX-friendly and realistic).
+
+            effectiveRecoveryDays < 1.0 -> 0.07
+            // First day: do NOT allow the model to jump too high.
+            // Stabilization is not "done" within 24 hours.
+
+            else -> rawProgress01
+            // After day 1: use the curve normally.
+        }
+        // Apply an early-time guardrail so users don't see 90–99% on day 0/1 due to bugs or clamping.
+
+        val progressPercent = (progressCappedForFirstDay01.coerceIn(0.0, 1.0) * 100.0).roundToInt()
+        // Convert 0..1 progress to integer percent 0..100.
+
+        return progressPercent.coerceIn(0, 100)
+        // Safety clamp: percent must always stay inside 0..100.
+    }
+
+    override fun calculateImmuneRecoveryPercent(): Int {
+        val daysSinceQuitNonNegative = getDaysSinceQuit().coerceAtLeast(0)
+        // Ensure time is not negative in case millisSinceQuit is negative.
+
+        val cigarettesPerDayClamped = userData.cigarettesData.cigarettesPerDay.coerceIn(0, 60)
+        // Clamp cigarettes/day to a reasonable range to avoid extreme personalization.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(cigarettesPerDayClamped)
+        // Map smoking intensity to a multiplier that gently affects recovery speed.
+
+        val ageClamped = userData.personalData.age.coerceIn(18, 90)
+        // Clamp age to a reasonable adult range.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(ageClamped)
+        // Map age to a multiplier that gently affects recovery speed.
+
+        val effectiveRecoveryDays = daysSinceQuitNonNegative * smokingLoadFactor * ageRecoveryFactor
+        // Compute "effective days" which represent personalized recovery time.
+
+        val effectiveDaysLimitedToModelWindow = effectiveRecoveryDays.coerceIn(0.0, 180.0)
+        // Limit to 0..180 days because we model immune recovery over ~6 months for UI.
+
+        val midpointDaysForHalfRecovery = 45.0
+        // Midpoint: around this many effective days we expect the curve to reach ~50%.
+
+        val logisticSteepness = 0.06
+        // Steepness controls how quickly the curve rises around the midpoint.
+
+        val immuneRecoveryProgress01 =
+            1.0 / (1.0 + exp(-logisticSteepness * (effectiveDaysLimitedToModelWindow - midpointDaysForHalfRecovery)))
+        // Logistic curve (0..1) to model gradual immune recovery over weeks/months.
+
+        val progressGuardedForVeryEarlyDays01 = when {
+            effectiveDaysLimitedToModelWindow < 1.0 -> 0.02
+            // Day 0..1: show minimal progress (immune system does not "recover" instantly).
+
+            effectiveDaysLimitedToModelWindow < 7.0 -> immuneRecoveryProgress01.coerceAtMost(0.15)
+            // First week: cap progress so it doesn't jump unrealistically high.
+
+            else -> immuneRecoveryProgress01
+            // After week 1: use the curve normally.
+        }
+        // Apply small UX/realism guardrails so early values look believable.
+
+        val immuneRecoveryPercent =
+            (progressGuardedForVeryEarlyDays01.coerceIn(0.0, 1.0) * 100.0).roundToInt()
+        // Convert 0..1 progress to integer percent.
+
+        return immuneRecoveryPercent.coerceIn(0, 100)
+        // Ensure the output always stays in 0..100.
+    }
+
+    override fun calculateStressRegulationPercent(): Int {
+        val daysSinceQuit = getDaysSinceQuit()
+        // Convert milliseconds since quit into days using your existing helper.
+
+        val daysSinceQuitNonNegative = daysSinceQuit.coerceAtLeast(0)
+        // Ensure days since quit is not negative (defensive guard).
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Get recovery speed multiplier based on cigarettes/day (heavier smoking -> slower progress).
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Get recovery speed multiplier based on age (younger -> slightly faster, older -> slightly slower).
+
+        val effectiveRecoveryDays = daysSinceQuitNonNegative * smokingLoadFactor * ageRecoveryFactor
+        // Compute "effective" recovery time in days after applying personalization multipliers.
+
+        val effectiveDaysLimitedToModelWindow = effectiveRecoveryDays.coerceIn(0.0, 90.0)
+        // Limit to the 0..90 days window because we model stress regulation over ~3 months for UI.
+
+        val midpointDaysForHalfImprovement = 28.0
+        // Set the logistic midpoint: around 4 weeks the model reaches ~50% improvement.
+
+        val logisticSteepness = 0.08
+        // Set curve steepness: controls how quickly progress increases around the midpoint.
+
+        val stressRegulationProgress01 =
+            1.0 / (1.0 + exp(-logisticSteepness * (effectiveDaysLimitedToModelWindow - midpointDaysForHalfImprovement)))
+        // Calculate logistic progress (0..1) for stress regulation improvement.
+
+        val progressGuardedForEarlyWithdrawal01 = when {
+            effectiveDaysLimitedToModelWindow < 1.0 -> 0.02
+            // First day: keep progress minimal because stress can feel worse initially.
+
+            effectiveDaysLimitedToModelWindow < 7.0 -> stressRegulationProgress01.coerceAtMost(0.12)
+            // First week: cap progress; adaptation and mood swings are common.
+
+            effectiveDaysLimitedToModelWindow < 14.0 -> stressRegulationProgress01.coerceAtMost(0.25)
+            // Second week: still cap to keep early numbers believable.
+
+            else -> stressRegulationProgress01
+            // After two weeks: use the logistic curve normally.
+        }
+        // Apply guardrails so the user never sees unrealistically high early percentages.
+
+        val stressRegulationPercent =
+            (progressGuardedForEarlyWithdrawal01.coerceIn(0.0, 1.0) * 100.0).roundToInt()
+        // Convert 0..1 progress to an Int percent (0..100).
+
+        return stressRegulationPercent.coerceIn(0, 100)
+        // Final safety clamp to keep output in valid percent range.
+    }
+
+    override fun calculateSleepQualityPercent(): Int {
+        val daysSinceQuit = getDaysSinceQuit()
+        // Convert milliseconds since quit to days using your existing helper.
+
+        val daysSinceQuitNonNegative = daysSinceQuit.coerceAtLeast(0)
+        // Ensure we never use negative time (defensive guard).
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Get speed multiplier based on prior cigarettes/day.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Get speed multiplier based on age.
+
+        val effectiveRecoveryDays = daysSinceQuitNonNegative * smokingLoadFactor * ageRecoveryFactor
+        // Compute personalized "effective days" of recovery.
+
+        val modelWindowDays = 45.0
+        // Define the window where sleep improvements are most noticeable for the UI curve.
+
+        val effectiveDaysLimitedToModelWindow = effectiveRecoveryDays.coerceIn(0.0, modelWindowDays)
+        // Limit effective days to the model window to avoid unnecessary extremes.
+
+        val timeConstantDays = 10.0
+        // Time constant for exponential approach: faster changes in the first weeks, then slows down.
+
+        val rawProgress01 = exponentialApproachToOne(
+            timeDays = effectiveDaysLimitedToModelWindow,
+            timeConstantDays = timeConstantDays
+        )
+        // Compute sleep improvement progress (0..1) using your existing exponential helper.
+
+        val progressGuardedForVeryEarlyDays01 = when {
+            effectiveDaysLimitedToModelWindow < 1.0 -> 0.03
+            // First day: keep progress minimal (sleep may be unstable during acute withdrawal).
+
+            effectiveDaysLimitedToModelWindow < 3.0 -> rawProgress01.coerceAtMost(0.15)
+            // First 3 days: cap progress to avoid unrealistic jumps.
+
+            else -> rawProgress01
+            // After a few days: use the curve normally.
+        }
+        // Apply small guardrails so the first days look believable.
+
+        val sleepQualityPercent =
+            (progressGuardedForVeryEarlyDays01.coerceIn(0.0, 1.0) * 100.0).roundToInt()
+        // Convert progress 0..1 into percent 0..100.
+
+        return sleepQualityPercent.coerceIn(0, 100)
+        // Final safety clamp to ensure valid percent output.
+    }
+
+    override fun calculateTasteAndSmellRecoveryPercent(): Int {
+        val daysSinceQuit = getDaysSinceQuit()
+        // Convert milliseconds since quit to days using your helper.
+
+        val daysSinceQuitNonNegative = daysSinceQuit.coerceAtLeast(0)
+        // Ensure time is not negative (defensive guard).
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Get speed multiplier based on prior cigarettes/day (heavier smoking -> slightly slower recovery).
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Get speed multiplier based on age (younger -> slightly faster recovery).
+
+        val effectiveRecoveryDays = daysSinceQuitNonNegative * smokingLoadFactor * ageRecoveryFactor
+        // Compute personalized "effective days" for taste/smell recovery.
+
+        val modelWindowDays = 14.0
+        // Define the main UI window: taste and smell often improve within ~1–2 weeks.
+
+        val effectiveDaysLimitedToModelWindow = effectiveRecoveryDays.coerceIn(0.0, modelWindowDays)
+        // Limit effective days to 0..14 to keep the curve focused on the expected timeframe.
+
+        val timeConstantDays = 3.0
+        // Set exponential time constant: fast improvement early, then gradually slows.
+
+        val rawProgress01 = exponentialApproachToOne(
+            timeDays = effectiveDaysLimitedToModelWindow,
+            timeConstantDays = timeConstantDays
+        )
+        // Calculate raw recovery progress in 0..1.
+
+        val progressGuardedForFirstDay01 = when {
+            effectiveDaysLimitedToModelWindow < 1.0 -> rawProgress01.coerceAtMost(0.10)
+            // First day: cap progress so it doesn't look like full recovery instantly.
+
+            else -> rawProgress01
+            // After day 1: use the curve normally.
+        }
+        // Apply a small realism guardrail for the very early period.
+
+        val tasteAndSmellPercent =
+            (progressGuardedForFirstDay01.coerceIn(0.0, 1.0) * 100.0).roundToInt()
+        // Convert 0..1 progress to percent 0..100.
+
+        return tasteAndSmellPercent.coerceIn(0, 100)
+        // Final clamp to keep output within valid percent range.
+    }
+
+    override fun calculateSkinImprovementPercent(): Int {
+        val daysSinceQuit = getDaysSinceQuit()
+        // Convert milliseconds since quit to days using your helper.
+
+        val daysSinceQuitNonNegative = daysSinceQuit.coerceAtLeast(0)
+        // Ensure we never use negative time.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Get recovery speed multiplier based on smoking intensity.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Get recovery speed multiplier based on age.
+
+        val effectiveRecoveryDays = daysSinceQuitNonNegative * smokingLoadFactor * ageRecoveryFactor
+        // Compute personalized "effective days" for skin recovery.
+
+        val modelWindowDays = 180.0
+        // Skin improvements are gradual; we model the main visible change over ~6 months.
+
+        val effectiveDaysLimitedToModelWindow = effectiveRecoveryDays.coerceIn(0.0, modelWindowDays)
+        // Limit effective days to the model window for stable UI behavior.
+
+        val timeConstantDays = 60.0
+        // Exponential time constant: slow, long-term curve (about ~63% by ~60 days, ~95% by ~180 days).
+
+        val rawProgress01 = exponentialApproachToOne(
+            timeDays = effectiveDaysLimitedToModelWindow,
+            timeConstantDays = timeConstantDays
+        )
+        // Calculate raw skin improvement progress (0..1).
+
+        val percentNotMoreThanNinetyNine = (rawProgress01.coerceIn(0.0, 0.99) * 100.0).roundToInt()
+        // Convert to percent and cap at 99% by design (avoid showing 100%).
+
+        return percentNotMoreThanNinetyNine.coerceIn(0, 99)
+        // Final safety clamp to keep output in 0..99.
+    }
+
+    override fun calculateStrokeRiskReductionPercent(): Int {
+        val daysSinceQuit = getDaysSinceQuit()
+        // Convert milliseconds since quit to days using your helper.
+
+        val daysSinceQuitNonNegative = daysSinceQuit.coerceAtLeast(0)
+        // Ensure we never use negative time.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Get speed multiplier based on prior smoking intensity.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Get speed multiplier based on age.
+
+        val effectiveRecoveryDays = daysSinceQuitNonNegative * smokingLoadFactor * ageRecoveryFactor
+        // Compute personalized "effective days" (gentle personalization for long-term risk).
+
+        val modelWindowYears = 5.0
+        // Define the UI model window: stroke risk reduction is meaningful over multiple years.
+
+        val daysInYear = 365.25
+        // Use average year length to convert years to days.
+
+        val modelWindowDays = modelWindowYears * daysInYear
+        // Convert the model window from years to days.
+
+        val effectiveDaysLimitedToModelWindow = effectiveRecoveryDays.coerceIn(0.0, modelWindowDays)
+        // Limit effective days so the curve stays stable and doesn't overshoot.
+
+        val timeConstantYears = 1.8
+        // Choose time constant in years: faster gains in early years, then slower improvements.
+
+        val timeConstantDays = timeConstantYears * daysInYear
+        // Convert time constant from years to days for the exponential helper.
+
+        val rawProgress01 = exponentialApproachToOne(
+            timeDays = effectiveDaysLimitedToModelWindow,
+            timeConstantDays = timeConstantDays
+        )
+        // Compute risk-reduction progress (0..1) over the multi-year horizon.
+
+        val percentNotMoreThanNinetyNine = (rawProgress01.coerceIn(0.0, 0.99) * 100.0).roundToInt()
+        // Convert to percent and cap at 99% by design.
+
+        return percentNotMoreThanNinetyNine.coerceIn(0, 99)
+        // Final clamp to keep output within 0..99.
+    }
+
+    override fun calculateCancerRiskReductionPercent(): Int {
+        val daysSinceQuit = getDaysSinceQuit()
+        // Convert milliseconds since quit into days (must be duration, not timestamp).
+
+        val daysSinceQuitNonNegative = daysSinceQuit.coerceAtLeast(0)
+        // Defensive guard: never allow negative time.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Smoking intensity has strong impact on cancer risk, so we use this factor directly.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Age slightly affects how fast long-term risk reduction accumulates.
+
+        val effectiveRecoveryDays =
+            daysSinceQuitNonNegative * smokingLoadFactor * ageRecoveryFactor
+        // Compute personalized "effective days" for long-term cancer risk reduction.
+
+        val modelWindowYears = 10.0
+        // Cancer risk reduction is a very long-term process (many years).
+
+        val daysInYear = 365.25
+        // Average year length for conversion.
+
+        val modelWindowDays = modelWindowYears * daysInYear
+        // Convert model window to days.
+
+        val effectiveDaysLimitedToModelWindow =
+            effectiveRecoveryDays.coerceIn(0.0, modelWindowDays)
+        // Limit effective days to the model window to keep the curve stable.
+
+        val timeConstantYears = 3.5
+        // Time constant in years: reflects slow, cumulative reduction of cancer risk.
+
+        val timeConstantDays = timeConstantYears * daysInYear
+        // Convert time constant to days for the exponential helper.
+
+        val rawProgress01 = exponentialApproachToOne(
+            timeDays = effectiveDaysLimitedToModelWindow,
+            timeConstantDays = timeConstantDays
+        )
+        // Exponential curve modeling gradual long-term cancer risk reduction (0..1).
+
+        val percentNotMoreThanNinetyNine =
+            (rawProgress01.coerceIn(0.0, 0.99) * 100.0).roundToInt()
+        // Convert to percent and cap at 99% by design (avoid “fully safe” illusion).
+
+        return percentNotMoreThanNinetyNine.coerceIn(0, 99)
+        // Final safety clamp.
+    }
+
     private fun piecewisePercent(days: Int, milestones: List<Pair<Int, Double>>): Double {
         if (milestones.isEmpty()) return 0.0
         val sorted = milestones.sortedBy { it.first }
@@ -163,5 +542,73 @@ internal class HealthRecoveryCalculatorImpl(
         val effective = 1.0 - (1.0 - ageFactor) * (nearEnd * sensitivity)
 
         return (basePercent * effective).roundToInt().coerceIn(0, 100)
+    }
+
+    /** Maps cigarettes/day to a gentle multiplier for recovery speed. */
+    private fun calculateSmokingLoadFactor(cigarettesPerDayBeforeQuit: Int): Double {
+        val cigarettes = cigarettesPerDayBeforeQuit.coerceIn(0, 60)
+        // Clamp input to a reasonable range to avoid extreme multipliers.
+
+        return when {
+            cigarettes <= 5 -> 1.10
+            // Very light smoking: slightly faster recovery.
+
+            cigarettes <= 10 -> 1.05
+            // Light smoking: a bit faster recovery.
+
+            cigarettes <= 20 -> 1.00
+            // Typical pack/day or less: baseline.
+
+            cigarettes <= 30 -> 0.95
+            // Heavier smoking: slightly slower recovery.
+
+            cigarettes <= 40 -> 0.90
+            // Very heavy smoking: slower recovery.
+
+            else -> 0.85
+            // Extremely heavy smoking: slowest allowed recovery.
+        }
+    }
+
+    /** Maps age to a gentle multiplier for recovery speed. */
+    private fun calculateAgeRecoveryFactor(ageYears: Int): Double {
+        val age = ageYears.coerceIn(18, 90)
+        // Clamp age to a reasonable adult range to avoid odd inputs.
+
+        return when {
+            age <= 30 -> 1.08
+            // Younger: slightly faster stabilization.
+
+            age <= 40 -> 1.04
+            // Early middle age: a bit faster.
+
+            age <= 55 -> 1.00
+            // Baseline.
+
+            age <= 70 -> 0.94
+            // Older: slightly slower.
+
+            else -> 0.88
+            // Elderly: slowest allowed.
+        }
+    }
+
+    /**
+     * Exponential curve that approaches 1.0 over time:
+     * progress = 1 - exp(-time / timeConstant)
+     */
+    private fun exponentialApproachToOne(timeDays: Double, timeConstantDays: Double): Double {
+        val safeTimeDays = timeDays.coerceAtLeast(0.0)
+        // Make sure time is non-negative.
+
+        val safeTimeConstant = timeConstantDays.coerceAtLeast(0.0001)
+        // Prevent division by zero.
+
+        return 1.0 - exp(-safeTimeDays / safeTimeConstant)
+        // Core exponential approach-to-one formula.
+    }
+
+    private fun getDaysSinceQuit(): Long {
+        return (System.currentTimeMillis() - userData.quitData.quitDateMillis) / 86_400_000L
     }
 }
