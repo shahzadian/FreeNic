@@ -76,6 +76,8 @@ dependencies {
 //    Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+
+    implementation(libs.androidx.datastore.preferences)
     
     // Compose BOM
     implementation(platform(libs.androidx.compose.bom))

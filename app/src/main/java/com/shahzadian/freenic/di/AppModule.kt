@@ -5,11 +5,14 @@ import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.domain.ClearAppDataUseCase
 import com.freenic.logger.AppLogger
 import com.freenic.ui.appinfo.AppInfoHelper
+import com.freenic.ui.appinfo.appdatacache.AppDataCache
+import com.freenic.ui.appinfo.appdatacache.AppDataCacheUpdater
 import com.freenic.ui.model.CoroutineContexts
 import com.shahzadian.freenic.activityeventhandler.ActivityEventHandlerFactory
 import com.shahzadian.freenic.activityeventhandler.ActivityEventHandlerFactoryImpl
 import com.shahzadian.freenic.analytics.AnalyticsEventSenderDebug
 import com.shahzadian.freenic.analytics.AnalyticsEventSenderProd
+import com.shahzadian.freenic.appdatacache.AppDataCacheImpl
 import com.shahzadian.freenic.appinfohelper.AppInfoHelperImpl
 import com.shahzadian.freenic.domain.clearappdata.ClearAppDataUseCaseImpl
 import com.shahzadian.freenic.domain.clearappdata.appclearabledata.AppClearableDataFactory
@@ -49,6 +52,18 @@ internal interface AppModule {
     fun bindActivityEventHandlerFactory(
         impl: ActivityEventHandlerFactoryImpl
     ): ActivityEventHandlerFactory
+
+    @Binds
+    @Singleton
+    fun bindAppDataCache(
+        impl: AppDataCacheImpl
+    ): AppDataCache
+
+    @Binds
+    @Singleton
+    fun bindAppDataCacheUpdater(
+        impl: AppDataCacheImpl
+    ): AppDataCacheUpdater
 
     companion object {
 
