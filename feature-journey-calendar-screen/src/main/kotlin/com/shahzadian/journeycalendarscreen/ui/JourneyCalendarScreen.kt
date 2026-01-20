@@ -49,6 +49,7 @@ fun JourneyCalendarScreen(
                     is JourneyCalendarViewCommand.NavigateBack -> {
                         navigator.navigateBack()
                     }
+
                     is JourneyCalendarViewCommand.NavigateTo -> {
                         navigator.navigateToScreen(command.screen)
                     }
@@ -84,6 +85,14 @@ private fun ContentView(
             return
         }
         val data = state as JourneyCalendarViewState.Data
+        val onSubscribeClickEvent = remember { { onEvent(JourneyCalendarViewEvent.OnCalendarPreviewSubscribeClicked) } }
+        if (!data.hasPaidSubscription) {
+            CalendarPreviewView(
+                onSubscribeClicked = onSubscribeClickEvent,
+                modifier = Modifier.fillMaxSize(),
+            )
+            return
+        }
         val month = data.monthDataUiModel
         val dayClick: (DayCellUiModel) -> Unit =
             remember { { cell -> onEvent(JourneyCalendarViewEvent.OnDayTapped(cell)) } }

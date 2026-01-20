@@ -7,10 +7,13 @@ import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.JourneyCalendarHelper
+import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
+import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,6 +23,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
     private val journeyCalendarHelper: JourneyCalendarHelper,
     private val analyticsEventSender: AnalyticsEventSender,
     private val activityEventSender: ActivityEventSender,
+    private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
 ) : BaseViewModel<JourneyCalendarViewState, JourneyCalendarViewEvent, JourneyCalendarViewCommand>() {
 
     override val initState: JourneyCalendarViewState by lazyUnsafe {
@@ -55,14 +59,21 @@ internal class JourneyCalendarViewModel @Inject constructor(
             is JourneyCalendarViewEvent.OnBottomSheetDismissRequired -> {
                 onBottomSheetDismissRequired()
             }
+
+            is JourneyCalendarViewEvent.OnCalendarPreviewSubscribeClicked -> {
+                onCalendarPreviewSubscribeClicked()
+            }
         }
     }
 
     private fun setData() {
         viewModelScope.launch {
             val model = journeyCalendarHelper.getMonth()
+            val hasPaidSubscription =
+                getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription
             setViewState(
                 state = JourneyCalendarViewState.Data(
+                    hasPaidSubscription = hasPaidSubscription,
                     hasPreviousMonth = journeyCalendarHelper.hasPreviousMonth(),
                     tappedDay = tappetDay,
                     monthDataUiModel = model,
@@ -126,6 +137,17 @@ internal class JourneyCalendarViewModel @Inject constructor(
                 state = currentState.copy(tappedDay = null)
             )
             activityEventSender.sendEvent(ActivityEvent.AppRateViewShowRequest)
+        }
+    }
+
+    private fun onCalendarPreviewSubscribeClicked() {
+        viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.JOURNEY_CALENDAR_PREVIEW_SUBSCRIBE_TAP,
+                )
+            )
+            sendViewCommand(JourneyCalendarViewCommand.NavigateTo(AppScreen.PaywallScreen))
         }
     }
 }

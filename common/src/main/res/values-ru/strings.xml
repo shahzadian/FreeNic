@@ -503,5 +503,11 @@
     <string name="app_rate_subtitle">Ваш отзыв помогает сделать приложение более полезным и поддерживающим.</string>
     <string name="app_rate_submit_button">Оценить FreeNic</string>
     <string name="app_rate_cancel_button">Не сейчас</string>
+    <string name="journey_calendar_preview_header_title">Календарь пути</string>
+    <string name="journey_calendar_preview_header_subtitle">Полный контроль над прогрессом - по подписке</string>
+    <string name="journey_calendar_preview_feature_1">Полная история по дням, неделям и месяцам</string>
+    <string name="journey_calendar_preview_feature_2">Удобная визуализация вашего пути</string>
+    <string name="journey_calendar_preview_header_premium">Премиум функция</string>
+    <string name="journey_calendar_preview_submit_button">Оформить подписку</string>
 
 </resources>

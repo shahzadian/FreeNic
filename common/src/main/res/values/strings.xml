@@ -510,5 +510,11 @@
     <string name="app_rate_subtitle">Your feedback helps us make the app more supportive and useful.</string>
     <string name="app_rate_submit_button">Rate FreeNic</string>
     <string name="app_rate_cancel_button">Not now</string>
+    <string name="journey_calendar_preview_header_title">Journey calendar</string>
+    <string name="journey_calendar_preview_header_subtitle">Full control over your progress - with subscription</string>
+    <string name="journey_calendar_preview_feature_1">Full history by days, weeks, and months</string>
+    <string name="journey_calendar_preview_feature_2">Clear visualization of your journey</string>
+    <string name="journey_calendar_preview_header_premium">Premium feature</string>
+    <string name="journey_calendar_preview_submit_button">Subscribe now</string>
 
 </resources>
