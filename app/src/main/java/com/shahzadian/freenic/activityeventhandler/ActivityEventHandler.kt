@@ -21,6 +21,11 @@ internal abstract class ActivityEventHandler<E : ActivityEvent>(
     }
     val resultFlow: Flow<ActivityEventResult> = _resultFlow
 
+    private val _activityCommandFlow: MutableSharedFlow<ActivityCommand> by lazyUnsafe {
+        MutableSharedFlow()
+    }
+    val activityCommandFlow: Flow<ActivityCommand> = _activityCommandFlow
+
     fun handle(event: ActivityEvent) {
         onEvent(event as E)
     }
@@ -30,6 +35,12 @@ internal abstract class ActivityEventHandler<E : ActivityEvent>(
     protected fun sendResult(result: ActivityEventResult) {
         coroutineScope.launch {
             _resultFlow.emit(result)
+        }
+    }
+
+    protected fun sendCommand(command: ActivityCommand) {
+        coroutineScope.launch {
+            _activityCommandFlow.emit(command)
         }
     }
 

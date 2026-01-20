@@ -60,6 +60,20 @@ internal class AppDataCacheImpl @Inject constructor(
         }
     }
 
+    override suspend fun hasAppRated(): Boolean {
+        return withStoreContext {
+            val prefs = dataStore.data.firstOrNull() ?: return@withStoreContext false
+            prefs[PREF_KEY_HAS_APP_RATED] ?: false
+        }
+    }
+
+    override suspend fun getRateCancelMillis(): Long? {
+        return withStoreContext {
+            val prefs = dataStore.data.firstOrNull() ?: return@withStoreContext null
+            prefs[PREF_KEY_RATE_CANCEL_MILLIS]
+        }
+    }
+
     override suspend fun setRegisteredTimeMillis(millis: Long) {
         withStoreContext {
             dataStore.edit { prefs ->
@@ -92,6 +106,22 @@ internal class AppDataCacheImpl @Inject constructor(
         }
     }
 
+    override suspend fun onAppRated() {
+        withStoreContext {
+            dataStore.edit { prefs ->
+                prefs[PREF_KEY_HAS_APP_RATED] = true
+            }
+        }
+    }
+
+    override suspend fun setRateCancelMillis(millis: Long) {
+        withStoreContext {
+            dataStore.edit { prefs ->
+                prefs[PREF_KEY_RATE_CANCEL_MILLIS] = millis
+            }
+        }
+    }
+
     private suspend fun <T> withStoreContext(block: suspend CoroutineScope.() -> T): T {
         return withContext(coroutineContexts.io, block)
     }
@@ -103,5 +133,7 @@ internal class AppDataCacheImpl @Inject constructor(
         val PREF_KEY_HAS_SHARED_ACHIEVEMENT = booleanPreferencesKey("has_shared_achievement")
         val PREF_KEY_HAS_CREATED_SAVINGS_GOAL = booleanPreferencesKey("has_created_savings_goal")
         val PREF_KEY_SESSIONS_COUNT = intPreferencesKey("sessions_count")
+        val PREF_KEY_HAS_APP_RATED = booleanPreferencesKey("has_app_rated")
+        val PREF_KEY_RATE_CANCEL_MILLIS = longPreferencesKey("rate_cancel_millis")
     }
 }

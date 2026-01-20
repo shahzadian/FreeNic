@@ -4,13 +4,22 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.lifecycleScope
 import com.freenic.AppLaunchConst
 import com.freenic.activityevent.ActivityEventReceiver
 import com.freenic.logger.AppLogger
+import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.model.CoroutineContexts
 import com.freenic.ui.theme.FreeNicTheme
 import com.shahzadian.ad.AdHelper
+import com.shahzadian.apprate.ui.AppRateBottomSheet
+import com.shahzadian.freenic.activityeventhandler.ActivityCommand
 import com.shahzadian.freenic.activityeventhandler.ActivityEventHandlerFactory
 import com.shahzadian.freenic.navigation.AppNavigation
 import com.shahzadian.freenic.navigation.AppNavigatorFactory
@@ -21,8 +30,10 @@ import com.shahzadian.subscription.domain.UserSubscriptionStatusChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -56,6 +67,10 @@ internal class MainActivity : ComponentActivity() {
 
     private var latestSubscriptionStatus: UserSubscriptionStatus? = null
 
+    private val appRateShowCommandFlow: MutableSharedFlow<ActivityCommand.ShowAppRateView> by lazyUnsafe {
+        MutableSharedFlow()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -67,10 +82,29 @@ internal class MainActivity : ComponentActivity() {
                     targetScreen = targetScreen,
                     appNavigatorFactory = appNavigatorFactory,
                 )
+                AppRateView()
             }
         }
         initializeAdSdk()
         subscribeToEvents()
+    }
+
+    @Composable
+    private fun AppRateView() {
+        var appRateCommand: ActivityCommand.ShowAppRateView? by remember { mutableStateOf(null) }
+        LaunchedEffect(Unit) {
+            appRateShowCommandFlow
+                .collect {
+                    appRateCommand = it
+                }
+        }
+        appRateCommand?.let { command ->
+            AppRateBottomSheet(
+                onDismissRequest = { appRateCommand = null },
+                onRated = { command.onAppRated(it) },
+                onNotNowClicked = { command.onNotNowClicked() }
+            )
+        }
     }
 
     override fun onStart() {
@@ -148,5 +182,36 @@ internal class MainActivity : ComponentActivity() {
                 activityEventHandlers.forEach { it.handle(event) }
             }
             .launchIn(lifecycleScope)
+
+        activityEventHandlers
+            .map {
+                it.resultFlow
+            }
+            .merge()
+            .onEach { result ->
+                activityEventReceiver.sendResult(result)
+            }
+            .launchIn(lifecycleScope)
+
+        activityEventHandlers
+            .map {
+                it.activityCommandFlow
+            }
+            .merge()
+            .onEach { command ->
+                onActivityCommand(command)
+            }
+            .launchIn(lifecycleScope)
+
+    }
+
+    private fun onActivityCommand(command: ActivityCommand) {
+        when (command) {
+            is ActivityCommand.ShowAppRateView -> {
+                lifecycleScope.launch {
+                    appRateShowCommandFlow.emit(command)
+                }
+            }
+        }
     }
 }

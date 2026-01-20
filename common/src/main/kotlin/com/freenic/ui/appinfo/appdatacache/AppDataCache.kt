@@ -6,6 +6,8 @@ interface AppDataCache {
     suspend fun hasSharedAchievement(): Boolean
     suspend fun getHasCreatedSavingsGoal(): Boolean
     suspend fun getSessionsCount(): Int
+    suspend fun hasAppRated(): Boolean
+    suspend fun getRateCancelMillis(): Long?
 }
 
 interface AppDataCacheUpdater {
@@ -14,4 +16,6 @@ interface AppDataCacheUpdater {
     suspend fun onAchievementShared()
     suspend fun onSavingsGoalCreated()
     suspend fun setSessionsCount(sessionsCount: Int)
+    suspend fun onAppRated()
+    suspend fun setRateCancelMillis(millis: Long)
 }

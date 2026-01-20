@@ -1,6 +1,8 @@
 package com.shahzadian.freenic.activityeventhandler
 
 import android.app.Activity
+import com.freenic.analytics.AnalyticsEventSender
+import com.shahzadian.apprate.domain.ShouldShowAppRateViewUseCase
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import com.shahzadian.subscription.domain.SubscribeToPremiumUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -17,6 +19,8 @@ internal interface ActivityEventHandlerFactory {
 internal class ActivityEventHandlerFactoryImpl @Inject constructor(
     private val subscribeToPremiumUseCase: SubscribeToPremiumUseCase,
     private val refreshSubscriptionStatusUseCase: RefreshSubscriptionStatusUseCase,
+    private val shouldShowAppRateViewUseCase: ShouldShowAppRateViewUseCase,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : ActivityEventHandlerFactory {
 
     override fun create(
@@ -29,6 +33,11 @@ internal class ActivityEventHandlerFactoryImpl @Inject constructor(
                 coroutineScope = coroutineScope,
                 subscribeToPremiumUseCase = subscribeToPremiumUseCase,
                 refreshSubscriptionStatusUseCase = refreshSubscriptionStatusUseCase,
+            ),
+            AppRateViewShowRequestHandler(
+                coroutineScope = coroutineScope,
+                shouldShowAppRateViewUseCase = shouldShowAppRateViewUseCase,
+                analyticsEventSender = analyticsEventSender,
             )
         )
     }

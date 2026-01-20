@@ -25,6 +25,8 @@ sealed interface ActivityEvent {
     data class AppSubscriptionRequest(
         val planId: String,
     ) : ActivityEvent
+
+    data object AppRateViewShowRequest : ActivityEvent
 }
 
 interface ActivityEventResult
