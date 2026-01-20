@@ -101,8 +101,14 @@ internal class MainActivity : ComponentActivity() {
         appRateCommand?.let { command ->
             AppRateBottomSheet(
                 onDismissRequest = { appRateCommand = null },
-                onRated = { command.onAppRated(it) },
-                onNotNowClicked = { command.onNotNowClicked() }
+                onRated = {
+                    command.onAppRated(it)
+                    appRateCommand = null
+                },
+                onNotNowClicked = {
+                    command.onNotNowClicked()
+                    appRateCommand = null
+                }
             )
         }
     }

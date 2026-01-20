@@ -2,6 +2,8 @@ package com.shahzadian.savingsgoalscreen.ui.create.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.freenic.activityevent.ActivityEvent
+import com.freenic.activityevent.ActivityEventSender
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
@@ -23,6 +25,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val analyticsEventSender: AnalyticsEventSender,
     private val appDataCacheUpdater: AppDataCacheUpdater,
+    private val activityEventSender: ActivityEventSender,
 ) : BaseViewModel<SavingsGoalCreateViewState, SavingsGoalCreateViewEvent, SavingsGoalCreateViewCommand>() {
 
     override val initState: SavingsGoalCreateViewState by lazyUnsafe {
@@ -106,6 +109,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
         viewModelScope.launch {
             saveGoal()
             appDataCacheUpdater.onSavingsGoalCreated()
+            activityEventSender.sendEvent(ActivityEvent.AppRateViewShowRequest)
             sendViewCommand(SavingsGoalCreateViewCommand.NavigateBack)
         }
     }

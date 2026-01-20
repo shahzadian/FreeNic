@@ -38,6 +38,7 @@ fun AppRateBottomSheet(
     val dismissRequest = remember {
         { onDismissRequest() }
     }
+    val rated: (Int) -> Unit = remember { { onRated(it) } }
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = false,
     )
@@ -48,14 +49,22 @@ fun AppRateBottomSheet(
         shape = MaterialTheme.shapes.medium,
         modifier = modifier
     ) {
-        ContentView()
+        ContentView(
+            onRated = rated,
+            onNotNowClicked = onNotNowClicked,
+        )
     }
 }
 
 @Composable
 private fun ContentView(
+    onRated: (starsCount: Int) -> Unit,
+    onNotNowClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var starsCount by remember { mutableStateOf(0) }
+    val submitClick = remember { { onRated(starsCount) } }
+    val notNowClick = remember { { onNotNowClicked() } }
     Column(
         modifier = modifier
             .padding(16.dp),
@@ -66,14 +75,16 @@ private fun ContentView(
                 .padding(bottom = 32.dp)
         )
         StarsView(
-            onRated = {},
+            onRated = {
+                starsCount = it
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 32.dp)
         )
         FooterView(
-            onSubmitClicked = {},
-            onNotNowClicked = {},
+            onSubmitClicked = submitClick,
+            onNotNowClicked = notNowClick,
             modifier = Modifier.fillMaxWidth()
         )
     }

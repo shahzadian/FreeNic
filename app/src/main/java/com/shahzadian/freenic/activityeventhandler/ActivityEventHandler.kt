@@ -27,6 +27,7 @@ internal abstract class ActivityEventHandler<E : ActivityEvent>(
     val activityCommandFlow: Flow<ActivityCommand> = _activityCommandFlow
 
     fun handle(event: ActivityEvent) {
+        if (eventClass.isInstance(event).not()) return
         onEvent(event as E)
     }
 
