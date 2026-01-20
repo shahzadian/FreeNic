@@ -5,6 +5,7 @@ import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
+import com.freenic.ui.appinfo.appdatacache.AppDataCacheUpdater
 import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.apprate.domain.ShouldShowAppRateViewUseCase
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +15,7 @@ internal class AppRateViewShowRequestHandler(
     coroutineScope: CoroutineScope,
     private val shouldShowAppRateViewUseCase: ShouldShowAppRateViewUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val appDataCacheUpdater: AppDataCacheUpdater,
 ) : ActivityEventHandler<ActivityEvent.AppRateViewShowRequest>(
     coroutineScope = coroutineScope,
 ) {
@@ -40,14 +42,17 @@ internal class AppRateViewShowRequestHandler(
     }
 
     private fun onAppRated(starsCount: Int) {
-        analyticsEventSender.send(
-            AnalyticsEvent(
-                name = AnalyticsEventConst.APP_RATE_CONFIRMED,
-                params = mapOf(
-                    AnalyticsEventConst.APP_RATE_PARAM_STARS_COUNT to starsCount.asAnalyticsProperty()
+        launchInScope {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.APP_RATE_CONFIRMED,
+                    params = mapOf(
+                        AnalyticsEventConst.APP_RATE_PARAM_STARS_COUNT to starsCount.asAnalyticsProperty()
+                    )
                 )
             )
-        )
+            appDataCacheUpdater.onAppRated()
+        }
     }
 
     private fun onNotNowClicked() {
