@@ -1,14 +1,14 @@
 package com.shahzadian.journeycalendarscreen.ui.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.activityevent.ActivityEvent
+import com.freenic.activityevent.ActivityEventSender
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
-import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
-import com.shahzadian.ad.AdHelper
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.JourneyCalendarHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 internal class JourneyCalendarViewModel @Inject constructor(
     private val journeyCalendarHelper: JourneyCalendarHelper,
     private val analyticsEventSender: AnalyticsEventSender,
-    private val adHelper: AdHelper,
+    private val activityEventSender: ActivityEventSender,
 ) : BaseViewModel<JourneyCalendarViewState, JourneyCalendarViewEvent, JourneyCalendarViewCommand>() {
 
     override val initState: JourneyCalendarViewState by lazyUnsafe {
@@ -28,12 +28,9 @@ internal class JourneyCalendarViewModel @Inject constructor(
 
     private var tappetDay: DayCellUiModel? = null
 
-    private var shouldShowAddNoteBottomSheet: Boolean = false
-
     init {
         viewModelScope.launch {
             setData()
-            adHelper.requestAdShow()
         }
     }
 
@@ -56,19 +53,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
             }
 
             is JourneyCalendarViewEvent.OnBottomSheetDismissRequired -> {
-                onEventsSheetDismissRequired()
-            }
-
-            is JourneyCalendarViewEvent.OnAddNoteClicked -> {
-                onAddNoteClicked()
-            }
-
-            is JourneyCalendarViewEvent.OnAddNoteUnlockClicked -> {
-                onAddNoteUnlockClicked()
-            }
-
-            is JourneyCalendarViewEvent.OnAddNoteSheetDismissRequired -> {
-                onAddNoteSheetDismissRequired()
+                onBottomSheetDismissRequired()
             }
         }
     }
@@ -80,7 +65,6 @@ internal class JourneyCalendarViewModel @Inject constructor(
                 state = JourneyCalendarViewState.Data(
                     hasPreviousMonth = journeyCalendarHelper.hasPreviousMonth(),
                     tappedDay = tappetDay,
-                    shouldShowAddNoteBottomSheet = false,
                     monthDataUiModel = model,
                 )
             )
@@ -134,62 +118,14 @@ internal class JourneyCalendarViewModel @Inject constructor(
         }
     }
 
-    private fun onEventsSheetDismissRequired() {
+    private fun onBottomSheetDismissRequired() {
         tappetDay = null
         val currentState = viewState as? JourneyCalendarViewState.Data ?: return
         viewModelScope.launch {
             setViewState(
                 state = currentState.copy(tappedDay = null)
             )
-        }
-    }
-
-    private fun onAddNoteClicked() {
-        analyticsEventSender.send(
-            event = AnalyticsEvent(
-                name = AnalyticsEventConst.JOURNEY_CALENDAR_ADD_NOTE_TAP
-            )
-        )
-        shouldShowAddNoteBottomSheet = true
-        val currentState = viewState as? JourneyCalendarViewState.Data ?: return
-        viewModelScope.launch {
-            setViewState(
-                state = currentState.copy(
-                    shouldShowAddNoteBottomSheet = shouldShowAddNoteBottomSheet,
-                )
-            )
-        }
-    }
-
-    private fun onAddNoteUnlockClicked() {
-        analyticsEventSender.send(
-            event = AnalyticsEvent(
-                name = AnalyticsEventConst.JOURNEY_CALENDAR_ADD_NOTE_UNLOCK_TAP
-            )
-        )
-        viewModelScope.launch {
-            sendViewCommand(JourneyCalendarViewCommand.NavigateTo(AppScreen.PaywallScreen))
-        }
-        shouldShowAddNoteBottomSheet = false
-        val currentState = viewState as? JourneyCalendarViewState.Data ?: return
-        viewModelScope.launch {
-            setViewState(
-                state = currentState.copy(
-                    shouldShowAddNoteBottomSheet = shouldShowAddNoteBottomSheet,
-                )
-            )
-        }
-    }
-
-    private fun onAddNoteSheetDismissRequired() {
-        shouldShowAddNoteBottomSheet = false
-        val currentState = viewState as? JourneyCalendarViewState.Data ?: return
-        viewModelScope.launch {
-            setViewState(
-                state = currentState.copy(
-                    shouldShowAddNoteBottomSheet = shouldShowAddNoteBottomSheet,
-                )
-            )
+            activityEventSender.sendEvent(ActivityEvent.AppRateViewShowRequest)
         }
     }
 }
