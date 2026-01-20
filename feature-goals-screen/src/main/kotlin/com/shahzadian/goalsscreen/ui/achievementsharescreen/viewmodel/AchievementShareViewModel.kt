@@ -7,6 +7,7 @@ import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
+import com.freenic.ui.appinfo.appdatacache.AppDataCacheUpdater
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.freenic.ui.wrapper.TextWrapper
@@ -21,6 +22,7 @@ internal class AchievementShareViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val achievementsUiModelFetcher: AchievementsUiModelFetcher,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val appDataCacheUpdater: AppDataCacheUpdater,
 ) : BaseViewModel<AchievementShareViewState, AchievementShareViewEvent, AchievementShareViewCommand>() {
 
     override val initState: AchievementShareViewState by lazyUnsafe { AchievementShareViewState.Loading }
@@ -67,14 +69,17 @@ internal class AchievementShareViewModel @Inject constructor(
     }
 
     private fun onShareTapped(templateId: String) {
-        analyticsEventSender.send(
-            event = AnalyticsEvent(
-                name = AnalyticsEventConst.ACHIEVEMENT_SHARE_TAP,
-                params = mapOf(
-                    AnalyticsEventConst.ACHIEVEMENT_SHARE_TAP_PARAM_ACHIEVEMENT_ID to achievementId.asAnalyticsProperty(),
-                    AnalyticsEventConst.ACHIEVEMENT_SHARE_TAP_PARAM_TEMPLATE_ID to templateId.asAnalyticsProperty()
+        viewModelScope.launch {
+            analyticsEventSender.send(
+                event = AnalyticsEvent(
+                    name = AnalyticsEventConst.ACHIEVEMENT_SHARE_TAP,
+                    params = mapOf(
+                        AnalyticsEventConst.ACHIEVEMENT_SHARE_TAP_PARAM_ACHIEVEMENT_ID to achievementId.asAnalyticsProperty(),
+                        AnalyticsEventConst.ACHIEVEMENT_SHARE_TAP_PARAM_TEMPLATE_ID to templateId.asAnalyticsProperty()
+                    )
                 )
             )
-        )
+            appDataCacheUpdater.onAchievementShared()
+        }
     }
 }

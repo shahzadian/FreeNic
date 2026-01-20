@@ -11,7 +11,7 @@ interface AppDataCache {
 interface AppDataCacheUpdater {
 
     suspend fun setRegisteredTimeMillis(millis: Long)
-    suspend fun setHasSharedAchievement(hasSharedAchievement: Boolean)
-    suspend fun setHasCreatedSavingsGoal(hasCreatedSavingsGoal: Boolean)
+    suspend fun onAchievementShared()
+    suspend fun onSavingsGoalCreated()
     suspend fun setSessionsCount(sessionsCount: Int)
 }

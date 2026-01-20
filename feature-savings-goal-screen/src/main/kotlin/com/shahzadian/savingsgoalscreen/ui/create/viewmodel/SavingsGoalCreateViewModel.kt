@@ -7,6 +7,7 @@ import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
+import com.freenic.ui.appinfo.appdatacache.AppDataCacheUpdater
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
@@ -21,6 +22,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
     private val savingsGoalHelper: SavingsGoalHelper,
     private val savedStateHandle: SavedStateHandle,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val appDataCacheUpdater: AppDataCacheUpdater,
 ) : BaseViewModel<SavingsGoalCreateViewState, SavingsGoalCreateViewEvent, SavingsGoalCreateViewCommand>() {
 
     override val initState: SavingsGoalCreateViewState by lazyUnsafe {
@@ -103,6 +105,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
     private fun onSavingsGoalSubmitted() {
         viewModelScope.launch {
             saveGoal()
+            appDataCacheUpdater.onSavingsGoalCreated()
             sendViewCommand(SavingsGoalCreateViewCommand.NavigateBack)
         }
     }

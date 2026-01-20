@@ -21,7 +21,7 @@ import javax.inject.Singleton
 
 @Singleton
 internal class AppDataCacheImpl @Inject constructor(
-    @field:ApplicationContext
+    @param:ApplicationContext
     private val context: Context,
     private val coroutineContexts: CoroutineContexts,
 ) : AppDataCache, AppDataCacheUpdater {
@@ -68,18 +68,18 @@ internal class AppDataCacheImpl @Inject constructor(
         }
     }
 
-    override suspend fun setHasSharedAchievement(hasSharedAchievement: Boolean) {
+    override suspend fun onAchievementShared() {
         withStoreContext {
             dataStore.edit { prefs ->
-                prefs[PREF_KEY_HAS_SHARED_ACHIEVEMENT] = hasSharedAchievement
+                prefs[PREF_KEY_HAS_SHARED_ACHIEVEMENT] = true
             }
         }
     }
 
-    override suspend fun setHasCreatedSavingsGoal(hasCreatedSavingsGoal: Boolean) {
+    override suspend fun onSavingsGoalCreated() {
         withStoreContext {
             dataStore.edit { prefs ->
-                prefs[PREF_KEY_HAS_CREATED_SAVINGS_GOAL] = hasCreatedSavingsGoal
+                prefs[PREF_KEY_HAS_CREATED_SAVINGS_GOAL] = true
             }
         }
     }

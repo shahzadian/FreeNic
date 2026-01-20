@@ -7,6 +7,7 @@ import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
+import com.freenic.ui.appinfo.appdatacache.AppDataCacheUpdater
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.datafill.domain.FillableInfoHelper
@@ -36,6 +37,7 @@ internal class DataFillViewModel @Inject constructor(
     private val fillableInfoHelper: FillableInfoHelper,
     private val updateUserDataUseCase: UpdateUserDataUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val appDataCacheUpdater: AppDataCacheUpdater,
 ) : BaseViewModel<DataFillViewState, DataFillViewEvent, DataFillCommand>() {
 
     override val initState: DataFillViewState by lazyUnsafe {
@@ -115,6 +117,7 @@ internal class DataFillViewModel @Inject constructor(
                 analyticsEventSender.send(analyticsEvent)
                 updateUserDataUseCase(it)
                 updateUserDataUseCase.setUserRegistered(true)
+                appDataCacheUpdater.setRegisteredTimeMillis(System.currentTimeMillis())
             }
             sendViewCommand(DataFillCommand.NavigateTo(AppScreen.MainScreen))
         }
@@ -220,7 +223,9 @@ internal class DataFillViewModel @Inject constructor(
             name = AnalyticsEventConst.REGISTRATION_FINISH,
             params = mapOf(
                 AnalyticsEventConst.REGISTRATION_FINISH_PARAM_AGE to userData.personalData.age.asAnalyticsProperty(),
-                AnalyticsEventConst.REGISTRATION_FINISH_PARAM_IS_QUIT_TODAY to DateUtils.isToday(userData.quitData.quitDateMillis)
+                AnalyticsEventConst.REGISTRATION_FINISH_PARAM_IS_QUIT_TODAY to DateUtils.isToday(
+                    userData.quitData.quitDateMillis
+                )
                     .asAnalyticsProperty(),
                 AnalyticsEventConst.REGISTRATION_FINISH_PARAM_CIGS_PER_DAY to userData.cigarettesData.cigarettesPerDay.asAnalyticsProperty(),
                 AnalyticsEventConst.REGISTRATION_FINISH_PARAM_PACK_PRICE to userData.cigarettesData.priceData.price.asAnalyticsProperty(),
