@@ -506,17 +506,9 @@
     <string name="manage_subscription_cancel_confirmation_confirm">Yes</string>
     <string name="manage_subscription_cancel_confirmation_cancel">No</string>
     <string name="manage_subscription_current_plan_premium_active_until">Active until %s</string>
-    <string name="journey_calendar_add_note_title">Add note</string>
-    <string name="journey_calendar_add_note_subtitle">Save thoughts or moments for this day</string>
-    <string name="journey_calendar_add_note_locked_title">Notes for your journey</string>
-    <string name="journey_calendar_add_note_locked_subtitle">Save thoughts, triggers and moments for any day</string>
-    <string name="journey_calendar_add_note_note_1_title">Reflect on difficult days</string>
-    <string name="journey_calendar_add_note_note_1_subtitle">Track what triggered cravings and how you overcame them</string>
-    <string name="journey_calendar_add_note_note_2_title">Remember what helped you</string>
-    <string name="journey_calendar_add_note_note_2_subtitle">Build a personal library of coping strategies</string>
-    <string name="journey_calendar_add_note_note_3_title">See notes with your progress</string>
-    <string name="journey_calendar_add_note_note_3_subtitle">View insights alongside your smoke-free journey</string>
-    <string name="journey_calendar_add_note_unlock_button">Unlock notes</string>
-    <string name="journey_calendar_add_note_not_now">Not now</string>
+    <string name="app_rate_title">How is FreeNic helping you?</string>
+    <string name="app_rate_subtitle">Your feedback helps us make the app more supportive and useful.</string>
+    <string name="app_rate_submit_button">Rate FreeNic</string>
+    <string name="app_rate_cancel_button">Not now</string>
 
 </resources>
