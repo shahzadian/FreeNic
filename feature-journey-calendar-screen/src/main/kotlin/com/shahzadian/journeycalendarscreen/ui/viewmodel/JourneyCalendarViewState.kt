@@ -16,7 +16,6 @@ internal sealed interface JourneyCalendarViewState : ViewState {
         val monthDataUiModel: MonthDataUiModel,
         val hasPreviousMonth: Boolean,
         val tappedDay: DayCellUiModel?,
-        val shouldShowAddNoteBottomSheet: Boolean,
         // changeId гарантирует, что при каждом setData будет новый экземпляр состояния,
         // даже если вложенные модели равны по equals -> заставляет Compose перерисовать контент
         val changeId: Long = System.nanoTime(),
