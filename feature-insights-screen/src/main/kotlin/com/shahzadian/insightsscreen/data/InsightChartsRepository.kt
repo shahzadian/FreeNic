@@ -28,8 +28,6 @@ internal class InsightChartsRepositoryImpl(
             getHealthProgressBlock(),
             getWhoBlock(),
             getEstimatedBlock()
-            //  getLongTermRisksBlock(),
-//            TODO premium
         )
     }
 
