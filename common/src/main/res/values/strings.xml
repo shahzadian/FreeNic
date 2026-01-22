@@ -534,5 +534,6 @@
     <string name="insights_cancer_subtitle">Over time, the risk of several cancers decreases, with meaningful benefits building over years</string>
     <string name="insight_chart_block_estimated">Estimated</string>
     <string name="insight_chart_who">WHO</string>
+    <string name="journey_calendar_event_insight_title">Achievend: %s</string>
 
 </resources>

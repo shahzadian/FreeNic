@@ -527,5 +527,6 @@
     <string name="insights_cancer_subtitle">Со временем снижается риск ряда видов рака, и заметный эффект накапливается в течение лет</string>
     <string name="insight_chart_block_estimated">Расчетное</string>
     <string name="insight_chart_who">ВОЗ</string>
+    <string name="journey_calendar_event_insight_title">Достигнуто: %s</string>
 
 </resources>

@@ -47,6 +47,14 @@ fun imageFromWrapper(wrapper: ImageWrapper): Painter {
     }
 }
 
+fun TextWrapper.extract(context: Context): String {
+    return when (this) {
+        is TextWrapper.FromRes -> context.getString(resId, args)
+        is TextWrapper.FromPlural -> context.resources.getQuantityString(resId, quantity, args)
+        is TextWrapper.FromString -> text
+    }
+}
+
 @Composable
 fun textFromWrapper(wrapper: TextWrapper): String {
     return when (wrapper) {

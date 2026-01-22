@@ -1,11 +1,13 @@
 package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
 
+import android.content.Context
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
 import com.shahzadian.insightsscreen.domain.GetInsightChartsBlocksUseCase
 import com.shahzadian.savingsgoal.domain.GetCurrentSavingsGoalUseCase
 import com.shahzadian.slip.slipcase.domain.GetSlipCasesUseCase
 import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 internal interface JourneyCalendarEventsFinderFactory {
@@ -14,6 +16,7 @@ internal interface JourneyCalendarEventsFinderFactory {
 }
 
 internal class JourneyCalendarEventsFinderFactoryImpl @Inject constructor(
+    @param:ApplicationContext private val context: Context,
     private val getSlipCasesUseCase: GetSlipCasesUseCase,
     private val getUserDataUseCase: GetUserDataUseCase,
     private val getAchievementsUseCase: GetAchievementsUseCase,
@@ -39,6 +42,7 @@ internal class JourneyCalendarEventsFinderFactoryImpl @Inject constructor(
                 getCurrentSavingsGoalUseCase = getCurrentSavingsGoalUseCase,
             ),
             InsightChartsEventFinder(
+                context = context,
                 getInsightChartsBlocksUseCase = getInsightChartsBlocksUseCase,
             ),
         )

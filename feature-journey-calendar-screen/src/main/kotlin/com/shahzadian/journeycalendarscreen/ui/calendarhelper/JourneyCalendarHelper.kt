@@ -7,6 +7,8 @@ import com.shahzadian.user.domain.UserDataHelper
 import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.model.UserData
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.time.Instant
 import java.time.LocalDate
 import java.time.YearMonth
@@ -44,73 +46,85 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     private var _userData: UserData? = null
     private var _userDataHelper: UserDataHelper? = null
 
+    private val mutex by lazyUnsafe {
+        Mutex()
+    }
+
     override suspend fun hasPreviousMonth(): Boolean {
-        val quitDate = getQuitDate() ?: return false
-        if (quitDate.year < currentMonth.year) return true
-        return quitDate.month < currentMonth.month
+        mutex.withLock {
+            val quitDate = getQuitDate() ?: return false
+            if (quitDate.year < currentMonth.year) return true
+            return quitDate.month < currentMonth.month
+        }
     }
 
     override suspend fun getMonth(): MonthDataUiModel {
-        val title = TextWrapper.FromString(
-            currentMonth.month.getDisplayName(
-                TextStyle.FULL_STANDALONE, Locale.getDefault()
-            ).plus(" ").plus(currentMonth.year)
-        )
+        mutex.withLock {
+            val title = TextWrapper.FromString(
+                currentMonth.month.getDisplayName(
+                    TextStyle.FULL_STANDALONE, Locale.getDefault()
+                ).plus(" ").plus(currentMonth.year)
+            )
 
-        val firstOfMonth = currentMonth.atDay(1)
-        val daysInMonth = currentMonth.lengthOfMonth()
-        val firstDayOfWeek = firstOfMonth.dayOfWeek
+            val firstOfMonth = currentMonth.atDay(1)
+            val daysInMonth = currentMonth.lengthOfMonth()
+            val firstDayOfWeek = firstOfMonth.dayOfWeek
 
-        // We use Monday as first day (1..7)
-        val leadingBlanks =
-            ((firstDayOfWeek.value + 6) % 7) // Monday=1 -> 0 blanks, Sunday=7 -> 6 blanks
+            // We use Monday as first day (1..7)
+            val leadingBlanks =
+                ((firstDayOfWeek.value + 6) % 7) // Monday=1 -> 0 blanks, Sunday=7 -> 6 blanks
 
-        val totalCellsBase = leadingBlanks + daysInMonth
-        val trailingBlanks = (7 - (totalCellsBase % 7)) % 7
-        val totalCells = totalCellsBase + trailingBlanks
+            val totalCellsBase = leadingBlanks + daysInMonth
+            val trailingBlanks = (7 - (totalCellsBase % 7)) % 7
+            val totalCells = totalCellsBase + trailingBlanks
 
-        val today = LocalDate.now()
+            val today = LocalDate.now()
 
-        val cells = (0 until totalCells).map { index ->
-            val dayNumber = index - leadingBlanks + 1
-            val inCurrentMonth = dayNumber in 1..daysInMonth
-            val date = if (inCurrentMonth) {
-                currentMonth.atDay(dayNumber)
-            } else {
-                null
-            }
-            DayCellUiModel(
-                calendarDayText = if (inCurrentMonth) {
-                    TextWrapper.FromString(dayNumber.toString())
+            val cells = (0 until totalCells).map { index ->
+                val dayNumber = index - leadingBlanks + 1
+                val inCurrentMonth = dayNumber in 1..daysInMonth
+                val date = if (inCurrentMonth) {
+                    currentMonth.atDay(dayNumber)
                 } else {
                     null
-                },
-                fullDayText = date?.getFullDayText(),
-                isInCurrentMonth = inCurrentMonth,
-                isToday = date == today,
-                isInFuture = date?.isAfter(today) ?: false,
-                isInSmokeQuitPeriod = date?.isInSmokeQuitPeriod() ?: false,
-                noCigData = date?.toNoCigData(),
-                events = date?.let { localDate ->
-                    eventsFinders.map { it.findEventsForDate(localDate) }.flatten()
-                } ?: emptyList(),
-                maxDisplayableEvents = MAX_DISPLAYABLE_EVENTS,
+                }
+                DayCellUiModel(
+                    calendarDayText = if (inCurrentMonth) {
+                        TextWrapper.FromString(dayNumber.toString())
+                    } else {
+                        null
+                    },
+                    fullDayText = date?.getFullDayText(),
+                    isInCurrentMonth = inCurrentMonth,
+                    isToday = date == today,
+                    isInFuture = date?.isAfter(today) ?: false,
+                    isInSmokeQuitPeriod = date?.isInSmokeQuitPeriod() ?: false,
+                    noCigData = date?.toNoCigData(),
+                    events = date?.let { localDate ->
+                        eventsFinders.map { it.findEventsForDate(localDate) }.flatten()
+                    } ?: emptyList(),
+                    maxDisplayableEvents = MAX_DISPLAYABLE_EVENTS,
+                )
+            }
+
+            val weeks = cells.chunked(7)
+            return MonthDataUiModel(
+                monthTitle = title,
+                weeks = weeks,
             )
         }
-
-        val weeks = cells.chunked(7)
-        return MonthDataUiModel(
-            monthTitle = title,
-            weeks = weeks,
-        )
     }
 
     override suspend fun decrementMonth() {
-        currentMonth = currentMonth.minusMonths(1)
+        mutex.withLock {
+            currentMonth = currentMonth.minusMonths(1)
+        }
     }
 
     override suspend fun incrementMonth() {
-        currentMonth = currentMonth.plusMonths(1)
+        mutex.withLock {
+            currentMonth = currentMonth.plusMonths(1)
+        }
     }
 
     private suspend fun LocalDate?.toNoCigData(): DayCellUiModel.NoCigData? {
