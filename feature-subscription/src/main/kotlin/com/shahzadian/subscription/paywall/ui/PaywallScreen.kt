@@ -71,6 +71,10 @@ fun PaywallScreen(
         viewModel.viewCommandFlow.collect { command ->
             when (command) {
                 is PaywallViewCommand.NavigateBack -> navigator.navigateBack()
+                is PaywallViewCommand.NavigateTo -> navigator.navigateToRoute(
+                    route = command.screen.route,
+                    keepInStack = command.keepInStack,
+                )
             }
         }
     }

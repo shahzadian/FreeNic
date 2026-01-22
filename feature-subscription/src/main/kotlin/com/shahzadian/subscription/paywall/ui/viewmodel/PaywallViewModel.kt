@@ -7,6 +7,7 @@ import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.analytics.asAnalyticsProperty
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
@@ -85,7 +86,10 @@ internal class PaywallViewModel @Inject constructor(
                 when (event) {
                     is UserSubscriptionStatusChanged -> {
                         sendViewCommand(
-                            PaywallViewCommand.NavigateBack
+                            PaywallViewCommand.NavigateTo(
+                                screen = AppScreen.DashboardScreen,
+                                keepInStack = false,
+                            )
                         )
                     }
                 }
