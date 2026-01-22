@@ -46,7 +46,16 @@ internal fun LungsRecoveryChart(
             percents = uiModel.percents,
             modifier = Modifier.padding(bottom = 16.dp),
         )
-        LungsImageView()
+        HeartImageView(
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        Text(
+            text = stringResource(R.string.insights_lung_self_cleaning_subtitle),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+        )
     }
 }
 
@@ -72,7 +81,7 @@ private fun PercentsView(
 }
 
 @Composable
-private fun LungsImageView(
+private fun HeartImageView(
     modifier: Modifier = Modifier,
 ) {
     Image(

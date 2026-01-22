@@ -46,5 +46,9 @@ internal sealed interface InsightsViewState : ViewState {
         data class LungsRecoveryUiModel(
             val percents: Int,
         ) : ChartUiModel
+
+        data class HeartRecoveryUiModel(
+            val percents: Int,
+        ) : ChartUiModel
     }
 }

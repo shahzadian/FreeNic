@@ -41,6 +41,16 @@ sealed interface InsightChart {
         override val badge: InsightChartBadge,
         val currentPercents: Int,
     ) : InsightChart
+
+    class HeartRecoveryChart(
+        override val id: String,
+        override val achieveDateMillis: Long,
+        override val title: TextWrapper,
+        override val description: TextWrapper,
+        override val icon: ImageWrapper,
+        override val badge: InsightChartBadge,
+        val currentPercents: Int,
+    ) : InsightChart
 }
 
 sealed interface InsightChartBadge {

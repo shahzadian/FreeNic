@@ -536,5 +536,6 @@
     <string name="insight_chart_who">WHO</string>
     <string name="journey_calendar_event_insight_title">Achieved: %s</string>
     <string name="insights_lungs_recovery_title">Lungs recovery</string>
+    <string name="insights_heart_recovery_title">Circulation &amp; heart recovery</string>
 
 </resources>

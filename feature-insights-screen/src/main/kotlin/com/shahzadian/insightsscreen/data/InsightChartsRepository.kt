@@ -46,6 +46,15 @@ internal class InsightChartsRepositoryImpl(
                     currentPercents = recoveryCalculator.calculateLungSelfCleaningPercent(),
                     achieveDateMillis = recoveryCalculator.calculateLungSelfCleaningDateMillisForPercents(99),
                 ),
+                InsightChart.HeartRecoveryChart(
+                    id = "Circulation & heart recovery",
+                    title = TextWrapper.FromRes(R.string.insights_circulation_title),
+                    description = TextWrapper.FromRes(R.string.insights_circulation_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_heart_recovery),
+                    badge = InsightChartBadge.MedicalEvidence,
+                    currentPercents = recoveryCalculator.calculateCirculationHeartRecoveryPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateCancerRiskReductionDateMillisForPercents(99),
+                ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Oxygen & CO normalization",
                     title = TextWrapper.FromRes(R.string.insights_oxygen_title),
@@ -54,15 +63,6 @@ internal class InsightChartsRepositoryImpl(
                     badge = InsightChartBadge.MedicalEvidence,
                     percents = recoveryCalculator.calculateOxygenCoNormalizationPercent(),
                     achieveDateMillis = recoveryCalculator.calculateOxygenCoNormalizationDateMillisForPercents(99),
-                ),
-                InsightChart.TitleAndPercentsChart(
-                    id = "Circulation & heart recovery",
-                    title = TextWrapper.FromRes(R.string.insights_circulation_title),
-                    description = TextWrapper.FromRes(R.string.insights_circulation_subtitle),
-                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_heart_recovery),
-                    badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateCirculationHeartRecoveryPercent(),
-                    achieveDateMillis = recoveryCalculator.calculateCancerRiskReductionDateMillisForPercents(99),
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Blood pressure stabilization",

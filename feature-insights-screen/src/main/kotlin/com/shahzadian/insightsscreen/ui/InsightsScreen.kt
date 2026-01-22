@@ -22,6 +22,7 @@ import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.insightsscreen.ui.chart.ChartTabView
 import com.shahzadian.insightsscreen.ui.chart.DisclaimerView
+import com.shahzadian.insightsscreen.ui.chart.HeartRecoveryChart
 import com.shahzadian.insightsscreen.ui.chart.LungsRecoveryChart
 import com.shahzadian.insightsscreen.ui.chart.TitleAndPercentsChart
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewModel
@@ -152,6 +153,14 @@ private fun ChartsView(
                 }
                 is InsightsViewState.ChartUiModel.LungsRecoveryUiModel -> {
                     LungsRecoveryChart(
+                        uiModel = chart,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+                is InsightsViewState.ChartUiModel.HeartRecoveryUiModel -> {
+                    HeartRecoveryChart(
                         uiModel = chart,
                         modifier = Modifier
                             .fillMaxWidth()

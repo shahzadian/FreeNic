@@ -36,8 +36,15 @@ internal class InsightChartMapperImpl @Inject constructor() : InsightChartMapper
                     text = this.badge.text
                 )
             )
+
             is InsightChart.LungsRecoveryChart -> {
                 InsightsViewState.ChartUiModel.LungsRecoveryUiModel(
+                    percents = this.currentPercents,
+                )
+            }
+
+            is InsightChart.HeartRecoveryChart -> {
+                InsightsViewState.ChartUiModel.HeartRecoveryUiModel(
                     percents = this.currentPercents,
                 )
             }
