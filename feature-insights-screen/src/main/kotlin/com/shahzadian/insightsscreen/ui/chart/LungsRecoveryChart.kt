@@ -46,10 +46,7 @@ internal fun LungsRecoveryChart(
             percents = uiModel.percents,
             modifier = Modifier.padding(bottom = 16.dp),
         )
-        Image(
-            painter = painterResource(com.shahzadian.insightsscreen.R.drawable.ic_insight_lungs),
-            contentDescription = "Lungs recovery",
-        )
+        LungsImageView()
     }
 }
 
@@ -70,6 +67,17 @@ private fun PercentsView(
         text = "${animatable.value.toInt()}%",
         style = MaterialTheme.typography.headlineLarge,
         color = MaterialTheme.colorScheme.primary,
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun LungsImageView(
+    modifier: Modifier = Modifier,
+) {
+    Image(
+        painter = painterResource(com.shahzadian.insightsscreen.R.drawable.ic_insight_lungs),
+        contentDescription = "Lungs recovery",
         modifier = modifier,
     )
 }
