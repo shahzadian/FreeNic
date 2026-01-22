@@ -8,6 +8,7 @@ import kotlin.math.ln
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
+//TODO refactor class and algorithms
 internal class HealthRecoveryCalculatorImpl(
     private val userData: UserData,
     private val userDataHelper: UserDataHelper
@@ -29,6 +30,32 @@ internal class HealthRecoveryCalculatorImpl(
         return ageAdjusted(base, age, sensitivity = 0.15)
     }
 
+    override fun calculateOxygenCoNormalizationDateMillisForPercents(percents: Int): Long {
+        val points = listOf(
+            0 to 0.0,
+            1 to 75.0,
+            2 to 92.0,
+            3 to 100.0
+        )
+
+        val clampedTarget = percents.coerceIn(0, 100)
+
+        for (i in 0 until points.size - 1) {
+            val (day1, p1) = points[i]
+            val (day2, p2) = points[i + 1]
+
+            if (clampedTarget.toDouble() in p1..p2) {
+                val ratio = (clampedTarget - p1) / (p2 - p1)
+                val days = day1 + ratio * (day2 - day1)
+
+                return userData.quitData.quitDateMillis + (days * MILLIS_IN_DAY).toLong()
+            }
+        }
+
+        // если 100% — возвращаем 3-й день
+        return userData.quitData.quitDateMillis + 3L * MILLIS_IN_DAY
+    }
+
     override fun calculateCirculationHeartRecoveryPercent(): Int {
         val base = piecewisePercent(
             skippedDaysCount, listOf(
@@ -42,6 +69,35 @@ internal class HealthRecoveryCalculatorImpl(
             )
         )
         return ageAdjusted(base, age, sensitivity = 0.35)
+    }
+
+    override fun calculateCirculationHeartRecoveryDateMillisForPercents(percents: Int): Long {
+        val points = listOf(
+            0 to 0.0,
+            7 to 10.0,
+            30 to 22.0,
+            90 to 38.0,
+            365 to 65.0,
+            1825 to 90.0,
+            3650 to 100.0
+        )
+
+        val clampedTarget = percents.coerceIn(0, 100)
+
+        for (i in 0 until points.size - 1) {
+            val (day1, p1) = points[i]
+            val (day2, p2) = points[i + 1]
+
+            if (clampedTarget.toDouble() in p1..p2) {
+                val ratio = (clampedTarget - p1) / (p2 - p1)
+                val days = day1 + ratio * (day2 - day1)
+
+                return userData.quitData.quitDateMillis + (days * MILLIS_IN_DAY).toLong()
+            }
+        }
+
+        // Если 100% — возвращаем 3650-й день (10 лет)
+        return userData.quitData.quitDateMillis + 3650L * MILLIS_IN_DAY
     }
 
     override fun calculateLungSelfCleaningPercent(): Int {
@@ -60,6 +116,36 @@ internal class HealthRecoveryCalculatorImpl(
         return ageAdjusted(base, age, sensitivity = 0.45)
     }
 
+    override fun calculateLungSelfCleaningDateMillisForPercents(percents: Int): Long {
+        val points = listOf(
+            0 to 0.0,
+            14 to 8.0,
+            60 to 25.0,
+            180 to 55.0,
+            270 to 70.0,
+            365 to 82.0,
+            730 to 92.0,
+            1825 to 100.0
+        )
+
+        val clampedTarget = percents.coerceIn(0, 100)
+
+        for (i in 0 until points.size - 1) {
+            val (day1, p1) = points[i]
+            val (day2, p2) = points[i + 1]
+
+            if (clampedTarget.toDouble() in p1..p2) {
+                val ratio = (clampedTarget - p1) / (p2 - p1)
+                val days = day1 + ratio * (day2 - day1)
+
+                return userData.quitData.quitDateMillis + (days * MILLIS_IN_DAY).toLong()
+            }
+        }
+
+        // 100% — 1825 дней (~5 лет)
+        return userData.quitData.quitDateMillis + 1825L * MILLIS_IN_DAY
+    }
+
     override fun calculateLongTermRiskReductionPercent(): Int {
         val base = piecewisePercent(
             skippedDaysCount, listOf(
@@ -72,6 +158,34 @@ internal class HealthRecoveryCalculatorImpl(
             )
         )
         return ageAdjusted(base, age, sensitivity = 0.25)
+    }
+
+    override fun calculateLongTermRiskReductionDateMillisForPercents(percents: Int): Long {
+        val points = listOf(
+            0 to 0.0,
+            365 to 12.0,
+            1825 to 35.0,
+            3650 to 60.0,
+            5475 to 80.0,  // 15 years
+            7300 to 100.0  // 20 years
+        )
+
+        val clampedTarget = percents.coerceIn(0, 100)
+
+        for (i in 0 until points.size - 1) {
+            val (day1, p1) = points[i]
+            val (day2, p2) = points[i + 1]
+
+            if (clampedTarget.toDouble() in p1..p2) {
+                val ratio = (clampedTarget - p1) / (p2 - p1)
+                val days = day1 + ratio * (day2 - day1)
+
+                return userData.quitData.quitDateMillis + (days * MILLIS_IN_DAY).toLong()
+            }
+        }
+
+        // 100% — 7300 дней (~20 лет)
+        return userData.quitData.quitDateMillis + 7300L * MILLIS_IN_DAY
     }
 
     override fun calculateEnergyLevelPercent(): Int {
@@ -89,6 +203,34 @@ internal class HealthRecoveryCalculatorImpl(
         return ageAdjusted(base, age, sensitivity = 0.30)
     }
 
+    override fun calculateEnergyLevelDateMillisForPercents(percents: Int): Long {
+        val points = listOf(
+            0 to 0.0,
+            3 to 12.0,
+            14 to 35.0,
+            30 to 55.0,
+            90 to 78.0,
+            180 to 90.0,
+            365 to 100.0
+        )
+
+        val clampedTarget = percents.coerceIn(0, 100)
+        for (i in 0 until points.size - 1) {
+            val (day1, p1) = points[i]
+            val (day2, p2) = points[i + 1]
+
+            if (clampedTarget.toDouble() in p1..p2) {
+                val ratio = (clampedTarget - p1) / (p2 - p1)
+                val days = day1 + ratio * (day2 - day1)
+
+                return userData.quitData.quitDateMillis + (days * MILLIS_IN_DAY).toLong()
+            }
+        }
+
+        // если 100% — возвращаем последний день
+        return userData.quitData.quitDateMillis + 365L * MILLIS_IN_DAY
+    }
+
     override fun calculateBreathingComfortPercent(): Int {
         val base = piecewisePercent(
             skippedDaysCount, listOf(
@@ -104,6 +246,35 @@ internal class HealthRecoveryCalculatorImpl(
         return ageAdjusted(base, age, sensitivity = 0.40)
     }
 
+    override fun calculateBreathingComfortDateMillisForPercents(percents: Int): Long {
+        val points = listOf(
+            0 to 0.0,
+            7 to 10.0,
+            30 to 30.0,
+            90 to 55.0,
+            180 to 75.0,
+            365 to 92.0,
+            730 to 100.0
+        )
+
+        val clampedTarget = percents.coerceIn(0, 100)
+
+        for (i in 0 until points.size - 1) {
+            val (day1, p1) = points[i]
+            val (day2, p2) = points[i + 1]
+
+            if (clampedTarget.toDouble() in p1..p2) {
+                val ratio = (clampedTarget - p1) / (p2 - p1)
+                val days = day1 + ratio * (day2 - day1)
+
+                return userData.quitData.quitDateMillis + (days * MILLIS_IN_DAY).toLong()
+            }
+        }
+
+        // 100% — 730 дней (~2 года)
+        return userData.quitData.quitDateMillis + 730L * MILLIS_IN_DAY
+    }
+
     override fun calculatePhysicalEndurancePercent(): Int {
         val base = piecewisePercent(
             skippedDaysCount, listOf(
@@ -117,6 +288,35 @@ internal class HealthRecoveryCalculatorImpl(
             )
         )
         return ageAdjusted(base, age, sensitivity = 0.45)
+    }
+
+    override fun calculatePhysicalEnduranceDateMillisForPercents(percents: Int): Long {
+        val points = listOf(
+            0 to 0.0,
+            14 to 15.0,
+            30 to 32.0,
+            90 to 60.0,
+            180 to 78.0,
+            365 to 92.0,
+            730 to 100.0
+        )
+
+        val clampedTarget = percents.coerceIn(0, 100)
+
+        for (i in 0 until points.size - 1) {
+            val (day1, p1) = points[i]
+            val (day2, p2) = points[i + 1]
+
+            if (clampedTarget.toDouble() in p1..p2) {
+                val ratio = (clampedTarget - p1) / (p2 - p1)
+                val days = day1 + ratio * (day2 - day1)
+
+                return userData.quitData.quitDateMillis + (days * MILLIS_IN_DAY).toLong()
+            }
+        }
+
+        // 100% — 730 дней (~2 года)
+        return userData.quitData.quitDateMillis + 730L * MILLIS_IN_DAY
     }
 
     /**
@@ -947,5 +1147,9 @@ internal class HealthRecoveryCalculatorImpl(
 
     private fun getDaysSinceQuit(): Long {
         return (System.currentTimeMillis() - userData.quitData.quitDateMillis) / 86_400_000L
+    }
+
+    private companion object {
+        const val MILLIS_IN_DAY = 24L * 60 * 60 * 1000
     }
 }

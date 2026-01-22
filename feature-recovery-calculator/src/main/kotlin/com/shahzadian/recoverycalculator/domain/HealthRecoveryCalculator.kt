@@ -4,17 +4,31 @@ interface HealthRecoveryCalculator {
 
     fun calculateOxygenCoNormalizationPercent(): Int
 
+    fun calculateOxygenCoNormalizationDateMillisForPercents(percents: Int): Long
+
     fun calculateCirculationHeartRecoveryPercent(): Int
+
+    fun calculateCirculationHeartRecoveryDateMillisForPercents(percents: Int): Long
 
     fun calculateLungSelfCleaningPercent(): Int
 
+    fun calculateLungSelfCleaningDateMillisForPercents(percents: Int): Long
+
     fun calculateLongTermRiskReductionPercent(): Int
+
+    fun calculateLongTermRiskReductionDateMillisForPercents(percents: Int): Long
 
     fun calculateEnergyLevelPercent(): Int
 
+    fun calculateEnergyLevelDateMillisForPercents(percents: Int): Long
+
     fun calculateBreathingComfortPercent(): Int
 
+    fun calculateBreathingComfortDateMillisForPercents(percents: Int): Long
+
     fun calculatePhysicalEndurancePercent(): Int
+
+    fun calculatePhysicalEnduranceDateMillisForPercents(percents: Int): Long
 
     fun calculateMinutesRegained(): Long
 
