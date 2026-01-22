@@ -35,6 +35,7 @@ internal class ActivityEventHandlerFactoryImpl @Inject constructor(
                 coroutineScope = coroutineScope,
                 subscribeToPremiumUseCase = subscribeToPremiumUseCase,
                 refreshSubscriptionStatusUseCase = refreshSubscriptionStatusUseCase,
+                analyticsEventSender = analyticsEventSender,
             ),
             AppRateViewShowRequestHandler(
                 coroutineScope = coroutineScope,

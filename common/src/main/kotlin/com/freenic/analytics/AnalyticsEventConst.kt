@@ -47,9 +47,11 @@ object AnalyticsEventConst {
     const val ACHIEVEMENT_SHARE_TAP_PARAM_ACHIEVEMENT_ID: String = "achievement_id"
     const val ACHIEVEMENT_SHARE_TAP_PARAM_TEMPLATE_ID: String = "template_id"
 
-    const val PAYWALL_UPGRADE_TAP_PARAM_PLAN_ID: String = "template_id"
+    const val PAYWALL_UPGRADE_TAP_PARAM_PLAN_ID: String = "plan_id"
 
     const val APP_RATE_PARAM_STARS_COUNT: String = "stars_count"
+
+    const val SUBSCRIPTION_SUCCESS_PLAN_ID: String = "plan_id"
 
     const val SCREEN_VIEW: String = "screen_view"
     const val REGISTRATION_START: String = "registration_start"
@@ -89,4 +91,5 @@ object AnalyticsEventConst {
     const val APP_RATE_CONFIRMED: String = "app_rated"
     const val APP_RATE_NOT_NOW_TAP: String = "app_rate_not_now_tap"
     const val INSIGHTS_SUBSCRIBE_TAP: String = "insights_subscribe_tap"
+    const val SUBSCRIPTION_SUCCESS: String = "subscription_success"
 }
