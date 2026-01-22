@@ -20,17 +20,33 @@ interface HealthRecoveryCalculator {
 
     fun calculateBloodPressureStabilizationPercent(): Int
 
+    fun calculateBloodPressureDateMillisForPercents(percents: Int): Long
+
     fun calculateImmuneRecoveryPercent(): Int
+
+    fun calculateImmuneRecoveryDateMillisForPercents(percents: Int): Long
 
     fun calculateStressRegulationPercent(): Int
 
+    fun calculateStressRegulationDateMillisForPercents(percents: Int): Long
+
     fun calculateSleepQualityPercent(): Int
+
+    fun calculateSleepQualityDateMillisForPercents(percents: Int): Long
 
     fun calculateTasteAndSmellRecoveryPercent(): Int
 
+    fun calculateTasteAndSmellRecoveryDateMillisForPercents(percents: Int): Long
+
     fun calculateSkinImprovementPercent(): Int
+
+    fun calculateSkinImprovementDateMillisForPercents(percents: Int): Long
 
     fun calculateStrokeRiskReductionPercent(): Int
 
+    fun calculateStrokeRiskReductionDateMillisForPercents(percents: Int): Long
+
     fun calculateCancerRiskReductionPercent(): Int
+
+    fun calculateCancerRiskReductionDateMillisForPercents(percents: Int): Long
 }

@@ -14,11 +14,19 @@ class InsightChartsBlock(
 
 sealed interface InsightChart {
 
+    val id: String
+    val achieveDateMillis: Long
+    val title: TextWrapper
+    val description: TextWrapper
+    val icon: ImageWrapper
+
     class TitleAndPercentsChart(
-        val id: String,
-        val title: TextWrapper,
-        val description: TextWrapper,
-        val icon: ImageWrapper,
+        override val id: String,
+//        TODO
+        override val achieveDateMillis: Long,
+        override val title: TextWrapper,
+        override val description: TextWrapper,
+        override val icon: ImageWrapper,
         val badge: InsightChartBadge,
         val percents: Int,
     ) : InsightChart

@@ -4,7 +4,9 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.user.domain.UserDataHelper
 import com.shahzadian.user.model.UserData
 import kotlin.math.exp
+import kotlin.math.ln
 import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 internal class HealthRecoveryCalculatorImpl(
     private val userData: UserData,
@@ -166,6 +168,46 @@ internal class HealthRecoveryCalculatorImpl(
         // Safety clamp: percent must always stay inside 0..100.
     }
 
+    override fun calculateBloodPressureDateMillisForPercents(percents: Int): Long {
+        val targetPercentClamped = percents.coerceIn(1, 99)
+        // Ensure target percent is within a valid and meaningful range.
+
+        val targetProgress01 = targetPercentClamped / 100.0
+        // Convert percent (e.g. 85) to progress value (0.85).
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Get smoking-related recovery speed multiplier.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Get age-related recovery speed multiplier.
+
+        val effectiveDaysMultiplier = smokingLoadFactor * ageRecoveryFactor
+        // Combined multiplier used in the main recovery algorithm.
+
+        val timeConstantDays = 7.0
+        // Time constant for blood pressure recovery (must match main algorithm).
+
+        // Invert the exponential recovery function:
+        // progress = 1 - exp(-effectiveDays / timeConstantDays)
+        // effectiveDays = -timeConstantDays * ln(1 - progress)
+        val effectiveDaysRequired =
+            -timeConstantDays * ln(1.0 - targetProgress01)
+        // Calculate how many "effective days" are required to reach target progress.
+
+        val realDaysRequired =
+            effectiveDaysRequired / effectiveDaysMultiplier.coerceAtLeast(0.0001)
+        // Convert effective days back to real calendar days.
+
+        val millisPerDay = 86_400_000.0
+        // Number of milliseconds in one day.
+
+        val millisFromQuitToTarget =
+            (realDaysRequired * millisPerDay).roundToLong()
+        // Convert days to milliseconds.
+
+        return userData.quitData.quitDateMillis + millisFromQuitToTarget
+    }
+
     override fun calculateImmuneRecoveryPercent(): Int {
         val daysSinceQuitNonNegative = getDaysSinceQuit().coerceAtLeast(0)
         // Ensure time is not negative in case millisSinceQuit is negative.
@@ -216,6 +258,55 @@ internal class HealthRecoveryCalculatorImpl(
 
         return immuneRecoveryPercent.coerceIn(0, 100)
         // Ensure the output always stays in 0..100.
+    }
+
+    override fun calculateImmuneRecoveryDateMillisForPercents(percents: Int): Long {
+        val targetPercentClamped = percents.coerceIn(1, 99)
+        // Clamp to 1..99 to avoid infinite values near 0% and 100%.
+
+        val targetProgress01 = targetPercentClamped / 100.0
+        // Convert percent to 0..1 progress.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Smoking intensity multiplier (heavier smoking -> slower progress).
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Age multiplier (older -> slightly slower progress).
+
+        val effectiveDaysMultiplier = smokingLoadFactor * ageRecoveryFactor
+        // Combined multiplier for converting real days to effective days.
+
+        val midpointDays = 45.0
+        // Logistic midpoint: around this many effective days progress is ~50%.
+
+        val logisticSteepness = 0.06
+        // Logistic steepness: controls how fast the curve rises.
+
+        // Invert logistic:
+        // progress = 1 / (1 + exp(-k*(x - mid)))
+        // 1/progress - 1 = exp(-k*(x - mid))
+        // ln(1/progress - 1) = -k*(x - mid)
+        // x = mid - (1/k)*ln(1/progress - 1)
+        val effectiveDaysRequired =
+            midpointDays - (1.0 / logisticSteepness) * ln((1.0 / targetProgress01) - 1.0)
+        // Compute how many effective days are required to reach the target progress.
+
+        val effectiveDaysRequiredNonNegative = effectiveDaysRequired.coerceAtLeast(0.0)
+        // Ensure we never go negative (very low targets could mathematically imply < 0 days).
+
+        val realDaysRequired =
+            effectiveDaysRequiredNonNegative / effectiveDaysMultiplier.coerceAtLeast(0.0001)
+        // Convert effective days back to real calendar days.
+
+        val millisPerDay = 86_400_000.0
+        // Milliseconds in one day.
+
+        val millisFromQuitToTarget =
+            (realDaysRequired * millisPerDay).roundToLong()
+        // Convert required days to milliseconds.
+
+        return userData.quitData.quitDateMillis + millisFromQuitToTarget
+        // Return the absolute date in epoch millis.
     }
 
     override fun calculateStressRegulationPercent(): Int {
@@ -270,6 +361,50 @@ internal class HealthRecoveryCalculatorImpl(
         // Final safety clamp to keep output in valid percent range.
     }
 
+    override fun calculateStressRegulationDateMillisForPercents(percents: Int): Long {
+        val targetPercentClamped = percents.coerceIn(1, 99)
+        // Clamp to 1..99 to avoid infinities near 0% and 100%.
+
+        val targetProgress01 = targetPercentClamped / 100.0
+        // Convert percent to 0..1 progress.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Smoking intensity multiplier (affects adaptation speed).
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Age multiplier (gentle effect).
+
+        val effectiveDaysMultiplier = smokingLoadFactor * ageRecoveryFactor
+        // Combined multiplier used in the percent algorithm.
+
+        val midpointDays = 28.0
+        // Must match your stress regulation percent model (50% around ~4 weeks).
+
+        val logisticSteepness = 0.08
+        // Must match your stress regulation percent model.
+
+        val effectiveDaysRequired =
+            midpointDays - (1.0 / logisticSteepness) * ln((1.0 / targetProgress01) - 1.0)
+        // Invert logistic curve to compute required effective days.
+
+        val effectiveDaysRequiredNonNegative = effectiveDaysRequired.coerceAtLeast(0.0)
+        // Ensure non-negative (very low targets could mathematically imply <0 days).
+
+        val realDaysRequired =
+            effectiveDaysRequiredNonNegative / effectiveDaysMultiplier.coerceAtLeast(0.0001)
+        // Convert effective days back to real calendar days.
+
+        val millisPerDay = 86_400_000.0
+        // Milliseconds in one day.
+
+        val millisFromQuitToTarget =
+            (realDaysRequired * millisPerDay).roundToLong()
+        // Convert required days to milliseconds since quit.
+
+        return userData.quitData.quitDateMillis + millisFromQuitToTarget
+        // Return absolute target date in epoch millis.
+    }
+
     override fun calculateSleepQualityPercent(): Int {
         val daysSinceQuit = getDaysSinceQuit()
         // Convert milliseconds since quit to days using your existing helper.
@@ -321,6 +456,44 @@ internal class HealthRecoveryCalculatorImpl(
         // Final safety clamp to ensure valid percent output.
     }
 
+    override fun calculateSleepQualityDateMillisForPercents(percents: Int): Long {
+        val targetPercentClamped = percents.coerceIn(1, 99)
+        // Clamp to 1..99 because 100% is unreachable for an exponential curve.
+
+        val targetProgress01 = targetPercentClamped / 100.0
+        // Convert percent to 0..1 progress.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Smoking intensity multiplier.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Age multiplier.
+
+        val effectiveDaysMultiplier = smokingLoadFactor * ageRecoveryFactor
+        // Combined multiplier used in your percent algorithm.
+
+        val timeConstantDays = 10.0
+        // Must match your sleep percent algorithm (the tau you used there).
+
+        val effectiveDaysRequired =
+            -timeConstantDays * ln(1.0 - targetProgress01)
+        // Invert the exponential curve to get required effective days for target progress.
+
+        val realDaysRequired =
+            effectiveDaysRequired / effectiveDaysMultiplier.coerceAtLeast(0.0001)
+        // Convert effective days back to real days using the same multipliers.
+
+        val millisPerDay = 86_400_000.0
+        // Milliseconds in one day.
+
+        val millisFromQuitToTarget =
+            (realDaysRequired * millisPerDay).roundToLong()
+        // Convert required days to milliseconds since quit.
+
+        return userData.quitData.quitDateMillis + millisFromQuitToTarget
+        // Return absolute target date in epoch millis.
+    }
+
     override fun calculateTasteAndSmellRecoveryPercent(): Int {
         val daysSinceQuit = getDaysSinceQuit()
         // Convert milliseconds since quit to days using your helper.
@@ -369,6 +542,44 @@ internal class HealthRecoveryCalculatorImpl(
         // Final clamp to keep output within valid percent range.
     }
 
+    override fun calculateTasteAndSmellRecoveryDateMillisForPercents(percents: Int): Long {
+        val targetPercentClamped = percents.coerceIn(1, 99)
+        // Clamp to 1..99 because exponential curves never reach 100% exactly.
+
+        val targetProgress01 = targetPercentClamped / 100.0
+        // Convert percent to 0..1 progress.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Smoking intensity multiplier.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Age multiplier.
+
+        val effectiveDaysMultiplier = smokingLoadFactor * ageRecoveryFactor
+        // Combined multiplier used in the percent algorithm.
+
+        val timeConstantDays = 3.0
+        // Must match your taste & smell percent algorithm.
+
+        val effectiveDaysRequired =
+            -timeConstantDays * ln(1.0 - targetProgress01)
+        // Invert the exponential model to find required effective days.
+
+        val realDaysRequired =
+            effectiveDaysRequired / effectiveDaysMultiplier.coerceAtLeast(0.0001)
+        // Convert effective days back to real days.
+
+        val millisPerDay = 86_400_000.0
+        // Milliseconds in one day.
+
+        val millisFromQuitToTarget =
+            (realDaysRequired * millisPerDay).roundToLong()
+        // Convert required days to milliseconds since quit.
+
+        return userData.quitData.quitDateMillis + millisFromQuitToTarget
+        // Return absolute target date in epoch millis.
+    }
+
     override fun calculateSkinImprovementPercent(): Int {
         val daysSinceQuit = getDaysSinceQuit()
         // Convert milliseconds since quit to days using your helper.
@@ -405,6 +616,44 @@ internal class HealthRecoveryCalculatorImpl(
 
         return percentNotMoreThanNinetyNine.coerceIn(0, 99)
         // Final safety clamp to keep output in 0..99.
+    }
+
+    override fun calculateSkinImprovementDateMillisForPercents(percents: Int): Long {
+        val targetPercentClamped = percents.coerceIn(1, 99)
+        // Clamp to 1..99 because exponential curves never reach 100% exactly.
+
+        val targetProgress01 = targetPercentClamped / 100.0
+        // Convert percent to 0..1 progress.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Smoking intensity multiplier (heavier smoking -> slower improvement).
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Age multiplier (older -> slower improvement).
+
+        val effectiveDaysMultiplier = smokingLoadFactor * ageRecoveryFactor
+        // Combined multiplier used in the percent algorithm.
+
+        val timeConstantDays = 60.0
+        // Must match your skin improvement percent algorithm.
+
+        val effectiveDaysRequired =
+            -timeConstantDays * ln(1.0 - targetProgress01)
+        // Invert exponential model to get required effective days for target progress.
+
+        val realDaysRequired =
+            effectiveDaysRequired / effectiveDaysMultiplier.coerceAtLeast(0.0001)
+        // Convert effective days back to real days.
+
+        val millisPerDay = 86_400_000.0
+        // Milliseconds in one day.
+
+        val millisFromQuitToTarget =
+            (realDaysRequired * millisPerDay).roundToLong()
+        // Convert required days to milliseconds since quit.
+
+        return userData.quitData.quitDateMillis + millisFromQuitToTarget
+        // Return absolute target date in epoch millis.
     }
 
     override fun calculateStrokeRiskReductionPercent(): Int {
@@ -452,6 +701,50 @@ internal class HealthRecoveryCalculatorImpl(
 
         return percentNotMoreThanNinetyNine.coerceIn(0, 99)
         // Final clamp to keep output within 0..99.
+    }
+
+    override fun calculateStrokeRiskReductionDateMillisForPercents(percents: Int): Long {
+        val targetPercentClamped = percents.coerceIn(1, 99)
+        // Clamp to 1..99 because exponential curves never reach 100% exactly.
+
+        val targetProgress01 = targetPercentClamped / 100.0
+        // Convert percent to 0..1 progress.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Smoking intensity multiplier.
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Age multiplier.
+
+        val effectiveDaysMultiplier = smokingLoadFactor * ageRecoveryFactor
+        // Combined multiplier used in the percent algorithm.
+
+        val daysInYear = 365.25
+        // Average year length used for conversion.
+
+        val timeConstantYears = 1.8
+        // Must match your stroke risk reduction percent algorithm.
+
+        val timeConstantDays = timeConstantYears * daysInYear
+        // Convert time constant from years to days for the exponential inversion.
+
+        val effectiveDaysRequired =
+            -timeConstantDays * ln(1.0 - targetProgress01)
+        // Invert exponential model to compute required effective days.
+
+        val realDaysRequired =
+            effectiveDaysRequired / effectiveDaysMultiplier.coerceAtLeast(0.0001)
+        // Convert effective days back to real calendar days.
+
+        val millisPerDay = 86_400_000.0
+        // Milliseconds in one day.
+
+        val millisFromQuitToTarget =
+            (realDaysRequired * millisPerDay).roundToLong()
+        // Convert required days to milliseconds since quit.
+
+        return userData.quitData.quitDateMillis + millisFromQuitToTarget
+        // Return absolute target date in epoch millis.
     }
 
     override fun calculateCancerRiskReductionPercent(): Int {
@@ -502,6 +795,50 @@ internal class HealthRecoveryCalculatorImpl(
 
         return percentNotMoreThanNinetyNine.coerceIn(0, 99)
         // Final safety clamp.
+    }
+
+    override fun calculateCancerRiskReductionDateMillisForPercents(percents: Int): Long {
+        val targetPercentClamped = percents.coerceIn(1, 99)
+        // Clamp to 1..99 because exponential curves never reach 100% exactly.
+
+        val targetProgress01 = targetPercentClamped / 100.0
+        // Convert percent to 0..1 progress.
+
+        val smokingLoadFactor = calculateSmokingLoadFactor(userData.cigarettesData.cigarettesPerDay)
+        // Smoking intensity multiplier (important for cancer-related progress speed).
+
+        val ageRecoveryFactor = calculateAgeRecoveryFactor(userData.personalData.age)
+        // Age multiplier (gentle effect).
+
+        val effectiveDaysMultiplier = smokingLoadFactor * ageRecoveryFactor
+        // Combined multiplier used in the percent algorithm.
+
+        val daysInYear = 365.25
+        // Average year length used for conversion.
+
+        val timeConstantYears = 3.5
+        // Must match your cancer risk reduction percent algorithm.
+
+        val timeConstantDays = timeConstantYears * daysInYear
+        // Convert time constant from years to days.
+
+        val effectiveDaysRequired =
+            -timeConstantDays * ln(1.0 - targetProgress01)
+        // Invert exponential model to compute required effective days.
+
+        val realDaysRequired =
+            effectiveDaysRequired / effectiveDaysMultiplier.coerceAtLeast(0.0001)
+        // Convert effective days back to real calendar days.
+
+        val millisPerDay = 86_400_000.0
+        // Milliseconds in one day.
+
+        val millisFromQuitToTarget =
+            (realDaysRequired * millisPerDay).roundToLong()
+        // Convert required days to milliseconds since quit.
+
+        return userData.quitData.quitDateMillis + millisFromQuitToTarget
+        // Return absolute target date in epoch millis.
     }
 
     private fun piecewisePercent(days: Int, milestones: List<Pair<Int, Double>>): Double {

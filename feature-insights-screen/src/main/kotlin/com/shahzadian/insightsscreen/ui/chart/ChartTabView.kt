@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
@@ -33,7 +34,8 @@ internal fun ChartTabView(
                     MaterialTheme.colorScheme.primaryContainer
                 },
                 shape = MaterialTheme.shapes.small
-            ),
+            )
+            .padding(horizontal = 4.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
@@ -46,18 +48,20 @@ internal fun ChartTabView(
                 } else {
                     MaterialTheme.colorScheme.onPrimaryContainer
                 }
-            )
+            ),
+            modifier = Modifier.padding(end = 4.dp)
         )
         Text(
             text = textFromWrapper(title),
-            modifier = Modifier
-                .padding(8.dp),
+            modifier = Modifier,
             style = MaterialTheme.typography.titleMedium,
             color = if (isSelected) {
                 MaterialTheme.colorScheme.onPrimary
             } else {
                 MaterialTheme.colorScheme.onPrimaryContainer
             },
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }

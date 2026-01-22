@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -77,7 +78,9 @@ internal fun DayCellView(
                     Image(
                         painter = imageFromWrapper(model.icon),
                         contentDescription = "Event ${index + 1}",
-                        modifier = Modifier.padding(bottom = if (index < cell.events.lastIndex) 2.dp else 0.dp)
+                        modifier = Modifier
+                            .size(15.dp)
+                            .padding(bottom = if (index < cell.events.lastIndex) 2.dp else 0.dp)
                     )
                 }
         }

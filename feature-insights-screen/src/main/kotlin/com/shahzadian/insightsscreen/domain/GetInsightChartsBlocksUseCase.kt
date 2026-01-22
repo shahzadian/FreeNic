@@ -4,7 +4,7 @@ import com.shahzadian.insightsscreen.data.InsightChartsRepository
 import com.shahzadian.recoverycalculator.domain.factory.HealthRecoveryCalculatorFactory
 import javax.inject.Inject
 
-internal interface GetInsightChartsBlocksUseCase {
+interface GetInsightChartsBlocksUseCase {
 
     suspend operator fun invoke(): List<InsightChartsBlock>
 }

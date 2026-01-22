@@ -45,7 +45,8 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_oxygen_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_oxygen),
                     badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateOxygenCoNormalizationPercent()
+                    percents = recoveryCalculator.calculateOxygenCoNormalizationPercent(),
+                    achieveDateMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 10,
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Circulation & heart recovery",
@@ -53,7 +54,8 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_circulation_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_heart_recovery),
                     badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateCirculationHeartRecoveryPercent()
+                    percents = recoveryCalculator.calculateCirculationHeartRecoveryPercent(),
+                    achieveDateMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 11,
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Lung self-cleaning",
@@ -61,7 +63,8 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_lung_self_cleaning_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_chart_lung_self_cleaning),
                     badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateLungSelfCleaningPercent()
+                    percents = recoveryCalculator.calculateLungSelfCleaningPercent(),
+                    achieveDateMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 12,
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Blood pressure stabilization",
@@ -69,7 +72,10 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_blood_pressure_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_blood_pressure),
                     badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateBloodPressureStabilizationPercent()
+                    percents = recoveryCalculator.calculateBloodPressureStabilizationPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateBloodPressureDateMillisForPercents(
+                        99
+                    ),
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Immune system recovery",
@@ -77,7 +83,10 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_immune_recovery_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_immune_recovery),
                     badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateImmuneRecoveryPercent()
+                    percents = recoveryCalculator.calculateImmuneRecoveryPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateImmuneRecoveryDateMillisForPercents(
+                        99
+                    ),
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Sleep quality improvement",
@@ -85,7 +94,10 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_sleep_quality_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_sleep_quality),
                     badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateSleepQualityPercent()
+                    percents = recoveryCalculator.calculateSleepQualityPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateSleepQualityDateMillisForPercents(
+                        99
+                    ),
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Taste and smell recovery",
@@ -93,7 +105,10 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_taste_and_smell_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_smell_recovery),
                     badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateTasteAndSmellRecoveryPercent()
+                    percents = recoveryCalculator.calculateTasteAndSmellRecoveryPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateSleepQualityDateMillisForPercents(
+                        99
+                    ),
                 )
             )
         )
@@ -112,6 +127,7 @@ internal class InsightChartsRepositoryImpl(
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_energy_level),
                     badge = InsightChartBadge.Estimated,
                     percents = recoveryCalculator.calculateEnergyLevelPercent(),
+                    achieveDateMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 17,
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Breathing comfort",
@@ -120,6 +136,7 @@ internal class InsightChartsRepositoryImpl(
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_breathing_comfort),
                     badge = InsightChartBadge.Estimated,
                     percents = recoveryCalculator.calculateBreathingComfortPercent(),
+                    achieveDateMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 18,
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Physical endurance",
@@ -128,6 +145,7 @@ internal class InsightChartsRepositoryImpl(
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_endurance),
                     badge = InsightChartBadge.Estimated,
                     percents = recoveryCalculator.calculatePhysicalEndurancePercent(),
+                    achieveDateMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 19,
                 )
             )
         )
@@ -145,7 +163,10 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_stress_regulation_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_stress_regulation),
                     badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateStressRegulationPercent()
+                    percents = recoveryCalculator.calculateStressRegulationPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateStressRegulationDateMillisForPercents(
+                        99
+                    ),
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Skin improvement",
@@ -153,7 +174,10 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_skin_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_skin_improvement),
                     badge = InsightChartBadge.Estimated,
-                    percents = recoveryCalculator.calculateSkinImprovementPercent()
+                    percents = recoveryCalculator.calculateSkinImprovementPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateSkinImprovementDateMillisForPercents(
+                        99
+                    ),
                 )
             )
         )
@@ -171,7 +195,8 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_stroke_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_stroke),
                     badge = InsightChartBadge.Who,
-                    percents = recoveryCalculator.calculateStrokeRiskReductionPercent()
+                    percents = recoveryCalculator.calculateStrokeRiskReductionPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateStrokeRiskReductionDateMillisForPercents(99),
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Cancer risk reduction",
@@ -179,7 +204,8 @@ internal class InsightChartsRepositoryImpl(
                     description = TextWrapper.FromRes(R.string.insights_cancer_subtitle),
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_cancer),
                     badge = InsightChartBadge.Who,
-                    percents = recoveryCalculator.calculateCancerRiskReductionPercent()
+                    percents = recoveryCalculator.calculateCancerRiskReductionPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateCancerRiskReductionDateMillisForPercents(99),
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Long-term risk reduction",
@@ -188,6 +214,7 @@ internal class InsightChartsRepositoryImpl(
                     icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_long_term_risk_reduction),
                     badge = InsightChartBadge.Who,
                     percents = recoveryCalculator.calculateLongTermRiskReductionPercent(),
+                    achieveDateMillis = System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 21,
                 )
             )
         )

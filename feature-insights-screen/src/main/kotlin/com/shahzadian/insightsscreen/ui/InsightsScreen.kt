@@ -15,9 +15,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
-import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.insightsscreen.ui.chart.ChartTabView
@@ -28,6 +28,7 @@ import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState
 
 @Composable
 fun InsightsScreen(
+    navController: NavController,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: InsightsViewModel = hiltViewModel()
@@ -42,8 +43,10 @@ fun InsightsScreen(
         is InsightsViewState.Data -> {
             HeaderScreen(
                 title = TextWrapper.FromRes(R.string.insights_header_title),
-                subtitle = TextWrapper.FromRes(R.string.insights_header_subtitle),
-                icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_header),
+                hasBackIcon = true,
+                onBackIconClicked = {
+                    navController.popBackStack()
+                },
                 modifier = modifier,
             ) {
                 ContentView(
