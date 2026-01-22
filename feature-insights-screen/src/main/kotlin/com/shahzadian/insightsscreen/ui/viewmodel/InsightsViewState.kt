@@ -41,5 +41,10 @@ internal sealed interface InsightsViewState : ViewState {
                 val text: TextWrapper,
             )
         }
+
+        @Immutable
+        data class LungsRecoveryUiModel(
+            val percents: Int,
+        ) : ChartUiModel
     }
 }

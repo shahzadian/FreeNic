@@ -37,6 +37,15 @@ internal class InsightChartsRepositoryImpl(
             title = TextWrapper.FromRes(R.string.insights_chart_medical),
             icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_tab_medical),
             charts = listOf(
+                InsightChart.LungsRecoveryChart(
+                    id = "Lung self-cleaning",
+                    title = TextWrapper.FromRes(R.string.insights_lung_self_cleaning_title),
+                    description = TextWrapper.FromRes(R.string.insights_lung_self_cleaning_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_chart_lung_self_cleaning),
+                    badge = InsightChartBadge.MedicalEvidence,
+                    currentPercents = recoveryCalculator.calculateLungSelfCleaningPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateLungSelfCleaningDateMillisForPercents(99),
+                ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Oxygen & CO normalization",
                     title = TextWrapper.FromRes(R.string.insights_oxygen_title),
@@ -54,15 +63,6 @@ internal class InsightChartsRepositoryImpl(
                     badge = InsightChartBadge.MedicalEvidence,
                     percents = recoveryCalculator.calculateCirculationHeartRecoveryPercent(),
                     achieveDateMillis = recoveryCalculator.calculateCancerRiskReductionDateMillisForPercents(99),
-                ),
-                InsightChart.TitleAndPercentsChart(
-                    id = "Lung self-cleaning",
-                    title = TextWrapper.FromRes(R.string.insights_lung_self_cleaning_title),
-                    description = TextWrapper.FromRes(R.string.insights_lung_self_cleaning_subtitle),
-                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_chart_lung_self_cleaning),
-                    badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateLungSelfCleaningPercent(),
-                    achieveDateMillis = recoveryCalculator.calculateLungSelfCleaningDateMillisForPercents(99),
                 ),
                 InsightChart.TitleAndPercentsChart(
                     id = "Blood pressure stabilization",

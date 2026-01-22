@@ -19,6 +19,7 @@ sealed interface InsightChart {
     val title: TextWrapper
     val description: TextWrapper
     val icon: ImageWrapper
+    val badge: InsightChartBadge
 
     class TitleAndPercentsChart(
         override val id: String,
@@ -27,8 +28,18 @@ sealed interface InsightChart {
         override val title: TextWrapper,
         override val description: TextWrapper,
         override val icon: ImageWrapper,
-        val badge: InsightChartBadge,
+        override val badge: InsightChartBadge,
         val percents: Int,
+    ) : InsightChart
+
+    class LungsRecoveryChart(
+        override val id: String,
+        override val achieveDateMillis: Long,
+        override val title: TextWrapper,
+        override val description: TextWrapper,
+        override val icon: ImageWrapper,
+        override val badge: InsightChartBadge,
+        val currentPercents: Int,
     ) : InsightChart
 }
 

@@ -528,5 +528,6 @@
     <string name="insight_chart_block_estimated">Расчетное</string>
     <string name="insight_chart_who">ВОЗ</string>
     <string name="journey_calendar_event_insight_title">Достигнуто: %s</string>
+    <string name="insights_lungs_recovery_title">Восстановление легких</string>
 
 </resources>
