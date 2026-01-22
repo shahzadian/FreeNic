@@ -88,4 +88,5 @@ object AnalyticsEventConst {
     const val MANAGE_SUBSCRIPTION_CANCEL_TAP: String = "manage_subscription_cancel_tap"
     const val APP_RATE_CONFIRMED: String = "app_rated"
     const val APP_RATE_NOT_NOW_TAP: String = "app_rate_not_now_tap"
+    const val INSIGHTS_SUBSCRIBE_TAP: String = "insights_subscribe_tap"
 }

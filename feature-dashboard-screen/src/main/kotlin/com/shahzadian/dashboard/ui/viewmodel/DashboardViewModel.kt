@@ -131,14 +131,9 @@ internal class DashboardViewModel @Inject constructor(
                     name = AnalyticsEventConst.DASHBOARD_DETAILED_INSIGHTS_TAP,
                 )
             )
-            val screen = if (hasUserPaidSubscription()) {
-                AppScreen.InsightsScreen
-            } else {
-                AppScreen.PaywallScreen
-            }
             sendViewCommand(
                 DashboardViewCommand.NavigateTo(
-                    screen = screen,
+                    screen = AppScreen.InsightsScreen,
                 )
             )
         }

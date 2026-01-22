@@ -322,7 +322,7 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) { _ ->
                 InsightsScreen(
-                    navController = navController,
+                    navigator = appNavigator,
                     modifier = BaseModifier,
                 )
             }

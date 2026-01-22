@@ -13,6 +13,7 @@ internal sealed interface InsightsViewState : ViewState {
 
     @Immutable
     data class Data(
+        val hasPaidSubscription: Boolean,
         val chartBlocks: List<ChartBlockUiModel>,
         val selectedBlockId: String,
     ) : InsightsViewState

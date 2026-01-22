@@ -35,10 +35,10 @@ internal fun CalendarPreviewView(
 ) {
     val subscribeClick = remember { { onSubscribeClicked() } }
     Box(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier,
     ) {
         Column(
-            modifier = modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             HeaderView(

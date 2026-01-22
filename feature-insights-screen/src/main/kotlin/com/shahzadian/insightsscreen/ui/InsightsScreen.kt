@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,9 +18,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
+import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
-import com.freenic.ui.extensions.HeaderScreen
+import com.freenic.ui.extensions.MainToolbarView
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.insightsscreen.ui.chart.ChartTabView
@@ -25,12 +28,14 @@ import com.shahzadian.insightsscreen.ui.chart.DisclaimerView
 import com.shahzadian.insightsscreen.ui.chart.HeartRecoveryChart
 import com.shahzadian.insightsscreen.ui.chart.LungsRecoveryChart
 import com.shahzadian.insightsscreen.ui.chart.TitleAndPercentsChart
+import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewCommand
+import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewEvent
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewModel
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState
 
 @Composable
 fun InsightsScreen(
-    navController: NavController,
+    navigator: AppNavigator,
     modifier: Modifier = Modifier,
 ) {
     val viewModel: InsightsViewModel = hiltViewModel()
@@ -43,20 +48,23 @@ fun InsightsScreen(
         }
 
         is InsightsViewState.Data -> {
-            HeaderScreen(
-                title = TextWrapper.FromRes(R.string.insights_header_title),
-                hasBackIcon = true,
-                onBackIconClicked = {
-                    navController.popBackStack()
-                },
-                modifier = modifier,
-            ) {
-                ContentView(
-                    data = (state as InsightsViewState.Data),
-                    modifier = modifier.fillMaxSize(),
-                )
-            }
+            ContentView(
+                data = (state as InsightsViewState.Data),
+                onEvent = viewModel::onViewEvent,
+                modifier = modifier.fillMaxSize(),
+            )
         }
+    }
+
+    LaunchedEffect(viewModel.viewCommandFlow) {
+        viewModel
+            .viewCommandFlow
+            .collect { command ->
+                when (command) {
+                    is InsightsViewCommand.NavigateTo -> navigator.navigateToScreen(command.screen)
+                    is InsightsViewCommand.NavigateBack -> navigator.navigateBack()
+                }
+            }
     }
 
 }
@@ -64,30 +72,51 @@ fun InsightsScreen(
 @Composable
 private fun ContentView(
     data: InsightsViewState.Data,
+    onEvent: (InsightsViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var selectedChartTabId by remember { mutableStateOf(data.selectedBlockId) }
     Column(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize().padding(16.dp),
     ) {
-        ChartBlockTabsView(
-            blocks = data.chartBlocks,
-            selectedBlockId = data.selectedBlockId,
-            onChartSelected = { id ->
-                selectedChartTabId = id
-            },
-            modifier = Modifier.padding(bottom = 16.dp)
+        val backIconClick = remember { { onEvent(InsightsViewEvent.OnBackIconClicked) } }
+        MainToolbarView(
+            title = TextWrapper.FromRes(R.string.insights_header_title),
+            hasBackIcon = true,
+            onBackIconClicked = backIconClick,
+            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
         )
-        ChartsView(
-            charts = data.chartBlocks.firstOrNull { it.id == selectedChartTabId }?.charts
-                ?: throw IllegalStateException("No charts found for selected block id: $selectedChartTabId"),
-            modifier = Modifier.padding(bottom = 16.dp),
-        )
-        DisclaimerView(
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
+        if (!data.hasPaidSubscription) {
+            val subscribeClick = remember { { onEvent(InsightsViewEvent.OnSubscribeClicked) } }
+            InsightsPreviewView(
+                onSubscribeClicked = subscribeClick,
+                modifier = Modifier.fillMaxSize()
+            )
+            return
+        }
+        var selectedChartTabId by remember { mutableStateOf(data.selectedBlockId) }
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            ChartBlockTabsView(
+                blocks = data.chartBlocks,
+                selectedBlockId = data.selectedBlockId,
+                onChartSelected = { id ->
+                    selectedChartTabId = id
+                },
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+            ChartsView(
+                charts = data.chartBlocks.firstOrNull { it.id == selectedChartTabId }?.charts
+                    ?: throw IllegalStateException("No charts found for selected block id: $selectedChartTabId"),
+                modifier = Modifier.padding(bottom = 16.dp),
+            )
+            DisclaimerView(
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+        }
     }
-
 }
 
 @Composable
@@ -151,6 +180,7 @@ private fun ChartsView(
                             .padding(bottom = 8.dp)
                     )
                 }
+
                 is InsightsViewState.ChartUiModel.LungsRecoveryUiModel -> {
                     LungsRecoveryChart(
                         uiModel = chart,
@@ -159,6 +189,7 @@ private fun ChartsView(
                             .padding(bottom = 8.dp),
                     )
                 }
+
                 is InsightsViewState.ChartUiModel.HeartRecoveryUiModel -> {
                     HeartRecoveryChart(
                         uiModel = chart,

@@ -2,7 +2,6 @@ package com.shahzadian.dashboard.ui
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -20,7 +19,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -176,12 +174,6 @@ private fun DetailsView(
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier
                 .padding(end = 4.dp),
-        )
-        Image(
-            painter = painterResource(R.drawable.ic_premium),
-            contentDescription = "premium",
-            modifier = Modifier
-                .padding(start = 4.dp),
         )
     }
 }
