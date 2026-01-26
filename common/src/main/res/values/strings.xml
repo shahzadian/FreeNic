@@ -541,5 +541,13 @@
     <string name="profile_terms">Terms of service</string>
     <string name="paywall_subscription_terms">Subscription terms</string>
     <string name="push_achievement_title">New achievement!</string>
+    <string name="push_default_title">Stay on track</string>
+    <string name="push_default_subtitle">Enable notifications to receive gentle reminders, track your progress, and stay motivated</string>
+    <string name="push_default_submit">Enable</string>
+    <string name="push_default_cancel">Not now</string>
+    <string name="push_soft_ask_title">Want reminders?</string>
+    <string name="push_soft_ask_subtitle">Notifications can help you stay consistent and remind you of your progress when it matters</string>
+    <string name="push_soft_ask_submit">Enable</string>
+    <string name="push_soft_ask_cancel">No thanks</string>
 
 </resources>

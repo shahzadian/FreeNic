@@ -220,6 +220,7 @@ internal class MainActivity : ComponentActivity() {
                     appRateShowCommandFlow.emit(command)
                 }
             }
+
             is ActivityCommand.OpenUrl -> {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(command.url))
                 startActivity(intent)

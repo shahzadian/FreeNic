@@ -534,5 +534,13 @@
     <string name="profile_terms">Условия использования</string>
     <string name="paywall_subscription_terms">Условия подписки</string>
     <string name="push_achievement_title">Новое достижение!</string>
+    <string name="push_default_title">Оставайтесь на пути</string>
+    <string name="push_default_subtitle">Включите уведомления, чтобы получать мягкие напоминания, отслеживать прогресс и сохранять мотивацию</string>
+    <string name="push_default_submit">Включить</string>
+    <string name="push_default_cancel">Не сейчас</string>
+    <string name="push_soft_ask_title">Хотите напоминания?</string>
+    <string name="push_soft_ask_subtitle">Уведомления могут помочь вам сохранять регулярность и напоминать о прогрессе, когда это важно</string>
+    <string name="push_soft_ask_submit">Включить</string>
+    <string name="push_soft_ask_cancel">Нет, спасибо</string>
 
 </resources>

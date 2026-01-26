@@ -2,6 +2,7 @@ package com.shahzadian.push.startup
 
 import android.content.Context
 import androidx.startup.Initializer
+import androidx.work.WorkManagerInitializer
 import com.shahzadian.push.scheduler.PushScheduler
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -18,7 +19,8 @@ class PushInitializer : Initializer<Unit> {
         entryPoint.pushScheduler().scheduleDaily(context)
     }
 
-    override fun dependencies(): MutableList<Class<out Initializer<*>>> = mutableListOf()
+    override fun dependencies(): MutableList<Class<out Initializer<*>>> =
+        mutableListOf(WorkManagerInitializer::class.java)
 }
 
 @EntryPoint
