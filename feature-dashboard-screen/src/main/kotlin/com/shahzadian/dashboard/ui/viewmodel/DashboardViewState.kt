@@ -14,6 +14,7 @@ internal sealed interface DashboardViewState : ViewState {
     data class Data(
         val analyticsData: DashboardAnalyticsUiModel,
         val motivationalNote: MotivationalNoteUiModel,
+        val shouldShowDailyCheckIn: Boolean,
     ) : DashboardViewState
 
     @Immutable
@@ -27,4 +28,10 @@ internal sealed interface DashboardViewState : ViewState {
     data class MotivationalNoteUiModel(
         val text: TextWrapper,
     )
+
+    enum class DailyCheckInResult {
+        HARD,
+        OKAY,
+        HAPPY
+    }
 }

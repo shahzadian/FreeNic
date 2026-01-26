@@ -550,5 +550,11 @@
     <string name="push_soft_ask_submit">Enable</string>
     <string name="push_soft_ask_cancel">No thanks</string>
     <string name="profile_support_email">Contact email: %s</string>
+    <string name="dashboard_daily_check_in_title">How was your day?</string>
+    <string name="dashboard_daily_check_in_subtitle">Tell us how you felt today</string>
+    <string name="dashboard_daily_check_in_hard">Hard</string>
+    <string name="dashboard_daily_check_in_okay">Okay</string>
+    <string name="dashboard_daily_check_in_happy">Happy</string>
+    <string name="dashboard_daily_check_in_confirmation">Thanks! We’ll include this in your stats</string>
 
 </resources>

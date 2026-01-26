@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -40,6 +43,7 @@ internal fun DashboardAnalyticsView(
     ) {
         Row(
             modifier = Modifier
+                .height(IntrinsicSize.Min)
                 .padding(bottom = 8.dp),
             horizontalArrangement = Arrangement.Center,
         ) {
@@ -47,6 +51,7 @@ internal fun DashboardAnalyticsView(
                 days = data.noCigDays,
                 modifier = Modifier
                     .weight(1f)
+                    .fillMaxHeight()
                     .padding(end = 4.dp),
             )
             SavedMoneyView(
@@ -54,6 +59,7 @@ internal fun DashboardAnalyticsView(
                 currency = data.currency,
                 modifier = Modifier
                     .weight(1f)
+                    .fillMaxHeight()
                     .padding(start = 4.dp),
             )
         }
