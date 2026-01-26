@@ -84,15 +84,15 @@ private fun ContentView(
             )
             return
         }
-        val data = state as JourneyCalendarViewState.Data
-        val onSubscribeClickEvent = remember { { onEvent(JourneyCalendarViewEvent.OnCalendarPreviewSubscribeClicked) } }
-        if (!data.hasPaidSubscription) {
+        if (state is JourneyCalendarViewState.Preview) {
+            val onSubscribeClickEvent = remember { { onEvent(JourneyCalendarViewEvent.OnCalendarPreviewSubscribeClicked) } }
             CalendarPreviewView(
                 onSubscribeClicked = onSubscribeClickEvent,
                 modifier = Modifier.fillMaxSize(),
             )
             return
         }
+        val data = state as JourneyCalendarViewState.Data
         val month = data.monthDataUiModel
         val dayClick: (DayCellUiModel) -> Unit =
             remember { { cell -> onEvent(JourneyCalendarViewEvent.OnDayTapped(cell)) } }

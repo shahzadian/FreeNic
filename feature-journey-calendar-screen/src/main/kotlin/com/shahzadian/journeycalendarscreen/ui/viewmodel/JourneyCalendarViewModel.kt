@@ -33,9 +33,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
     private var tappetDay: DayCellUiModel? = null
 
     init {
-        viewModelScope.launch {
-            setData()
-        }
+        setData()
     }
 
     override fun onViewEventHappened(event: JourneyCalendarViewEvent) {
@@ -68,17 +66,20 @@ internal class JourneyCalendarViewModel @Inject constructor(
 
     private fun setData() {
         viewModelScope.launch {
-            val model = journeyCalendarHelper.getMonth()
             val hasPaidSubscription =
                 getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription
-            setViewState(
-                state = JourneyCalendarViewState.Data(
-                    hasPaidSubscription = hasPaidSubscription,
-                    hasPreviousMonth = journeyCalendarHelper.hasPreviousMonth(),
-                    tappedDay = tappetDay,
-                    monthDataUiModel = model,
+            if (hasPaidSubscription) {
+                val model = journeyCalendarHelper.getMonth()
+                setViewState(
+                    state = JourneyCalendarViewState.Data(
+                        hasPreviousMonth = journeyCalendarHelper.hasPreviousMonth(),
+                        tappedDay = tappetDay,
+                        monthDataUiModel = model,
+                    )
                 )
-            )
+            } else {
+                setViewState(JourneyCalendarViewState.Preview)
+            }
         }
     }
 

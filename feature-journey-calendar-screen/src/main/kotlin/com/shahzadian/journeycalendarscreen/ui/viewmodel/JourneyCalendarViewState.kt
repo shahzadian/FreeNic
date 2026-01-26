@@ -12,8 +12,10 @@ internal sealed interface JourneyCalendarViewState : ViewState {
     data object Loading : JourneyCalendarViewState
 
     @Immutable
+    data object Preview : JourneyCalendarViewState
+
+    @Immutable
     data class Data(
-        val hasPaidSubscription: Boolean,
         val monthDataUiModel: MonthDataUiModel,
         val hasPreviousMonth: Boolean,
         val tappedDay: DayCellUiModel?,
