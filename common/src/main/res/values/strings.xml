@@ -549,5 +549,6 @@
     <string name="push_soft_ask_subtitle">Notifications can help you stay consistent and remind you of your progress when it matters</string>
     <string name="push_soft_ask_submit">Enable</string>
     <string name="push_soft_ask_cancel">No thanks</string>
+    <string name="profile_support_email">Contact email: %s</string>
 
 </resources>

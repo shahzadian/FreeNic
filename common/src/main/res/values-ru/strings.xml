@@ -542,5 +542,6 @@
     <string name="push_soft_ask_subtitle">Уведомления могут помочь вам сохранять регулярность и напоминать о прогрессе, когда это важно</string>
     <string name="push_soft_ask_submit">Включить</string>
     <string name="push_soft_ask_cancel">Нет, спасибо</string>
+    <string name="profile_support_email">Почта для связи: %s</string>
 
 </resources>

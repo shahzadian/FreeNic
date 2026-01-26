@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.navigation.AppNavigator
@@ -150,27 +152,26 @@ private fun ContentView(
             },
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        AppVersionTextView(
-            appVersion = data.appVersion,
+        Column(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(bottom = 16.dp)
-        )
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                text = stringResource(R.string.profile_support_email, data.supportEmail),
+                color = MaterialTheme.colorScheme.onSecondary,
+                modifier = Modifier.padding(bottom = 4.dp),
+                style = MaterialTheme.typography.bodySmall
+            )
+            Text(
+                text = data.appVersion,
+                color = MaterialTheme.colorScheme.onSecondary,
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
     }
 
-}
-
-@Composable
-private fun AppVersionTextView(
-    appVersion: String,
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        text = appVersion,
-        color = MaterialTheme.colorScheme.onSecondary,
-        modifier = modifier,
-        style = MaterialTheme.typography.bodySmall
-    )
 }
 
 @Composable

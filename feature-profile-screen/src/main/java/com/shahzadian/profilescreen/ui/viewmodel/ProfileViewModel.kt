@@ -2,6 +2,7 @@ package com.shahzadian.profilescreen.ui.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.freenic.CommonConst
 import com.freenic.activityevent.ActivityEvent
 import com.freenic.activityevent.ActivityEventSender
 import com.freenic.analytics.AnalyticsEvent
@@ -130,6 +131,7 @@ internal class ProfileViewModel @Inject constructor(
                         currency = userData.cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
                     ),
                     isDebugBuild = appInfoHelper.isDebugBuild(),
+                    supportEmail = CommonConst.SUPPORT_EMAIL,
                 )
             )
         }
