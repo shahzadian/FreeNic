@@ -537,5 +537,7 @@
     <string name="journey_calendar_event_insight_title">Achieved: %s</string>
     <string name="insights_lungs_recovery_title">Lungs recovery</string>
     <string name="insights_heart_recovery_title">Circulation &amp; heart recovery</string>
+    <string name="profile_privacy">Privacy policy</string>
+    <string name="profile_terms">Terms of service</string>
 
 </resources>

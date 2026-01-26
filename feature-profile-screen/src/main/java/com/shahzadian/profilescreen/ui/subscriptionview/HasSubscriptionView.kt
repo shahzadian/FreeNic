@@ -75,7 +75,7 @@ private fun HeaderView(
             Text(
                 text = stringResource(R.string.profile_premium_active),
                 color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
             )
         }
         Text(

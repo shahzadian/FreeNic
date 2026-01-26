@@ -124,6 +124,11 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
+        ProfilePrivacyBlockView(
+            onPrivacyClicked = {},
+            onTermsClicked = {},
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
         if (data.isDebugBuild) {
             DebugBuildView(
                 onDebugClicked = {
