@@ -84,6 +84,12 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
 
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+
+    // AndroidX Startup for auto scheduling
+    implementation(libs.androidx.startup.runtime)
+
     implementation(libs.androidx.datastore.preferences)
     
     // Compose BOM

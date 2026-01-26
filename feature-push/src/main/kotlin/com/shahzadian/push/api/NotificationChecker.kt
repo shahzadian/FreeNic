@@ -19,6 +19,7 @@ data class PushNotificationData(
     val channelId: String,
     val title: String,
     val message: String,
+    val iconRes: Int,
     // Ключ для дедупликации/хранения факта показа
     val dedupKey: String,
 )

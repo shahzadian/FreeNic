@@ -2,6 +2,7 @@ package com.shahzadian.push.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.freenic.CommonConst
 import com.shahzadian.push.api.NotificationChecker
 import com.shahzadian.push.checkers.achievements.AchievementsNotificationChecker
 import com.shahzadian.push.dispatcher.PushDispatcher
@@ -35,6 +36,9 @@ object PushProvideModule {
     @Provides
     @Singleton
     fun providePrefs(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences("feature_push_prefs", Context.MODE_PRIVATE)
+        return context.getSharedPreferences(
+            CommonConst.PREF_NAME_APP_SETTINGS,
+            Context.MODE_PRIVATE
+        )
     }
 }
