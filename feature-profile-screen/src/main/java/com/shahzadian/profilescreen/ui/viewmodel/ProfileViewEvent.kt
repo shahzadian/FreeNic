@@ -34,4 +34,10 @@ internal sealed interface ProfileViewEvent : ViewEvent {
 
     @Immutable
     data object OnClearAllDataConfirmed : ProfileViewEvent
+
+    @Immutable
+    data object OnPrivacyClicked : ProfileViewEvent
+
+    @Immutable
+    data object OnTermsClicked : ProfileViewEvent
 }

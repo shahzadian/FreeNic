@@ -42,7 +42,13 @@ internal class ActivityEventHandlerFactoryImpl @Inject constructor(
                 shouldShowAppRateViewUseCase = shouldShowAppRateViewUseCase,
                 analyticsEventSender = analyticsEventSender,
                 appDataCacheUpdater = appDataCacheUpdater,
-            )
+            ),
+            PrivacyPolicyShowRequestHandler(
+                coroutineScope = coroutineScope,
+            ),
+            TermsOfServiceShowRequestHandler(
+                coroutineScope = coroutineScope,
+            ),
         )
     }
 }

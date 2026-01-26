@@ -2,6 +2,8 @@ package com.shahzadian.profilescreen.ui.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.viewModelScope
+import com.freenic.activityevent.ActivityEvent
+import com.freenic.activityevent.ActivityEventSender
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
@@ -35,6 +37,7 @@ internal class ProfileViewModel @Inject constructor(
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val clearAppDataUseCase: ClearAppDataUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val activityEventSender: ActivityEventSender,
 ) : BaseViewModel<ProfileViewState, ProfileViewEvent, ProfileViewCommand>() {
 
     override val initState: ProfileViewState by lazyUnsafe { ProfileViewState.Loading }
@@ -77,6 +80,8 @@ internal class ProfileViewModel @Inject constructor(
             is ProfileViewEvent.OnPriceEdited -> onPriceEdited(event.price)
             is ProfileViewEvent.OnDebugPanelOpenClicked -> onDebugPanelClicked()
             is ProfileViewEvent.OnClearAllDataConfirmed -> onClearAllDataConfirmed()
+            is ProfileViewEvent.OnPrivacyClicked -> onPrivacyClicked()
+            is ProfileViewEvent.OnTermsClicked -> onTermsClicked()
         }
     }
 
@@ -262,6 +267,28 @@ internal class ProfileViewModel @Inject constructor(
                     ),
                 )
             }
+    }
+
+    private fun onPrivacyClicked() {
+        viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.PROFILE_PRIVACY_POLICY_TAP
+                )
+            )
+            activityEventSender.sendEvent(ActivityEvent.PrivacyPolicyViewShowRequest)
+        }
+    }
+
+    private fun onTermsClicked() {
+        viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.PROFILE_TERMS_OF_SERVICES_TAP
+                )
+            )
+            activityEventSender.sendEvent(ActivityEvent.TermsOfServiceViewShowRequest)
+        }
     }
 
     private fun getSubscriptionTitle(plan: SubscriptionPlan): TextWrapper {

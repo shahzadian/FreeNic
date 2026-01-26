@@ -6,4 +6,8 @@ internal interface ActivityCommand {
         val onAppRated: (starsCount: Int) -> Unit,
         val onNotNowClicked: () -> Unit,
     ) : ActivityCommand
+
+    data class OpenUrl(
+        val url: String,
+    ) : ActivityCommand
 }

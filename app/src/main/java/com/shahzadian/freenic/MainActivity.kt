@@ -1,5 +1,7 @@
 package com.shahzadian.freenic
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -217,6 +219,10 @@ internal class MainActivity : ComponentActivity() {
                 lifecycleScope.launch {
                     appRateShowCommandFlow.emit(command)
                 }
+            }
+            is ActivityCommand.OpenUrl -> {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(command.url))
+                startActivity(intent)
             }
         }
     }

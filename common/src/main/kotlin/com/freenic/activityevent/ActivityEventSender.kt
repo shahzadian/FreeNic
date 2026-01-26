@@ -27,6 +27,10 @@ sealed interface ActivityEvent {
     ) : ActivityEvent
 
     data object AppRateViewShowRequest : ActivityEvent
+
+    data object PrivacyPolicyViewShowRequest : ActivityEvent
+
+    data object TermsOfServiceViewShowRequest : ActivityEvent
 }
 
 interface ActivityEventResult

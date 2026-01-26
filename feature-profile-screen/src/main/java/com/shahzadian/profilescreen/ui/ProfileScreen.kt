@@ -125,8 +125,12 @@ private fun ContentView(
                 .padding(bottom = 16.dp)
         )
         ProfilePrivacyBlockView(
-            onPrivacyClicked = {},
-            onTermsClicked = {},
+            onPrivacyClicked = {
+                onEvent(ProfileViewEvent.OnPrivacyClicked)
+            },
+            onTermsClicked = {
+                onEvent(ProfileViewEvent.OnTermsClicked)
+            },
             modifier = Modifier.padding(bottom = 16.dp)
         )
         if (data.isDebugBuild) {
