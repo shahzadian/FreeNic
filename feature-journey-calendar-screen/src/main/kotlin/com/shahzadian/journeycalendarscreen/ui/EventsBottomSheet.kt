@@ -124,14 +124,6 @@ private fun EventsView(
         modifier = modifier
             .verticalScroll(scrollState),
     ) {
-        cell.noCigData?.let { noCigData ->
-            NoCigDaysEventView(
-                data = noCigData,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp)
-            )
-        }
         cell.events.forEach { event ->
             EventView(
                 model = event,
@@ -221,14 +213,14 @@ private fun EventIconView(
                 color = MaterialTheme.colorScheme.outline,
                 shape = CircleShape,
             )
-            .size(48.dp)
+            .size(34.dp)
             .padding(4.dp)
     ) {
         Image(
             painter = imageFromWrapper(icon),
             contentDescription = null,
             modifier = Modifier
-                .size(24.dp)
+                .size(18.dp)
                 .align(Alignment.Center),
         )
     }

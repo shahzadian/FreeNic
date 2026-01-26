@@ -16,7 +16,6 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
-import java.util.Currency
 import java.util.Locale
 import javax.inject.Inject
 
@@ -99,7 +98,6 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
                     isToday = date == today,
                     isInFuture = date?.isAfter(today) ?: false,
                     isInSmokeQuitPeriod = date?.isInSmokeQuitPeriod() ?: false,
-                    noCigData = date?.toNoCigData(),
                     events = date?.let { localDate ->
                         eventsFinders.map { it.findEventsForDate(localDate) }.flatten()
                     } ?: emptyList(),
@@ -125,32 +123,6 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
         mutex.withLock {
             currentMonth = currentMonth.plusMonths(1)
         }
-    }
-
-    private suspend fun LocalDate?.toNoCigData(): DayCellUiModel.NoCigData? {
-        val dateMillis = this?.atStartOfDay(ZoneId.systemDefault())?.toInstant()?.toEpochMilli()
-            ?.let { it + 1000 * 60 * 60 * 24 } ?: return null
-        val userData = getUserData() ?: return null
-        val userDataHelper = getUserDataHelper() ?: return null
-        val noCigDays = dateMillis.takeIf { this.isInSmokeQuitPeriod() }?.let { millis ->
-            userDataHelper.calculateSkippedDaysForMillis(millis)
-        } ?: return null
-        val savedMoney = dateMillis.takeIf { this.isInSmokeQuitPeriod() }?.let { millis ->
-            val userDataHelper = getUserDataHelper() ?: return@let null
-            userDataHelper.calculateSavedMoneyForMillis(millis)
-        } ?: return null
-        val currency = userData.cigarettesData.priceData.currency.let {
-            try {
-                Currency.getInstance(it).symbol
-            } catch (t: Throwable) {
-                return null
-            }
-        }
-        val displayableSavedMoney = "${savedMoney}$currency"
-        return DayCellUiModel.NoCigData(
-            noCigDays = noCigDays,
-            displayableSavedMoney = displayableSavedMoney,
-        )
     }
 
     private fun LocalDate.getFullDayText(): TextWrapper {

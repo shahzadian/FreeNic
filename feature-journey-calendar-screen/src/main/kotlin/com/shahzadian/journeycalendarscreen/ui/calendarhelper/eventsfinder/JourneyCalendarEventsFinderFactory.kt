@@ -27,6 +27,10 @@ internal class JourneyCalendarEventsFinderFactoryImpl @Inject constructor(
 
     override fun getAll(): List<JourneyCalendarEventsFinder> {
         return listOf(
+            NoCigEventsFinder(
+                getUserDataUseCase = getUserDataUseCase,
+                userDataHelperFactory = userDataHelperFactory,
+            ),
             SlipEventsFinder(
                 getSlipCasesUseCase = getSlipCasesUseCase,
             ),
