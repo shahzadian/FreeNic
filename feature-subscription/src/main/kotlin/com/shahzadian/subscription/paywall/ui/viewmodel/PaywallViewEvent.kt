@@ -13,4 +13,7 @@ internal sealed interface PaywallViewEvent : ViewEvent {
     data class OnUpgradeClicked(
         val planId: String,
     ) : PaywallViewEvent
+
+    @Immutable
+    data object OnSubscriptionTermsClicked : PaywallViewEvent
 }

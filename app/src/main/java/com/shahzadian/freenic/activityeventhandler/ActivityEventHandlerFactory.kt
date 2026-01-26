@@ -43,10 +43,13 @@ internal class ActivityEventHandlerFactoryImpl @Inject constructor(
                 analyticsEventSender = analyticsEventSender,
                 appDataCacheUpdater = appDataCacheUpdater,
             ),
-            PrivacyPolicyShowRequestHandler(
+            PrivacyPolicyOpenRequestHandler(
                 coroutineScope = coroutineScope,
             ),
-            TermsOfServiceShowRequestHandler(
+            TermsOfServiceOpenRequestHandler(
+                coroutineScope = coroutineScope,
+            ),
+            SubscriptionTermsOpenRequestHandler(
                 coroutineScope = coroutineScope,
             ),
         )

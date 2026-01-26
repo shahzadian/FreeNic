@@ -28,12 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
+import com.freenic.ui.extensions.noIndicationClick
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.subscription.paywall.ui.viewmodel.PaywallViewCommand
@@ -93,6 +95,9 @@ private fun ContentView(
     val upgradeClickEvent: (String) -> Unit = remember {
         { planId -> onEvent(PaywallViewEvent.OnUpgradeClicked(planId = planId)) }
     }
+    val subscriptionTermsClick = remember {
+        { onEvent(PaywallViewEvent.OnSubscriptionTermsClicked) }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.paywall_page_title),
         hasBackIcon = true,
@@ -116,6 +121,17 @@ private fun ContentView(
             paidFeatures = data.paidFeatures,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        Text(
+            text = stringResource(R.string.paywall_subscription_terms),
+            color = MaterialTheme.colorScheme.primary,
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier
+                .noIndicationClick(onClick = subscriptionTermsClick)
+                .align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+            textDecoration = TextDecoration.Underline,
         )
     }
 }

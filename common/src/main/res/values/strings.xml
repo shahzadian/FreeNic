@@ -539,5 +539,6 @@
     <string name="insights_heart_recovery_title">Circulation &amp; heart recovery</string>
     <string name="profile_privacy">Privacy policy</string>
     <string name="profile_terms">Terms of service</string>
+    <string name="paywall_subscription_terms">Subscription terms</string>
 
 </resources>

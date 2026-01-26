@@ -532,5 +532,6 @@
     <string name="insights_heart_recovery_title">Восстановление сердца и кровообращения</string>
     <string name="profile_privacy">Политика конфиденциальности</string>
     <string name="profile_terms">Условия использования</string>
+    <string name="paywall_subscription_terms">Условия подписки</string>
 
 </resources>

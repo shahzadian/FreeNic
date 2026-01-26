@@ -52,6 +52,10 @@ internal class PaywallViewModel @Inject constructor(
                     planId = event.planId,
                 )
             }
+
+            is PaywallViewEvent.OnSubscriptionTermsClicked -> {
+                onSubscriptionTermsClicked()
+            }
         }
     }
 
@@ -122,6 +126,17 @@ internal class PaywallViewModel @Inject constructor(
                     planId = planId,
                 )
             )
+        }
+    }
+
+    private fun onSubscriptionTermsClicked() {
+        viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.SUBSCRIPTION_TERMS_TAP
+                )
+            )
+            activityEventSender.sendEvent(ActivityEvent.SubscriptionTermsOpenRequest)
         }
     }
 }

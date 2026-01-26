@@ -276,7 +276,7 @@ internal class ProfileViewModel @Inject constructor(
                     name = AnalyticsEventConst.PROFILE_PRIVACY_POLICY_TAP
                 )
             )
-            activityEventSender.sendEvent(ActivityEvent.PrivacyPolicyViewShowRequest)
+            activityEventSender.sendEvent(ActivityEvent.PrivacyPolicyOpenRequest)
         }
     }
 
@@ -287,7 +287,7 @@ internal class ProfileViewModel @Inject constructor(
                     name = AnalyticsEventConst.PROFILE_TERMS_OF_SERVICES_TAP
                 )
             )
-            activityEventSender.sendEvent(ActivityEvent.TermsOfServiceViewShowRequest)
+            activityEventSender.sendEvent(ActivityEvent.TermsOfServicesOpenRequest)
         }
     }
 
