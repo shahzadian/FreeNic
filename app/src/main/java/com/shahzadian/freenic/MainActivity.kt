@@ -3,15 +3,20 @@ package com.shahzadian.freenic
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.freenic.AppLaunchConst
 import com.freenic.activityevent.ActivityEventReceiver
@@ -25,6 +30,7 @@ import com.shahzadian.freenic.activityeventhandler.ActivityCommand
 import com.shahzadian.freenic.activityeventhandler.ActivityEventHandlerFactory
 import com.shahzadian.freenic.navigation.AppNavigation
 import com.shahzadian.freenic.navigation.AppNavigatorFactory
+import com.shahzadian.push.ui.PushShowDialog
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
@@ -73,6 +79,10 @@ internal class MainActivity : ComponentActivity() {
         MutableSharedFlow()
     }
 
+    private val pushPermissionRequestCommandFlow: MutableSharedFlow<ActivityCommand.PushPermissionRequestCommand> by lazyUnsafe {
+        MutableSharedFlow()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -85,6 +95,7 @@ internal class MainActivity : ComponentActivity() {
                     appNavigatorFactory = appNavigatorFactory,
                 )
                 AppRateView()
+                PushPermissionView()
             }
         }
         initializeAdSdk()
@@ -111,6 +122,59 @@ internal class MainActivity : ComponentActivity() {
                     command.onNotNowClicked()
                     appRateCommand = null
                 }
+            )
+        }
+    }
+
+    @Composable
+    private fun PushPermissionView() {
+        var pushRequestCommand: ActivityCommand.PushPermissionRequestCommand? by remember {
+            mutableStateOf(
+                null
+            )
+        }
+        LaunchedEffect(Unit) {
+            pushPermissionRequestCommandFlow
+                .collect {
+                    pushRequestCommand = it
+                }
+        }
+        pushRequestCommand?.let { command ->
+            var shouldLaunch by remember { mutableStateOf(false) }
+            if (shouldLaunch) {
+                val launcher = rememberLauncherForActivityResult(
+                    contract = ActivityResultContracts.RequestPermission()
+                ) { isGranted ->
+                    if (isGranted) {
+                        command.onPermissionGranted()
+                    } else {
+                        command.onPermissionDenied()
+                    }
+                }
+                SideEffect {
+                    launcher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+            val showRationale = ActivityCompat.shouldShowRequestPermissionRationale(
+                this,
+                android.Manifest.permission.POST_NOTIFICATIONS
+            )
+            PushShowDialog(
+                isSoftAsk = showRationale,
+                onSubmitClicked = {
+                    pushRequestCommand = null
+                    if (showRationale) {
+                        val intent = Intent(
+                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            Uri.fromParts("package", packageName, null)
+                        ).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                        startActivity(intent)
+                    } else {
+                        shouldLaunch = true
+                    }
+                },
             )
         }
     }
@@ -225,6 +289,16 @@ internal class MainActivity : ComponentActivity() {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(command.url))
                 startActivity(intent)
             }
+
+            is ActivityCommand.PushPermissionRequestCommand -> {
+                lifecycleScope.launch {
+                    pushPermissionRequestCommandFlow.emit(command)
+                }
+            }
         }
+    }
+
+    private companion object {
+        const val PUSH_PERMISSION_REQUEST_CODE = 1
     }
 }

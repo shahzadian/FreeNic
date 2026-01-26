@@ -52,6 +52,11 @@ internal class ActivityEventHandlerFactoryImpl @Inject constructor(
             SubscriptionTermsOpenRequestHandler(
                 coroutineScope = coroutineScope,
             ),
+            PushPermissionShowRequestHandler(
+                context = activity,
+                coroutineScope = coroutineScope,
+                analyticsEventSender = analyticsEventSender,
+            ),
         )
     }
 }

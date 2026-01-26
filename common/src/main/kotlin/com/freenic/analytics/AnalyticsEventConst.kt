@@ -95,4 +95,6 @@ object AnalyticsEventConst {
     const val PROFILE_PRIVACY_POLICY_TAP: String = "profile_privacy_policy_tap"
     const val PROFILE_TERMS_OF_SERVICES_TAP: String = "profile_terms_of_services_tap"
     const val SUBSCRIPTION_TERMS_TAP: String = "subscription_terms_tap"
+    const val PUSH_PERMISSION_GRANTED: String = "push_permission_granted"
+    const val PUSH_PERMISSION_DENIED: String = "push_permission_denied"
 }

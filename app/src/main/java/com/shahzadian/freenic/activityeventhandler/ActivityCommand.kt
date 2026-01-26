@@ -10,4 +10,9 @@ internal interface ActivityCommand {
     data class OpenUrl(
         val url: String,
     ) : ActivityCommand
+
+    data class PushPermissionRequestCommand(
+        val onPermissionGranted: () -> Unit,
+        val onPermissionDenied: () -> Unit,
+    ) : ActivityCommand
 }

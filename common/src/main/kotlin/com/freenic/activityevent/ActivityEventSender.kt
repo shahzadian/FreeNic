@@ -33,9 +33,15 @@ sealed interface ActivityEvent {
     data object TermsOfServicesOpenRequest : ActivityEvent
 
     data object SubscriptionTermsOpenRequest : ActivityEvent
+
+    data object PushPermissionShowRequest : ActivityEvent
 }
 
 interface ActivityEventResult
+
+data class OnPushPermissionResult(
+    val isGranted: Boolean,
+) : ActivityEventResult
 
 @Singleton
 internal class ActivityEventHelper @Inject constructor() : ActivityEventSender,
