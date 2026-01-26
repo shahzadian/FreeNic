@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -18,7 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
-import com.freenic.AppLaunchConst
+import com.freenic.CommonConst
 import com.freenic.activityevent.ActivityEventReceiver
 import com.freenic.logger.AppLogger
 import com.freenic.ui.extensions.lazyUnsafe
@@ -87,7 +88,7 @@ internal class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val targetScreen =
-            intent.getStringExtra(AppLaunchConst.KEY_INTENT_TARGET_SCREEN)
+            intent.getStringExtra(CommonConst.KEY_INTENT_TARGET_SCREEN)
         setContent {
             FreeNicTheme {
                 AppNavigation(
@@ -150,6 +151,7 @@ internal class MainActivity : ComponentActivity() {
                     } else {
                         command.onPermissionDenied()
                     }
+                    pushRequestCommand = null
                 }
                 SideEffect {
                     launcher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
@@ -162,7 +164,6 @@ internal class MainActivity : ComponentActivity() {
             PushShowDialog(
                 isSoftAsk = showRationale,
                 onSubmitClicked = {
-                    pushRequestCommand = null
                     if (showRationale) {
                         val intent = Intent(
                             Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
@@ -175,6 +176,10 @@ internal class MainActivity : ComponentActivity() {
                         shouldLaunch = true
                     }
                 },
+                onCancelClicked = {
+                    Log.d("LogMog", "onCancelClicked")
+                    command.onCancelClicked()
+                }
             )
         }
     }

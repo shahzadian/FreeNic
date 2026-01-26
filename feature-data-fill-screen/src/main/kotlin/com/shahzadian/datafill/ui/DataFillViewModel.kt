@@ -2,6 +2,8 @@ package com.shahzadian.datafill.ui
 
 import android.text.format.DateUtils
 import androidx.lifecycle.viewModelScope
+import com.freenic.activityevent.ActivityEvent
+import com.freenic.activityevent.ActivityEventSender
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
@@ -38,6 +40,7 @@ internal class DataFillViewModel @Inject constructor(
     private val updateUserDataUseCase: UpdateUserDataUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
     private val appDataCacheUpdater: AppDataCacheUpdater,
+    private val activityEventSender: ActivityEventSender,
 ) : BaseViewModel<DataFillViewState, DataFillViewEvent, DataFillCommand>() {
 
     override val initState: DataFillViewState by lazyUnsafe {
@@ -119,6 +122,7 @@ internal class DataFillViewModel @Inject constructor(
                 updateUserDataUseCase.setUserRegistered(true)
                 appDataCacheUpdater.setRegisteredTimeMillis(System.currentTimeMillis())
             }
+            activityEventSender.sendEvent(ActivityEvent.PushPermissionShowRequest)
             sendViewCommand(DataFillCommand.NavigateTo(AppScreen.MainScreen))
         }
     }

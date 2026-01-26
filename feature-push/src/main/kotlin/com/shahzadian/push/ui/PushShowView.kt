@@ -31,6 +31,7 @@ import com.shahzadian.push.R
 fun PushShowDialog(
     isSoftAsk: Boolean,
     onSubmitClicked: () -> Unit,
+    onCancelClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var showDialog by remember { mutableStateOf(true) }
@@ -45,6 +46,7 @@ fun PushShowDialog(
                 onSubmitClicked = onSubmitClicked,
                 onCancelClicked = {
                     showDialog = false
+                    onCancelClicked()
                 },
                 modifier = modifier
             )

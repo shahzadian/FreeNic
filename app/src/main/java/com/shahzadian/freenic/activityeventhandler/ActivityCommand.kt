@@ -14,5 +14,6 @@ internal interface ActivityCommand {
     data class PushPermissionRequestCommand(
         val onPermissionGranted: () -> Unit,
         val onPermissionDenied: () -> Unit,
+        val onCancelClicked: () -> Unit,
     ) : ActivityCommand
 }

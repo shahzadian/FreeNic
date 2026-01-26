@@ -34,7 +34,7 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.freenic.AppLaunchConst
+import com.freenic.CommonConst
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.theme.AppTypography
@@ -143,7 +143,7 @@ private fun UpgradeWidget() {
     val launchIntent = context.packageManager.getLaunchIntentForPackage(context.packageName)
         ?.apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            this.putExtra(AppLaunchConst.KEY_INTENT_TARGET_SCREEN, AppScreen.PaywallScreen.route)
+            this.putExtra(CommonConst.KEY_INTENT_TARGET_SCREEN, AppScreen.PaywallScreen.route)
         }
     var modifier = GlanceModifier
         .fillMaxSize()
