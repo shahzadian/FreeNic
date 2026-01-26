@@ -17,6 +17,7 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 
 internal interface BillingDataSource {
+
     /**
      * Подробная информация об активной подписке из BillingClient (без серверной верификации).
      * [purchaseTimeMillis] берётся из [Purchase.getPurchaseTime].
@@ -37,12 +38,14 @@ internal interface BillingDataSource {
 }
 
 internal class BillingDataSourceImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @param:ApplicationContext private val context: Context
 ) : BillingDataSource {
+
+    private var purchaseCallback: ((BillingResult) -> Unit)? = null
 
     // Обязательный listener для обновлений покупок. Для текущей задачи — минимальная обработка (логирование).
     private val purchasesUpdatedListener = PurchasesUpdatedListener { billingResult, purchases ->
-        // Здесь в будущем можно триггерить refresh/acknowledge.
+        purchaseCallback?.invoke(billingResult)
     }
 
     private fun newClient(): BillingClient =
@@ -144,7 +147,11 @@ internal class BillingDataSourceImpl @Inject constructor(
             .setProductDetailsParamsList(listOf(productDetailsParams))
             .build()
 
-        val result = client.launchBillingFlow(activity, flowParams)
-        return result.responseCode == BillingClient.BillingResponseCode.OK
+        return suspendCancellableCoroutine { cont ->
+            purchaseCallback = { billingResult ->
+                cont.resume(billingResult.responseCode == BillingClient.BillingResponseCode.OK)
+            }
+            client.launchBillingFlow(activity, flowParams)
+        }
     }
 }
