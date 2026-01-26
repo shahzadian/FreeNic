@@ -35,7 +35,7 @@ internal fun GuessShapeView(
     modifier: Modifier = Modifier,
 ) {
     val shapeSelected = remember { { id: String -> onShapeSelected(id) } }
-    var selectedShapeId = ""
+    var selectedShapeId by remember { mutableStateOf("") }
     var isButtonEnabled by remember {
         mutableStateOf(false)
     }
