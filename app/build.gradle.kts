@@ -25,11 +25,17 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            // В релизной сборке включаем обфускацию и шринк ресурсов
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        debug {
+            // В debug-сборке оставляем код без обфускации для удобной отладки
+            isMinifyEnabled = false
         }
     }
     buildFeatures {
