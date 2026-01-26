@@ -1,0 +1,19 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.shahzadian.push">
+
+    <application>
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            android:initOrder="1000"
+            tools:node="merge"
+            tools:replace="android:authorities">
+            <meta-data
+                android:name="com.shahzadian.push.startup.PushInitializer"
+                android:value="androidx.startup" />
+        </provider>
+    </application>
+
+</manifest>

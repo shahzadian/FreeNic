@@ -1,0 +1,1 @@
+# consumer rules for feature-push

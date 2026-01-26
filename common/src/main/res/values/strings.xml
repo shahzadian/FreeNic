@@ -540,5 +540,6 @@
     <string name="profile_privacy">Privacy policy</string>
     <string name="profile_terms">Terms of service</string>
     <string name="paywall_subscription_terms">Subscription terms</string>
+    <string name="push_achievement_title">New achievement!</string>
 
 </resources>

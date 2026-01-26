@@ -533,5 +533,6 @@
     <string name="profile_privacy">Политика конфиденциальности</string>
     <string name="profile_terms">Условия использования</string>
     <string name="paywall_subscription_terms">Условия подписки</string>
+    <string name="push_achievement_title">Новое достижение!</string>
 
 </resources>

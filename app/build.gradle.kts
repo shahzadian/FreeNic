@@ -78,6 +78,7 @@ dependencies {
     implementation(project(":feature-slip"))
     implementation(project(":feature-journey-calendar-screen"))
     implementation(project(":feature-app-rate"))
+    implementation(project(":feature-push"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))
