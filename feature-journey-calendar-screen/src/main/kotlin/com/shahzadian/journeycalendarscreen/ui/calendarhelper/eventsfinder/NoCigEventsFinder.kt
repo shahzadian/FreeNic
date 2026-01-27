@@ -48,7 +48,7 @@ internal class NoCigEventsFinder(
                     noCigDays,
                     arrayListOf(noCigDays, displayableSavedMoney)
                 ),
-                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_event_no_cig_days)
+                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_event_no_cig_days),
             )
         )
     }

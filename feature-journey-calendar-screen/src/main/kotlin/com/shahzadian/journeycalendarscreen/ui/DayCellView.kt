@@ -2,7 +2,6 @@ package com.shahzadian.journeycalendarscreen.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
+import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventShowType
 
 @Composable
 internal fun DayCellView(
@@ -43,18 +43,6 @@ internal fun DayCellView(
                     Modifier
                 }
             )
-            .then(
-                if (cell.isInSmokeQuitPeriod && !cell.isInFuture) {
-                    Modifier
-                        .border(
-                            width = 1.dp,
-                            color = MaterialTheme.colorScheme.primary,
-                            shape = MaterialTheme.shapes.small,
-                        )
-                } else {
-                    Modifier
-                }
-            )
             .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
@@ -75,6 +63,7 @@ internal fun DayCellView(
                 .distinctBy { it.icon }
                 .take(cell.maxDisplayableEvents)
                 .forEachIndexed { index, model ->
+                    if (model.showTypes.none { it is DayEventShowType.Preview }) return@forEachIndexed
                     Image(
                         painter = imageFromWrapper(model.icon),
                         contentDescription = "Event ${index + 1}",

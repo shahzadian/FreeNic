@@ -549,5 +549,9 @@
     <string name="dashboard_daily_check_in_okay">Норм</string>
     <string name="dashboard_daily_check_in_happy">Весело</string>
     <string name="dashboard_daily_check_in_confirmation">Спасибо! Мы учтём это в вашей статистике</string>
+    <string name="calendar_event_daily_check_in_hard">Было тяжко</string>
+    <string name="calendar_event_daily_check_in_okay">Обычный день</string>
+    <string name="calendar_event_daily_check_in_happy">Хороший день</string>
+    <string name="calendar_event_daily_check_in_desc">Вы отметили этот день</string>
 
 </resources>

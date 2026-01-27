@@ -556,5 +556,9 @@
     <string name="dashboard_daily_check_in_okay">Okay</string>
     <string name="dashboard_daily_check_in_happy">Happy</string>
     <string name="dashboard_daily_check_in_confirmation">Thanks! We’ll include this in your stats</string>
+    <string name="calendar_event_daily_check_in_hard">It was tough</string>
+    <string name="calendar_event_daily_check_in_okay">An ordinary day</string>
+    <string name="calendar_event_daily_check_in_happy">A good day</string>
+    <string name="calendar_event_daily_check_in_desc">You marked this day</string>
 
 </resources>

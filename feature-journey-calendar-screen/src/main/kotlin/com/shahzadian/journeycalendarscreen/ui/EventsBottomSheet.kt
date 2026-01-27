@@ -36,6 +36,7 @@ import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.journeycalendarscreen.R
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
+import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventShowType
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -125,6 +126,7 @@ private fun EventsView(
             .verticalScroll(scrollState),
     ) {
         cell.events.forEach { event ->
+            if (event.showTypes.none { it is DayEventShowType.BottomSheet }) return@forEach
             EventView(
                 model = event,
                 modifier = Modifier
@@ -190,14 +192,16 @@ private fun EventView(
                 text = textFromWrapper(model.title),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onPrimary,
-                modifier = Modifier.padding(bottom = 4.dp)
+                modifier = Modifier.padding(bottom = model.subtitle?.let { 4.dp } ?: 0.dp)
             )
-            Text(
-                text = textFromWrapper(model.subtitle),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSecondary,
-                overflow = TextOverflow.Ellipsis,
-            )
+            model.subtitle?.let { subtitle ->
+                Text(
+                    text = textFromWrapper(subtitle),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSecondary,
+                    overflow = TextOverflow.Ellipsis,
+                )
+            }
         }
     }
 }
