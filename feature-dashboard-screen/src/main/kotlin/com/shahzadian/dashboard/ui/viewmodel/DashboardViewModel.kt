@@ -4,11 +4,16 @@ import androidx.lifecycle.viewModelScope
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.cravingsscreen.domain.CravingTool
 import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
+import com.shahzadian.dailycheckin.domain.AddDailyCheckInStateUseCase
+import com.shahzadian.dailycheckin.domain.DailyCheckInMood
+import com.shahzadian.dailycheckin.domain.DailyCheckInState
+import com.shahzadian.dailycheckin.domain.GetDailyCheckInForDayUseCase
 import com.shahzadian.dashboard.domain.GetUserDashboardUseCase
 import com.shahzadian.dashboard.domain.UserDashboard
 import com.shahzadian.helpfulnotes.domain.GetMotivationalNotesUseCase
@@ -17,6 +22,7 @@ import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +32,8 @@ internal class DashboardViewModel @Inject constructor(
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val getMotivationalNotesUseCase: GetMotivationalNotesUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val getDailyCheckInForDayUseCase: GetDailyCheckInForDayUseCase,
+    private val addDailyCheckInStateUseCase: AddDailyCheckInStateUseCase,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
     private var latestCravingToolId: String? = null
@@ -60,6 +68,10 @@ internal class DashboardViewModel @Inject constructor(
             is DashboardViewEvent.OnISmokedClicked -> {
                 onISmokedClicked()
             }
+
+            is DashboardViewEvent.OnDailyCheckInClicked -> {
+                onDailyCheckInClicked(result = event.result)
+            }
         }
     }
 
@@ -71,7 +83,7 @@ internal class DashboardViewModel @Inject constructor(
                 state = DashboardViewState.Data(
                     analyticsData = dashboard.toMainProgress(),
                     motivationalNote = getMotivationalNotesUseCase().random().toUiModel(),
-                    dailyCheckInState = getDailyCheckInState(),
+                    dailyCheckIn = getDailyCheckInState(),
                 )
             )
         }
@@ -185,7 +197,45 @@ internal class DashboardViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getDailyCheckInState(): DashboardViewState.DailyCheckInState {
-        return DashboardViewState.DailyCheckInState.Hide
+    private fun onDailyCheckInClicked(result: DashboardViewState.DailyCheckInResult) {
+        viewModelScope.launch {
+            (viewStateFlow.value as? DashboardViewState.Data)
+                ?.let { state ->
+                    val newState =
+                        state.copy(dailyCheckIn = DashboardViewState.DailyCheckInUiModel.Confirmation)
+                    setViewState(newState)
+                }
+            val mood = result.toMood()
+            val checkInState = DailyCheckInState(
+                mood = mood,
+                date = LocalDate.now(),
+            )
+            addDailyCheckInStateUseCase(checkInState)
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.DASHBOARD_DAILY_CHECK_IN_TAP,
+                    params = mapOf(
+                        AnalyticsEventConst.DAILY_CHECK_IN_PARAM_VALUE_MOOD to mood.name.asAnalyticsProperty()
+                    )
+                )
+            )
+        }
+    }
+
+    private suspend fun getDailyCheckInState(): DashboardViewState.DailyCheckInUiModel {
+        val today = LocalDate.now()
+        getDailyCheckInForDayUseCase(today)
+            ?.let {
+                return DashboardViewState.DailyCheckInUiModel.Hide
+            }
+        return DashboardViewState.DailyCheckInUiModel.Selection
+    }
+
+    private fun DashboardViewState.DailyCheckInResult.toMood(): DailyCheckInMood {
+        return when (this) {
+            DashboardViewState.DailyCheckInResult.HARD -> DailyCheckInMood.HARD
+            DashboardViewState.DailyCheckInResult.OKAY -> DailyCheckInMood.OKAY
+            DashboardViewState.DailyCheckInResult.HAPPY -> DailyCheckInMood.HAPPY
+        }
     }
 }

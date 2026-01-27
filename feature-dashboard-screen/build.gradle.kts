@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":feature-cravings-screen"))
     implementation(project(":feature-subscription"))
     implementation(project(":feature-motivational-notes"))
+    implementation(project(":feature-daily-check-in"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

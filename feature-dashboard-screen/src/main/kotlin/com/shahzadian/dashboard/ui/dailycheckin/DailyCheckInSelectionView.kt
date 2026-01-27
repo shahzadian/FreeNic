@@ -1,4 +1,4 @@
-package com.shahzadian.dashboard.ui
+package com.shahzadian.dashboard.ui.dailycheckin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,11 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.mainCardBackground
+import com.shahzadian.baseui.R
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewState
 
 @Composable
-internal fun DailyCheckInView(
-    onEmojiSelected: (DashboardViewState.DailyCheckInResult) -> Unit,
+internal fun DailyCheckInSelectionView(
+    onResult: (DashboardViewState.DailyCheckInResult) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -30,7 +31,7 @@ internal fun DailyCheckInView(
         HeaderView(
             modifier = Modifier.padding(bottom = 16.dp)
         )
-        EmojiBlockView(onEmojiSelected = onEmojiSelected)
+        EmojiBlockView(onResult = onResult)
     }
 }
 
@@ -42,13 +43,13 @@ private fun HeaderView(
         modifier = modifier,
     ) {
         Text(
-            text = stringResource(com.shahzadian.baseui.R.string.dashboard_daily_check_in_title),
+            text = stringResource(R.string.dashboard_daily_check_in_title),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier.padding(bottom = 8.dp)
         )
         Text(
-            text = stringResource(com.shahzadian.baseui.R.string.dashboard_daily_check_in_subtitle),
+            text = stringResource(R.string.dashboard_daily_check_in_subtitle),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSecondary,
         )
@@ -57,17 +58,17 @@ private fun HeaderView(
 
 @Composable
 private fun EmojiBlockView(
-    onEmojiSelected: (DashboardViewState.DailyCheckInResult) -> Unit,
+    onResult: (DashboardViewState.DailyCheckInResult) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val emojiSelected: (DashboardViewState.DailyCheckInResult) -> Unit =
-        remember { { onEmojiSelected(it) } }
+        remember { { onResult(it) } }
     Row(
         modifier = modifier,
     ) {
         EmojiView(
             emoji = "\uD83D\uDE1E",
-            textRes = com.shahzadian.baseui.R.string.dashboard_daily_check_in_hard,
+            textRes = R.string.dashboard_daily_check_in_hard,
             onSelected = {
                 emojiSelected(DashboardViewState.DailyCheckInResult.HARD)
             },
@@ -77,7 +78,7 @@ private fun EmojiBlockView(
         )
         EmojiView(
             emoji = "\uD83D\uDE10",
-            textRes = com.shahzadian.baseui.R.string.dashboard_daily_check_in_okay,
+            textRes = R.string.dashboard_daily_check_in_okay,
             onSelected = {
                 emojiSelected(DashboardViewState.DailyCheckInResult.OKAY)
             },
@@ -87,7 +88,7 @@ private fun EmojiBlockView(
         )
         EmojiView(
             emoji = "\uD83D\uDE04",
-            textRes = com.shahzadian.baseui.R.string.dashboard_daily_check_in_happy,
+            textRes = R.string.dashboard_daily_check_in_happy,
             onSelected = {
                 emojiSelected(DashboardViewState.DailyCheckInResult.HAPPY)
             },

@@ -20,4 +20,9 @@ internal sealed interface DashboardViewEvent : ViewEvent {
 
     @Immutable
     data object OnMotivationalNoteRefreshClicked : DashboardViewEvent
+
+    @Immutable
+    data class OnDailyCheckInClicked(
+        val result: DashboardViewState.DailyCheckInResult
+    ) : DashboardViewEvent
 }

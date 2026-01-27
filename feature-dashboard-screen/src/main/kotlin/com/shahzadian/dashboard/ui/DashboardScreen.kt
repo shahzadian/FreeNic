@@ -16,6 +16,8 @@ import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.dashboard.ui.dailycheckin.DailyCheckInConfirmationView
+import com.shahzadian.dashboard.ui.dailycheckin.DailyCheckInSelectionView
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewCommand
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewEvent
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewModel
@@ -77,6 +79,9 @@ private fun ContentView(
     val onMotivationalNoteRefreshClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteRefreshClicked) }
     }
+    val onDailyCheckInResultClick: (DashboardViewState.DailyCheckInResult) -> Unit = remember {
+        { onViewModelEvent(DashboardViewEvent.OnDailyCheckInClicked(it)) }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.dashboard_header_title),
         subtitle = TextWrapper.FromRes(R.string.dashboard_header_subtitle),
@@ -107,14 +112,13 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 32.dp)
         )
-//        if (data.shouldShowDailyCheckIn) {
-//            DailyCheckInView(
-//                onEmojiSelected = {},
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(bottom = 32.dp)
-//            )
-//        }
+        DailyCheckIn(
+            uiModel = data.dailyCheckIn,
+            onResult = onDailyCheckInResultClick,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 32.dp)
+        )
         MotivationalNoteView(
             noteUiModel = data.motivationalNote,
             onClicked = onMotivationalNoteRefreshClick,
@@ -122,5 +126,31 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
+    }
+}
+
+@Composable
+private fun DailyCheckIn(
+    uiModel: DashboardViewState.DailyCheckInUiModel,
+    onResult: (DashboardViewState.DailyCheckInResult) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    when (uiModel) {
+        is DashboardViewState.DailyCheckInUiModel.Selection -> {
+            DailyCheckInSelectionView(
+                onResult = onResult,
+                modifier = modifier,
+            )
+        }
+
+        is DashboardViewState.DailyCheckInUiModel.Confirmation -> {
+            DailyCheckInConfirmationView(
+                modifier = modifier,
+            )
+        }
+
+        is DashboardViewState.DailyCheckInUiModel.Hide -> {
+//            Hidden
+        }
     }
 }
