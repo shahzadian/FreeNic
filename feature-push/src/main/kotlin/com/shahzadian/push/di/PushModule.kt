@@ -1,17 +1,12 @@
 package com.shahzadian.push.di
 
-import android.content.Context
-import android.content.SharedPreferences
-import com.freenic.CommonConst
 import com.shahzadian.push.api.NotificationChecker
 import com.shahzadian.push.checkers.achievements.AchievementsNotificationChecker
 import com.shahzadian.push.dispatcher.PushDispatcher
 import com.shahzadian.push.dispatcher.PushDispatcherImpl
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import javax.inject.Singleton
@@ -33,12 +28,5 @@ abstract class PushBindModule {
 @InstallIn(SingletonComponent::class)
 object PushProvideModule {
 
-    @Provides
-    @Singleton
-    fun providePrefs(@ApplicationContext context: Context): SharedPreferences {
-        return context.getSharedPreferences(
-            CommonConst.PREF_NAME_APP_SETTINGS,
-            Context.MODE_PRIVATE
-        )
-    }
+
 }

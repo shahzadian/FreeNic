@@ -107,14 +107,14 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 32.dp)
         )
-        if (data.shouldShowDailyCheckIn) {
-            DailyCheckInView(
-                onEmojiSelected = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 32.dp)
-            )
-        }
+//        if (data.shouldShowDailyCheckIn) {
+//            DailyCheckInView(
+//                onEmojiSelected = {},
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(bottom = 32.dp)
+//            )
+//        }
         MotivationalNoteView(
             noteUiModel = data.motivationalNote,
             onClicked = onMotivationalNoteRefreshClick,

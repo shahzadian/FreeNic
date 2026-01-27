@@ -2,6 +2,7 @@ package com.shahzadian.push.checkers.achievements
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.freenic.CommonConst
 import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.achievements.domain.Achievement
 import com.shahzadian.achievements.domain.AchievementState
@@ -12,6 +13,7 @@ import com.shahzadian.push.api.NotificationChecker
 import com.shahzadian.push.api.PushNotificationData
 import dagger.Reusable
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * Чекер достижений: находит новые полностью достигнутые ачивки и формирует уведомления,
@@ -21,6 +23,7 @@ import javax.inject.Inject
 class AchievementsNotificationChecker @Inject constructor(
     private val getAchievementsUseCase: GetAchievementsUseCase,
     private val achievementStateProviderFactory: AchievementStateProviderFactory,
+    @param:Named(CommonConst.PREF_NAME_APP_SETTINGS)
     private val prefs: SharedPreferences,
 ) : NotificationChecker {
 

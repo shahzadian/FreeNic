@@ -79,6 +79,7 @@ dependencies {
     implementation(project(":feature-journey-calendar-screen"))
     implementation(project(":feature-app-rate"))
     implementation(project(":feature-push"))
+    implementation(project(":feature-daily-check-in"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))

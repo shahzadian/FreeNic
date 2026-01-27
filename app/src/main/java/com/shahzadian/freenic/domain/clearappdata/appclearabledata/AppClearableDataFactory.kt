@@ -1,6 +1,7 @@
 package com.shahzadian.freenic.domain.clearappdata.appclearabledata
 
 import android.content.Context
+import com.shahzadian.dailycheckin.domain.ClearAllDailyCheckInsUseCase
 import com.shahzadian.savingsgoal.domain.ClearSavingsGoalUseCase
 import com.shahzadian.slip.slipcase.domain.ClearSlipCasesUseCase
 import com.shahzadian.user.domain.getuserdata.ClearUserDataUseCase
@@ -17,6 +18,7 @@ internal class AppClearableDataFactoryImpl @Inject constructor(
     private val clearUserDataUseCase: ClearUserDataUseCase,
     private val clearSlipCasesUseCase: ClearSlipCasesUseCase,
     private val clearSavingsGoalUseCase: ClearSavingsGoalUseCase,
+    private val clearAllDailyCheckInsUseCase: ClearAllDailyCheckInsUseCase,
 ) : AppClearableDataFactory {
 
     override fun create(): List<AppClearableData> {
@@ -30,6 +32,9 @@ internal class AppClearableDataFactoryImpl @Inject constructor(
             ),
             SavingsGoalClearableData(
                 clearSavingsGoalUseCase = clearSavingsGoalUseCase,
+            ),
+            DailyCheckInClearableData(
+                clearAllDailyCheckInsUseCase = clearAllDailyCheckInsUseCase,
             )
         )
     }

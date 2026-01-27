@@ -71,7 +71,7 @@ internal class DashboardViewModel @Inject constructor(
                 state = DashboardViewState.Data(
                     analyticsData = dashboard.toMainProgress(),
                     motivationalNote = getMotivationalNotesUseCase().random().toUiModel(),
-                    shouldShowDailyCheckIn = true,
+                    dailyCheckInState = getDailyCheckInState(),
                 )
             )
         }
@@ -183,5 +183,9 @@ internal class DashboardViewModel @Inject constructor(
             _hasPaidSubscription = hasPaidSubscription
             hasPaidSubscription
         }
+    }
+
+    private suspend fun getDailyCheckInState(): DashboardViewState.DailyCheckInState {
+        return DashboardViewState.DailyCheckInState.Hide
     }
 }
