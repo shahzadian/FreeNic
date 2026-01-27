@@ -37,7 +37,7 @@ class AchievementsNotificationChecker @Inject constructor(
                 val state = provider.getAchievementState(achievement)
                 state is AchievementState.Unlocked && !alreadyShown.contains(achievement.id)
             }
-        return achievementsToShow.firstOrNull()?.let { achievement ->
+        return achievementsToShow.lastOrNull()?.let { achievement ->
             alreadyShown.addAll(achievementsToShow.map { it.id })
             prefs.edit().putStringSet(KEY_SHOWN_ACHIEVEMENT, alreadyShown).apply()
             listOf(buildPush(context, achievement))
