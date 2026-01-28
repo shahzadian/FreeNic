@@ -560,5 +560,7 @@
     <string name="paywall_promo_code_invalid">Неверный промокод.</string>
     <string name="paywall_promo_code_try_again">Попробовать снова</string>
     <string name="paywall_promo_code_blocked">Вы не можете ввести промокод сейчас. Попробуйте позже</string>
+    <string name="push_daily_check_in_title">Как прошел ваш день?</string>
+    <string name="push_daily_check_in_desc">Отметьте, как вы себя чувствовали сегодня</string>
 
 </resources>

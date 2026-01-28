@@ -17,6 +17,7 @@ class PushInitializer : Initializer<Unit> {
     override fun create(context: Context) {
         val entryPoint = EntryPointAccessors.fromApplication(context, PushInitializerEntryPoint::class.java)
         entryPoint.pushScheduler().scheduleDaily(context)
+        entryPoint.pushScheduler().scheduleEvening(context)
     }
 
     override fun dependencies(): MutableList<Class<out Initializer<*>>> =

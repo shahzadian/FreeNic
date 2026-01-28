@@ -2,6 +2,7 @@ package com.shahzadian.push.di
 
 import com.shahzadian.push.api.NotificationChecker
 import com.shahzadian.push.checkers.achievements.AchievementsNotificationChecker
+import com.shahzadian.push.checkers.evening.EveningSimpleReminderChecker
 import com.shahzadian.push.dispatcher.PushDispatcher
 import com.shahzadian.push.dispatcher.PushDispatcherImpl
 import dagger.Binds
@@ -22,6 +23,11 @@ abstract class PushBindModule {
     @Binds
     @IntoSet
     abstract fun bindAchievementsChecker(impl: AchievementsNotificationChecker): NotificationChecker
+
+    @Binds
+    @IntoSet
+    @Evening
+    abstract fun bindEveningSimpleReminderChecker(impl: EveningSimpleReminderChecker): NotificationChecker
 }
 
 @Module

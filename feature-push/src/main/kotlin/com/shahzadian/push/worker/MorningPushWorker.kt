@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
  * Worker, который раз в день опрашивает все зарегистрированные чекеры
  * и централизованно показывает уведомления.
  */
-class PushWorker(
+class MorningPushWorker(
     appContext: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(appContext, workerParams) {

@@ -5,7 +5,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.shahzadian.push.worker.PushWorker
+import com.shahzadian.push.worker.MorningPushWorker
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,7 +26,7 @@ class PushScheduler @Inject constructor() {
             next = next.plusDays(1)
         }
         val initialDelayMs = java.time.Duration.between(now, next).toMillis()
-        val workRequest = PeriodicWorkRequestBuilder<PushWorker>(
+        val workRequest = PeriodicWorkRequestBuilder<MorningPushWorker>(
             24, TimeUnit.HOURS
         )
             .setConstraints(constraints)
@@ -41,8 +41,38 @@ class PushScheduler @Inject constructor() {
         )
     }
 
+    fun scheduleEvening(context: Context) {
+        val constraints = androidx.work.Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+            .setRequiresBatteryNotLow(false)
+            .build()
+
+        val targetHour = 20  // 20:00 локального времени
+        val now = java.time.ZonedDateTime.now()
+        var next = now.withHour(targetHour).withMinute(0).withSecond(0).withNano(0)
+        if (!next.isAfter(now)) {
+            next = next.plusDays(1)
+        }
+        val initialDelayMs = java.time.Duration.between(now, next).toMillis()
+        val workRequest = PeriodicWorkRequestBuilder<com.shahzadian.push.worker.EveningPushWorker>(
+            24, TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .addTag(WORK_TAG_EVENING)
+            .setInitialDelay(initialDelayMs, TimeUnit.MILLISECONDS)
+            .build()
+
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            UNIQUE_NAME_EVENING,
+            ExistingPeriodicWorkPolicy.UPDATE,
+            workRequest
+        )
+    }
+
     companion object {
         private const val UNIQUE_NAME = "feature_push_daily_work"
         const val WORK_TAG = "feature_push_tag"
+        private const val UNIQUE_NAME_EVENING = "feature_push_evening_work"
+        const val WORK_TAG_EVENING = "feature_push_evening_tag"
     }
 }
