@@ -66,7 +66,7 @@
     <string name="dashboard_cigs_avoided_title">Брошено\nсигарет</string>
 
     <string name="dashboard_header_title">Главная</string>
-    <string name="dashboard_header_subtitle">С возвращением!</string>
+    <string name="dashboard_header_subtitle">С возвращением, %s!</string>
 
     <string name="dashboard_health_progress_title">Прогресс здоровья</string>
     <string name="dashboard_health_progress_heart_label">Здоровье сердца</string>
@@ -560,11 +560,11 @@
     <string name="paywall_promo_code_invalid">Неверный промокод.</string>
     <string name="paywall_promo_code_try_again">Попробовать снова</string>
     <string name="paywall_promo_code_blocked">Вы не можете ввести промокод сейчас. Попробуйте позже</string>
-    <string name="push_daily_check_in_title">Как прошел ваш день?</string>
+    <string name="push_daily_check_in_title">%s, как прошел ваш день?</string>
     <string name="push_daily_check_in_desc">Отметьте, как вы себя чувствовали сегодня</string>
-    <string name="push_savings_goal_existing_title">Ваша копилка растет!</string>
+    <string name="push_savings_goal_existing_title">%s, ваша копилка растет!</string>
     <string name="push_savings_goal_existing_desc">Уже сохранено %s</string>
-    <string name="push_savings_goal_none_title">Хотите начать копить?</string>
+    <string name="push_savings_goal_none_title">%s, хотите начать копить?</string>
     <string name="push_savings_goal_none_desc">Начните откладывать деньги, которые раньше уходили на сигареты</string>
     <string name="manage_subscription_restore_button">Восстановить покупку</string>
 

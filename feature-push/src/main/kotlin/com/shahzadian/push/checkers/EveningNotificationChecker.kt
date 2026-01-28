@@ -10,6 +10,7 @@ import com.shahzadian.dailycheckin.domain.GetDailyCheckInForDayUseCase
 import com.shahzadian.push.api.NotificationChecker
 import com.shahzadian.push.api.PushNotificationData
 import com.shahzadian.savingsgoal.domain.GetCurrentSavingsGoalUseCase
+import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import dagger.Reusable
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
@@ -27,6 +28,7 @@ class EveningNotificationChecker @Inject constructor(
     @param:Named(CommonConst.PREF_NAME_APP_SETTINGS)
     private val sharedPreferences: SharedPreferences,
     private val coroutineContexts: CoroutineContexts,
+    private val getUserDataUseCase: GetUserDataUseCase,
 ) : NotificationChecker {
 
     override suspend fun check(context: Context): List<PushNotificationData> {
@@ -36,7 +38,7 @@ class EveningNotificationChecker @Inject constructor(
             when (latestShownKey) {
                 NOTIFICATION_ID_DAILY_CHECK_IN -> {
                     val savingsGoalData = getSavingsGoalData(context)
-                    toReturn.add(savingsGoalData)
+                    savingsGoalData?.let { toReturn.add(savingsGoalData) }
                     sharedPreferences.edit()
                         .putInt(PREF_KEY_LATEST_SHOWN_PUSH_ID, NOTIFICATION_ID_SAVINGS_GOAL).apply()
                 }
@@ -50,7 +52,7 @@ class EveningNotificationChecker @Inject constructor(
                             .apply()
                     } ?: let {
                         val savingsGoalData = getSavingsGoalData(context)
-                        toReturn.add(savingsGoalData)
+                        savingsGoalData?.let { toReturn.add(savingsGoalData) }
                         sharedPreferences.edit()
                             .putInt(PREF_KEY_LATEST_SHOWN_PUSH_ID, NOTIFICATION_ID_SAVINGS_GOAL)
                             .apply()
@@ -66,7 +68,7 @@ class EveningNotificationChecker @Inject constructor(
                             .apply()
                     } ?: let {
                         val savingsGoalData = getSavingsGoalData(context)
-                        toReturn.add(savingsGoalData)
+                        savingsGoalData?.let { toReturn.add(savingsGoalData) }
                         sharedPreferences.edit()
                             .putInt(PREF_KEY_LATEST_SHOWN_PUSH_ID, NOTIFICATION_ID_SAVINGS_GOAL)
                             .apply()
@@ -83,7 +85,10 @@ class EveningNotificationChecker @Inject constructor(
             return null
         }
 
-        val title = context.getString(R.string.push_daily_check_in_title)
+        val userData = getUserDataUseCase() ?: return null
+
+        val title =
+            context.getString(R.string.push_daily_check_in_title, userData.personalData.name)
         val message = context.getString(R.string.push_daily_check_in_desc)
         return PushNotificationData(
             notificationId = NOTIFICATION_ID_DAILY_CHECK_IN,
@@ -96,18 +101,22 @@ class EveningNotificationChecker @Inject constructor(
         )
     }
 
-    private suspend fun getSavingsGoalData(context: Context): PushNotificationData {
+    private suspend fun getSavingsGoalData(context: Context): PushNotificationData? {
         val pendingIntent = PushNotificationData.getDefaultPendingIntent(
             context = context,
             targetScreen = AppScreen.GoalsScreen,
         )
+        val userData = getUserDataUseCase() ?: return null
         return getCurrentSavingsGoalUseCase()?.let { goal ->
             if (goal.currentAmount == 0f) return@let null
             val savedAMount = "${goal.currentAmount}${goal.currency ?: ""}"
             PushNotificationData(
                 notificationId = NOTIFICATION_ID_SAVINGS_GOAL,
                 channelId = CHANNEL_EVENING,
-                title = context.getString(R.string.push_savings_goal_existing_title),
+                title = context.getString(
+                    R.string.push_savings_goal_existing_title,
+                    userData.personalData.name,
+                ),
                 message = context.getString(R.string.push_savings_goal_existing_desc, savedAMount),
                 iconRes = com.shahzadian.push.R.drawable.ic_push_icon,
                 dedupKey = "evening_savings_goal:${LocalDate.now()}",
@@ -116,7 +125,10 @@ class EveningNotificationChecker @Inject constructor(
         } ?: PushNotificationData(
             notificationId = NOTIFICATION_ID_SAVINGS_GOAL,
             channelId = CHANNEL_EVENING,
-            title = context.getString(R.string.push_savings_goal_none_title),
+            title = context.getString(
+                R.string.push_savings_goal_none_title,
+                userData.personalData.name,
+            ),
             message = context.getString(R.string.push_savings_goal_none_desc),
             iconRes = com.shahzadian.push.R.drawable.ic_push_icon,
             dedupKey = "evening_savings_goal:${LocalDate.now()}",

@@ -18,8 +18,6 @@ import com.shahzadian.dashboard.domain.GetUserDashboardUseCase
 import com.shahzadian.dashboard.domain.UserDashboard
 import com.shahzadian.helpfulnotes.domain.GetMotivationalNotesUseCase
 import com.shahzadian.helpfulnotes.domain.MotivationalNote
-import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
-import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -29,7 +27,6 @@ import javax.inject.Inject
 internal class DashboardViewModel @Inject constructor(
     private val getUserDashboardUseCase: GetUserDashboardUseCase,
     private val getCravingToolsUseCase: GetCravingToolsUseCase,
-    private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val getMotivationalNotesUseCase: GetMotivationalNotesUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
     private val getDailyCheckInForDayUseCase: GetDailyCheckInForDayUseCase,
@@ -37,7 +34,6 @@ internal class DashboardViewModel @Inject constructor(
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
     private var latestCravingToolId: String? = null
-    private var _hasPaidSubscription: Boolean? = null
 
     init {
         setData()
@@ -81,6 +77,7 @@ internal class DashboardViewModel @Inject constructor(
                 ?: throw IllegalStateException("User dashboard is null")
             setViewState(
                 state = DashboardViewState.Data(
+                    userName = dashboard.userName,
                     analyticsData = dashboard.toMainProgress(),
                     motivationalNote = getMotivationalNotesUseCase().random().toUiModel(),
                     dailyCheckIn = getDailyCheckInState(),
@@ -186,15 +183,6 @@ internal class DashboardViewModel @Inject constructor(
         return DashboardViewState.MotivationalNoteUiModel(
             text = this.text,
         )
-    }
-
-    private suspend fun hasUserPaidSubscription(): Boolean {
-        return _hasPaidSubscription ?: let {
-            val hasPaidSubscription =
-                getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription
-            _hasPaidSubscription = hasPaidSubscription
-            hasPaidSubscription
-        }
     }
 
     private fun onDailyCheckInClicked(result: DashboardViewState.DailyCheckInResult) {

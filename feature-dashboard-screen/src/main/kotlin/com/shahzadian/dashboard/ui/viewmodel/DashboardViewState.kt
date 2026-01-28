@@ -11,6 +11,7 @@ internal sealed interface DashboardViewState : ViewState {
     data object Loading : DashboardViewState
 
     data class Data(
+        val userName: String,
         val analyticsData: DashboardAnalyticsUiModel,
         val motivationalNote: MotivationalNoteUiModel,
         val dailyCheckIn: DailyCheckInUiModel,

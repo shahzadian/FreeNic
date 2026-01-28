@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":feature-daily-check-in"))
     implementation(project(":feature-subscription"))
     implementation(project(":feature-savings-goal"))
+    implementation(project(":data-user"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.hilt.android)

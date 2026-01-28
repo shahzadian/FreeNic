@@ -74,7 +74,7 @@
     <string name="dashboard_cigs_avoided_title">Cigarettes\navoided</string>
 
     <string name="dashboard_header_title">Dashboard</string>
-    <string name="dashboard_header_subtitle">Welcome back!</string>
+    <string name="dashboard_header_subtitle">Welcome back, %s!</string>
     <string name="dashboard_health_progress_title">Health progress</string>
     <string name="dashboard_health_progress_heart_label">Heart health</string>
     <string name="dashboard_health_progress_energy_label">Energy improvement</string>
@@ -567,11 +567,11 @@
     <string name="paywall_promo_code_invalid">Invalid promo code.</string>
     <string name="paywall_promo_code_try_again">Try again</string>
     <string name="paywall_promo_code_blocked">You cannot enter promo code right now. Try again later</string>
-    <string name="push_daily_check_in_title">How was your day?</string>
+    <string name="push_daily_check_in_title">%s, how was your day?</string>
     <string name="push_daily_check_in_desc">Tell us how you felt today</string>
-    <string name="push_savings_goal_existing_title">Your savings are growing!</string>
+    <string name="push_savings_goal_existing_title">%s, your savings are growing!</string>
     <string name="push_savings_goal_existing_desc">You\'ve already saved %s</string>
-    <string name="push_savings_goal_none_title">Want to start saving?</string>
+    <string name="push_savings_goal_none_title">%s, want to start saving?</string>
     <string name="push_savings_goal_none_desc">Start saving the money you used to spend on cigarettes</string>
     <string name="manage_subscription_restore_button">Restore subscription</string>
 

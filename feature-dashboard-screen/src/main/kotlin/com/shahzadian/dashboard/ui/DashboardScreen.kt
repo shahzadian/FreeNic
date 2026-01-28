@@ -84,7 +84,7 @@ private fun ContentView(
     }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.dashboard_header_title),
-        subtitle = TextWrapper.FromRes(R.string.dashboard_header_subtitle),
+        subtitle = TextWrapper.FromRes(R.string.dashboard_header_subtitle, listOf(data.userName)),
         modifier = modifier,
     ) {
         DashboardAnalyticsView(

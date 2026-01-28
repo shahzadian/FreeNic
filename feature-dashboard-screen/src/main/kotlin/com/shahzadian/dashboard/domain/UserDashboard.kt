@@ -1,6 +1,7 @@
 package com.shahzadian.dashboard.domain
 
 internal class UserDashboard(
+    val userName: String,
     val mainProgressData: MainProgressData,
 )
 

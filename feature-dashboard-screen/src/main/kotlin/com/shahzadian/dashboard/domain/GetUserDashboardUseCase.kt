@@ -19,6 +19,7 @@ internal class GetUserDashboardUseCaseImpl @Inject constructor(
         val userData = getUserDataUseCase() ?: return null
         val userDataHelper = userDataHelperFactory.create(userData)
         return UserDashboard(
+            userName = userData.personalData.name,
             mainProgressData = MainProgressData(
                 noCigDays = userDataHelper.getSkippedDaysCount(),
                 savedMoney = userDataHelper.getSavedMoney(),
