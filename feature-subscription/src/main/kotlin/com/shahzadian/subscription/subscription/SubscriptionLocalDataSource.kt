@@ -1,8 +1,9 @@
 package com.shahzadian.subscription.subscription
 
-import android.content.Context
-import dagger.hilt.android.qualifiers.ApplicationContext
+import android.content.SharedPreferences
+import com.freenic.CommonConst
 import javax.inject.Inject
+import javax.inject.Named
 
 internal interface SubscriptionLocalDataSource {
     fun getCurrentPlanId(): String?
@@ -14,12 +15,9 @@ internal interface SubscriptionLocalDataSource {
 }
 
 internal class SubscriptionLocalDataSourceImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context
+    @param:Named(CommonConst.PREF_NAME_APP_SETTINGS)
+    private val prefs: SharedPreferences,
 ) : SubscriptionLocalDataSource {
-
-    private val prefs by lazy {
-        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    }
 
     override fun getCurrentPlanId(): String? =
         prefs.getString(KEY_PLAN_ID, null)
@@ -51,7 +49,6 @@ internal class SubscriptionLocalDataSourceImpl @Inject constructor(
     }
 
     private companion object {
-        const val PREFS_NAME = "subscription_prefs"
         const val KEY_PLAN_ID = "current_plan_id"
         const val KEY_EXPIRES_AT = "current_expires_at"
         const val KEY_IS_AUTO_RENEWING = "is_auto_renewing"

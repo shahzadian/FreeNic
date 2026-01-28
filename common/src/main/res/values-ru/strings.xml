@@ -22,7 +22,7 @@
     <string name="onboarding_4_submit">Я готов!</string>
 
     <!--    Data fill-->
-    <string name="data_fill_start_title">Расскажи немного о себе</string>
+    <string name="data_fill_start_title">Расскажите немного о себе</string>
     <string name="data_fill_start_subtitle">Чтобы мы помогли вам бросить эффективнее</string>
     <string name="data_fill_submit_button">Продолжить</string>
     <string name="data_fill_about_title">Немного о Вас</string>
