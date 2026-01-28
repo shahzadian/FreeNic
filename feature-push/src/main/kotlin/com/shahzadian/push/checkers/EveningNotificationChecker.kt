@@ -3,6 +3,7 @@ package com.shahzadian.push.checkers
 import android.content.Context
 import android.content.SharedPreferences
 import com.freenic.CommonConst
+import com.freenic.ui.AppScreen
 import com.freenic.ui.model.CoroutineContexts
 import com.shahzadian.baseui.R
 import com.shahzadian.dailycheckin.domain.GetDailyCheckInForDayUseCase
@@ -91,10 +92,15 @@ class EveningNotificationChecker @Inject constructor(
             message = message,
             iconRes = com.shahzadian.push.R.drawable.ic_push_icon, // тот же iconRes
             dedupKey = "evening_simple_reminder:${LocalDate.now()}",
+            pendingIntent = PushNotificationData.getDefaultPendingIntent(context)
         )
     }
 
     private suspend fun getSavingsGoalData(context: Context): PushNotificationData {
+        val pendingIntent = PushNotificationData.getDefaultPendingIntent(
+            context = context,
+            targetScreen = AppScreen.GoalsScreen,
+        )
         return getCurrentSavingsGoalUseCase()?.let { goal ->
             if (goal.currentAmount == 0f) return@let null
             val savedAMount = "${goal.currentAmount}${goal.currency ?: ""}"
@@ -105,6 +111,7 @@ class EveningNotificationChecker @Inject constructor(
                 message = context.getString(R.string.push_savings_goal_existing_desc, savedAMount),
                 iconRes = com.shahzadian.push.R.drawable.ic_push_icon,
                 dedupKey = "evening_savings_goal:${LocalDate.now()}",
+                pendingIntent = pendingIntent,
             )
         } ?: PushNotificationData(
             notificationId = NOTIFICATION_ID_SAVINGS_GOAL,
@@ -113,6 +120,7 @@ class EveningNotificationChecker @Inject constructor(
             message = context.getString(R.string.push_savings_goal_none_desc),
             iconRes = com.shahzadian.push.R.drawable.ic_push_icon,
             dedupKey = "evening_savings_goal:${LocalDate.now()}",
+            pendingIntent = pendingIntent,
         )
     }
 

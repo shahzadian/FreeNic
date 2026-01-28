@@ -54,6 +54,7 @@ class MorningNotificationChecker @Inject constructor(
             message = message,
             iconRes = com.shahzadian.push.R.drawable.ic_push_icon,
             dedupKey = "achievement:${achievement.id}",
+            pendingIntent = PushNotificationData.getDefaultPendingIntent(context)
         )
     }
 
