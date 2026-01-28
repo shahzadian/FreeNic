@@ -80,6 +80,7 @@ internal fun SlipDateView(
         AppDatePickerDialog(
             initialDateMillis = data.millis,
             maxDateMillis = System.currentTimeMillis(),
+            minDateMillis = data.minimalSlipDateMillis,
             onDismissRequest = onDismiss,
             onDateConfirmed = onConfirmed,
         )

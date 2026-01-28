@@ -29,6 +29,7 @@ internal interface SlipReasonViewState : ViewState {
     @Immutable
     data class SlipDateUiModel(
         val millis: Long,
+        val minimalSlipDateMillis: Long,
         val displayableDate: TextWrapper,
     )
 }

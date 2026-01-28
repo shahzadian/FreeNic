@@ -15,6 +15,7 @@ import com.shahzadian.slip.slipcase.domain.CreateSlipCaseUseCase
 import com.shahzadian.slip.slipcase.domain.SlipCase
 import com.shahzadian.slip.slipreason.domain.GetSlipReasonsUseCase
 import com.shahzadian.slip.slipreason.domain.SlipReason
+import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.Instant
@@ -28,6 +29,7 @@ internal class SlipReasonViewModel @Inject constructor(
     private val getSlipReasonsUseCase: GetSlipReasonsUseCase,
     private val createSlipCaseUseCase: CreateSlipCaseUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
+    private val getUserDataUseCase: GetUserDataUseCase,
 ) : BaseViewModel<SlipReasonViewState, SlipReasonViewEvent, SlipReasonViewCommand>() {
 
     private var selectedReasonId: String? = null
@@ -66,6 +68,8 @@ internal class SlipReasonViewModel @Inject constructor(
         viewModelScope.launch {
             val reasons = getSlipReasonsUseCase()
                 .map { it.toUiModel() }
+            val quitDate = getUserDataUseCase()?.quitData?.quitDateMillis
+                ?: throw IllegalStateException("Quit data is null")
             setViewState(
                 SlipReasonViewState.Data(
                     isSubmitButtonEnabled = selectedReasonId != null,
@@ -73,6 +77,7 @@ internal class SlipReasonViewModel @Inject constructor(
                     slipReasons = reasons,
                     slipDateUiModel = SlipReasonViewState.SlipDateUiModel(
                         millis = slipDate,
+                        minimalSlipDateMillis = quitDate,
                         displayableDate = getDisplayableSlipDate()
                     )
                 )
@@ -84,6 +89,8 @@ internal class SlipReasonViewModel @Inject constructor(
         viewModelScope.launch {
             val reasons = (viewState as? SlipReasonViewState.Data)?.slipReasons
                 ?: getSlipReasonsUseCase().map { it.toUiModel() }
+            val quitDate = getUserDataUseCase()?.quitData?.quitDateMillis
+                ?: throw IllegalStateException("Quit data is null")
             setViewState(
                 SlipReasonViewState.Data(
                     isSubmitButtonEnabled = selectedReasonId != null,
@@ -91,6 +98,7 @@ internal class SlipReasonViewModel @Inject constructor(
                     slipReasons = reasons,
                     slipDateUiModel = SlipReasonViewState.SlipDateUiModel(
                         millis = slipDate,
+                        minimalSlipDateMillis = quitDate,
                         displayableDate = getDisplayableSlipDate()
                     )
                 )
@@ -104,10 +112,14 @@ internal class SlipReasonViewModel @Inject constructor(
                 AnalyticsEvent(
                     name = AnalyticsEventConst.SLIP_REASON_CONFIRM_TAP,
                     params = mapOf(
-                        AnalyticsEventConst.SLIP_REASON_CONFIRM_PARAM_REASON_ID to requireNotNull(selectedReasonId) {
+                        AnalyticsEventConst.SLIP_REASON_CONFIRM_PARAM_REASON_ID to requireNotNull(
+                            selectedReasonId
+                        ) {
                             "Selected reason id is null."
                         }.asAnalyticsProperty(),
-                        AnalyticsEventConst.SLIP_REASON_CONFIRM_PARAM_WAS_SLIP_TODAY to DateUtils.isToday(slipDate)
+                        AnalyticsEventConst.SLIP_REASON_CONFIRM_PARAM_WAS_SLIP_TODAY to DateUtils.isToday(
+                            slipDate
+                        )
                             .asAnalyticsProperty()
                     )
                 )
