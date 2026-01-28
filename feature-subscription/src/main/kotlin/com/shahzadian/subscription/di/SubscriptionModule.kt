@@ -16,6 +16,10 @@ import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCaseImpl
 import com.shahzadian.subscription.domain.SubscribeToPremiumUseCase
 import com.shahzadian.subscription.domain.SubscribeToPremiumUseCaseImpl
+import com.shahzadian.subscription.domain.UpdateSubscriptionUseCase
+import com.shahzadian.subscription.domain.UpdateSubscriptionUseCaseImpl
+import com.shahzadian.subscription.paywall.ui.PromoCodeHelper
+import com.shahzadian.subscription.paywall.ui.PromoCodeHelperImpl
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapper
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapperImpl
 import com.shahzadian.subscription.subscription.BillingDataSource
@@ -78,4 +82,10 @@ internal interface SubscriptionModule {
     fun bindCancelSubscriptionUseCase(
         impl: CancelSubscriptionUseCaseImpl
     ): CancelSubscriptionUseCase
+
+    @Binds
+    fun bindUpdateSubscriptionUseCase(impl: UpdateSubscriptionUseCaseImpl): UpdateSubscriptionUseCase
+
+    @Binds
+    fun bindPromoCodeHelper(impl: PromoCodeHelperImpl): PromoCodeHelper
 }

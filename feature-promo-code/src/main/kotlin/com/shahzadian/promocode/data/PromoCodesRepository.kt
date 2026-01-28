@@ -6,7 +6,6 @@ import com.google.firebase.remoteconfig.remoteConfig
 import com.google.firebase.remoteconfig.remoteConfigSettings
 import com.shahzadian.promocode.domain.PromoCodeBehavior
 import com.shahzadian.promocode.domain.PromoCodeData
-import com.shahzadian.promocode.domain.PromoCodeExpiration
 import org.json.JSONArray
 import javax.inject.Inject
 
@@ -38,8 +37,10 @@ internal class PromoCodesRepositoryImpl @Inject constructor() : PromoCodesReposi
         for (i in 0 until json.length()) {
             if (json.getString(i) == code) {
                 promoCodeData = PromoCodeData(
-                    behavior = PromoCodeBehavior.PremiumSubscription,
-                    expiration = PromoCodeExpiration.Never,
+                    behavior = PromoCodeBehavior.PremiumSubscription(
+//                        TODO change dependent on JSON
+                        expiration = PromoCodeBehavior.PremiumSubscription.Expiration.Month
+                    ),
                 )
             }
         }

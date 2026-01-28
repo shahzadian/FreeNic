@@ -1,6 +1,5 @@
 package com.shahzadian.subscription.paywall.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,13 +24,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withLink
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.navigation.AppNavigator
+import com.freenic.ui.AppInputDialog
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
 import com.freenic.ui.extensions.MainSubmitButton
@@ -98,21 +103,26 @@ private fun ContentView(
     val subscriptionTermsClick = remember {
         { onEvent(PaywallViewEvent.OnSubscriptionTermsClicked) }
     }
+    val promoCodeEnterEvent: (String) -> Unit = remember {
+        { onEvent(PaywallViewEvent.OnPromoCodeEntered(it)) }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.paywall_page_title),
         hasBackIcon = true,
         onBackIconClicked = backIconClick,
         modifier = modifier,
     ) {
-        HeaderView(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
-        )
         SubscriptionPlansView(
             plans = data.subscriptionPlans,
             defaultPlanId = data.defaultSelectedPlanId,
             onUpgradeClicked = upgradeClickEvent,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        PromoCodeView(
+            state = data.promoCodeState,
+            onPromoCodeEntered = promoCodeEnterEvent,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
@@ -137,34 +147,108 @@ private fun ContentView(
 }
 
 @Composable
-private fun HeaderView(
+private fun PromoCodeView(
+    state: PaywallViewState.PromoCodeState,
+    onPromoCodeEntered: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Image(
-            painter = painterResource(com.shahzadian.subscription.R.drawable.ic_paywall_header),
-            contentDescription = "paywall header",
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        Text(
-            text = stringResource(R.string.paywall_header_title),
-            color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.headlineLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(bottom = 8.dp)
-        )
-        Text(
-            text = stringResource(R.string.paywall_header_subtitle),
-            color = MaterialTheme.colorScheme.onSecondary,
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(bottom = 16.dp)
+    var shouldShowPromoCodeDialog by remember { mutableStateOf(false) }
+    val tryAgainClick = remember {
+        { shouldShowPromoCodeDialog = true }
+    }
+    when (state) {
+        is PaywallViewState.PromoCodeState.Default -> {
+            Text(
+                text = stringResource(R.string.paywall_promo_code_text),
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = modifier
+                    .noIndicationClick {
+                        shouldShowPromoCodeDialog = true
+                    },
+                textAlign = TextAlign.Center,
+                textDecoration = TextDecoration.Underline,
+            )
+        }
+
+        is PaywallViewState.PromoCodeState.Loading -> {
+            Text(
+                text = stringResource(R.string.paywall_promo_code_loading),
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = modifier,
+                textAlign = TextAlign.Center,
+            )
+        }
+
+        is PaywallViewState.PromoCodeState.ValidationResult -> {
+            if (state.isValid) {
+                Text(
+                    text = stringResource(R.string.paywall_promo_code_success),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = modifier,
+                    textAlign = TextAlign.Center,
+                )
+            } else {
+                val text = buildAnnotatedString {
+                    withStyle(
+                        SpanStyle(
+                            color = MaterialTheme.colorScheme.error,
+                        )
+                    ) {
+                        append(stringResource(R.string.paywall_promo_code_invalid))
+                    }
+                    append(" ")
+                    withLink(
+                        LinkAnnotation.Clickable(
+                            tag = "try_again",
+                            styles = TextLinkStyles(
+                                style = SpanStyle(
+                                    color = MaterialTheme.colorScheme.primary,
+                                )
+                            ),
+                            linkInteractionListener = { tryAgainClick() }
+                        )
+                    ) {
+                        append(stringResource(R.string.paywall_promo_code_try_again))
+                    }
+                }
+                Text(
+                    text = text,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = modifier,
+                    textAlign = TextAlign.Center,
+                )
+            }
+        }
+
+        is PaywallViewState.PromoCodeState.Blocked -> {
+            Text(
+                text = stringResource(R.string.paywall_promo_code_blocked),
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = modifier,
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
+    if (shouldShowPromoCodeDialog) {
+        AppInputDialog(
+            onDismissRequest = {
+                shouldShowPromoCodeDialog = false
+            },
+            onConfirm = { promoCode ->
+                shouldShowPromoCodeDialog = false
+                onPromoCodeEntered(promoCode)
+            },
+            title = stringResource(R.string.paywall_promo_code_text),
+            label = stringResource(R.string.paywall_promo_code_input_label),
         )
     }
 }
+
 
 @Composable
 private fun PaidFeaturesBlock(

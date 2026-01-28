@@ -14,8 +14,10 @@ import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
 import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCase
 import com.shahzadian.subscription.domain.PaidFeature
 import com.shahzadian.subscription.domain.UserSubscriptionStatusChanged
+import com.shahzadian.subscription.paywall.ui.PromoCodeHelper
 import com.shahzadian.subscription.paywall.ui.SubscriptionPlanMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -28,6 +30,7 @@ internal class PaywallViewModel @Inject constructor(
     private val subscriptionPlanMapper: SubscriptionPlanMapper,
     private val analyticsEventSender: AnalyticsEventSender,
     private val activityEventSender: ActivityEventSender,
+    private val promoCodeHelper: PromoCodeHelper,
 ) : BaseViewModel<PaywallViewState, PaywallViewEvent, PaywallViewCommand>() {
 
     override val initState: PaywallViewState by lazyUnsafe { PaywallViewState.Loading }
@@ -56,6 +59,10 @@ internal class PaywallViewModel @Inject constructor(
             is PaywallViewEvent.OnSubscriptionTermsClicked -> {
                 onSubscriptionTermsClicked()
             }
+
+            is PaywallViewEvent.OnPromoCodeEntered -> {
+                onPromoCodeEntered(event.promoCode)
+            }
         }
     }
 
@@ -77,7 +84,12 @@ internal class PaywallViewModel @Inject constructor(
                     defaultSelectedPlanId = planUiModels
                         .firstOrNull { it.savingPercents != null }
                         ?.id
-                        ?: planUiModels.first().id
+                        ?: planUiModels.first().id,
+                    promoCodeState = if (promoCodeHelper.canEnterPromoCode()) {
+                        PaywallViewState.PromoCodeState.Default
+                    } else {
+                        PaywallViewState.PromoCodeState.Blocked
+                    },
                 )
             )
         }
@@ -107,6 +119,45 @@ internal class PaywallViewModel @Inject constructor(
             subtitle = this.description,
             icon = this.icon,
         )
+    }
+
+    private fun onPromoCodeEntered(promoCode: String) {
+        val state = viewStateFlow.value as? PaywallViewState.Data ?: return
+        viewModelScope.launch {
+            setViewState(state.copy(promoCodeState = PaywallViewState.PromoCodeState.Loading))
+            val isPromoCodeValid = promoCodeHelper.onPromoCodeEntered(promoCode)
+            if (isPromoCodeValid) {
+                setViewState(
+                    state.copy(
+                        promoCodeState = PaywallViewState.PromoCodeState.ValidationResult(
+                            isValid = true,
+                        )
+                    )
+                )
+                delay(2000)
+                sendViewCommand(
+                    PaywallViewCommand.NavigateTo(
+                        AppScreen.DashboardScreen
+                    )
+                )
+            } else {
+                if (promoCodeHelper.canEnterPromoCode()) {
+                    setViewState(
+                        state.copy(
+                            promoCodeState = PaywallViewState.PromoCodeState.ValidationResult(
+                                isValid = false,
+                            )
+                        )
+                    )
+                } else {
+                    setViewState(
+                        state.copy(
+                            promoCodeState = PaywallViewState.PromoCodeState.Blocked
+                        )
+                    )
+                }
+            }
+        }
     }
 
     private fun onUpgradeClicked(

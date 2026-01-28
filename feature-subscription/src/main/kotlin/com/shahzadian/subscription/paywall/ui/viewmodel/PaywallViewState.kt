@@ -16,6 +16,7 @@ internal sealed interface PaywallViewState : ViewState {
         val paidFeatures: List<PaidFeatureUiModel>,
         val subscriptionPlans: List<SubscriptionPlanUiModel>,
         val defaultSelectedPlanId: String,
+        val promoCodeState: PromoCodeState,
     ) : PaywallViewState
 
     @Immutable
@@ -35,4 +36,21 @@ internal sealed interface PaywallViewState : ViewState {
         val currency: String,
         val savingPercents: Int? = null,
     )
+
+    @Immutable
+    sealed interface PromoCodeState {
+
+        @Immutable
+        data object Default : PromoCodeState
+
+        @Immutable
+        data object Loading : PromoCodeState
+
+        data object Blocked : PromoCodeState
+
+        @Immutable
+        data class ValidationResult(
+            val isValid: Boolean,
+        ) : PromoCodeState
+    }
 }

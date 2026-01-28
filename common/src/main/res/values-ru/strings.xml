@@ -553,5 +553,12 @@
     <string name="calendar_event_daily_check_in_okay">Обычный день</string>
     <string name="calendar_event_daily_check_in_happy">Хороший день</string>
     <string name="calendar_event_daily_check_in_desc">Вы отметили этот день</string>
+    <string name="paywall_promo_code_text">Есть промокод?</string>
+    <string name="paywall_promo_code_input_label">Введите код</string>
+    <string name="paywall_promo_code_loading">Проверяем промокод</string>
+    <string name="paywall_promo_code_success">Промокод применен</string>
+    <string name="paywall_promo_code_invalid">Неверный промокод.</string>
+    <string name="paywall_promo_code_try_again">Попробовать снова</string>
+    <string name="paywall_promo_code_blocked">Вы не можете ввести промокод сейчас. Попробуйте позже</string>
 
 </resources>

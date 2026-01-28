@@ -2,15 +2,17 @@ package com.shahzadian.promocode.domain
 
 class PromoCodeData(
     val behavior: PromoCodeBehavior,
-    val expiration: PromoCodeExpiration,
 )
 
 sealed interface PromoCodeBehavior {
 
-    data object PremiumSubscription : PromoCodeBehavior
-}
+    data class PremiumSubscription(
+        val expiration: Expiration,
+    ) : PromoCodeBehavior {
 
-sealed interface PromoCodeExpiration {
-
-    data object Never : PromoCodeExpiration
+        sealed interface Expiration {
+            object Month : Expiration
+            object Year : Expiration
+        }
+    }
 }

@@ -560,5 +560,12 @@
     <string name="calendar_event_daily_check_in_okay">An ordinary day</string>
     <string name="calendar_event_daily_check_in_happy">A good day</string>
     <string name="calendar_event_daily_check_in_desc">You marked this day</string>
+    <string name="paywall_promo_code_text">Have a promo code?</string>
+    <string name="paywall_promo_code_input_label">Enter code</string>
+    <string name="paywall_promo_code_loading">Checking promo code</string>
+    <string name="paywall_promo_code_success">Promo code applied</string>
+    <string name="paywall_promo_code_invalid">Invalid promo code.</string>
+    <string name="paywall_promo_code_try_again">Try again</string>
+    <string name="paywall_promo_code_blocked">You cannot enter promo code right now. Try again later</string>
 
 </resources>
