@@ -1,6 +1,8 @@
 package com.shahzadian.subscription.domain
 
 import com.shahzadian.subscription.subscription.SubscriptionRepository
+import java.time.Instant
+import java.time.ZoneId
 import javax.inject.Inject
 
 internal interface UpdateSubscriptionUseCase {
@@ -20,13 +22,24 @@ internal class UpdateSubscriptionUseCaseImpl @Inject constructor(
     }
 
     private fun SubscriptionPlan.getExpirationMillis(): Long {
+        val nowMillis = System.currentTimeMillis()
         return when (this.paymentFrequency) {
             SubscriptionPlan.PaymentFrequency.MONTHLY -> {
-                System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 30
+                Instant
+                    .ofEpochMilli(nowMillis)
+                    .atZone(ZoneId.systemDefault())
+                    .plusMonths(1)
+                    .toInstant()
+                    .toEpochMilli()
             }
 
             SubscriptionPlan.PaymentFrequency.ANNUAL -> {
-                System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 365
+                Instant
+                    .ofEpochMilli(nowMillis)
+                    .atZone(ZoneId.systemDefault())
+                    .plusYears(1)
+                    .toInstant()
+                    .toEpochMilli()
             }
         }
     }

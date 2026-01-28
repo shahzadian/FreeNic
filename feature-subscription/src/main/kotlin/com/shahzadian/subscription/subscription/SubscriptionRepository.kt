@@ -11,6 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
+import java.util.Calendar
 import javax.inject.Inject
 
 internal interface SubscriptionRepository {
@@ -32,7 +33,7 @@ internal interface SubscriptionRepository {
 }
 
 internal class SubscriptionRepositoryImpl @Inject constructor(
-    @ApplicationContext private val appContext: Context,
+    @param:ApplicationContext private val appContext: Context,
     private val local: SubscriptionLocalDataSource,
     private val plansRepository: SubscriptionPlansRepository,
     private val billing: BillingDataSource
@@ -44,6 +45,9 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
     override suspend fun onSubscriptionUpdated(planId: String?, expiresAtMillis: Long?) {
         stateMutex.withLock {
             local.setCurrentPlanId(planId)
+            Calendar.getInstance().apply {
+                timeInMillis = expiresAtMillis!!
+            }
             local.setCurrentExpiresAtMillis(expiresAtMillis)
         }
     }
@@ -77,6 +81,13 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
                     ?: throw IllegalStateException("Unknown plan ID: $planId")
             val expiresAt = local.getCurrentExpiresAtMillis()
                 ?: throw IllegalStateException("No expiresAtMillis for plan ID: $planId")
+            if (expiresAt <= System.currentTimeMillis()) {
+                onSubscriptionUpdated(
+                    planId = null,
+                    expiresAtMillis = null
+                )
+                return@withLock UserSubscriptionStatus.NoSubscription
+            }
             val isAutoRenewing = local.getIsAutoRenewing()
             UserSubscriptionStatus.HasSubscription(
                 plan = plan,
@@ -119,14 +130,14 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
     }
 
     private fun addMonthsMillis(baseMillis: Long, months: Int): Long =
-        java.util.Calendar.getInstance().apply {
+        Calendar.getInstance().apply {
             timeInMillis = baseMillis
-            add(java.util.Calendar.MONTH, months)
+            add(Calendar.MONTH, months)
         }.timeInMillis
 
     private fun addYearsMillis(baseMillis: Long, years: Int): Long =
-        java.util.Calendar.getInstance().apply {
+        Calendar.getInstance().apply {
             timeInMillis = baseMillis
-            add(java.util.Calendar.YEAR, years)
+            add(Calendar.YEAR, years)
         }.timeInMillis
 }
