@@ -80,6 +80,7 @@ dependencies {
     implementation(project(":feature-app-rate"))
     implementation(project(":feature-push"))
     implementation(project(":feature-daily-check-in"))
+    implementation(project(":feature-promo-code"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))

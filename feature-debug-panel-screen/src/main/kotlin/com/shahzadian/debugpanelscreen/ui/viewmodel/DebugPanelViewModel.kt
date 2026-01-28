@@ -36,7 +36,7 @@ internal class DebugPanelViewModel @Inject constructor(
         debugPanelParams: DebugPanelParams? = null,
     ) {
         viewModelScope.launch {
-            val params = debugPanelParams ?: debugPanelParamsHelper.getParams() ?: return@launch
+            val params = debugPanelParams ?: debugPanelParamsHelper.getParams()
             val hasPaidSubscription = params.hasPaidSubscription
             setViewState(
                 DebugPanelViewState.Data(

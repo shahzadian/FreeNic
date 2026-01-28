@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -177,7 +176,6 @@ internal class MainActivity : ComponentActivity() {
                     }
                 },
                 onCancelClicked = {
-                    Log.d("LogMog", "onCancelClicked")
                     command.onCancelClicked()
                 }
             )

@@ -132,7 +132,7 @@ internal class BillingDataSourceImpl @Inject constructor(
                     cont.resume(null as ProductDetails?)
                     return@queryProductDetailsAsync
                 }
-                cont.resume(productDetailsList?.firstOrNull())
+                cont.resume(productDetailsList.firstOrNull())
             }
         } ?: return false
 

@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "632199751636",
-    "project_id": "freenic-9d536",
-    "storage_bucket": "freenic-9d536.firebasestorage.app"
+    "project_number": "1013143238724",
+    "project_id": "freenic-app",
+    "storage_bucket": "freenic-app.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:632199751636:android:992abaa813eaed816e5841",
+        "mobilesdk_app_id": "1:1013143238724:android:524095b7540870a52fe411",
         "android_client_info": {
           "package_name": "com.shahzadian.freenic"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBUAcmnv6wNT1uyY4OMnC2pI5CxKEE9zk4"
+          "current_key": "AIzaSyBtwq742HnwHI9aI4A_1hVNCSfa8GkJ5zs"
         }
       ],
       "services": {
