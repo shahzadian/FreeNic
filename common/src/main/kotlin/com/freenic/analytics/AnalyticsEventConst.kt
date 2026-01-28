@@ -100,4 +100,5 @@ object AnalyticsEventConst {
     const val SUBSCRIPTION_TERMS_TAP: String = "subscription_terms_tap"
     const val PUSH_PERMISSION_GRANTED: String = "push_permission_granted"
     const val PUSH_PERMISSION_DENIED: String = "push_permission_denied"
+    const val PAYWALL_PROMO_CODE_ACTIVATED: String = "paywall_promo_code_activated"
 }

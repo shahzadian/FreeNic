@@ -2,6 +2,9 @@ package com.shahzadian.subscription.paywall.ui
 
 import android.content.SharedPreferences
 import com.freenic.CommonConst
+import com.freenic.analytics.AnalyticsEvent
+import com.freenic.analytics.AnalyticsEventConst
+import com.freenic.analytics.AnalyticsEventSender
 import com.freenic.ui.model.CoroutineContexts
 import com.shahzadian.promocode.domain.GetPromoCodeDataUseCase
 import com.shahzadian.promocode.domain.PromoCodeBehavior
@@ -27,6 +30,7 @@ internal class PromoCodeHelperImpl @Inject constructor(
     private val getPromoCodeDataUseCase: GetPromoCodeDataUseCase,
     private val updateSubscriptionUseCase: UpdateSubscriptionUseCase,
     private val subscriptionPlansRepository: SubscriptionPlansRepository,
+    private val analyticsEventSender: AnalyticsEventSender,
 ) : PromoCodeHelper {
 
     private var promoCodeEnterIteration: Int = 0
@@ -78,6 +82,11 @@ internal class PromoCodeHelperImpl @Inject constructor(
                     .first { it.paymentFrequency == (data.behavior as PromoCodeBehavior.PremiumSubscription).getPaymentFrequency() }
                 updateSubscriptionUseCase(
                     plan = plan,
+                )
+                analyticsEventSender.send(
+                    AnalyticsEvent(
+                        name = AnalyticsEventConst.PAYWALL_PROMO_CODE_ACTIVATED
+                    )
                 )
             }
         }
