@@ -18,8 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.freenic.CommonConst
 import com.freenic.activityevent.ActivityEventReceiver
 import com.freenic.logger.AppLogger
@@ -33,7 +31,6 @@ import com.shahzadian.freenic.activityeventhandler.ActivityEventHandlerFactory
 import com.shahzadian.freenic.navigation.AppNavigation
 import com.shahzadian.freenic.navigation.AppNavigatorFactory
 import com.shahzadian.push.ui.PushShowDialog
-import com.shahzadian.push.worker.EveningPushWorker
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.RefreshSubscriptionStatusUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
@@ -103,11 +100,6 @@ internal class MainActivity : ComponentActivity() {
         }
         initializeAdSdk()
         subscribeToEvents()
-        val request = OneTimeWorkRequestBuilder<EveningPushWorker>()
-            .build()
-        WorkManager
-            .getInstance(this)
-            .enqueue(request)
     }
 
     @Composable
