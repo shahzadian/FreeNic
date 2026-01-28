@@ -39,6 +39,8 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":feature-achievements"))
     implementation(project(":feature-daily-check-in"))
+    implementation(project(":feature-subscription"))
+    implementation(project(":feature-savings-goal"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.hilt.android)

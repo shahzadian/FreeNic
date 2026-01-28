@@ -1,4 +1,4 @@
-package com.shahzadian.push.checkers.achievements
+package com.shahzadian.push.checkers
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -20,7 +20,7 @@ import javax.inject.Named
  * если такие ещё не были показаны ранее.
  */
 @Reusable
-class AchievementsNotificationChecker @Inject constructor(
+class MorningNotificationChecker @Inject constructor(
     private val getAchievementsUseCase: GetAchievementsUseCase,
     private val achievementStateProviderFactory: AchievementStateProviderFactory,
     @param:Named(CommonConst.PREF_NAME_APP_SETTINGS)

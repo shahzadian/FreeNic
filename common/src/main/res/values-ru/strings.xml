@@ -562,5 +562,9 @@
     <string name="paywall_promo_code_blocked">Вы не можете ввести промокод сейчас. Попробуйте позже</string>
     <string name="push_daily_check_in_title">Как прошел ваш день?</string>
     <string name="push_daily_check_in_desc">Отметьте, как вы себя чувствовали сегодня</string>
+    <string name="push_savings_goal_existing_title">Ваша копилка растет!</string>
+    <string name="push_savings_goal_existing_desc">Уже сохранено %s</string>
+    <string name="push_savings_goal_none_title">Хотите начать копить?</string>
+    <string name="push_savings_goal_none_desc">Начните откладывать деньги, которые раньше уходили на сигареты</string>
 
 </resources>
