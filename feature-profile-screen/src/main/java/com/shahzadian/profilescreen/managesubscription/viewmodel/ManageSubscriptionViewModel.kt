@@ -1,6 +1,8 @@
 package com.shahzadian.profilescreen.managesubscription.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.freenic.activityevent.ActivityEvent
+import com.freenic.activityevent.ActivityEventSender
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
@@ -11,6 +13,7 @@ import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.subscription.domain.CancelSubscriptionUseCase
 import com.shahzadian.subscription.domain.GetPaidFeaturesUseCase
+import com.shahzadian.subscription.domain.GetSubscriptionPlansUseCase
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.SubscriptionPlan
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
@@ -24,6 +27,8 @@ internal class ManageSubscriptionViewModel @Inject constructor(
     private val getPaidFeaturesUseCase: GetPaidFeaturesUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
     private val cancelSubscriptionUseCase: CancelSubscriptionUseCase,
+    private val getSubscriptionPlansUseCase: GetSubscriptionPlansUseCase,
+    private val activityEventSender: ActivityEventSender,
 ) : BaseViewModel<ManageSubscriptionViewState, ManageSubscriptionViewEvent, ManageSubscriptionViewCommand>() {
 
     override val initState: ManageSubscriptionViewState by lazyUnsafe {
@@ -42,6 +47,10 @@ internal class ManageSubscriptionViewModel @Inject constructor(
 
             is ManageSubscriptionViewEvent.OnSubscriptionCancelClicked -> {
                 onCancelSubscriptionClicked()
+            }
+
+            is ManageSubscriptionViewEvent.OnSubscriptionRestoreClicked -> {
+                onRestoreSubscriptionClicked()
             }
         }
     }
@@ -83,6 +92,28 @@ internal class ManageSubscriptionViewModel @Inject constructor(
             if (isCancelOpened) {
                 sendViewCommand(ManageSubscriptionViewCommand.NavigateBack)
             }
+        }
+    }
+
+    private fun onRestoreSubscriptionClicked() {
+        analyticsEventSender.send(
+            AnalyticsEvent(
+                name = AnalyticsEventConst.MANAGE_SUBSCRIPTION_RESTORE_TAP,
+            )
+        )
+        viewModelScope.launch {
+            getSubscriptionPlansUseCase()
+                .let { plans ->
+                    plans.firstOrNull { it.paymentFrequency == SubscriptionPlan.PaymentFrequency.ANNUAL }
+                        ?: plans.firstOrNull()
+                }
+                ?.let {
+                    activityEventSender.sendEvent(
+                        ActivityEvent.AppSubscriptionRequest(
+                            planId = it.id
+                        )
+                    )
+                }
         }
     }
 

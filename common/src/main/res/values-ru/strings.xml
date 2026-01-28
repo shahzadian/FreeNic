@@ -566,5 +566,6 @@
     <string name="push_savings_goal_existing_desc">Уже сохранено %s</string>
     <string name="push_savings_goal_none_title">Хотите начать копить?</string>
     <string name="push_savings_goal_none_desc">Начните откладывать деньги, которые раньше уходили на сигареты</string>
+    <string name="manage_subscription_restore_button">Восстановить покупку</string>
 
 </resources>

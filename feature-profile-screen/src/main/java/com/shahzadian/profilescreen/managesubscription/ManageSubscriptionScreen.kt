@@ -14,6 +14,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.HeaderScreen
+import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.profilescreen.managesubscription.viewmodel.ManageSubscriptionViewCommand
@@ -68,6 +69,9 @@ private fun ContentView(
     val cancelSubscriptionClick = remember {
         { onEvent(ManageSubscriptionViewEvent.OnSubscriptionCancelClicked) }
     }
+    val restoreSubscriptionClick = remember {
+        { onEvent(ManageSubscriptionViewEvent.OnSubscriptionRestoreClicked) }
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(R.string.manage_subscription_header_title),
         hasBackIcon = true,
@@ -92,6 +96,14 @@ private fun ContentView(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp)
+            )
+        } else {
+            MainSubmitButton(
+                text = TextWrapper.FromRes(R.string.manage_subscription_restore_button),
+                onClick = restoreSubscriptionClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
             )
         }
     }

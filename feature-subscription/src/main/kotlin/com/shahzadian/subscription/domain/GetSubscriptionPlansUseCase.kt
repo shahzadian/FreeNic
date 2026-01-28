@@ -3,7 +3,7 @@ package com.shahzadian.subscription.domain
 import com.shahzadian.subscription.data.SubscriptionPlansRepository
 import javax.inject.Inject
 
-internal interface GetSubscriptionPlansUseCase {
+interface GetSubscriptionPlansUseCase {
 
     suspend operator fun invoke(): List<SubscriptionPlan>
 }

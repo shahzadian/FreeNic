@@ -11,4 +11,7 @@ internal sealed interface ManageSubscriptionViewEvent : ViewEvent {
 
     @Immutable
     data object OnSubscriptionCancelClicked : ManageSubscriptionViewEvent
+
+    @Immutable
+    data object OnSubscriptionRestoreClicked : ManageSubscriptionViewEvent
 }

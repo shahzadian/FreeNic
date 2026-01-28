@@ -573,5 +573,6 @@
     <string name="push_savings_goal_existing_desc">You\'ve already saved %s</string>
     <string name="push_savings_goal_none_title">Want to start saving?</string>
     <string name="push_savings_goal_none_desc">Start saving the money you used to spend on cigarettes</string>
+    <string name="manage_subscription_restore_button">Restore subscription</string>
 
 </resources>
