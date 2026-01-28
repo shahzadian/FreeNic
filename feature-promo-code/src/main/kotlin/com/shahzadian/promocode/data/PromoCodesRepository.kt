@@ -48,6 +48,6 @@ internal class PromoCodesRepositoryImpl @Inject constructor() : PromoCodesReposi
     }
 
     private companion object {
-        const val KEY_PROMO_CODES = "subscriptions_promo_codes"
+        const val KEY_PROMO_CODES = "subscription_promo_codes"
     }
 }
