@@ -10,6 +10,9 @@ internal interface SlipCaseDao {
     @Query("SELECT * FROM slipcaseentity")
     fun getAll(): List<SlipCaseEntity>
 
+    @Query("DELETE FROM slipcaseentity WHERE slipDateMillis = :millis")
+    fun deleteByMillis(millis: Long)
+
     @Upsert
     fun insert(slipCaseEntity: SlipCaseEntity)
 }

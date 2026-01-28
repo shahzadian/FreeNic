@@ -9,6 +9,8 @@ import com.shahzadian.slip.slipcase.domain.ClearSlipCasesUseCase
 import com.shahzadian.slip.slipcase.domain.ClearSlipCasesUseCaseImpl
 import com.shahzadian.slip.slipcase.domain.CreateSlipCaseUseCase
 import com.shahzadian.slip.slipcase.domain.CreateSlipCaseUseCaseImpl
+import com.shahzadian.slip.slipcase.domain.DeleteSlipCasesEarlierThanMillisUseCase
+import com.shahzadian.slip.slipcase.domain.DeleteSlipCasesEarlierThanMillisUseCaseImpl
 import com.shahzadian.slip.slipcase.domain.GetSlipCasesUseCase
 import com.shahzadian.slip.slipcase.domain.GetSlipCasesUseCaseImpl
 import com.shahzadian.slip.slipreason.data.SlipReasonRepository
@@ -54,6 +56,9 @@ internal interface SlipModule {
 
     @Binds
     fun bindClearSlipCasesUseCase(impl: ClearSlipCasesUseCaseImpl): ClearSlipCasesUseCase
+
+    @Binds
+    fun bindDeleteSlipCasesByMillisUseCase(impl: DeleteSlipCasesEarlierThanMillisUseCaseImpl): DeleteSlipCasesEarlierThanMillisUseCase
 
     companion object {
 

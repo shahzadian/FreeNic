@@ -13,6 +13,8 @@ internal interface SlipCaseRepository {
 
     suspend fun insertSlipCase(slipCase: SlipCase)
 
+    suspend fun deleteSlipCasesEarlierThanMillis(millis: Long)
+
     suspend fun clearAll()
 }
 
@@ -30,6 +32,15 @@ internal class SlipCaseRepositoryImpl @Inject constructor(
     override suspend fun insertSlipCase(slipCase: SlipCase) {
         withContext(coroutineContexts.io) {
             slipCaseDatabase.slipCaseDao().insert(slipCase.toEntity())
+        }
+    }
+
+    override suspend fun deleteSlipCasesEarlierThanMillis(millis: Long) {
+        withContext(coroutineContexts.io) {
+            val dao = slipCaseDatabase.slipCaseDao()
+            dao.getAll()
+                .filter { it.slipDateMillis < millis }
+                .forEach { dao.deleteByMillis(it.slipDateMillis) }
         }
     }
 
