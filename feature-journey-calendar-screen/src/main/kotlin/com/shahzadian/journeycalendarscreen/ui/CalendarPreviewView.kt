@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,10 +31,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.screenWidth
 import com.shahzadian.journeycalendarscreen.R
+import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewState
 import kotlinx.coroutines.delay
 
 @Composable
 internal fun CalendarPreviewView(
+    rewardState: JourneyCalendarViewState.PreviewRewardState,
     onSubscribeClicked: () -> Unit,
     onWatchVideoClicked: () -> Unit,
     modifier: Modifier = Modifier
@@ -58,6 +61,7 @@ internal fun CalendarPreviewView(
             )
         }
         FooterView(
+            rewardState = rewardState,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter),
@@ -142,6 +146,7 @@ private fun CarouselView(
 
 @Composable
 private fun FooterView(
+    rewardState: JourneyCalendarViewState.PreviewRewardState,
     onWatchVideoClicked: () -> Unit,
     onSubscribeClicked: () -> Unit,
     modifier: Modifier = Modifier,
@@ -152,6 +157,7 @@ private fun FooterView(
         verticalArrangement = Arrangement.Center
     ) {
         WatchVideoButton(
+            rewardState = rewardState,
             onClicked = onWatchVideoClicked,
             modifier = Modifier
                 .fillMaxWidth()
@@ -188,6 +194,7 @@ private fun FooterView(
 
 @Composable
 private fun WatchVideoButton(
+    rewardState: JourneyCalendarViewState.PreviewRewardState,
     onClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -201,16 +208,26 @@ private fun WatchVideoButton(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
-        Image(
-            painter = painterResource(R.drawable.ic_calendar_video_button),
-            contentDescription = "video button",
-            modifier = Modifier.padding(end = 8.dp)
-        )
-        Text(
-            text = stringResource(com.shahzadian.baseui.R.string.journey_calendar_reward_submit),
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onPrimary,
-        )
+        when (rewardState) {
+            is JourneyCalendarViewState.PreviewRewardState.Loading -> {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.onPrimary,
+
+                )
+            }
+            is JourneyCalendarViewState.PreviewRewardState.Default -> {
+                Image(
+                    painter = painterResource(R.drawable.ic_calendar_video_button),
+                    contentDescription = "video button",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = stringResource(com.shahzadian.baseui.R.string.journey_calendar_reward_submit),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
+            }
+        }
     }
 }
 

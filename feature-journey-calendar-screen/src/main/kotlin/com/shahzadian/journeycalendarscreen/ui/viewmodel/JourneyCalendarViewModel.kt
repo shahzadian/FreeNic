@@ -1,5 +1,6 @@
 package com.shahzadian.journeycalendarscreen.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.freenic.activityevent.ActivityEvent
 import com.freenic.activityevent.ActivityEventSender
@@ -88,7 +89,11 @@ internal class JourneyCalendarViewModel @Inject constructor(
                     )
                 )
             } else {
-                setViewState(JourneyCalendarViewState.Preview)
+                setViewState(
+                    JourneyCalendarViewState.Preview(
+                        previewRewardState = JourneyCalendarViewState.PreviewRewardState.Default
+                    )
+                )
             }
         }
     }
@@ -129,8 +134,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
             }
             analyticsEventSender.send(
                 event = AnalyticsEvent(
-                    name = AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP,
-                    params = mapOf(
+                    name = AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP, params = mapOf(
                         AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_HAS_EVENTS to dayCellUiModel.events.isNotEmpty()
                             .asAnalyticsProperty(),
                         AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_DAY_TYPE to dayType.asAnalyticsProperty(),
@@ -163,24 +167,32 @@ internal class JourneyCalendarViewModel @Inject constructor(
     }
 
     private fun onWatchVideoClicked() {
+        if (adHelper.isLoading(AdHelper.AdType.Rewarded)) return
         viewModelScope.launch {
+            Log.d("LogMog", "onWatchVideoClicked:")
             analyticsEventSender.send(
                 AnalyticsEvent(
                     name = AnalyticsEventConst.JOURNEY_CALENDAR_WATCH_VIDEO_TAP,
                 )
             )
-            activityEventSender
-                .resultFlow
-                .filterIsInstance<AdHelper.BannerAdShowResult>()
+            activityEventSender.resultFlow.filterIsInstance<AdHelper.BannerAdShowResult>()
                 .onEach { eventResult ->
+                    (viewState as? JourneyCalendarViewState.Preview)?.let { currentState ->
+                        setViewState(currentState.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Default))
+                    }
+                    Log.d("LogMog", "got ad show result: $eventResult")
                     if (eventResult is AdHelper.BannerAdShowResult.Rewarded) {
                         journeyCalendarHelper.rewardHelper.onRewarded()
+                        setData()
                     }
-                }
-                .launchIn(viewModelScope)
+                }.launchIn(viewModelScope)
+            Log.d("LogMog", "requesting ad show")
             adHelper.requestAdShow(
                 adType = AdHelper.AdType.Rewarded,
+                forceShow = true,
             )
+            val currentState = viewState as? JourneyCalendarViewState.Preview ?: return@launch
+            setViewState(currentState.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Loading))
         }
     }
 }

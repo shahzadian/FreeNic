@@ -26,18 +26,25 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.coroutines.resume
 
 interface AdHelper {
 
     suspend fun initialize(context: Context)
 
+    fun isLoading(adType: AdType): Boolean
+
     // Единый поток запросов на показ с указанием типа объявления
     val adShowRequestFlow: Flow<AdType>
 
     // Запросить показ объявления определенного типа
-    fun requestAdShow(adType: AdType = AdType.Interstitial)
+    fun requestAdShow(
+        adType: AdType = AdType.Interstitial,
+        forceShow: Boolean = false,
+    )
 
     // Показ объявления указанного типа (по умолчанию Interstitial)
     suspend fun showAd(
@@ -46,9 +53,12 @@ interface AdHelper {
     ): Flow<BannerAdShowResult>
 
     // Загрузка объявления указанного типа (по умолчанию Interstitial)
-    suspend fun loadBannerAd(adType: AdType = AdType.Interstitial): Flow<BannerAdLoadResult>
+    suspend fun loadBannerAd(adType: AdType = AdType.Interstitial): BannerAdLoadResult
 
     sealed interface BannerAdLoadResult {
+
+        object AlreadyLoading : BannerAdLoadResult
+
         object Success : BannerAdLoadResult
 
         class Error(
@@ -99,11 +109,9 @@ internal class AdHelperImpl @Inject constructor(
     private var lastTimeAdWasShown: Long? = null
 
     @Volatile
-    private var isLoadingAd: Boolean = false
-
+    private var isLoadingInterstitialAd: Boolean = false
     @Volatile
     private var isLoadingRewardedAd: Boolean = false
-
     @Volatile
     private var isLoadingRewardedInterstitialAd: Boolean = false
 
@@ -115,7 +123,18 @@ internal class AdHelperImpl @Inject constructor(
         CoroutineScope(coroutineContexts.unconfined)
     }
 
-    override fun requestAdShow(adType: AdHelper.AdType) {
+    override fun isLoading(adType: AdHelper.AdType): Boolean {
+        return when (adType) {
+            AdHelper.AdType.Interstitial -> isLoadingInterstitialAd
+            AdHelper.AdType.Rewarded -> isLoadingRewardedAd
+            AdHelper.AdType.RewardedInterstitial -> isLoadingRewardedInterstitialAd
+        }
+    }
+
+    override fun requestAdShow(
+        adType: AdHelper.AdType,
+        forceShow: Boolean,
+    ) {
         coroutineScope.launch {
             if (!canShowAdToUser(adType)) return@launch
             when (adType) {
@@ -124,7 +143,7 @@ internal class AdHelperImpl @Inject constructor(
                         adShowRequestFlow.emit(adType)
                     } else {
                         withContext(coroutineContexts.main) {
-                            loadBannerAd(adType).collect { }
+                            loadBannerAd(adType)
                         }
                     }
                 }
@@ -134,7 +153,15 @@ internal class AdHelperImpl @Inject constructor(
                         adShowRequestFlow.emit(adType)
                     } else {
                         withContext(coroutineContexts.main) {
-                            loadBannerAd(adType).collect { }
+                            val result = loadBannerAd(adType)
+                            if (forceShow && result is AdHelper.BannerAdLoadResult.Success &&
+                                currentRewardedAd != null
+                            ) {
+                                requestAdShow(
+                                    adType = adType,
+                                    forceShow = false,
+                                )
+                            }
                         }
                     }
                 }
@@ -144,7 +171,7 @@ internal class AdHelperImpl @Inject constructor(
                         adShowRequestFlow.emit(adType)
                     } else {
                         withContext(coroutineContexts.main) {
-                            loadBannerAd(adType).collect { }
+                            loadBannerAd(adType)
                         }
                     }
                 }
@@ -251,7 +278,6 @@ internal class AdHelperImpl @Inject constructor(
                 close()
                 return@callbackFlow
             }
-
             ad.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     currentRewardedAd = null
@@ -368,16 +394,17 @@ internal class AdHelperImpl @Inject constructor(
         }
     }
 
-    private suspend fun loadInterstitialAd(): Flow<AdHelper.BannerAdLoadResult> {
-        if (isLoadingAd) return callbackFlow { close() }
-        isLoadingAd = true
-        return callbackFlow {
-            if (!canShowAdToUser(adType = AdHelper.AdType.Interstitial)) {
-                trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently")))
-                isLoadingAd = false
-                close()
-                return@callbackFlow
-            }
+    private suspend fun loadInterstitialAd(): AdHelper.BannerAdLoadResult {
+        if (isLoadingInterstitialAd) {
+            return AdHelper.BannerAdLoadResult.AlreadyLoading
+        }
+        isLoadingInterstitialAd = true
+        if (!canShowAdToUser(adType = AdHelper.AdType.Interstitial)) {
+            isLoadingInterstitialAd = false
+            return AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+        }
+        return suspendCancellableCoroutine { continuation ->
+            continuation.invokeOnCancellation { isLoadingInterstitialAd = false }
             InterstitialAd.load(
                 context,
                 getAppAdId(AdHelper.AdType.Interstitial),
@@ -385,31 +412,25 @@ internal class AdHelperImpl @Inject constructor(
                 object : InterstitialAdLoadCallback() {
                     override fun onAdLoaded(p0: InterstitialAd) {
                         currentInterstitialAd = p0
-                        trySend(AdHelper.BannerAdLoadResult.Success)
-                        isLoadingAd = false
-                        close()
+                        isLoadingInterstitialAd = false
+                        continuation.resume(AdHelper.BannerAdLoadResult.Success)
                     }
 
                     override fun onAdFailedToLoad(p0: LoadAdError) {
                         currentInterstitialAd = null
-                        trySend(
+                        isLoadingInterstitialAd = false
+                        continuation.resume(
                             AdHelper.BannerAdLoadResult.Error(
                                 Throwable(p0.message)
                             )
                         )
-                        isLoadingAd = false
-                        close()
                     }
                 }
             )
-
-            awaitClose {
-                isLoadingAd = false
-            }
         }
     }
 
-    override suspend fun loadBannerAd(adType: AdHelper.AdType): Flow<AdHelper.BannerAdLoadResult> {
+    override suspend fun loadBannerAd(adType: AdHelper.AdType): AdHelper.BannerAdLoadResult {
         return when (adType) {
             AdHelper.AdType.Interstitial -> loadInterstitialAd()
             AdHelper.AdType.Rewarded -> loadRewardedAd()
@@ -417,16 +438,15 @@ internal class AdHelperImpl @Inject constructor(
         }
     }
 
-    private suspend fun loadRewardedAd(): Flow<AdHelper.BannerAdLoadResult> {
-        if (isLoadingRewardedAd) return callbackFlow { close() }
+    private suspend fun loadRewardedAd(): AdHelper.BannerAdLoadResult {
+        if (isLoadingRewardedAd) return AdHelper.BannerAdLoadResult.AlreadyLoading
         isLoadingRewardedAd = true
-        return callbackFlow {
-            if (!canShowAdToUser(adType = AdHelper.AdType.Rewarded)) {
-                trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently")))
-                isLoadingRewardedAd = false
-                close()
-                return@callbackFlow
-            }
+        if (!canShowAdToUser(adType = AdHelper.AdType.Rewarded)) {
+            isLoadingRewardedAd = false
+            return AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+        }
+        return suspendCancellableCoroutine { continuation ->
+            continuation.invokeOnCancellation { isLoadingRewardedAd = false }
             RewardedAd.load(
                 context,
                 getAppAdId(AdHelper.AdType.Rewarded),
@@ -434,36 +454,29 @@ internal class AdHelperImpl @Inject constructor(
                 object : RewardedAdLoadCallback() {
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                         currentRewardedAd = null
-                        trySend(AdHelper.BannerAdLoadResult.Error(Throwable(loadAdError.message)))
                         isLoadingRewardedAd = false
-                        close()
+                        continuation.resume(AdHelper.BannerAdLoadResult.Error(Throwable(loadAdError.message)))
                     }
 
                     override fun onAdLoaded(ad: RewardedAd) {
                         currentRewardedAd = ad
-                        trySend(AdHelper.BannerAdLoadResult.Success)
                         isLoadingRewardedAd = false
-                        close()
+                        continuation.resume(AdHelper.BannerAdLoadResult.Success)
                     }
                 }
             )
-
-            awaitClose {
-                isLoadingRewardedAd = false
-            }
         }
     }
 
-    private suspend fun loadRewardedInterstitialAd(): Flow<AdHelper.BannerAdLoadResult> {
-        if (isLoadingRewardedInterstitialAd) return callbackFlow { close() }
+    private suspend fun loadRewardedInterstitialAd(): AdHelper.BannerAdLoadResult {
+        if (isLoadingRewardedInterstitialAd) return AdHelper.BannerAdLoadResult.AlreadyLoading
         isLoadingRewardedInterstitialAd = true
-        return callbackFlow {
-            if (!canShowAdToUser(adType = AdHelper.AdType.RewardedInterstitial)) {
-                trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently")))
-                isLoadingRewardedInterstitialAd = false
-                close()
-                return@callbackFlow
-            }
+        if (!canShowAdToUser(adType = AdHelper.AdType.RewardedInterstitial)) {
+            isLoadingRewardedInterstitialAd = false
+            return AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+        }
+        return suspendCancellableCoroutine { continuation ->
+            continuation.invokeOnCancellation { isLoadingRewardedInterstitialAd = false }
             RewardedInterstitialAd.load(
                 context,
                 getAppAdId(AdHelper.AdType.RewardedInterstitial),
@@ -471,23 +484,17 @@ internal class AdHelperImpl @Inject constructor(
                 object : RewardedInterstitialAdLoadCallback() {
                     override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                         currentRewardedInterstitialAd = null
-                        trySend(AdHelper.BannerAdLoadResult.Error(Throwable(loadAdError.message)))
                         isLoadingRewardedInterstitialAd = false
-                        close()
+                        continuation.resume(AdHelper.BannerAdLoadResult.Error(Throwable(loadAdError.message)))
                     }
 
                     override fun onAdLoaded(ad: RewardedInterstitialAd) {
                         currentRewardedInterstitialAd = ad
-                        trySend(AdHelper.BannerAdLoadResult.Success)
                         isLoadingRewardedInterstitialAd = false
-                        close()
+                        continuation.resume(AdHelper.BannerAdLoadResult.Success)
                     }
                 }
             )
-
-            awaitClose {
-                isLoadingRewardedInterstitialAd = false
-            }
         }
     }
 

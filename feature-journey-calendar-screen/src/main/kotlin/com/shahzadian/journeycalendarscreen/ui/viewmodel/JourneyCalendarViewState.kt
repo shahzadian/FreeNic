@@ -12,7 +12,9 @@ internal sealed interface JourneyCalendarViewState : ViewState {
     data object Loading : JourneyCalendarViewState
 
     @Immutable
-    data object Preview : JourneyCalendarViewState
+    data class Preview(
+        val previewRewardState: PreviewRewardState,
+    ) : JourneyCalendarViewState
 
     @Immutable
     data class Data(
@@ -23,4 +25,10 @@ internal sealed interface JourneyCalendarViewState : ViewState {
         // даже если вложенные модели равны по equals -> заставляет Compose перерисовать контент
         val changeId: Long = System.nanoTime(),
     ) : JourneyCalendarViewState
+
+    sealed interface PreviewRewardState {
+
+        data object Default : PreviewRewardState
+        data object Loading : PreviewRewardState
+    }
 }

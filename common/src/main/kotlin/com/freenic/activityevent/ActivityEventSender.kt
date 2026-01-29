@@ -59,7 +59,10 @@ internal class ActivityEventHelper @Inject constructor() : ActivityEventSender,
     ActivityEventReceiver {
 
     override val resultFlow: MutableSharedFlow<ActivityEventResult> by lazyUnsafe {
-        MutableSharedFlow()
+        MutableSharedFlow(
+            replay = 1,
+            extraBufferCapacity = 1,
+        )
     }
 
     override val eventFlow: MutableSharedFlow<ActivityEvent> by lazyUnsafe {

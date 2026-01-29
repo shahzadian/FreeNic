@@ -88,6 +88,7 @@ private fun ContentView(
             val onSubscribeClickEvent = remember { { onEvent(JourneyCalendarViewEvent.OnCalendarPreviewSubscribeClicked) } }
             val onWatchVideoClickEvent = remember { { onEvent(JourneyCalendarViewEvent.OnWatchVideoClicked) } }
             CalendarPreviewView(
+                rewardState = state.previewRewardState,
                 onSubscribeClicked = onSubscribeClickEvent,
                 onWatchVideoClicked = onWatchVideoClickEvent,
                 modifier = Modifier.fillMaxSize(),

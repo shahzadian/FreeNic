@@ -216,7 +216,6 @@ internal class MainActivity : ComponentActivity() {
             delay(1000)
             adHelper.initialize(this@MainActivity)
             loadAd(AdHelper.AdType.Interstitial)
-            loadAd(AdHelper.AdType.Rewarded)
         }
         adHelper
             .adShowRequestFlow
@@ -256,7 +255,7 @@ internal class MainActivity : ComponentActivity() {
 
     private fun loadAd(adType: AdHelper.AdType) {
         lifecycleScope.launch(coroutineContexts.main) {
-            adHelper.loadBannerAd(adType).collect {}
+            adHelper.loadBannerAd(adType)
         }
     }
 
@@ -313,9 +312,5 @@ internal class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    private companion object {
-        const val PUSH_PERMISSION_REQUEST_CODE = 1
     }
 }
