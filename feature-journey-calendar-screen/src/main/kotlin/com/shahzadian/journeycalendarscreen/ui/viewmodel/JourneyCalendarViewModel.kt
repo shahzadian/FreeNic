@@ -1,6 +1,5 @@
 package com.shahzadian.journeycalendarscreen.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.freenic.activityevent.ActivityEvent
 import com.freenic.activityevent.ActivityEventSender
@@ -169,7 +168,6 @@ internal class JourneyCalendarViewModel @Inject constructor(
     private fun onWatchVideoClicked() {
         if (adHelper.isLoading(AdHelper.AdType.Rewarded)) return
         viewModelScope.launch {
-            Log.d("LogMog", "onWatchVideoClicked:")
             analyticsEventSender.send(
                 AnalyticsEvent(
                     name = AnalyticsEventConst.JOURNEY_CALENDAR_WATCH_VIDEO_TAP,
@@ -180,13 +178,11 @@ internal class JourneyCalendarViewModel @Inject constructor(
                     (viewState as? JourneyCalendarViewState.Preview)?.let { currentState ->
                         setViewState(currentState.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Default))
                     }
-                    Log.d("LogMog", "got ad show result: $eventResult")
                     if (eventResult is AdHelper.BannerAdShowResult.Rewarded) {
                         journeyCalendarHelper.rewardHelper.onRewarded()
                         setData()
                     }
                 }.launchIn(viewModelScope)
-            Log.d("LogMog", "requesting ad show")
             adHelper.requestAdShow(
                 adType = AdHelper.AdType.Rewarded,
                 forceShow = true,
