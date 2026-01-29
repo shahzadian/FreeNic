@@ -18,6 +18,7 @@ internal sealed interface JourneyCalendarViewState : ViewState {
 
     @Immutable
     data class Data(
+        val calendarAccessType: CalendarAccessType,
         val monthDataUiModel: MonthDataUiModel,
         val hasPreviousMonth: Boolean,
         val tappedDay: DayCellUiModel?,
@@ -26,9 +27,17 @@ internal sealed interface JourneyCalendarViewState : ViewState {
         val changeId: Long = System.nanoTime(),
     ) : JourneyCalendarViewState
 
+    @Immutable
     sealed interface PreviewRewardState {
 
         data object Default : PreviewRewardState
         data object Loading : PreviewRewardState
+    }
+
+    @Immutable
+    sealed interface CalendarAccessType {
+        data object Permanent : CalendarAccessType
+        data object UntilTheDayEnd : CalendarAccessType
+        data object NoAccess : CalendarAccessType
     }
 }

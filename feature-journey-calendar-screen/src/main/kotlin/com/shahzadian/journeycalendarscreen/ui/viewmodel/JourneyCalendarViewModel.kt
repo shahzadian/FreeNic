@@ -83,6 +83,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
                 val model = journeyCalendarHelper.getMonth()
                 setViewState(
                     state = JourneyCalendarViewState.Data(
+                        calendarAccessType = getCalendarAccessType(),
                         hasPreviousMonth = journeyCalendarHelper.hasPreviousMonth(),
                         tappedDay = tappetDay,
                         monthDataUiModel = model,
@@ -192,6 +193,14 @@ internal class JourneyCalendarViewModel @Inject constructor(
             )
             val currentState = viewState as? JourneyCalendarViewState.Preview ?: return@launch
             setViewState(currentState.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Loading))
+        }
+    }
+
+    private suspend fun getCalendarAccessType(): JourneyCalendarViewState.CalendarAccessType {
+        return when {
+            getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription -> JourneyCalendarViewState.CalendarAccessType.Permanent
+            journeyCalendarHelper.rewardHelper.hasAccessToCalendar() -> JourneyCalendarViewState.CalendarAccessType.UntilTheDayEnd
+            else -> JourneyCalendarViewState.CalendarAccessType.NoAccess
         }
     }
 }

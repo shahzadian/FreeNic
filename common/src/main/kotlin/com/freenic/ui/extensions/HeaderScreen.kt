@@ -160,7 +160,7 @@ private fun TitleView(
         subtitle?.let { subtitle ->
             Text(
                 text = textFromWrapper(subtitle),
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondary,
             )
         }

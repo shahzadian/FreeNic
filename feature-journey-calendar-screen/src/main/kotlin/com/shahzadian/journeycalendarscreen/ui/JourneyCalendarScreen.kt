@@ -16,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.navigation.AppNavigator
@@ -70,8 +71,12 @@ private fun ContentView(
     ) {
         val onBackIconClickEvent =
             remember { { onEvent(JourneyCalendarViewEvent.OnBackIconClicked) } }
+
         MainToolbarView(
             title = TextWrapper.FromRes(R.string.journey_calendar_header),
+            subtitle = state.extractToolbarSubtitle()?.let {
+                TextWrapper.FromString(it)
+            },
             hasBackIcon = true,
             onBackIconClicked = onBackIconClickEvent,
             modifier = Modifier
@@ -85,8 +90,10 @@ private fun ContentView(
             return
         }
         if (state is JourneyCalendarViewState.Preview) {
-            val onSubscribeClickEvent = remember { { onEvent(JourneyCalendarViewEvent.OnCalendarPreviewSubscribeClicked) } }
-            val onWatchVideoClickEvent = remember { { onEvent(JourneyCalendarViewEvent.OnWatchVideoClicked) } }
+            val onSubscribeClickEvent =
+                remember { { onEvent(JourneyCalendarViewEvent.OnCalendarPreviewSubscribeClicked) } }
+            val onWatchVideoClickEvent =
+                remember { { onEvent(JourneyCalendarViewEvent.OnWatchVideoClicked) } }
             CalendarPreviewView(
                 rewardState = state.previewRewardState,
                 onSubscribeClicked = onSubscribeClickEvent,
@@ -158,6 +165,18 @@ private fun ContentView(
             modifier = Modifier
                 .fillMaxWidth()
         )
+    }
+}
+
+@Composable
+private fun JourneyCalendarViewState.extractToolbarSubtitle(): String? {
+    val data = this as? JourneyCalendarViewState.Data ?: return null
+    return when (data.calendarAccessType) {
+        is JourneyCalendarViewState.CalendarAccessType.UntilTheDayEnd -> {
+            stringResource(R.string.journey_calendar_header_subtitle_access_until_day_end)
+        }
+
+        else -> null
     }
 }
 

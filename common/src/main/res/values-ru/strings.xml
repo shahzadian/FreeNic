@@ -571,5 +571,6 @@
     <string name="journey_calendar_reward_submit">Смотреть видео</string>
     <string name="journey_calendar_preview_reward_hint">Доступ на сегодня</string>
     <string name="journey_calendar_preview_button_or">Или</string>
+    <string name="journey_calendar_header_subtitle_access_until_day_end">Календарь доступен до 23:59 сегодня</string>
 
 </resources>
