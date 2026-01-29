@@ -38,6 +38,7 @@ internal class ActivityEventHandlerFactoryImpl @Inject constructor(
                 analyticsEventSender = analyticsEventSender,
             ),
             AppRateViewShowRequestHandler(
+                context = activity,
                 coroutineScope = coroutineScope,
                 shouldShowAppRateViewUseCase = shouldShowAppRateViewUseCase,
                 analyticsEventSender = analyticsEventSender,

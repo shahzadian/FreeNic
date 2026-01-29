@@ -1,5 +1,9 @@
 package com.shahzadian.freenic.activityeventhandler
 
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import com.freenic.activityevent.ActivityEvent
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
@@ -8,10 +12,13 @@ import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.appinfo.appdatacache.AppDataCacheUpdater
 import com.freenic.ui.extensions.lazyUnsafe
 import com.shahzadian.apprate.domain.ShouldShowAppRateViewUseCase
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlin.reflect.KClass
 
 internal class AppRateViewShowRequestHandler(
+    @param:ApplicationContext
+    private val context: Context,
     coroutineScope: CoroutineScope,
     private val shouldShowAppRateViewUseCase: ShouldShowAppRateViewUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
@@ -52,6 +59,7 @@ internal class AppRateViewShowRequestHandler(
                 )
             )
             appDataCacheUpdater.onAppRated()
+            openAppInGooglePlay()
         }
     }
 
@@ -61,5 +69,25 @@ internal class AppRateViewShowRequestHandler(
                 name = AnalyticsEventConst.APP_RATE_NOT_NOW_TAP
             )
         )
+    }
+
+    private fun openAppInGooglePlay() {
+        val appPackageName = context.packageName
+
+        try {
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("market://details?id=$appPackageName")
+            )
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            val intent = Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+            )
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(intent)
+        }
     }
 }
