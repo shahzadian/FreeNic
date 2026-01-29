@@ -10,11 +10,15 @@ import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.shahzadian.ad.AdHelper
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
 import com.shahzadian.journeycalendarscreen.ui.calendarhelper.JourneyCalendarHelper
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,6 +28,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
     private val analyticsEventSender: AnalyticsEventSender,
     private val activityEventSender: ActivityEventSender,
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
+    private val adHelper: AdHelper,
 ) : BaseViewModel<JourneyCalendarViewState, JourneyCalendarViewEvent, JourneyCalendarViewCommand>() {
 
     override val initState: JourneyCalendarViewState by lazyUnsafe {
@@ -61,6 +66,10 @@ internal class JourneyCalendarViewModel @Inject constructor(
             is JourneyCalendarViewEvent.OnCalendarPreviewSubscribeClicked -> {
                 onCalendarPreviewSubscribeClicked()
             }
+
+            is JourneyCalendarViewEvent.OnWatchVideoClicked -> {
+                onWatchVideoClicked()
+            }
         }
     }
 
@@ -68,7 +77,8 @@ internal class JourneyCalendarViewModel @Inject constructor(
         viewModelScope.launch {
             val hasPaidSubscription =
                 getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription
-            if (hasPaidSubscription) {
+            val hasRewardedAccess = journeyCalendarHelper.rewardHelper.hasAccessToCalendar()
+            if (hasPaidSubscription || hasRewardedAccess) {
                 val model = journeyCalendarHelper.getMonth()
                 setViewState(
                     state = JourneyCalendarViewState.Data(
@@ -149,6 +159,28 @@ internal class JourneyCalendarViewModel @Inject constructor(
                 )
             )
             sendViewCommand(JourneyCalendarViewCommand.NavigateTo(AppScreen.PaywallScreen))
+        }
+    }
+
+    private fun onWatchVideoClicked() {
+        viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.JOURNEY_CALENDAR_WATCH_VIDEO_TAP,
+                )
+            )
+            activityEventSender
+                .resultFlow
+                .filterIsInstance<AdHelper.BannerAdShowResult>()
+                .onEach { eventResult ->
+                    if (eventResult is AdHelper.BannerAdShowResult.Rewarded) {
+                        journeyCalendarHelper.rewardHelper.onRewarded()
+                    }
+                }
+                .launchIn(viewModelScope)
+            adHelper.requestAdShow(
+                adType = AdHelper.AdType.Rewarded,
+            )
         }
     }
 }

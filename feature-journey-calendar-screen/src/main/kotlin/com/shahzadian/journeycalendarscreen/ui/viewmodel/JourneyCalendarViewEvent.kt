@@ -24,4 +24,7 @@ internal sealed interface JourneyCalendarViewEvent : ViewEvent {
 
     @Immutable
     data object OnCalendarPreviewSubscribeClicked : JourneyCalendarViewEvent
+
+    @Immutable
+    data object OnWatchVideoClicked : JourneyCalendarViewEvent
 }

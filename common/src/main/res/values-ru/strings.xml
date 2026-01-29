@@ -567,5 +567,9 @@
     <string name="push_savings_goal_none_title">%s, хотите начать копить?</string>
     <string name="push_savings_goal_none_desc">Начните откладывать деньги, которые раньше уходили на сигареты</string>
     <string name="manage_subscription_restore_button">Восстановить покупку</string>
+    <string name="journey_calendar_reward_info">Посмотрите короткое видео, чтобы получить доступ на сегодня</string>
+    <string name="journey_calendar_reward_submit">Смотреть видео</string>
+    <string name="journey_calendar_preview_reward_hint">Доступ на сегодня</string>
+    <string name="journey_calendar_preview_button_or">Или</string>
 
 </resources>

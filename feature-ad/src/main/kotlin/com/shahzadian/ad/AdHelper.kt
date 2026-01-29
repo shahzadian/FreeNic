@@ -57,13 +57,24 @@ interface AdHelper {
     }
 
     sealed interface BannerAdShowResult {
-        object Showing : BannerAdShowResult
-        object Dismissed : BannerAdShowResult
-        class Error(
+        val adType: AdType
+
+        data class Showing(
+            override val adType: AdType,
+        ) : BannerAdShowResult
+
+        data class Dismissed(
+            override val adType: AdType,
+        ) : BannerAdShowResult
+
+        data class Error(
+            override val adType: AdType,
             val throwable: Throwable
         ) : BannerAdShowResult
 
-        object Rewarded : BannerAdShowResult
+        data class Rewarded(
+            override val adType: AdType,
+        ) : BannerAdShowResult
     }
 
     enum class AdType {
@@ -141,16 +152,26 @@ internal class AdHelperImpl @Inject constructor(
         }
     }
 
-    private suspend fun showInterstitialAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
+    private fun showInterstitialAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
         return callbackFlow {
             if (!canShowAdToUser(adType = AdHelper.AdType.Interstitial)) {
-                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Cannot show ad currently")))
+                trySend(
+                    AdHelper.BannerAdShowResult.Error(
+                        adType = AdHelper.AdType.Interstitial,
+                        throwable = IllegalStateException("Cannot show ad currently")
+                    )
+                )
                 close()
                 return@callbackFlow
             }
             val ad = currentInterstitialAd
             if (ad == null) {
-                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Ad is not loaded yet")))
+                trySend(
+                    AdHelper.BannerAdShowResult.Error(
+                        adType = AdHelper.AdType.Interstitial,
+                        throwable = IllegalStateException("Ad is not loaded yet")
+                    )
+                )
                 close()
                 return@callbackFlow
             }
@@ -158,19 +179,32 @@ internal class AdHelperImpl @Inject constructor(
             ad.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     currentInterstitialAd = null
-                    trySend(AdHelper.BannerAdShowResult.Dismissed)
+                    trySend(
+                        AdHelper.BannerAdShowResult.Dismissed(
+                            adType = AdHelper.AdType.Interstitial,
+                        )
+                    )
                     lastTimeAdWasShown = System.currentTimeMillis()
                     close()
                 }
 
                 override fun onAdFailedToShowFullScreenContent(p0: AdError) {
                     currentInterstitialAd = null
-                    trySend(AdHelper.BannerAdShowResult.Error(Throwable(p0.message)))
+                    trySend(
+                        AdHelper.BannerAdShowResult.Error(
+                            adType = AdHelper.AdType.Interstitial,
+                            throwable = Throwable(p0.message)
+                        )
+                    )
                     close()
                 }
 
                 override fun onAdShowedFullScreenContent() {
-                    trySend(AdHelper.BannerAdShowResult.Showing)
+                    trySend(
+                        AdHelper.BannerAdShowResult.Showing(
+                            adType = AdHelper.AdType.Interstitial,
+                        )
+                    )
                 }
             }
 
@@ -194,16 +228,26 @@ internal class AdHelperImpl @Inject constructor(
         }
     }
 
-    private suspend fun showRewardedAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
+    private fun showRewardedAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
         return callbackFlow {
             if (!canShowAdToUser(adType = AdHelper.AdType.Rewarded)) {
-                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Cannot show ad currently")))
+                trySend(
+                    AdHelper.BannerAdShowResult.Error(
+                        adType = AdHelper.AdType.Rewarded,
+                        throwable = IllegalStateException("Cannot show ad currently")
+                    )
+                )
                 close()
                 return@callbackFlow
             }
             val ad = currentRewardedAd
             if (ad == null) {
-                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Ad is not loaded yet")))
+                trySend(
+                    AdHelper.BannerAdShowResult.Error(
+                        adType = AdHelper.AdType.Rewarded,
+                        throwable = IllegalStateException("Ad is not loaded yet")
+                    )
+                )
                 close()
                 return@callbackFlow
             }
@@ -211,24 +255,41 @@ internal class AdHelperImpl @Inject constructor(
             ad.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     currentRewardedAd = null
-                    trySend(AdHelper.BannerAdShowResult.Dismissed)
+                    trySend(
+                        AdHelper.BannerAdShowResult.Dismissed(
+                            adType = AdHelper.AdType.Rewarded,
+                        )
+                    )
                     lastTimeAdWasShown = System.currentTimeMillis()
                     close()
                 }
 
                 override fun onAdFailedToShowFullScreenContent(p0: AdError) {
                     currentRewardedAd = null
-                    trySend(AdHelper.BannerAdShowResult.Error(Throwable(p0.message)))
+                    trySend(
+                        AdHelper.BannerAdShowResult.Error(
+                            adType = AdHelper.AdType.Rewarded,
+                            throwable = Throwable(p0.message)
+                        )
+                    )
                     close()
                 }
 
                 override fun onAdShowedFullScreenContent() {
-                    trySend(AdHelper.BannerAdShowResult.Showing)
+                    trySend(
+                        AdHelper.BannerAdShowResult.Showing(
+                            adType = AdHelper.AdType.Rewarded,
+                        )
+                    )
                 }
             }
 
             ad.show(activity) { _: RewardItem ->
-                trySend(AdHelper.BannerAdShowResult.Rewarded)
+                trySend(
+                    AdHelper.BannerAdShowResult.Rewarded(
+                        adType = AdHelper.AdType.Rewarded,
+                    )
+                )
             }
 
             awaitClose {
@@ -237,16 +298,26 @@ internal class AdHelperImpl @Inject constructor(
         }
     }
 
-    private suspend fun showRewardedInterstitialAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
+    private fun showRewardedInterstitialAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
         return callbackFlow {
             if (!canShowAdToUser(adType = AdHelper.AdType.RewardedInterstitial)) {
-                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Cannot show ad currently")))
+                trySend(
+                    AdHelper.BannerAdShowResult.Error(
+                        adType = AdHelper.AdType.RewardedInterstitial,
+                        throwable = IllegalStateException("Cannot show ad currently")
+                    )
+                )
                 close()
                 return@callbackFlow
             }
             val ad = currentRewardedInterstitialAd
             if (ad == null) {
-                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Ad is not loaded yet")))
+                trySend(
+                    AdHelper.BannerAdShowResult.Error(
+                        adType = AdHelper.AdType.RewardedInterstitial,
+                        throwable = IllegalStateException("Ad is not loaded yet")
+                    )
+                )
                 close()
                 return@callbackFlow
             }
@@ -254,24 +325,41 @@ internal class AdHelperImpl @Inject constructor(
             ad.fullScreenContentCallback = object : FullScreenContentCallback() {
                 override fun onAdDismissedFullScreenContent() {
                     currentRewardedInterstitialAd = null
-                    trySend(AdHelper.BannerAdShowResult.Dismissed)
+                    trySend(
+                        AdHelper.BannerAdShowResult.Dismissed(
+                            adType = AdHelper.AdType.RewardedInterstitial,
+                        )
+                    )
                     lastTimeAdWasShown = System.currentTimeMillis()
                     close()
                 }
 
                 override fun onAdFailedToShowFullScreenContent(p0: AdError) {
                     currentRewardedInterstitialAd = null
-                    trySend(AdHelper.BannerAdShowResult.Error(Throwable(p0.message)))
+                    trySend(
+                        AdHelper.BannerAdShowResult.Error(
+                            adType = AdHelper.AdType.RewardedInterstitial,
+                            throwable = Throwable(p0.message)
+                        )
+                    )
                     close()
                 }
 
                 override fun onAdShowedFullScreenContent() {
-                    trySend(AdHelper.BannerAdShowResult.Showing)
+                    trySend(
+                        AdHelper.BannerAdShowResult.Showing(
+                            adType = AdHelper.AdType.RewardedInterstitial,
+                        )
+                    )
                 }
             }
 
             ad.show(activity) { _: RewardItem ->
-                trySend(AdHelper.BannerAdShowResult.Rewarded)
+                trySend(
+                    AdHelper.BannerAdShowResult.Rewarded(
+                        adType = AdHelper.AdType.RewardedInterstitial,
+                    )
+                )
             }
 
             awaitClose {

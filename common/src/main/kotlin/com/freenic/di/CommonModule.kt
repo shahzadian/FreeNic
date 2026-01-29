@@ -6,7 +6,10 @@ import com.freenic.CommonConst
 import com.freenic.activityevent.ActivityEventHelper
 import com.freenic.activityevent.ActivityEventReceiver
 import com.freenic.activityevent.ActivityEventSender
+import com.freenic.cache.AppCache
+import com.freenic.cache.AppCacheImpl
 import com.freenic.ui.model.CoroutineContexts
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,6 +22,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 internal interface CommonModule {
+
+    @Binds
+    fun bindAppCache(
+        impl: AppCacheImpl
+    ): AppCache
 
     companion object {
 

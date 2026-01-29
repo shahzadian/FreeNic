@@ -21,6 +21,8 @@ import javax.inject.Inject
 
 internal interface JourneyCalendarHelper {
 
+    val rewardHelper: JourneyCalendarRewardHelper
+
     suspend fun hasPreviousMonth(): Boolean
 
     suspend fun getMonth(): MonthDataUiModel
@@ -34,6 +36,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     private val eventsFinderFactory: JourneyCalendarEventsFinderFactory,
     private val getUserDataUseCase: GetUserDataUseCase,
     private val userDataHelperFactory: UserDataHelperFactory,
+    override val rewardHelper: JourneyCalendarRewardHelper,
 ) : JourneyCalendarHelper {
 
     private var currentMonth: YearMonth = YearMonth.now()

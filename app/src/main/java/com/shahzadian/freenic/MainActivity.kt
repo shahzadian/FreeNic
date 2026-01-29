@@ -215,7 +215,8 @@ internal class MainActivity : ComponentActivity() {
             }
             delay(1000)
             adHelper.initialize(this@MainActivity)
-            loadAd()
+            loadAd(AdHelper.AdType.Interstitial)
+            loadAd(AdHelper.AdType.Rewarded)
         }
         adHelper
             .adShowRequestFlow
@@ -225,14 +226,18 @@ internal class MainActivity : ComponentActivity() {
             .onEach { result ->
                 when (result) {
                     is AdHelper.BannerAdShowResult.Error -> {
-                        loadAd()
+                        loadAd(
+                            adType = result.adType,
+                        )
                         activityEventReceiver.sendResult(
                             OnAdEventResult.Error(result.throwable)
                         )
                     }
 
                     is AdHelper.BannerAdShowResult.Dismissed -> {
-                        loadAd()
+                        loadAd(
+                            adType = result.adType,
+                        )
                     }
 
                     is AdHelper.BannerAdShowResult.Showing -> {}
@@ -249,12 +254,9 @@ internal class MainActivity : ComponentActivity() {
             .launchIn(lifecycleScope)
     }
 
-    private fun loadAd() {
+    private fun loadAd(adType: AdHelper.AdType) {
         lifecycleScope.launch(coroutineContexts.main) {
-            adHelper.loadBannerAd()
-                .collect {
-//                    Result is not needed
-                }
+            adHelper.loadBannerAd(adType).collect {}
         }
     }
 

@@ -574,5 +574,9 @@
     <string name="push_savings_goal_none_title">%s, want to start saving?</string>
     <string name="push_savings_goal_none_desc">Start saving the money you used to spend on cigarettes</string>
     <string name="manage_subscription_restore_button">Restore subscription</string>
+    <string name="journey_calendar_reward_info">Watch a short video to get access for today</string>
+    <string name="journey_calendar_reward_submit">Watch video</string>
+    <string name="journey_calendar_preview_reward_hint">Access for today</string>
+    <string name="journey_calendar_preview_button_or">Or</string>
 
 </resources>
