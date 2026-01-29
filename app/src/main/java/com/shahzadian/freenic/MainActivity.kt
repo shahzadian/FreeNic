@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.freenic.CommonConst
 import com.freenic.activityevent.ActivityEventReceiver
+import com.freenic.activityevent.OnAdEventResult
 import com.freenic.logger.AppLogger
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.model.CoroutineContexts
@@ -218,13 +219,16 @@ internal class MainActivity : ComponentActivity() {
         }
         adHelper
             .adShowRequestFlow
-            .flatMapConcat {
-                adHelper.showAd(this@MainActivity)
+            .flatMapConcat { type ->
+                adHelper.showAd(this@MainActivity, type)
             }
             .onEach { result ->
                 when (result) {
                     is AdHelper.BannerAdShowResult.Error -> {
                         loadAd()
+                        activityEventReceiver.sendResult(
+                            OnAdEventResult.Error(result.throwable)
+                        )
                     }
 
                     is AdHelper.BannerAdShowResult.Dismissed -> {
@@ -232,6 +236,14 @@ internal class MainActivity : ComponentActivity() {
                     }
 
                     is AdHelper.BannerAdShowResult.Showing -> {}
+
+                    is AdHelper.BannerAdShowResult.Rewarded -> {
+                        activityEventReceiver.sendResult(
+                            OnAdEventResult.AdShown(
+                                hasReward = true,
+                            )
+                        )
+                    }
                 }
             }
             .launchIn(lifecycleScope)

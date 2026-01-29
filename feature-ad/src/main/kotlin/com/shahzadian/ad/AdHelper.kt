@@ -12,6 +12,11 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.ads.rewarded.RewardItem
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
+import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -28,13 +33,20 @@ interface AdHelper {
 
     suspend fun initialize(context: Context)
 
-    val adShowRequestFlow: Flow<Unit>
+    // Единый поток запросов на показ с указанием типа объявления
+    val adShowRequestFlow: Flow<AdType>
 
-    fun requestAdShow()
+    // Запросить показ объявления определенного типа
+    fun requestAdShow(adType: AdType = AdType.Interstitial)
 
-    suspend fun showAd(activity: Activity): Flow<BannerAdShowResult>
+    // Показ объявления указанного типа (по умолчанию Interstitial)
+    suspend fun showAd(
+        activity: Activity,
+        adType: AdType = AdType.Interstitial
+    ): Flow<BannerAdShowResult>
 
-    suspend fun loadBannerAd(): Flow<BannerAdLoadResult>
+    // Загрузка объявления указанного типа (по умолчанию Interstitial)
+    suspend fun loadBannerAd(adType: AdType = AdType.Interstitial): Flow<BannerAdLoadResult>
 
     sealed interface BannerAdLoadResult {
         object Success : BannerAdLoadResult
@@ -50,6 +62,14 @@ interface AdHelper {
         class Error(
             val throwable: Throwable
         ) : BannerAdShowResult
+
+        object Rewarded : BannerAdShowResult
+    }
+
+    enum class AdType {
+        Interstitial,
+        Rewarded,
+        RewardedInterstitial
     }
 }
 
@@ -62,13 +82,21 @@ internal class AdHelperImpl @Inject constructor(
 ) : AdHelper {
 
     private var currentInterstitialAd: InterstitialAd? = null
+    private var currentRewardedAd: RewardedAd? = null
+    private var currentRewardedInterstitialAd: RewardedInterstitialAd? = null
 
     private var lastTimeAdWasShown: Long? = null
 
     @Volatile
     private var isLoadingAd: Boolean = false
 
-    override val adShowRequestFlow: MutableSharedFlow<Unit> by lazyUnsafe {
+    @Volatile
+    private var isLoadingRewardedAd: Boolean = false
+
+    @Volatile
+    private var isLoadingRewardedInterstitialAd: Boolean = false
+
+    override val adShowRequestFlow: MutableSharedFlow<AdHelper.AdType> by lazyUnsafe {
         MutableSharedFlow()
     }
 
@@ -76,25 +104,46 @@ internal class AdHelperImpl @Inject constructor(
         CoroutineScope(coroutineContexts.unconfined)
     }
 
-    override fun requestAdShow() {
+    override fun requestAdShow(adType: AdHelper.AdType) {
         coroutineScope.launch {
-            if (!canShowAdToUser()) return@launch
-            if (currentInterstitialAd != null) {
-                adShowRequestFlow.emit(Unit)
-            } else {
-                withContext(coroutineContexts.main) {
-                    loadBannerAd()
-                        .collect { result ->
-//                        Result is not needed
+            if (!canShowAdToUser(adType)) return@launch
+            when (adType) {
+                AdHelper.AdType.Interstitial -> {
+                    if (currentInterstitialAd != null) {
+                        adShowRequestFlow.emit(adType)
+                    } else {
+                        withContext(coroutineContexts.main) {
+                            loadBannerAd(adType).collect { }
                         }
+                    }
+                }
+
+                AdHelper.AdType.Rewarded -> {
+                    if (currentRewardedAd != null) {
+                        adShowRequestFlow.emit(adType)
+                    } else {
+                        withContext(coroutineContexts.main) {
+                            loadBannerAd(adType).collect { }
+                        }
+                    }
+                }
+
+                AdHelper.AdType.RewardedInterstitial -> {
+                    if (currentRewardedInterstitialAd != null) {
+                        adShowRequestFlow.emit(adType)
+                    } else {
+                        withContext(coroutineContexts.main) {
+                            loadBannerAd(adType).collect { }
+                        }
+                    }
                 }
             }
         }
     }
 
-    override suspend fun showAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
+    private suspend fun showInterstitialAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
         return callbackFlow {
-            if (!canShowAdToUser()) {
+            if (!canShowAdToUser(adType = AdHelper.AdType.Interstitial)) {
                 trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Cannot show ad currently")))
                 close()
                 return@callbackFlow
@@ -134,11 +183,108 @@ internal class AdHelperImpl @Inject constructor(
         }
     }
 
-    override suspend fun loadBannerAd(): Flow<AdHelper.BannerAdLoadResult> {
+    override suspend fun showAd(
+        activity: Activity,
+        adType: AdHelper.AdType
+    ): Flow<AdHelper.BannerAdShowResult> {
+        return when (adType) {
+            AdHelper.AdType.Interstitial -> showInterstitialAd(activity)
+            AdHelper.AdType.Rewarded -> showRewardedAd(activity)
+            AdHelper.AdType.RewardedInterstitial -> showRewardedInterstitialAd(activity)
+        }
+    }
+
+    private suspend fun showRewardedAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
+        return callbackFlow {
+            if (!canShowAdToUser(adType = AdHelper.AdType.Rewarded)) {
+                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Cannot show ad currently")))
+                close()
+                return@callbackFlow
+            }
+            val ad = currentRewardedAd
+            if (ad == null) {
+                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Ad is not loaded yet")))
+                close()
+                return@callbackFlow
+            }
+
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    currentRewardedAd = null
+                    trySend(AdHelper.BannerAdShowResult.Dismissed)
+                    lastTimeAdWasShown = System.currentTimeMillis()
+                    close()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    currentRewardedAd = null
+                    trySend(AdHelper.BannerAdShowResult.Error(Throwable(p0.message)))
+                    close()
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    trySend(AdHelper.BannerAdShowResult.Showing)
+                }
+            }
+
+            ad.show(activity) { _: RewardItem ->
+                trySend(AdHelper.BannerAdShowResult.Rewarded)
+            }
+
+            awaitClose {
+                ad.fullScreenContentCallback = null
+            }
+        }
+    }
+
+    private suspend fun showRewardedInterstitialAd(activity: Activity): Flow<AdHelper.BannerAdShowResult> {
+        return callbackFlow {
+            if (!canShowAdToUser(adType = AdHelper.AdType.RewardedInterstitial)) {
+                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Cannot show ad currently")))
+                close()
+                return@callbackFlow
+            }
+            val ad = currentRewardedInterstitialAd
+            if (ad == null) {
+                trySend(AdHelper.BannerAdShowResult.Error(IllegalStateException("Ad is not loaded yet")))
+                close()
+                return@callbackFlow
+            }
+
+            ad.fullScreenContentCallback = object : FullScreenContentCallback() {
+                override fun onAdDismissedFullScreenContent() {
+                    currentRewardedInterstitialAd = null
+                    trySend(AdHelper.BannerAdShowResult.Dismissed)
+                    lastTimeAdWasShown = System.currentTimeMillis()
+                    close()
+                }
+
+                override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                    currentRewardedInterstitialAd = null
+                    trySend(AdHelper.BannerAdShowResult.Error(Throwable(p0.message)))
+                    close()
+                }
+
+                override fun onAdShowedFullScreenContent() {
+                    trySend(AdHelper.BannerAdShowResult.Showing)
+                }
+            }
+
+            ad.show(activity) { _: RewardItem ->
+                trySend(AdHelper.BannerAdShowResult.Rewarded)
+            }
+
+            awaitClose {
+                ad.fullScreenContentCallback = null
+            }
+        }
+    }
+
+    private suspend fun loadInterstitialAd(): Flow<AdHelper.BannerAdLoadResult> {
         if (isLoadingAd) return callbackFlow { close() }
         isLoadingAd = true
         return callbackFlow {
-            if (!canShowAdToUser()) {
+            if (!canShowAdToUser(adType = AdHelper.AdType.Interstitial)) {
                 trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently")))
                 isLoadingAd = false
                 close()
@@ -146,7 +292,7 @@ internal class AdHelperImpl @Inject constructor(
             }
             InterstitialAd.load(
                 context,
-                getAppAdId(),
+                getAppAdId(AdHelper.AdType.Interstitial),
                 AdRequest.Builder().build(),
                 object : InterstitialAdLoadCallback() {
                     override fun onAdLoaded(p0: InterstitialAd) {
@@ -175,27 +321,118 @@ internal class AdHelperImpl @Inject constructor(
         }
     }
 
+    override suspend fun loadBannerAd(adType: AdHelper.AdType): Flow<AdHelper.BannerAdLoadResult> {
+        return when (adType) {
+            AdHelper.AdType.Interstitial -> loadInterstitialAd()
+            AdHelper.AdType.Rewarded -> loadRewardedAd()
+            AdHelper.AdType.RewardedInterstitial -> loadRewardedInterstitialAd()
+        }
+    }
+
+    private suspend fun loadRewardedAd(): Flow<AdHelper.BannerAdLoadResult> {
+        if (isLoadingRewardedAd) return callbackFlow { close() }
+        isLoadingRewardedAd = true
+        return callbackFlow {
+            if (!canShowAdToUser(adType = AdHelper.AdType.Rewarded)) {
+                trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently")))
+                isLoadingRewardedAd = false
+                close()
+                return@callbackFlow
+            }
+            RewardedAd.load(
+                context,
+                getAppAdId(AdHelper.AdType.Rewarded),
+                AdRequest.Builder().build(),
+                object : RewardedAdLoadCallback() {
+                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                        currentRewardedAd = null
+                        trySend(AdHelper.BannerAdLoadResult.Error(Throwable(loadAdError.message)))
+                        isLoadingRewardedAd = false
+                        close()
+                    }
+
+                    override fun onAdLoaded(ad: RewardedAd) {
+                        currentRewardedAd = ad
+                        trySend(AdHelper.BannerAdLoadResult.Success)
+                        isLoadingRewardedAd = false
+                        close()
+                    }
+                }
+            )
+
+            awaitClose {
+                isLoadingRewardedAd = false
+            }
+        }
+    }
+
+    private suspend fun loadRewardedInterstitialAd(): Flow<AdHelper.BannerAdLoadResult> {
+        if (isLoadingRewardedInterstitialAd) return callbackFlow { close() }
+        isLoadingRewardedInterstitialAd = true
+        return callbackFlow {
+            if (!canShowAdToUser(adType = AdHelper.AdType.RewardedInterstitial)) {
+                trySend(AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently")))
+                isLoadingRewardedInterstitialAd = false
+                close()
+                return@callbackFlow
+            }
+            RewardedInterstitialAd.load(
+                context,
+                getAppAdId(AdHelper.AdType.RewardedInterstitial),
+                AdRequest.Builder().build(),
+                object : RewardedInterstitialAdLoadCallback() {
+                    override fun onAdFailedToLoad(loadAdError: LoadAdError) {
+                        currentRewardedInterstitialAd = null
+                        trySend(AdHelper.BannerAdLoadResult.Error(Throwable(loadAdError.message)))
+                        isLoadingRewardedInterstitialAd = false
+                        close()
+                    }
+
+                    override fun onAdLoaded(ad: RewardedInterstitialAd) {
+                        currentRewardedInterstitialAd = ad
+                        trySend(AdHelper.BannerAdLoadResult.Success)
+                        isLoadingRewardedInterstitialAd = false
+                        close()
+                    }
+                }
+            )
+
+            awaitClose {
+                isLoadingRewardedInterstitialAd = false
+            }
+        }
+    }
+
     override suspend fun initialize(context: Context) {
         MobileAds.initialize(context)
     }
 
-    private suspend fun canShowAdToUser(): Boolean {
-        if (lastTimeAdWasShown != null && System.currentTimeMillis() - lastTimeAdWasShown!! < AD_SHOW_MINIMAL_INTERVAL_MILLIS) {
-            return false
+    private suspend fun canShowAdToUser(adType: AdHelper.AdType): Boolean {
+        if (adType == AdHelper.AdType.Interstitial) {
+            if (lastTimeAdWasShown != null && System.currentTimeMillis() - lastTimeAdWasShown!! < AD_SHOW_MINIMAL_INTERVAL_MILLIS) {
+                return false
+            }
         }
         return getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.NoSubscription
     }
 
-    private fun getAppAdId(): String {
-        return if (appInfoHelper.isDebugBuild()) {
-            ADS_TEST_ID
-        } else {
-            ADS_PROD_ID
+    private fun getAppAdId(adType: AdHelper.AdType = AdHelper.AdType.Interstitial): String {
+        if (appInfoHelper.isDebugBuild()) {
+            return when (adType) {
+                AdHelper.AdType.Interstitial -> ADS_TEST_ID
+                AdHelper.AdType.Rewarded -> ADS_TEST_REWARDED_ID
+                AdHelper.AdType.RewardedInterstitial -> ADS_TEST_REWARDED_INTERSTITIAL_ID
+            }
         }
+        // Prod: пока используем один и тот же ID, до передачи отдельных ID
+        return ADS_PROD_ID
     }
 
     private companion object {
         const val ADS_TEST_ID: String = "ca-app-pub-3940256099942544/1033173712"
+        const val ADS_TEST_REWARDED_ID: String = "ca-app-pub-3940256099942544/5224354917"
+        const val ADS_TEST_REWARDED_INTERSTITIAL_ID: String =
+            "ca-app-pub-3940256099942544/5354046379"
         const val ADS_PROD_ID: String = "ca-app-pub-3104359766953553/8805483242"
         const val AD_SHOW_MINIMAL_INTERVAL_MILLIS: Long = 1000 * 60 * 2
     }

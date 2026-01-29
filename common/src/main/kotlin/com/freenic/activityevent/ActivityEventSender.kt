@@ -43,6 +43,17 @@ data class OnPushPermissionResult(
     val isGranted: Boolean,
 ) : ActivityEventResult
 
+sealed interface OnAdEventResult : ActivityEventResult {
+
+    data class Error(
+        val throwable: Throwable,
+    ) : OnAdEventResult
+
+    data class AdShown(
+        val hasReward: Boolean,
+    ) : OnAdEventResult
+}
+
 @Singleton
 internal class ActivityEventHelper @Inject constructor() : ActivityEventSender,
     ActivityEventReceiver {
