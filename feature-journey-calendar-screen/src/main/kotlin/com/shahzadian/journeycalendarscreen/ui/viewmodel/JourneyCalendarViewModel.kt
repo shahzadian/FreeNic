@@ -1,8 +1,10 @@
 package com.shahzadian.journeycalendarscreen.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.freenic.activityevent.ActivityEvent
 import com.freenic.activityevent.ActivityEventSender
+import com.freenic.activityevent.OnAdEventResult
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
@@ -38,6 +40,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
     private var tappetDay: DayCellUiModel? = null
 
     init {
+        Log.w("LogMog", "JourneyCalendarViewModel init")
         setData()
     }
 
@@ -173,12 +176,14 @@ internal class JourneyCalendarViewModel @Inject constructor(
                     name = AnalyticsEventConst.JOURNEY_CALENDAR_WATCH_VIDEO_TAP,
                 )
             )
-            activityEventSender.resultFlow.filterIsInstance<AdHelper.BannerAdShowResult>()
+            activityEventSender
+                .resultFlow
+                .filterIsInstance<OnAdEventResult.AdShown>()
                 .onEach { eventResult ->
                     (viewState as? JourneyCalendarViewState.Preview)?.let { currentState ->
                         setViewState(currentState.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Default))
                     }
-                    if (eventResult is AdHelper.BannerAdShowResult.Rewarded) {
+                    if (eventResult.hasReward) {
                         journeyCalendarHelper.rewardHelper.onRewarded()
                         setData()
                     }

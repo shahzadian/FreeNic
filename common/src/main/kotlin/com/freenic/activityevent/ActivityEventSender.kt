@@ -1,5 +1,6 @@
 package com.freenic.activityevent
 
+import android.util.Log
 import com.freenic.ui.extensions.lazyUnsafe
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -59,10 +60,7 @@ internal class ActivityEventHelper @Inject constructor() : ActivityEventSender,
     ActivityEventReceiver {
 
     override val resultFlow: MutableSharedFlow<ActivityEventResult> by lazyUnsafe {
-        MutableSharedFlow(
-            replay = 1,
-            extraBufferCapacity = 1,
-        )
+        MutableSharedFlow()
     }
 
     override val eventFlow: MutableSharedFlow<ActivityEvent> by lazyUnsafe {
@@ -74,6 +72,7 @@ internal class ActivityEventHelper @Inject constructor() : ActivityEventSender,
     }
 
     override suspend fun sendResult(result: ActivityEventResult) {
+        Log.e("LogMog", "this: ${this}, sendResult: $result")
         resultFlow.emit(result)
     }
 }
