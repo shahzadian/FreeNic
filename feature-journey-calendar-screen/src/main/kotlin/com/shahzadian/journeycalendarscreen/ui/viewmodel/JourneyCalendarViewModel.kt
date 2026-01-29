@@ -1,6 +1,5 @@
 package com.shahzadian.journeycalendarscreen.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.freenic.activityevent.ActivityEvent
 import com.freenic.activityevent.ActivityEventSender
@@ -40,7 +39,6 @@ internal class JourneyCalendarViewModel @Inject constructor(
     private var tappetDay: DayCellUiModel? = null
 
     init {
-        Log.w("LogMog", "JourneyCalendarViewModel init")
         setData()
     }
 
