@@ -104,7 +104,7 @@ private fun ContentView(
             onClicked = onISmokedClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp),
+                .padding(bottom = 32.dp),
         )
         DashboardJourneyCalendarView(
             onClicked = onJourneyCalendarClick,
@@ -117,14 +117,6 @@ private fun ContentView(
             onResult = onDailyCheckInResultClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp)
-        )
-        MotivationalNoteView(
-            noteUiModel = data.motivationalNote,
-            onClicked = onMotivationalNoteRefreshClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp)
         )
     }
 }
