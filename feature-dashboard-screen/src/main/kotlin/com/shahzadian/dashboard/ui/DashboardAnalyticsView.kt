@@ -2,8 +2,6 @@ package com.shahzadian.dashboard.ui
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +26,7 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.mainCardBackground
 import com.shahzadian.baseui.R
 import com.shahzadian.dashboard.ui.viewmodel.DashboardViewState
 
@@ -42,15 +41,7 @@ internal fun DashboardAnalyticsView(
     val detailsClick = remember(Unit) { { onDetailsClicked() } }
     Column(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.surface,
-                shape = MaterialTheme.shapes.large,
-            )
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outline,
-                shape = MaterialTheme.shapes.large
-            )
+            .mainCardBackground()
             .clickable(onClick = detailsClick)
             .padding(16.dp),
     ) {

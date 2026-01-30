@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -180,13 +181,12 @@ fun Modifier.mainCardBackground(
     shape: Shape = MaterialTheme.shapes.medium,
 ): Modifier {
     return this
-        .background(
-            color = mainCardBackground,
+        .shadow(
+            elevation = 4.dp,
             shape = shape,
         )
-        .border(
-            width = mainCardBorderWidth,
-            color = mainCardBorderColor,
+        .background(
+            color = MaterialTheme.colorScheme.surface,
             shape = shape,
         )
 }
@@ -204,11 +204,11 @@ fun Modifier.noIndicationClick(
 
 val mainCardBackground: Color
     @Composable
-    get() = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+    get() = MaterialTheme.colorScheme.surface
 
 val mainCardBorderColor: Color
     @Composable
-    get() = MaterialTheme.colorScheme.primary
+    get() = MaterialTheme.colorScheme.outline
 
 val mainCardBorderWidth: Dp
     get() = 1.dp

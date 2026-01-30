@@ -1,8 +1,7 @@
 package com.shahzadian.profilescreen.ui.subscriptionview
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainSubmitButton
+import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.wrapper.TextWrapper
 
 @Composable
@@ -29,15 +29,8 @@ internal fun NoSubscriptionView(
     }
     Column(
         modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
-                shape = MaterialTheme.shapes.medium,
-            )
-            .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.primary,
-                shape = MaterialTheme.shapes.medium
-            )
+            .mainCardBackground()
+            .clickable(onClick = onPremiumClick)
             .padding(16.dp),
     ) {
         HeaderView(

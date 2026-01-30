@@ -1,6 +1,7 @@
 package com.shahzadian.profilescreen.ui.subscriptionview
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,6 +34,7 @@ internal fun HasSubscriptionView(
     Column(
         modifier = modifier
             .mainCardBackground()
+            .clickable(onClick = manageSubscriptionClick)
             .padding(16.dp)
     ) {
         HeaderView(
