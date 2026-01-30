@@ -1,8 +1,6 @@
 package com.shahzadian.goalsscreen.ui.savingsgoal
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,8 +22,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.freenic.ui.extensions.mainCardBackground
-import com.freenic.ui.extensions.mainCardBorderColor
-import com.freenic.ui.extensions.mainCardBorderWidth
 import com.shahzadian.goalsscreen.R
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
 
@@ -40,15 +36,7 @@ internal fun SavingsGoalViewExisting(
     }
     Column(
         modifier = modifier
-            .background(
-                color = mainCardBackground,
-                shape = MaterialTheme.shapes.medium,
-            )
-            .border(
-                width = mainCardBorderWidth,
-                color = mainCardBorderColor,
-                shape = MaterialTheme.shapes.medium,
-            )
+            .mainCardBackground()
             .padding(16.dp),
     ) {
         HeaderView(
