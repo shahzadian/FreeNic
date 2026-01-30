@@ -1,11 +1,11 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper
+package com.shahzadian.journeycalendarscreen.calendarhelper
 
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 
 @Immutable
-internal data class DayEventUiModel(
+data class JourneyCalendarDayEvent(
     val title: TextWrapper,
     val subtitle: TextWrapper?,
     val icon: ImageWrapper,
@@ -15,7 +15,7 @@ internal data class DayEventUiModel(
     )
 )
 
-internal sealed interface DayEventShowType {
+sealed interface DayEventShowType {
     data object Preview : DayEventShowType
     data object BottomSheet : DayEventShowType
 }

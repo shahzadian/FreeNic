@@ -1,4 +1,4 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
+package com.shahzadian.journeycalendarscreen.calendarhelper.eventsfinder
 
 import android.content.Context
 import com.shahzadian.achievements.domain.GetAchievementsUseCase

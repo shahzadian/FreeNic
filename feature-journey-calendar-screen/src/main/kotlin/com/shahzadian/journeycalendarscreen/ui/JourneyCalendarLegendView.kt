@@ -42,7 +42,7 @@ fun JourneyCalendarLegendsView(
                     .weight(1f),
             )
             LegendView(
-                iconRes = R.drawable.ic_journey_calendar_event_achievement,
+                iconRes = com.shahzadian.journeycalendar.R.drawable.ic_journey_calendar_event_achievement,
                 labelRes = com.shahzadian.baseui.R.string.journey_calendar_legend_achievement,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -51,7 +51,7 @@ fun JourneyCalendarLegendsView(
         }
         Row {
             LegendView(
-                iconRes = R.drawable.ic_journey_calendar_event_slip,
+                iconRes = com.shahzadian.journeycalendar.R.drawable.ic_journey_calendar_event_slip,
                 labelRes = com.shahzadian.baseui.R.string.journey_calendar_legend_slip,
                 modifier = Modifier
                     .fillMaxWidth()

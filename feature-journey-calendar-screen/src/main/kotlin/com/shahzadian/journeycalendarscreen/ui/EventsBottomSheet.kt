@@ -24,25 +24,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.mainCardBackground
-import com.freenic.ui.extensions.mainHintBackground
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
-import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.journeycalendarscreen.R
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventShowType
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
+import com.shahzadian.journeycalendarscreen.calendarhelper.DayEventShowType
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayCell
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayEvent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun EventsBottomSheet(
-    cell: DayCellUiModel,
+    cell: JourneyCalendarDayCell,
     onEventsSheetDismissRequested: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -77,7 +73,7 @@ internal fun EventsBottomSheet(
 
 @Composable
 private fun EventsView(
-    cell: DayCellUiModel,
+    cell: JourneyCalendarDayCell,
     dismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -117,7 +113,7 @@ private fun EventsView(
 
 @Composable
 private fun EventsView(
-    cell: DayCellUiModel,
+    cell: JourneyCalendarDayCell,
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
@@ -138,33 +134,8 @@ private fun EventsView(
 }
 
 @Composable
-private fun NoCigDaysEventView(
-    data: DayCellUiModel.NoCigData,
-    modifier: Modifier = Modifier,
-) {
-    val title = stringResource(com.shahzadian.baseui.R.string.journey_calendar_event_no_cig_title)
-    val subtitle = pluralStringResource(
-        com.shahzadian.baseui.R.plurals.journey_calendar_event_no_cig_subtitle,
-        data.noCigDays,
-        data.noCigDays, data.displayableSavedMoney
-    )
-    EventView(
-        model = DayEventUiModel(
-            title = TextWrapper.FromString(title),
-            subtitle = TextWrapper.FromString(subtitle),
-            icon = ImageWrapper.FromRes(
-                R.drawable.ic_journey_calendar_event_no_cig_days
-            )
-        ),
-        modifier = modifier
-            .mainHintBackground(),
-        hasDefaultBackground = false,
-    )
-}
-
-@Composable
 private fun EventView(
-    model: DayEventUiModel,
+    model: JourneyCalendarDayEvent,
     modifier: Modifier = Modifier,
     hasDefaultBackground: Boolean = true,
 ) {

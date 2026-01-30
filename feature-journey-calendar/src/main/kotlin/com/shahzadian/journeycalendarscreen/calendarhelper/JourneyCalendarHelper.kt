@@ -1,8 +1,8 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper
+package com.shahzadian.journeycalendarscreen.calendarhelper
 
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.wrapper.TextWrapper
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder.JourneyCalendarEventsFinderFactory
+import com.shahzadian.journeycalendarscreen.calendarhelper.eventsfinder.JourneyCalendarEventsFinderFactory
 import com.shahzadian.user.domain.UserDataHelper
 import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
@@ -19,13 +19,13 @@ import java.time.format.TextStyle
 import java.util.Locale
 import javax.inject.Inject
 
-internal interface JourneyCalendarHelper {
+interface JourneyCalendarHelper {
 
     val rewardHelper: JourneyCalendarRewardHelper
 
     suspend fun hasPreviousMonth(): Boolean
 
-    suspend fun getMonth(): MonthDataUiModel
+    suspend fun getMonth(): JourneyCalendarMonthData
 
     suspend fun decrementMonth()
 
@@ -60,7 +60,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMonth(): MonthDataUiModel {
+    override suspend fun getMonth(): JourneyCalendarMonthData {
         mutex.withLock {
             val title = TextWrapper.FromString(
                 currentMonth.month.getDisplayName(
@@ -90,7 +90,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
                 } else {
                     null
                 }
-                DayCellUiModel(
+                JourneyCalendarDayCell(
                     calendarDayText = if (inCurrentMonth) {
                         TextWrapper.FromString(dayNumber.toString())
                     } else {
@@ -109,7 +109,7 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
             }
 
             val weeks = cells.chunked(7)
-            return MonthDataUiModel(
+            return JourneyCalendarMonthData(
                 monthTitle = title,
                 weeks = weeks,
             )

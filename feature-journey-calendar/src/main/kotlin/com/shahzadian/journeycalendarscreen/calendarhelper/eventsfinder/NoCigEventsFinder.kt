@@ -1,8 +1,9 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
+package com.shahzadian.journeycalendarscreen.calendarhelper.eventsfinder
 
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
+import com.shahzadian.baseui.R
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayEvent
 import com.shahzadian.user.domain.UserDataHelper
 import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
@@ -20,7 +21,7 @@ internal class NoCigEventsFinder(
     private var _userData: UserData? = null
     private var _userDataHelper: UserDataHelper? = null
 
-    override suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel> {
+    override suspend fun getEventsForDate(date: LocalDate): List<JourneyCalendarDayEvent> {
         val dateMillis = date.atStartOfDay(ZoneId.systemDefault())?.toInstant()?.toEpochMilli()
             ?.let { it + 1000 * 60 * 60 * 24 } ?: return emptyList()
         val userData = getUserData() ?: return emptyList()
@@ -41,14 +42,14 @@ internal class NoCigEventsFinder(
         }
         val displayableSavedMoney = "${savedMoney}$currency"
         return listOf(
-            DayEventUiModel(
-                title = TextWrapper.FromRes(com.shahzadian.baseui.R.string.journey_calendar_event_no_cig_title),
+            JourneyCalendarDayEvent(
+                title = TextWrapper.FromRes(R.string.journey_calendar_event_no_cig_title),
                 subtitle = TextWrapper.FromPlural(
-                    com.shahzadian.baseui.R.plurals.journey_calendar_event_no_cig_subtitle,
+                    R.plurals.journey_calendar_event_no_cig_subtitle,
                     noCigDays,
                     arrayListOf(noCigDays, displayableSavedMoney)
                 ),
-                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_event_no_cig_days),
+                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendar.R.drawable.ic_journey_calendar_event_no_cig_days),
             )
         )
     }

@@ -17,13 +17,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.textFromWrapper
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventShowType
+import com.shahzadian.journeycalendarscreen.calendarhelper.DayEventShowType
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayCell
 
 @Composable
 internal fun DayCellView(
     onDayClicked: () -> Unit,
-    cell: DayCellUiModel,
+    cell: JourneyCalendarDayCell,
     modifier: Modifier = Modifier,
 ) {
     val background = when {

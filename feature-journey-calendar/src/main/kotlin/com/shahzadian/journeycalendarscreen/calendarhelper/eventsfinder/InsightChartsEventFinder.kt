@@ -1,11 +1,11 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
+package com.shahzadian.journeycalendarscreen.calendarhelper.eventsfinder
 
 import android.content.Context
 import com.freenic.ui.extensions.extract
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.insightsscreen.domain.GetInsightChartsBlocksUseCase
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayEvent
 import java.time.LocalDate
 
 internal class InsightChartsEventFinder(
@@ -13,7 +13,7 @@ internal class InsightChartsEventFinder(
     private val getInsightChartsBlocksUseCase: GetInsightChartsBlocksUseCase,
 ) : JourneyCalendarEventsFinder() {
 
-    override suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel> {
+    override suspend fun getEventsForDate(date: LocalDate): List<JourneyCalendarDayEvent> {
         return getInsightChartsBlocksUseCase()
             .flatMap { chartsBlock ->
                 chartsBlock
@@ -25,7 +25,7 @@ internal class InsightChartsEventFinder(
                     }
                     .map {
                         val title = it.title.extract(context)
-                        DayEventUiModel(
+                        JourneyCalendarDayEvent(
                             title = TextWrapper.FromRes(
                                 R.string.journey_calendar_event_insight_title,
                                 arrayListOf(title)

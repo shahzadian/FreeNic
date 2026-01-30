@@ -24,7 +24,7 @@ import com.freenic.ui.AppLoaderView
 import com.freenic.ui.extensions.MainToolbarView
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayCell
 import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewCommand
 import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewEvent
 import com.shahzadian.journeycalendarscreen.ui.viewmodel.JourneyCalendarViewModel
@@ -103,8 +103,8 @@ private fun ContentView(
             return
         }
         val data = state as JourneyCalendarViewState.Data
-        val month = data.monthDataUiModel
-        val dayClick: (DayCellUiModel) -> Unit =
+        val month = data.journeyCalendarMonthData
+        val dayClick: (JourneyCalendarDayCell) -> Unit =
             remember { { cell -> onEvent(JourneyCalendarViewEvent.OnDayTapped(cell)) } }
         val bottomSheetDismissRequired =
             remember { { onEvent(JourneyCalendarViewEvent.OnBottomSheetDismissRequired) } }

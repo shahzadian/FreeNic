@@ -1,9 +1,9 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
+package com.shahzadian.journeycalendarscreen.calendarhelper.eventsfinder
 
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayEvent
 import com.shahzadian.savingsgoal.domain.GetCurrentSavingsGoalUseCase
 import com.shahzadian.savingsgoal.domain.SavingsGoal
 import java.time.LocalDate
@@ -15,7 +15,7 @@ internal class SavingsEventFinder(
 
     private var _currentSavingsGoal: SavingsGoal? = null
 
-    override suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel> {
+    override suspend fun getEventsForDate(date: LocalDate): List<JourneyCalendarDayEvent> {
         val goal = getCurrentSavingsGoal() ?: return emptyList()
         val today = LocalDate.now()
         if (today == date && goal.daysLeft == 0) {
@@ -30,7 +30,7 @@ internal class SavingsEventFinder(
 
     private fun composeEvent(
         savingsGoal: SavingsGoal,
-    ): DayEventUiModel {
+    ): JourneyCalendarDayEvent {
         val displayableCurrency = try {
             savingsGoal.currency
                 ?.let { Currency.getInstance(it).symbol } ?: ""
@@ -38,13 +38,13 @@ internal class SavingsEventFinder(
             ""
         }
         val displayableAmount = "${savingsGoal.necessaryAmount}$displayableCurrency"
-        return DayEventUiModel(
+        return JourneyCalendarDayEvent(
             title = TextWrapper.FromRes(R.string.journey_calendar_event_savings_goal_title),
             subtitle = TextWrapper.FromRes(
                 R.string.journey_calendar_event_savings_goal_subtitle,
                 arrayListOf(displayableAmount, savingsGoal.name)
             ),
-            icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_legend_savings)
+            icon = ImageWrapper.FromRes(com.shahzadian.journeycalendar.R.drawable.ic_journey_calendar_legend_savings)
         )
     }
 

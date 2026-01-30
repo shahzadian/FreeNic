@@ -12,8 +12,8 @@ import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.ad.AdHelper
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayCellUiModel
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.JourneyCalendarHelper
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayCell
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarHelper
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +36,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
         JourneyCalendarViewState.Loading
     }
 
-    private var tappetDay: DayCellUiModel? = null
+    private var tappetDay: JourneyCalendarDayCell? = null
 
     init {
         setData()
@@ -86,7 +86,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
                         calendarAccessType = getCalendarAccessType(),
                         hasPreviousMonth = journeyCalendarHelper.hasPreviousMonth(),
                         tappedDay = tappetDay,
-                        monthDataUiModel = model,
+                        journeyCalendarMonthData = model,
                     )
                 )
             } else {
@@ -121,22 +121,22 @@ internal class JourneyCalendarViewModel @Inject constructor(
         }
     }
 
-    private fun onDayTapped(dayCellUiModel: DayCellUiModel) {
-        tappetDay = dayCellUiModel
+    private fun onDayTapped(journeyCalendarDayCell: JourneyCalendarDayCell) {
+        tappetDay = journeyCalendarDayCell
         val currentState = viewState as? JourneyCalendarViewState.Data ?: return
         viewModelScope.launch {
             setViewState(
-                state = currentState.copy(tappedDay = dayCellUiModel)
+                state = currentState.copy(tappedDay = journeyCalendarDayCell)
             )
             val dayType = when {
-                dayCellUiModel.isToday -> AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_TODAY
-                dayCellUiModel.isInFuture -> AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_FUTURE
+                journeyCalendarDayCell.isToday -> AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_TODAY
+                journeyCalendarDayCell.isInFuture -> AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_FUTURE
                 else -> AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_VALUE_DAY_TYPE_PAST
             }
             analyticsEventSender.send(
                 event = AnalyticsEvent(
                     name = AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP, params = mapOf(
-                        AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_HAS_EVENTS to dayCellUiModel.events.isNotEmpty()
+                        AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_HAS_EVENTS to journeyCalendarDayCell.events.isNotEmpty()
                             .asAnalyticsProperty(),
                         AnalyticsEventConst.JOURNEY_CALENDAR_DAY_TAP_PARAM_DAY_TYPE to dayType.asAnalyticsProperty(),
                     )

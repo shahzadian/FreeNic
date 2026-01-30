@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":feature-subscription"))
     implementation(project(":feature-insights-screen"))
     implementation(project(":feature-daily-check-in"))
+    implementation(project(":feature-journey-calendar"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -1,6 +1,6 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
+package com.shahzadian.journeycalendarscreen.calendarhelper.eventsfinder
 
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayEvent
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -8,11 +8,11 @@ internal abstract class JourneyCalendarEventsFinder {
 
     protected val zone: ZoneId = ZoneId.systemDefault()
 
-    suspend fun findEventsForDate(date: LocalDate): List<DayEventUiModel> {
+    suspend fun findEventsForDate(date: LocalDate): List<JourneyCalendarDayEvent> {
         return getEventsForDate(date)
     }
 
-    protected abstract suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel>
+    protected abstract suspend fun getEventsForDate(date: LocalDate): List<JourneyCalendarDayEvent>
 
     protected fun LocalDate.startOfDayMillis(): Long {
         return this

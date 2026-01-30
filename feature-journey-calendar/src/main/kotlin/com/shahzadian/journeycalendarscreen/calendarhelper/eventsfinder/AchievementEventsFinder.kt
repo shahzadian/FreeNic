@@ -1,4 +1,4 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper.eventsfinder
+package com.shahzadian.journeycalendarscreen.calendarhelper.eventsfinder
 
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
@@ -6,7 +6,7 @@ import com.shahzadian.achievements.domain.Achievement
 import com.shahzadian.achievements.domain.AchievementItem
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
 import com.shahzadian.baseui.R
-import com.shahzadian.journeycalendarscreen.ui.calendarhelper.DayEventUiModel
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayEvent
 import com.shahzadian.user.domain.UserDataHelper
 import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
@@ -24,7 +24,7 @@ internal class AchievementEventsFinder(
     private var _userData: UserData? = null
     private var _userDataHelper: UserDataHelper? = null
 
-    override suspend fun getEventsForDate(date: LocalDate): List<DayEventUiModel> {
+    override suspend fun getEventsForDate(date: LocalDate): List<JourneyCalendarDayEvent> {
         val userData = getUserData() ?: return emptyList()
         val userDataHelper = getUserDataHelper() ?: return emptyList()
         val achievements = getAchievements()
@@ -49,7 +49,7 @@ internal class AchievementEventsFinder(
         achievements: List<Achievement>,
         userData: UserData,
         userDataHelper: UserDataHelper,
-    ): List<DayEventUiModel> {
+    ): List<JourneyCalendarDayEvent> {
         return achievements.mapNotNull { achievement ->
             val item = achievement.achievementItem as? AchievementItem.Money
                 ?: return@mapNotNull null
@@ -59,13 +59,13 @@ internal class AchievementEventsFinder(
             val necessaryDaysToAchieve = necessaryAmount / moneyPerDay
             val achievementDay = quitDate.plusDays(necessaryDaysToAchieve.toLong())
             if (achievementDay != date) return@mapNotNull null
-            DayEventUiModel(
+            JourneyCalendarDayEvent(
                 title = TextWrapper.FromRes(R.string.journey_calendar_event_achievement_title),
                 subtitle = TextWrapper.FromRes(
                     R.string.journey_calendar_event_money_based_achievement_subtitle,
                     args = arrayListOf(item.getDisplayableAmount())
                 ),
-                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_event_achievement)
+                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendar.R.drawable.ic_journey_calendar_event_achievement)
             )
         }
     }
@@ -74,7 +74,7 @@ internal class AchievementEventsFinder(
         date: LocalDate,
         achievements: List<Achievement>,
         userData: UserData,
-    ): List<DayEventUiModel> {
+    ): List<JourneyCalendarDayEvent> {
         return achievements.mapNotNull { achievement ->
             val necessaryCigs =
                 (achievement.achievementItem as? AchievementItem.Cigs)?.necessaryCount
@@ -84,14 +84,14 @@ internal class AchievementEventsFinder(
             val necessaryDaysToAchieve = necessaryCigs.toFloat() / cigsPerDay.toFloat()
             val achievementDay = quitDate.plusDays(necessaryDaysToAchieve.toLong())
             if (achievementDay != date) return@mapNotNull null
-            DayEventUiModel(
+            JourneyCalendarDayEvent(
                 title = TextWrapper.FromRes(R.string.journey_calendar_event_achievement_title),
                 subtitle = TextWrapper.FromPlural(
                     R.plurals.journey_calendar_event_no_cigs_based_achievement_subtitle,
                     quantity = necessaryCigs,
                     args = arrayListOf(necessaryCigs)
                 ),
-                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_event_achievement)
+                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendar.R.drawable.ic_journey_calendar_event_achievement)
             )
         }
     }
@@ -100,7 +100,7 @@ internal class AchievementEventsFinder(
         date: LocalDate,
         achievements: List<Achievement>,
         userData: UserData,
-    ): List<DayEventUiModel> {
+    ): List<JourneyCalendarDayEvent> {
         val quitDate = userData.getQuitDate()
         return achievements.mapNotNull { achievement ->
             val necessaryDays =
@@ -108,14 +108,14 @@ internal class AchievementEventsFinder(
                     ?: return@mapNotNull null
             val achievementDay = quitDate.plusDays(necessaryDays.toLong())
             if (achievementDay != date) return@mapNotNull null
-            DayEventUiModel(
+            JourneyCalendarDayEvent(
                 title = TextWrapper.FromRes(R.string.journey_calendar_event_achievement_title),
                 subtitle = TextWrapper.FromPlural(
                     R.plurals.journey_calendar_event_day_based_achievement_subtitle,
                     quantity = necessaryDays,
                     args = arrayListOf(necessaryDays)
                 ),
-                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendarscreen.R.drawable.ic_journey_calendar_event_achievement)
+                icon = ImageWrapper.FromRes(com.shahzadian.journeycalendar.R.drawable.ic_journey_calendar_event_achievement)
             )
         }
     }

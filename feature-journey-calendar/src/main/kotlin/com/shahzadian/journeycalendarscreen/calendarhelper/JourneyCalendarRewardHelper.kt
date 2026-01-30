@@ -1,4 +1,4 @@
-package com.shahzadian.journeycalendarscreen.ui.calendarhelper
+package com.shahzadian.journeycalendarscreen.calendarhelper
 
 import com.freenic.cache.AppCache
 import java.time.Instant
@@ -6,7 +6,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 import javax.inject.Inject
 
-internal interface JourneyCalendarRewardHelper {
+interface JourneyCalendarRewardHelper {
 
     suspend fun onRewarded()
 
