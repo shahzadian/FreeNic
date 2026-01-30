@@ -8,6 +8,9 @@ import java.time.LocalDate
 @Dao
 internal interface DailyCheckInDao {
 
+    @Query("SELECT * FROM dailycheckinentity")
+    suspend fun getAll(): List<DailyCheckInEntity>
+
     @Query("SELECT * FROM dailycheckinentity WHERE date = :date")
     suspend fun getForDay(date: LocalDate): DailyCheckInEntity?
 
