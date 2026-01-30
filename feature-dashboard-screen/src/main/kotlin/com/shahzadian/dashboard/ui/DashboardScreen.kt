@@ -89,21 +89,21 @@ private fun ContentView(
             onDetailsClicked = onDetailedInsightsClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp),
+                .padding(bottom = 16.dp),
         )
         DashboardSmokeView(
             onWantToSmokeClicked = onWantToSmokeClick,
             onIsSmokedClicked = onISmokedClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp),
+                .padding(bottom = 16.dp),
         )
         DashboardJourneyCalendarView(
             uiModel = data.calendar,
             onViewCalendarClicked = onJourneyCalendarClick,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 32.dp)
+                .padding(bottom = 16.dp)
         )
         DailyCheckIn(
             uiModel = data.dailyCheckIn,
