@@ -579,5 +579,7 @@
     <string name="journey_calendar_preview_reward_hint">Access for today</string>
     <string name="journey_calendar_preview_button_or">Or</string>
     <string name="journey_calendar_header_subtitle_access_until_day_end">Calendar is available until 23:59 today</string>
+    <string name="dashboard_smoke_view_title">Need support?</string>
+    <string name="dashboard_smoke_view_subtitle">We\'re here to help you</string>
 
 </resources>

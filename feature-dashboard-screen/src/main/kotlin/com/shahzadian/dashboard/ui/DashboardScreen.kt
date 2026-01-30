@@ -76,9 +76,6 @@ private fun ContentView(
     val onJourneyCalendarClick = remember {
         { onViewModelEvent(DashboardViewEvent.OnJourneyCalendarClicked) }
     }
-    val onMotivationalNoteRefreshClick = remember {
-        { onViewModelEvent(DashboardViewEvent.OnMotivationalNoteRefreshClicked) }
-    }
     val onDailyCheckInResultClick: (DashboardViewState.DailyCheckInResult) -> Unit = remember {
         { onViewModelEvent(DashboardViewEvent.OnDailyCheckInClicked(it)) }
     }
@@ -94,14 +91,9 @@ private fun ContentView(
                 .fillMaxWidth()
                 .padding(bottom = 32.dp),
         )
-        DashboardWantToSmokeView(
-            onClicked = onWantToSmokeClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 8.dp),
-        )
-        ISmokedView(
-            onClicked = onISmokedClick,
+        DashboardSmokeView(
+            onWantToSmokeClicked = onWantToSmokeClick,
+            onIsSmokedClicked = onISmokedClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 32.dp),
