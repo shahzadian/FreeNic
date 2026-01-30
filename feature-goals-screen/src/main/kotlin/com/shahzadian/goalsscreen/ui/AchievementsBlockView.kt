@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.shahzadian.baseui.R
+import com.shahzadian.goalsscreen.ui.viewmodel.AchievementUiModel
 import com.shahzadian.goalsscreen.ui.viewmodel.AchievementsData
 
 @Composable
@@ -26,70 +28,130 @@ internal fun AchievementsBlockView(
     onMoreClick: () -> Unit = {},
     onAchievementShareClicked: (id: String) -> Unit = {},
 ) {
+    val items = data.achievements
+    val itemsPerRowRaw = data.achievementsPerRow
+    val itemsPerRow = if (itemsPerRowRaw > 0) itemsPerRowRaw else 1
+
+    val rows = items.chunked(itemsPerRow)
+
+    if (data.shouldShowMoreAchievementsButton) {
+        NonLazyListContent(
+            rows = rows,
+            itemsPerRow = itemsPerRow,
+            onMoreClicked = onMoreClick,
+            onAchievementShareClicked = onAchievementShareClicked,
+            modifier = modifier
+        )
+    } else {
+        LazyListContent(
+            rows = rows,
+            itemsPerRow = itemsPerRow,
+            onAchievementShareClicked = onAchievementShareClicked,
+            modifier = modifier
+        )
+    }
+}
+
+@Composable
+private fun NonLazyListContent(
+    rows: List<List<AchievementUiModel>>,
+    itemsPerRow: Int,
+    onMoreClicked: () -> Unit,
+    onAchievementShareClicked: (id: String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     val achievementShareClick: (id: String) -> Unit =
         remember { { onAchievementShareClicked(it) } }
+    val moreClick: () -> Unit = remember { { onMoreClicked() } }
     Column(
-        modifier = modifier,
+        modifier = modifier.padding(bottom = 16.dp)
     ) {
-        Text(
-            text = stringResource(R.string.goals_achievements_block_title),
-            color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.titleLarge,
-            modifier = Modifier.padding(bottom = 16.dp),
-        )
-        Column(
-            modifier = Modifier.padding(
-                bottom = if (data.shouldShowMoreAchievementsButton) 16.dp else 0.dp
-            )
-        ) {
-            val items = data.achievements
-            val itemsPerRowRaw = data.achievementsPerRow
-            val itemsPerRow = if (itemsPerRowRaw > 0) itemsPerRowRaw else 1
-
-            val rows = items.chunked(itemsPerRow)
-            rows.forEachIndexed { rowIndex, rowItems ->
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = if (rowIndex == rows.lastIndex) 0.dp else 8.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    rowItems.forEach { achievement ->
-                        Box(
+        rows.forEachIndexed { rowIndex, rowItems ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = if (rowIndex == rows.lastIndex) 0.dp else 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                rowItems.forEach { achievement ->
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        AchievementView(
+                            achievement = achievement,
                             modifier = Modifier
-                                .weight(1f)
-                        ) {
-                            AchievementView(
-                                achievement = achievement,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .wrapContentHeight(),
-                                onAchievementShareClicked = {
-                                    achievementShareClick(achievement.id)
-                                }
-                            )
-                        }
+                                .fillMaxWidth()
+                                .wrapContentHeight(),
+                            onAchievementShareClicked = {
+                                achievementShareClick(achievement.id)
+                            }
+                        )
                     }
-                    val placeholders = itemsPerRow - rowItems.size
-                    if (placeholders > 0) {
-                        repeat(placeholders) {
-                            Spacer(modifier = Modifier.weight(1f))
-                        }
+                }
+                val placeholders = itemsPerRow - rowItems.size
+                if (placeholders > 0) {
+                    repeat(placeholders) {
+                        Spacer(modifier = Modifier.weight(1f))
                     }
                 }
             }
         }
-        if (data.shouldShowMoreAchievementsButton) {
-            Text(
-                text = stringResource(R.string.achievement_show_more),
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .clickable(
-                        enabled = true,
-                        onClick = onMoreClick,
-                    )
+    }
+    Text(
+        text = stringResource(R.string.achievement_show_more),
+        style = MaterialTheme.typography.titleMedium,
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier
+            .clickable(
+                enabled = true,
+                onClick = moreClick,
             )
+    )
+}
+
+@Composable
+private fun LazyListContent(
+    rows: List<List<AchievementUiModel>>,
+    itemsPerRow: Int,
+    onAchievementShareClicked: (id: String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val achievementShareClick: (id: String) -> Unit =
+        remember { { onAchievementShareClicked(it) } }
+    LazyColumn(
+        modifier = modifier
+    ) {
+        items(rows.size) { index ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                rows[index].forEach { achievement ->
+                    Box(
+                        modifier = Modifier
+                            .weight(1f)
+                    ) {
+                        AchievementView(
+                            achievement = achievement,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentHeight(),
+                            onAchievementShareClicked = {
+                                achievementShareClick(achievement.id)
+                            }
+                        )
+                    }
+                }
+                val placeholders = itemsPerRow - rows.size
+                if (placeholders > 0) {
+                    repeat(placeholders) {
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
+                }
+            }
         }
     }
 }

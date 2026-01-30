@@ -1,10 +1,12 @@
 package com.shahzadian.achievements.data
 
+import com.freenic.ui.model.CoroutineContexts
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.achievements.domain.Achievement
 import com.shahzadian.achievements.domain.AchievementItem
 import com.shahzadian.baseui.R
+import kotlinx.coroutines.withContext
 import java.util.Currency
 import javax.inject.Inject
 
@@ -13,10 +15,20 @@ internal interface AchievementRepository {
     suspend fun getAchievements(): List<Achievement>
 }
 
-internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepository {
+internal class AchievementRepositoryImpl @Inject constructor(
+    private val coroutineContexts: CoroutineContexts,
+) : AchievementRepository {
+
+    private var achievements: List<Achievement>? = null
 
     override suspend fun getAchievements(): List<Achievement> {
-        return getCigsCountBasedAchievements() + getDayBasedAchievements() + getMoneyBasedAchievements()
+        if (achievements != null) return achievements!!
+        return withContext(coroutineContexts.default) {
+            val toReturn =
+                getCigsCountBasedAchievements() + getDayBasedAchievements() + getMoneyBasedAchievements()
+            achievements = toReturn
+            toReturn
+        }
     }
 
     private fun getCigsCountBasedAchievements(): List<Achievement> {
@@ -42,35 +54,7 @@ internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepo
                 icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_fifty_victories),
                 achievementItem = AchievementItem.Cigs(50),
             ),
-            Achievement(
-                id = "100 cigs",
-                name = TextWrapper.FromRes(R.string.achievement_title_100_cigs),
-                description = TextWrapper.FromRes(R.string.achievement_desc_100_cigs),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_cigs),
-                achievementItem = AchievementItem.Cigs(100)
-            ),
-            Achievement(
-                id = "200 cigs",
-                name = TextWrapper.FromRes(R.string.achievement_title_200_cigs),
-                description = TextWrapper.FromRes(R.string.achievement_desc_200_cigs),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_cigs),
-                achievementItem = AchievementItem.Cigs(200)
-            ),
-            Achievement(
-                id = "500 cigs",
-                name = TextWrapper.FromRes(R.string.achievement_title_500_cigs),
-                description = TextWrapper.FromRes(R.string.achievement_desc_500_cigs),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_cigs),
-                achievementItem = AchievementItem.Cigs(500)
-            ),
-            Achievement(
-                id = "1000 cigs",
-                name = TextWrapper.FromRes(R.string.achievement_title_1000_cigs),
-                description = TextWrapper.FromRes(R.string.achievement_desc_1000_cigs),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_cigs),
-                achievementItem = AchievementItem.Cigs(1000)
-            ),
-        )
+        ) + getOtherCigsBasedAchievements()
     }
 
     private fun getDayBasedAchievements(): List<Achievement> {
@@ -134,58 +118,75 @@ internal class AchievementRepositoryImpl @Inject constructor() : AchievementRepo
         )
     }
 
+    private fun getOtherCigsBasedAchievements(): List<Achievement> {
+        val toReturn = mutableListOf<Achievement>()
+        var count = 100
+        while (count < 10000) {
+            toReturn.add(getCigsBasedAchievement(count))
+            count += 50
+        }
+        return toReturn
+    }
+
     private fun getMoneyBasedAchievements(): List<Achievement> {
-        return listOf(
-            Achievement(
-                id = "10 bucks",
-                name = TextWrapper.FromRes(R.string.achievement_title_10_bucks),
-                description = TextWrapper.FromRes(R.string.achievement_desc_10_bucks),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
-                achievementItem = AchievementItem.Money(
-                    necessaryAmount = 10f,
-                    currency = Currency.getInstance("USD"),
-                )
-            ),
-            Achievement(
-                id = "20 bucks",
-                name = TextWrapper.FromRes(R.string.achievement_title_20_bucks),
-                description = TextWrapper.FromRes(R.string.achievement_desc_20_bucks),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
-                achievementItem = AchievementItem.Money(
-                    necessaryAmount = 20f,
-                    currency = Currency.getInstance("USD"),
-                )
-            ),
-            Achievement(
-                id = "30 bucks",
-                name = TextWrapper.FromRes(R.string.achievement_title_30_bucks),
-                description = TextWrapper.FromRes(R.string.achievement_desc_30_bucks),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
-                achievementItem = AchievementItem.Money(
-                    necessaryAmount = 30f,
-                    currency = Currency.getInstance("USD"),
-                )
-            ),
-            Achievement(
-                id = "40 bucks",
-                name = TextWrapper.FromRes(R.string.achievement_title_40_bucks),
-                description = TextWrapper.FromRes(R.string.achievement_desc_40_bucks),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
-                achievementItem = AchievementItem.Money(
-                    necessaryAmount = 40f,
-                    currency = Currency.getInstance("USD"),
-                )
-            ),
-            Achievement(
-                id = "50 bucks",
-                name = TextWrapper.FromRes(R.string.achievement_title_50_bucks),
-                description = TextWrapper.FromRes(R.string.achievement_desc_50_bucks),
-                icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
-                achievementItem = AchievementItem.Money(
-                    necessaryAmount = 50f,
-                    currency = Currency.getInstance("USD"),
-                )
-            ),
+        val initialList = listOf(
+            getMoneyBasedAchievement(10f),
+            getMoneyBasedAchievement(20f),
+            getMoneyBasedAchievement(30f),
+            getMoneyBasedAchievement(40f),
+            getMoneyBasedAchievement(50f),
+        )
+        var bucks = 100f
+        val toReturn = mutableListOf<Achievement>()
+        toReturn.addAll(initialList)
+        while (bucks <= 2000f) {
+            toReturn.add(getMoneyBasedAchievement(bucks))
+            bucks += 50f
+        }
+        return toReturn
+    }
+
+    private fun getCigsBasedAchievement(cigs: Int): Achievement {
+        val title = TextWrapper.FromPlural(
+            R.plurals.achievement_title_cigs,
+            cigs,
+            listOf(cigs)
+        )
+        val desc = TextWrapper.FromPlural(
+            R.plurals.achievement_desc_cigs,
+            cigs,
+            listOf(cigs)
+        )
+        return Achievement(
+            id = "$cigs cigs",
+            name = title,
+            description = desc,
+            icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_cigs),
+            achievementItem = AchievementItem.Cigs(cigs)
+        )
+    }
+
+    private fun getMoneyBasedAchievement(count: Float): Achievement {
+        return Achievement(
+            id = "$count bucks",
+            name = getBucksTitle(count),
+            description = getBucksDescription(count),
+            icon = ImageWrapper.FromRes(com.shahzadian.achievements.R.drawable.ic_achievement_bucks),
+            achievementItem = AchievementItem.Money(
+                necessaryAmount = count,
+                currency = Currency.getInstance("USD"),
+            )
+        )
+    }
+
+    private fun getBucksTitle(count: Float): TextWrapper {
+        return TextWrapper.FromString("$count$")
+    }
+
+    private fun getBucksDescription(count: Float): TextWrapper {
+        return TextWrapper.FromRes(
+            R.string.achievement_desc_bucks,
+            listOf("$count$"),
         )
     }
 }

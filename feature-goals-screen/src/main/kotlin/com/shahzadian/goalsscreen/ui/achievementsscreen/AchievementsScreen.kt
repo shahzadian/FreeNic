@@ -1,17 +1,21 @@
 package com.shahzadian.goalsscreen.ui.achievementsscreen
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.AppScreen
-import com.freenic.ui.extensions.HeaderScreen
+import com.freenic.ui.extensions.MainToolbarView
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.goalsscreen.ui.AchievementsBlockView
@@ -71,15 +75,22 @@ private fun ContentView(
     val onBackIconClick: () -> Unit = remember {
         { onEvent(AchievementsViewEvent.OnBackIconClicked) }
     }
-    HeaderScreen(
-        title = TextWrapper.FromRes(R.string.achievements_header_title),
-        hasBackIcon = true,
-        onBackIconClicked = onBackIconClick,
-        modifier = modifier,
+    Scaffold(
+        topBar = {
+            MainToolbarView(
+                title = TextWrapper.FromRes(R.string.achievements_header_title),
+                hasBackIcon = true,
+                onBackIconClicked = onBackIconClick,
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            )
+        },
+        modifier = modifier.padding(16.dp)
     ) {
         AchievementsBlockView(
             data = data.achievementsData,
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .padding(it),
             onAchievementShareClicked = onShareClick,
         )
     }
