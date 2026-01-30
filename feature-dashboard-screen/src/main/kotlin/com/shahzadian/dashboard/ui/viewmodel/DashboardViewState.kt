@@ -3,6 +3,7 @@ package com.shahzadian.dashboard.ui.viewmodel
 import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
 import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayEvent
 
 @Immutable
 internal sealed interface DashboardViewState : ViewState {
@@ -15,6 +16,7 @@ internal sealed interface DashboardViewState : ViewState {
         val analyticsData: DashboardAnalyticsUiModel,
         val motivationalNote: MotivationalNoteUiModel,
         val dailyCheckIn: DailyCheckInUiModel,
+        val calendar: CalendarUiModel,
     ) : DashboardViewState
 
     @Immutable
@@ -34,6 +36,12 @@ internal sealed interface DashboardViewState : ViewState {
         data object Confirmation : DailyCheckInUiModel
         data object Hide : DailyCheckInUiModel
     }
+
+    @Immutable
+    data class CalendarUiModel(
+        val todayDisplayableDate: TextWrapper,
+        val eventToShow: JourneyCalendarDayEvent,
+    )
 
     enum class DailyCheckInResult {
         HARD,

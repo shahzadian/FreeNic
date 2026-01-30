@@ -204,7 +204,6 @@
     <string name="achievement_desc_6_months">You stayed smoke-free for 180 days!</string>
     <string name="achievement_title_12_months">One year</string>
     <string name="achievement_desc_12_months">You stayed smoke-free for one year!</string>
-    <string name="achievement_title_100_cigs">100 cigarettes</string>
     <string name="achievement_desc_100_cigs">You avoided 100 cigarettes!</string>
     <string name="achievement_title_200_cigs">200 cigarettes</string>
     <string name="achievement_desc_200_cigs">You avoided 200 cigarettes!</string>
@@ -212,6 +211,16 @@
     <string name="achievement_desc_500_cigs">You avoided 500 cigarettes!</string>
     <string name="achievement_title_1000_cigs">1000 cigarettes</string>
     <string name="achievement_desc_1000_cigs">You avoided 1000 cigarettes!</string>
+
+    <plurals name="achievement_title_cigs">
+        <item quantity="one">%d cigarette</item>
+        <item quantity="other">%d cigarettes</item>
+    </plurals>
+
+    <plurals name="achievement_desc_cigs">
+        <item quantity="one">You avoided %d cigarette</item>
+        <item quantity="other">You avoided %d cigarettes</item>
+    </plurals>
 
 
     <string name="main_page_insights_name">Insights</string>
@@ -489,7 +498,7 @@
     <string name="achievement_title_40_bucks">40$</string>
     <string name="achievement_desc_40_bucks">You saved 40$</string>
     <string name="achievement_title_50_bucks">50$</string>
-    <string name="achievement_desc_50_bucks">You saved 50$</string>
+    <string name="achievement_desc_bucks">You saved %s</string>
     <string name="achievement_share_money_based_title">MONEY SAVED!</string>
     <string name="achievement_share_money_based_subtitle">Money not spent on cigarettes</string>
     <string name="achievement_share_money_based_celebratory_title">MONEY SAVED!</string>
@@ -581,5 +590,7 @@
     <string name="journey_calendar_header_subtitle_access_until_day_end">Calendar is available until 23:59 today</string>
     <string name="dashboard_smoke_view_title">Need support?</string>
     <string name="dashboard_smoke_view_subtitle">We\'re here to help you</string>
+    <string name="dashboard_calendar_header_today">Today, %s</string>
+    <string name="dashboard_calendar_view_full_button">View full calendar</string>
 
 </resources>

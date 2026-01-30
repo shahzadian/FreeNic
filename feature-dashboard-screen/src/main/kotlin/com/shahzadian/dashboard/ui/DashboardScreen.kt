@@ -99,7 +99,8 @@ private fun ContentView(
                 .padding(bottom = 32.dp),
         )
         DashboardJourneyCalendarView(
-            onClicked = onJourneyCalendarClick,
+            uiModel = data.calendar,
+            onViewCalendarClicked = onJourneyCalendarClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 32.dp)

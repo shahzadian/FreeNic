@@ -465,7 +465,6 @@
     <string name="achievement_desc_6_months">Вы не курили 6 месяцев!</string>
     <string name="achievement_title_12_months">Один год</string>
     <string name="achievements_header_title">Достижения</string>
-    <string name="achievement_title_100_cigs">100 сигарет</string>
     <string name="achievement_desc_100_cigs">Вы не выкурили 100 сигарет!</string>
     <string name="achievement_title_200_cigs">200 сигарет</string>
     <string name="achievement_desc_200_cigs">Вы не выкурили 200 сигарет!</string>
@@ -481,7 +480,7 @@
     <string name="achievement_title_40_bucks">40$</string>
     <string name="achievement_desc_40_bucks">Вы сэкономили 40$</string>
     <string name="achievement_title_50_bucks">50$</string>
-    <string name="achievement_desc_50_bucks">Вы сэкономили 50$</string>
+    <string name="achievement_desc_bucks">Вы сэкономили %s</string>
     <string name="achievement_share_money_based_title">СЭКОНОМЛЕНО!</string>
     <string name="achievement_share_money_based_subtitle">Деньги, не потраченные на сигареты</string>
     <string name="achievement_share_money_based_celebratory_title">СЭКОНОМЛЕНО!</string>
@@ -574,5 +573,19 @@
     <string name="journey_calendar_header_subtitle_access_until_day_end">Календарь доступен до 23:59 сегодня</string>
     <string name="dashboard_smoke_view_title">Нужна поддержка?</string>
     <string name="dashboard_smoke_view_subtitle">Мы здесь, чтобы помочь вам</string>
+
+    <plurals name="achievement_title_cigs">
+        <item quantity="one">%d сигарета</item>
+        <item quantity="few">%d сигареты</item>
+        <item quantity="other">%d сигарет</item>
+    </plurals>
+
+    <plurals name="achievement_desc_cigs">
+        <item quantity="one">Вы не выкурили %d сигарету</item>
+        <item quantity="few">Вы не выкурили %d сигареты</item>
+        <item quantity="other">Вы не выкурили %d сигарет</item>
+    </plurals>
+    <string name="dashboard_calendar_header_today">Сегодня, %s</string>
+    <string name="dashboard_calendar_view_full_button">Посмотреть календарь</string>
 
 </resources>

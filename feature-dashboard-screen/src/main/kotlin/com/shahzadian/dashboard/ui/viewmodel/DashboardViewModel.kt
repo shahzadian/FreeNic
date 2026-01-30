@@ -18,6 +18,7 @@ import com.shahzadian.dashboard.domain.GetUserDashboardUseCase
 import com.shahzadian.dashboard.domain.UserDashboard
 import com.shahzadian.helpfulnotes.domain.GetMotivationalNotesUseCase
 import com.shahzadian.helpfulnotes.domain.MotivationalNote
+import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -31,6 +32,7 @@ internal class DashboardViewModel @Inject constructor(
     private val analyticsEventSender: AnalyticsEventSender,
     private val getDailyCheckInForDayUseCase: GetDailyCheckInForDayUseCase,
     private val addDailyCheckInStateUseCase: AddDailyCheckInStateUseCase,
+    private val journeyCalendarHelper: JourneyCalendarHelper,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
 
     private var latestCravingToolId: String? = null
@@ -75,12 +77,17 @@ internal class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             val dashboard = getUserDashboardUseCase()
                 ?: throw IllegalStateException("User dashboard is null")
+            val todayData = journeyCalendarHelper.getTodayData()
             setViewState(
                 state = DashboardViewState.Data(
                     userName = dashboard.userName,
                     analyticsData = dashboard.toMainProgress(),
                     motivationalNote = getMotivationalNotesUseCase().random().toUiModel(),
                     dailyCheckIn = getDailyCheckInState(),
+                    calendar = DashboardViewState.CalendarUiModel(
+                        todayDisplayableDate = todayData.todayDisplayableDate,
+                        eventToShow = todayData.events.random(),
+                    ),
                 )
             )
         }

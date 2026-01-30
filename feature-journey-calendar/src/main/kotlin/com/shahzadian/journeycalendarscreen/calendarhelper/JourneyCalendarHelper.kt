@@ -1,10 +1,9 @@
 package com.shahzadian.journeycalendarscreen.calendarhelper
 
+import androidx.compose.runtime.Immutable
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.journeycalendarscreen.calendarhelper.eventsfinder.JourneyCalendarEventsFinderFactory
-import com.shahzadian.user.domain.UserDataHelper
-import com.shahzadian.user.domain.UserDataHelperFactory
 import com.shahzadian.user.domain.getuserdata.GetUserDataUseCase
 import com.shahzadian.user.model.UserData
 import kotlinx.coroutines.sync.Mutex
@@ -30,12 +29,17 @@ interface JourneyCalendarHelper {
     suspend fun decrementMonth()
 
     suspend fun incrementMonth()
+
+    /**
+     * Возвращает данные для сегодняшнего дня: локализованное название дня недели
+     * и список событий, релевантных для текущей даты.
+     */
+    suspend fun getTodayData(): JourneyCalendarTodayData
 }
 
 internal class JourneyCalendarHelperImpl @Inject constructor(
     private val eventsFinderFactory: JourneyCalendarEventsFinderFactory,
     private val getUserDataUseCase: GetUserDataUseCase,
-    private val userDataHelperFactory: UserDataHelperFactory,
     override val rewardHelper: JourneyCalendarRewardHelper,
 ) : JourneyCalendarHelper {
 
@@ -46,7 +50,6 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
     }
 
     private var _userData: UserData? = null
-    private var _userDataHelper: UserDataHelper? = null
 
     private val mutex by lazyUnsafe {
         Mutex()
@@ -128,6 +131,17 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
         }
     }
 
+    override suspend fun getTodayData(): JourneyCalendarTodayData {
+        mutex.withLock {
+            val today = LocalDate.now()
+            val events = eventsFinders.map { it.findEventsForDate(today) }.flatten()
+            return JourneyCalendarTodayData(
+                todayDisplayableDate = today.getFullDayText(),
+                events = events,
+            )
+        }
+    }
+
     private fun LocalDate.getFullDayText(): TextWrapper {
         val formatter =
             DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(Locale.getDefault())
@@ -153,16 +167,13 @@ internal class JourneyCalendarHelperImpl @Inject constructor(
         }
     }
 
-    private suspend fun getUserDataHelper(): UserDataHelper? {
-        val userData = getUserData() ?: return null
-        return _userDataHelper ?: let {
-            val helper = userDataHelperFactory.create(userData)
-            _userDataHelper = helper
-            helper
-        }
-    }
-
     private companion object {
         const val MAX_DISPLAYABLE_EVENTS: Int = 3
     }
 }
+
+@Immutable
+data class JourneyCalendarTodayData(
+    val todayDisplayableDate: TextWrapper,
+    val events: List<JourneyCalendarDayEvent>,
+)
