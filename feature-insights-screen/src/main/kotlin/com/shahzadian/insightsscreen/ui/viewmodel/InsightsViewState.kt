@@ -18,6 +18,7 @@ internal sealed interface InsightsViewState : ViewState {
 
     @Immutable
     data class Data(
+        val accessType: InsightsAccessType,
         val hasPaidSubscription: Boolean,
         val chartBlocks: List<ChartBlockUiModel>,
         val selectedBlockId: String,
@@ -62,5 +63,12 @@ internal sealed interface InsightsViewState : ViewState {
         data class HeartRecoveryUiModel(
             val percents: Int,
         ) : ChartUiModel
+    }
+
+    @Immutable
+    sealed interface InsightsAccessType {
+        data object Permanent : InsightsAccessType
+        data object UntilTheDayEnd : InsightsAccessType
+        data object NoAccess : InsightsAccessType
     }
 }

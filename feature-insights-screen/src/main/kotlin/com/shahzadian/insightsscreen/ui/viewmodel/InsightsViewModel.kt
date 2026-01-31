@@ -79,6 +79,11 @@ internal class InsightsViewModel @Inject constructor(
                             hasPaidSubscription = hasPaidSubscription,
                             chartBlocks = chartBlocks,
                             selectedBlockId = chartBlocks.first().id,
+                            accessType = if (hasPaidSubscription) {
+                                InsightsViewState.InsightsAccessType.Permanent
+                            } else {
+                                InsightsViewState.InsightsAccessType.UntilTheDayEnd
+                            }
                         )
                     )
                 }
@@ -123,6 +128,9 @@ internal class InsightsViewModel @Inject constructor(
                 .onEach {
                     val currentState = viewState as? InsightsViewState.Preview ?: return@onEach
                     setViewState(currentState.copy(previewRewardState = InsightsViewState.PreviewRewardState.Default))
+                    if (it.hasReward) {
+                        rewardHelper.onRewarded()
+                    }
                     setData()
                 }.launchIn(viewModelScope)
             adHelper.requestAdShow(

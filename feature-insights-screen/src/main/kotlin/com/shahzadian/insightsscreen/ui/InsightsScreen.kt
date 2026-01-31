@@ -16,6 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.navigation.AppNavigator
@@ -83,6 +84,9 @@ private fun ContentView(
         val backIconClick = remember { { onEvent(InsightsViewEvent.OnBackIconClicked) } }
         MainToolbarView(
             title = TextWrapper.FromRes(R.string.insights_header_title),
+            subtitle = state.extractToolbarSubtitle()?.let {
+                TextWrapper.FromString(it)
+            },
             hasBackIcon = true,
             onBackIconClicked = backIconClick,
             modifier = Modifier
@@ -208,5 +212,17 @@ private fun ChartsView(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun InsightsViewState.extractToolbarSubtitle(): String? {
+    val data = this as? InsightsViewState.Data ?: return null
+    return when (data.accessType) {
+        is InsightsViewState.InsightsAccessType.UntilTheDayEnd -> {
+            stringResource(R.string.insights_header_subtitle_access_until_day_end)
+        }
+
+        else -> null
     }
 }
