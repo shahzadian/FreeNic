@@ -119,7 +119,7 @@ internal class InsightsViewModel @Inject constructor(
         viewModelScope.launch {
             analyticsEventSender.send(
                 AnalyticsEvent(
-                    name = AnalyticsEventConst.JOURNEY_CALENDAR_WATCH_VIDEO_TAP,
+                    name = AnalyticsEventConst.INSIGHTS_WATCH_VIDEO_TAP,
                 )
             )
             activityEventSender
