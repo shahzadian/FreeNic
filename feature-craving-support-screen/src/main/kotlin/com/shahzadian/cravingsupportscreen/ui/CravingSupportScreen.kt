@@ -21,6 +21,7 @@ import com.shahzadian.cravingsupportscreen.ui.viewmodel.CravingSupportViewState
 
 private const val HEADER_ANIMATION_DURATION: Int = 500
 private const val MOTIVATIONAL_NOTE_ANIMATION_DURATION: Int = 500
+private const val STRENGTH_SELECT_ANIMATION_DURATION: Int = 500
 
 @Composable
 fun CravingSupportScreen(
@@ -53,6 +54,9 @@ private fun ContentView(
     modifier: Modifier = Modifier,
 ) {
     val backIconClick = remember { { onEvent(CravingSupportViewEvent.OnBackIconClicked) } }
+    val strengthSelectEvent: (CravingSupportViewState.CravingStrength) -> Unit = { strength ->
+        onEvent(CravingSupportViewEvent.OnCravingStrengthSelected(strength))
+    }
     HeaderScreen(
         title = TextWrapper.FromRes(com.shahzadian.baseui.R.string.craving_support_toolbar_title),
         hasBackIcon = true,
@@ -61,14 +65,21 @@ private fun ContentView(
     ) {
         Spacer(modifier = Modifier.height(32.dp))
         CravingSupportHeaderView(
-            animationDuration = HEADER_ANIMATION_DURATION,
-            modifier = Modifier.fillMaxWidth()
+            animationDuration = HEADER_ANIMATION_DURATION, modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         CravingSupportNoteView(
             animationDuration = MOTIVATIONAL_NOTE_ANIMATION_DURATION,
-            animationDelay = 1000,
+            animationDelay = HEADER_ANIMATION_DURATION * 2,
             note = data.motivationalNote,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        CravingSupportStrengthSelectView(
+            selectedStrength = data.selectedCravingStrength,
+            animationDuration = STRENGTH_SELECT_ANIMATION_DURATION,
+            animationDelay = (HEADER_ANIMATION_DURATION + MOTIVATIONAL_NOTE_ANIMATION_DURATION) * 2,
+            onStrengthSelected = strengthSelectEvent,
             modifier = Modifier.fillMaxWidth()
         )
     }

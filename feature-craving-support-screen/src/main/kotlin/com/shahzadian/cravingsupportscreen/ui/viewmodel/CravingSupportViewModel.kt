@@ -18,7 +18,8 @@ internal class CravingSupportViewModel @Inject constructor(
         CravingSupportViewState.Loading
     }
 
-    private var _motivationalNotes: List<MotivationalNote>? = null
+    private var _motivationalNote: MotivationalNote? = null
+    private var selectedCravingStrength: CravingSupportViewState.CravingStrength? = null
 
     init {
         setData()
@@ -29,15 +30,20 @@ internal class CravingSupportViewModel @Inject constructor(
             is CravingSupportViewEvent.OnBackIconClicked -> {
                 onBackIconClicked()
             }
+
+            is CravingSupportViewEvent.OnCravingStrengthSelected -> {
+                onCravingStrengthSelected(event.strength)
+            }
         }
     }
 
     private fun setData() {
         viewModelScope.launch {
-            val motivationalNotes = getMotivationalNotes()
+            val motivationalNotes = getMotivationalNote()
             setViewState(
                 CravingSupportViewState.Data(
-                    motivationalNote = motivationalNotes.random().text,
+                    motivationalNote = motivationalNotes.text,
+                    selectedCravingStrength = selectedCravingStrength,
                 )
             )
         }
@@ -49,11 +55,16 @@ internal class CravingSupportViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getMotivationalNotes(): List<MotivationalNote> {
-        return _motivationalNotes ?: let {
+    private fun onCravingStrengthSelected(strength: CravingSupportViewState.CravingStrength) {
+        selectedCravingStrength = strength
+        setData()
+    }
+
+    private suspend fun getMotivationalNote(): MotivationalNote {
+        return _motivationalNote ?: let {
             val notes = getMotivationalNotesUseCase()
-            _motivationalNotes = notes
-            notes
+            _motivationalNote = notes.random()
+            return@let _motivationalNote!!
         }
     }
 }
