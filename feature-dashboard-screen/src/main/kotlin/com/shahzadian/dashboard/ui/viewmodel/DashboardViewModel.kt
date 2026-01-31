@@ -8,7 +8,6 @@ import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
-import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
 import com.shahzadian.dailycheckin.domain.AddDailyCheckInStateUseCase
 import com.shahzadian.dailycheckin.domain.DailyCheckInMood
 import com.shahzadian.dailycheckin.domain.DailyCheckInState
@@ -26,15 +25,12 @@ import javax.inject.Inject
 @HiltViewModel
 internal class DashboardViewModel @Inject constructor(
     private val getUserDashboardUseCase: GetUserDashboardUseCase,
-    private val getCravingToolsUseCase: GetCravingToolsUseCase,
     private val getMotivationalNotesUseCase: GetMotivationalNotesUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
     private val getDailyCheckInForDayUseCase: GetDailyCheckInForDayUseCase,
     private val addDailyCheckInStateUseCase: AddDailyCheckInStateUseCase,
     private val journeyCalendarHelper: JourneyCalendarHelper,
 ) : BaseViewModel<DashboardViewState, DashboardViewEvent, DashboardViewCommand>() {
-
-    private var latestCravingToolId: String? = null
 
     init {
         setData()
@@ -128,20 +124,6 @@ internal class DashboardViewModel @Inject constructor(
                     screen = AppScreen.CravingSupportScreen,
                 )
             )
-//            val cravingTools = getCravingToolsUseCase()
-//            val tool = cravingTools
-//                .filter {
-//                    it.id != latestCravingToolId &&
-//                            it.behavior is CravingTool.Behavior.NavigateToScreen
-//                }
-//                .shuffled()
-//                .firstOrNull() ?: return@launch
-//            latestCravingToolId = tool.id
-//            sendViewCommand(
-//                DashboardViewCommand.NavigateTo(
-//                    screen = (tool.behavior as CravingTool.Behavior.NavigateToScreen).screen,
-//                )
-//            )
         }
     }
 

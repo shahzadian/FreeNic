@@ -588,6 +588,12 @@
     </plurals>
     <string name="dashboard_calendar_header_today">Сегодня, %s</string>
     <string name="dashboard_calendar_view_full_button">Посмотреть календарь</string>
-    <string name="craving_support_header_title">Поддержка</string>
+    <string name="craving_support_toolbar_title">Поддержка</string>
+    <string name="craving_support_header_title">Это чувство пройдет</string>
+    <string name="craving_support_header_subtitle">Вы не одни. Давайте спокойно переждём этот момент.</string>
+    <string name="craving_support_craving_strength">Насколько сильное желание сейчас?</string>
+    <string name="craving_support_craving_strength_low">Слабое</string>
+    <string name="craving_support_craving_strength_mid">Среднее</string>
+    <string name="craving_support_craving_strength_strong">Сильное</string>
 
 </resources>

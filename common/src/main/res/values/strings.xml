@@ -593,6 +593,12 @@
     <string name="dashboard_smoke_view_subtitle">We\'re here to help you</string>
     <string name="dashboard_calendar_header_today">Today, %s</string>
     <string name="dashboard_calendar_view_full_button">View full calendar</string>
-    <string name="craving_support_header_title">Support</string>
+    <string name="craving_support_toolbar_title">Support</string>
+    <string name="craving_support_header_title">This feeling will pass</string>
+    <string name="craving_support_header_subtitle">You\’re not alone. Let\’s get through this moment calmly</string>
+    <string name="craving_support_craving_strength">How strong is the craving right now?</string>
+    <string name="craving_support_craving_strength_low">Mild</string>
+    <string name="craving_support_craving_strength_mid">Moderate</string>
+    <string name="craving_support_craving_strength_strong">Strong</string>
 
 </resources>
