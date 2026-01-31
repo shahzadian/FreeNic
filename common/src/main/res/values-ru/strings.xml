@@ -588,5 +588,6 @@
     </plurals>
     <string name="dashboard_calendar_header_today">Сегодня, %s</string>
     <string name="dashboard_calendar_view_full_button">Посмотреть календарь</string>
+    <string name="craving_support_header_title">Поддержка</string>
 
 </resources>

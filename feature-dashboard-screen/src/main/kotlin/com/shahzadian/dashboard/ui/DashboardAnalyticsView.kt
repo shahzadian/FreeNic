@@ -43,6 +43,8 @@ internal fun DashboardAnalyticsView(
             .mainCardBackground()
             .clickable(onClick = detailsClick)
             .padding(16.dp),
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Row(
             modifier = Modifier
@@ -56,7 +58,6 @@ internal fun DashboardAnalyticsView(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .padding(end = 4.dp),
             )
             SavedMoneyView(
                 savedMoney = data.savedMoney,
@@ -64,7 +65,6 @@ internal fun DashboardAnalyticsView(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .padding(start = 4.dp),
             )
         }
         DetailsView(
@@ -106,7 +106,7 @@ private fun NoCigDaysView(
             )
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSecondary,
             )
         }
@@ -150,7 +150,7 @@ private fun SavedMoneyView(
             )
             Text(
                 text = stringResource(R.string.dashboard_analytics_money_saved),
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSecondary,
             )
         }

@@ -593,5 +593,6 @@
     <string name="dashboard_smoke_view_subtitle">We\'re here to help you</string>
     <string name="dashboard_calendar_header_today">Today, %s</string>
     <string name="dashboard_calendar_view_full_button">View full calendar</string>
+    <string name="craving_support_header_title">Support</string>
 
 </resources>

@@ -8,7 +8,6 @@ import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
-import com.shahzadian.cravingsscreen.domain.CravingTool
 import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
 import com.shahzadian.dailycheckin.domain.AddDailyCheckInStateUseCase
 import com.shahzadian.dailycheckin.domain.DailyCheckInMood
@@ -124,20 +123,25 @@ internal class DashboardViewModel @Inject constructor(
                     name = AnalyticsEventConst.DASHBOARD_WANT_TO_SMOKE_TAP,
                 )
             )
-            val cravingTools = getCravingToolsUseCase()
-            val tool = cravingTools
-                .filter {
-                    it.id != latestCravingToolId &&
-                            it.behavior is CravingTool.Behavior.NavigateToScreen
-                }
-                .shuffled()
-                .firstOrNull() ?: return@launch
-            latestCravingToolId = tool.id
             sendViewCommand(
                 DashboardViewCommand.NavigateTo(
-                    screen = (tool.behavior as CravingTool.Behavior.NavigateToScreen).screen,
+                    screen = AppScreen.CravingSupportScreen,
                 )
             )
+//            val cravingTools = getCravingToolsUseCase()
+//            val tool = cravingTools
+//                .filter {
+//                    it.id != latestCravingToolId &&
+//                            it.behavior is CravingTool.Behavior.NavigateToScreen
+//                }
+//                .shuffled()
+//                .firstOrNull() ?: return@launch
+//            latestCravingToolId = tool.id
+//            sendViewCommand(
+//                DashboardViewCommand.NavigateTo(
+//                    screen = (tool.behavior as CravingTool.Behavior.NavigateToScreen).screen,
+//                )
+//            )
         }
     }
 

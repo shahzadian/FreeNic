@@ -155,6 +155,10 @@ sealed class AppScreen {
         override val route: String = "manage_subscription_screen"
     }
 
+    object CravingSupportScreen : AppScreen() {
+        override val route: String = "craving_support_screen"
+    }
+
     companion object {
         fun getAll(): List<AppScreen> {
             return listOf(
@@ -182,6 +186,7 @@ sealed class AppScreen {
                 SlipResultScreen,
                 JourneyCalendarScreen,
                 ManageSubscriptionScreen,
+                CravingSupportScreen,
             )
         }
     }

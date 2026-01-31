@@ -28,6 +28,7 @@ import androidx.navigation.navArgument
 import com.freenic.ui.AppScreen
 import com.shahzadian.breatheexercisescreen.ui.BreatheExerciseScreen
 import com.shahzadian.cravingsscreen.ui.CravingsScreen
+import com.shahzadian.cravingsupportscreen.ui.CravingSupportScreen
 import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
 import com.shahzadian.debugpanelscreen.ui.DebugPanelScreen
@@ -398,6 +399,17 @@ fun AppNavigation(
                 exitTransition = { ExitTransition.None },
             ) {
                 ManageSubscriptionScreen(
+                    navigator = appNavigator,
+                    modifier = BaseModifier,
+                )
+            }
+
+            composable(
+                route = AppScreen.CravingSupportScreen.route,
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None },
+            ) {
+                CravingSupportScreen(
                     navigator = appNavigator,
                     modifier = BaseModifier,
                 )
