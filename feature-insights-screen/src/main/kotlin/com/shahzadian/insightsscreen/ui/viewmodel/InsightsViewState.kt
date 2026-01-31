@@ -12,11 +12,22 @@ internal sealed interface InsightsViewState : ViewState {
     data object Loading : InsightsViewState
 
     @Immutable
+    data class Preview(
+        val previewRewardState: PreviewRewardState,
+    ) : InsightsViewState
+
+    @Immutable
     data class Data(
         val hasPaidSubscription: Boolean,
         val chartBlocks: List<ChartBlockUiModel>,
         val selectedBlockId: String,
     ) : InsightsViewState
+
+    @Immutable
+    sealed interface PreviewRewardState {
+        data object Default : PreviewRewardState
+        data object Loading : PreviewRewardState
+    }
 
     @Immutable
     data class ChartBlockUiModel(

@@ -12,6 +12,8 @@ import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.ad.AdHelper
+import com.shahzadian.ad.reward.RewardHelper
+import com.shahzadian.ad.reward.RewardHelperFactory
 import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayCell
 import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarHelper
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
@@ -30,7 +32,17 @@ internal class JourneyCalendarViewModel @Inject constructor(
     private val activityEventSender: ActivityEventSender,
     private val getUserCurrentSubscriptionUseCase: GetUserCurrentSubscriptionUseCase,
     private val adHelper: AdHelper,
+    private val rewardHelperFactory: RewardHelperFactory,
 ) : BaseViewModel<JourneyCalendarViewState, JourneyCalendarViewEvent, JourneyCalendarViewCommand>() {
+
+    private val rewardHelper: RewardHelper by lazyUnsafe {
+        rewardHelperFactory.create(
+            params = RewardHelper.Params(
+                featureKey = AppScreen.JourneyCalendarScreen.route,
+                duration = RewardHelper.RewardDuration.Day,
+            )
+        )
+    }
 
     override val initState: JourneyCalendarViewState by lazyUnsafe {
         JourneyCalendarViewState.Loading
@@ -78,7 +90,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
         viewModelScope.launch {
             val hasPaidSubscription =
                 getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription
-            val hasRewardedAccess = journeyCalendarHelper.rewardHelper.hasAccessToCalendar()
+            val hasRewardedAccess = rewardHelper.isRewardActual()
             if (hasPaidSubscription || hasRewardedAccess) {
                 val model = journeyCalendarHelper.getMonth()
                 setViewState(
@@ -183,7 +195,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
                         setViewState(currentState.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Default))
                     }
                     if (eventResult.hasReward) {
-                        journeyCalendarHelper.rewardHelper.onRewarded()
+                        rewardHelper.onRewarded()
                         setData()
                     }
                 }.launchIn(viewModelScope)
@@ -199,7 +211,7 @@ internal class JourneyCalendarViewModel @Inject constructor(
     private suspend fun getCalendarAccessType(): JourneyCalendarViewState.CalendarAccessType {
         return when {
             getUserCurrentSubscriptionUseCase() is UserSubscriptionStatus.HasSubscription -> JourneyCalendarViewState.CalendarAccessType.Permanent
-            journeyCalendarHelper.rewardHelper.hasAccessToCalendar() -> JourneyCalendarViewState.CalendarAccessType.UntilTheDayEnd
+            rewardHelper.isRewardActual() -> JourneyCalendarViewState.CalendarAccessType.UntilTheDayEnd
             else -> JourneyCalendarViewState.CalendarAccessType.NoAccess
         }
     }

@@ -47,9 +47,9 @@ fun InsightsScreen(
             )
         }
 
-        is InsightsViewState.Data -> {
+        else -> {
             ContentView(
-                data = (state as InsightsViewState.Data),
+                state = state,
                 onEvent = viewModel::onViewEvent,
                 modifier = modifier.fillMaxSize(),
             )
@@ -71,44 +71,52 @@ fun InsightsScreen(
 
 @Composable
 private fun ContentView(
-    data: InsightsViewState.Data,
+    state: InsightsViewState,
     onEvent: (InsightsViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
     ) {
         val backIconClick = remember { { onEvent(InsightsViewEvent.OnBackIconClicked) } }
         MainToolbarView(
             title = TextWrapper.FromRes(R.string.insights_header_title),
             hasBackIcon = true,
             onBackIconClicked = backIconClick,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
         )
-        if (!data.hasPaidSubscription) {
+        if (state is InsightsViewState.Preview) {
             val subscribeClick = remember { { onEvent(InsightsViewEvent.OnSubscribeClicked) } }
+            val watchVideoClick = remember { { onEvent(InsightsViewEvent.OnWatchVideoClicked) } }
             InsightsPreviewView(
+                rewardState = state.previewRewardState,
+                onWatchVideoClicked = watchVideoClick,
                 onSubscribeClicked = subscribeClick,
                 modifier = Modifier.fillMaxSize()
             )
             return
         }
-        var selectedChartTabId by remember { mutableStateOf(data.selectedBlockId) }
+        if (state !is InsightsViewState.Data) return@Column
+        var selectedChartTabId by remember { mutableStateOf(state.selectedBlockId) }
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
             ChartBlockTabsView(
-                blocks = data.chartBlocks,
-                selectedBlockId = data.selectedBlockId,
+                blocks = state.chartBlocks,
+                selectedBlockId = state.selectedBlockId,
                 onChartSelected = { id ->
                     selectedChartTabId = id
                 },
                 modifier = Modifier.padding(bottom = 16.dp)
             )
             ChartsView(
-                charts = data.chartBlocks.firstOrNull { it.id == selectedChartTabId }?.charts
+                charts = state.chartBlocks.firstOrNull { it.id == selectedChartTabId }?.charts
                     ?: throw IllegalStateException("No charts found for selected block id: $selectedChartTabId"),
                 modifier = Modifier.padding(bottom = 16.dp),
             )

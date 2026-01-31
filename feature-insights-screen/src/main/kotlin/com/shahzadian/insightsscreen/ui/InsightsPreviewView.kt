@@ -2,15 +2,21 @@ package com.shahzadian.insightsscreen.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,17 +29,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.freenic.ui.extensions.MainSubmitButton
-import com.freenic.ui.wrapper.TextWrapper
+import com.freenic.ui.extensions.screenWidth
 import com.shahzadian.baseui.R
+import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState
 import kotlinx.coroutines.delay
 
 @Composable
 internal fun InsightsPreviewView(
+    rewardState: InsightsViewState.PreviewRewardState,
+    onWatchVideoClicked: () -> Unit,
     onSubscribeClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val subscribeClick = remember { { onSubscribeClicked() } }
+    val watchVideoClick = remember { { onWatchVideoClicked() } }
     Box(
         modifier = modifier,
     ) {
@@ -51,12 +60,14 @@ internal fun InsightsPreviewView(
                     .fillMaxWidth()
             )
         }
-        MainSubmitButton(
-            text = TextWrapper.FromRes(R.string.journey_calendar_preview_submit_button),
-            onClick = subscribeClick,
+        FooterView(
+            rewardState = rewardState,
+            onWatchVideoClicked = watchVideoClick,
+            onSubscribeClicked = subscribeClick,
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
+                .padding(horizontal = 16.dp, vertical = 16.dp)
         )
     }
 }
@@ -70,9 +81,6 @@ private fun HeaderView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        PremiumBadge(
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
         Text(
             text = stringResource(R.string.insights_header_title),
             style = MaterialTheme.typography.headlineMedium,
@@ -152,14 +160,134 @@ private fun CarouselView(
             userScrollEnabled = false,
         ) { page ->
             actualIndex = page % actualCount
-            Image(
-                painter = painterResource(id = images[actualIndex]),
-                contentDescription = "image $actualIndex",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally),
-                contentScale = ContentScale.FillHeight
-            )
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Image(
+                    painter = painterResource(id = images[actualIndex]),
+                    contentDescription = "image $actualIndex",
+                    modifier = Modifier
+                        .width(screenWidth.dp / 2)
+                        .align(Alignment.Center),
+                    contentScale = ContentScale.FillWidth,
+                    alignment = Alignment.Center,
+                )
+            }
         }
+    }
+}
+
+@Composable
+private fun FooterView(
+    rewardState: InsightsViewState.PreviewRewardState,
+    onWatchVideoClicked: () -> Unit,
+    onSubscribeClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        WatchVideoButton(
+            rewardState = rewardState,
+            onClicked = onWatchVideoClicked,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp),
+        )
+        Text(
+            text = stringResource(com.shahzadian.baseui.R.string.journey_calendar_reward_info),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.padding(top = 16.dp, bottom = 16.dp)
+        )
+        HorizontalDivider(
+            modifier = Modifier.padding(bottom = 8.dp),
+            thickness = 1.dp,
+            color = MaterialTheme.colorScheme.outline,
+        )
+        Text(
+            text = stringResource(com.shahzadian.baseui.R.string.journey_calendar_preview_button_or),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier
+                .padding(bottom = 8.dp)
+                .align(Alignment.CenterHorizontally)
+        )
+        UpgradeButton(
+            onClicked = onSubscribeClicked,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(65.dp)
+        )
+    }
+}
+
+@Composable
+private fun WatchVideoButton(
+    rewardState: InsightsViewState.PreviewRewardState,
+    onClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .clickable(onClick = onClicked)
+            .background(
+                color = MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.medium,
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        when (rewardState) {
+            is InsightsViewState.PreviewRewardState.Loading -> {
+                CircularProgressIndicator(
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
+            }
+            is InsightsViewState.PreviewRewardState.Default -> {
+                Image(
+                    painter = painterResource(com.shahzadian.insightsscreen.R.drawable.ic_calendar_video_button),
+                    contentDescription = "video button",
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(
+                    text = stringResource(com.shahzadian.baseui.R.string.journey_calendar_reward_submit),
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
+            }
+        }
+    }
+}
+
+
+@Composable
+private fun UpgradeButton(
+    onClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .clickable(onClick = onClicked)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outline,
+                shape = MaterialTheme.shapes.medium,
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Image(
+            painter = painterResource(com.shahzadian.baseui.R.drawable.ic_premium),
+            contentDescription = "upgrade",
+            modifier = Modifier.padding(end = 8.dp)
+        )
+        Text(
+            text = stringResource(com.shahzadian.baseui.R.string.journey_calendar_preview_submit_button),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onPrimary,
+        )
     }
 }

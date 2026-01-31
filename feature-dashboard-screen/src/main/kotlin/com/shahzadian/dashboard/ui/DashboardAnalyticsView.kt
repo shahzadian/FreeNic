@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.mainCardBackground
 import com.shahzadian.baseui.R
@@ -95,7 +94,8 @@ private fun NoCigDaysView(
         modifier = modifier,
     ) {
         Column(
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
+            verticalArrangement = Arrangement.Top
         ) {
             Text(
                 text = noCigDaysAnimated.value.toInt().toString(),
@@ -103,13 +103,11 @@ private fun NoCigDaysView(
                 color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .padding(bottom = 4.dp),
-                textAlign = TextAlign.Center,
             )
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondary,
-                textAlign = TextAlign.Center,
             )
         }
     }
@@ -135,7 +133,8 @@ private fun SavedMoneyView(
         modifier = modifier,
     ) {
         Column(
-            modifier = Modifier.align(Alignment.Center)
+            modifier = Modifier.align(Alignment.Center),
+            verticalArrangement = Arrangement.Top
         ) {
             val displayableMoney = if (savedMoneyAnimated.value == savedMoney) {
                 savedMoneyAnimated.value.toString()
@@ -148,13 +147,11 @@ private fun SavedMoneyView(
                 color = MaterialTheme.colorScheme.tertiary,
                 modifier = Modifier
                     .padding(bottom = 4.dp),
-                textAlign = TextAlign.Center,
             )
             Text(
                 text = stringResource(R.string.dashboard_analytics_money_saved),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondary,
-                textAlign = TextAlign.Center,
             )
         }
     }
