@@ -65,6 +65,48 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
                     com.shahzadian.cravings.R.drawable.ic_cravings_tool_motivational_notes
                 ),
                 behavior = CravingTool.Behavior.NavigateToScreen(AppScreen.MotivationalNotesScreen)
+            ),
+            CravingTool(
+                id = "drink_water",
+                name = TextWrapper.FromRes(
+                    R.string.cravings_tool_water_title
+                ),
+                description = TextWrapper.FromRes(
+                    R.string.cravings_tool_water_subtitle
+                ),
+                icon = ImageWrapper.FromRes(
+                    com.shahzadian.cravings.R.drawable.ic_cravings_tool_water
+                ),
+            ),
+            CravingTool(
+                id = "walk",
+                name = TextWrapper.FromRes(
+                    R.string.cravings_tool_walking_title
+                ),
+                description = TextWrapper.FromRes(
+                    R.string.cravings_tool_walking_subtitle
+                ),
+                icon = ImageWrapper.FromRes(com.shahzadian.cravings.R.drawable.ic_cravings_tool_walk),
+            ),
+            CravingTool(
+                id = "surrounding",
+                name = TextWrapper.FromRes(
+                    R.string.cravings_tool_surrounding_title
+                ),
+                description = TextWrapper.FromRes(
+                    R.string.cravings_tool_surrounding_subtitle
+                ),
+                icon = ImageWrapper.FromRes(com.shahzadian.cravings.R.drawable.ic_cravings_tool_surrounding),
+            ),
+            CravingTool(
+                id = "stretch",
+                name = TextWrapper.FromRes(
+                    R.string.cravings_tool_stretch_title
+                ),
+                description = TextWrapper.FromRes(
+                    R.string.cravings_tool_stretch_subtitle
+                ),
+                icon = ImageWrapper.FromRes(com.shahzadian.cravings.R.drawable.ic_cravings_tool_stretch),
             )
         )
     }

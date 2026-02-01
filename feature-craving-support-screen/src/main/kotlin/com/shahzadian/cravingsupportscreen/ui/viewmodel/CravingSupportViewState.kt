@@ -14,6 +14,7 @@ internal sealed interface CravingSupportViewState : ViewState {
     data class Data(
         val selectedCravingStrength: CravingStrength?,
         val activities: ImmutableList<CravingSupportActivityUiModel>,
+        val otherActivities: ImmutableList<CravingSupportActivityUiModel>,
     ) : CravingSupportViewState
 
     data class CravingSupportActivityUiModel(

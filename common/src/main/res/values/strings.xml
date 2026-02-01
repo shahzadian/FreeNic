@@ -97,7 +97,7 @@
     <string name="cravings_tool_distraction_title">Distraction activity</string>
     <string name="cravings_tool_distraction_subtitle">Shift your focus with a simple 30-second task</string>
     <string name="cravings_tool_water_title">Drink water</string>
-    <string name="cravings_tool_water_subtitle">Hydrate and give your mind a reset moment.</string>
+    <string name="cravings_tool_water_subtitle">Sometimes a glass of water helps reduce cravings and shift attention</string>
     <string name="cravings_tool_mini_mindfulness_title">Mini mindfulness</string>
     <string name="cravings_tool_mini_mindfulness_subtitle">Ground yourself with a brief awareness exercise</string>
 
@@ -602,5 +602,12 @@
     <string name="craving_support_craving_strength_strong">Strong</string>
     <string name="craving_support_activity_title">Try this now</string>
     <string name="craving_support_activity_submit_button">Start activity</string>
+    <string name="cravings_tool_walking_title">Short walk</string>
+    <string name="cravings_tool_walking_subtitle">A brief walk or change of scenery can noticeably ease the craving</string>
+    <string name="cravings_tool_surrounding_title">Change surroundings</string>
+    <string name="cravings_tool_surrounding_subtitle">Move to a different place or do something simple to break the привычный pattern</string>
+    <string name="cravings_tool_stretch_title">Stretch or move</string>
+    <string name="cravings_tool_stretch_subtitle">Light movement or stretching helps release tension and shift your focus</string>
+    <string name="cravings_support_other_title">These may also help</string>
 
 </resources>

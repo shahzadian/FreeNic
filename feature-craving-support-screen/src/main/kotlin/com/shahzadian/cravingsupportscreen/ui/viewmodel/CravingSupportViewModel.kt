@@ -49,8 +49,19 @@ internal class CravingSupportViewModel @Inject constructor(
         viewModelScope.launch {
             setViewState(
                 CravingSupportViewState.Data(
-                    activities = getCravingTools().map { it.toUiModel() }.toImmutableList(),
+                    activities = getCravingTools()
+                        .mapNotNull { tool ->
+                            if (tool.behavior !is CravingTool.Behavior.NavigateToScreen) return@mapNotNull null
+                            tool.toUiModel()
+                        }
+                        .toImmutableList(),
                     selectedCravingStrength = selectedCravingStrength,
+                    otherActivities = getCravingTools()
+                        .mapNotNull { tool ->
+                            if (tool.behavior !is CravingTool.Behavior.None) return@mapNotNull null
+                            tool.toUiModel()
+                        }
+                        .toImmutableList()
                 )
             )
         }

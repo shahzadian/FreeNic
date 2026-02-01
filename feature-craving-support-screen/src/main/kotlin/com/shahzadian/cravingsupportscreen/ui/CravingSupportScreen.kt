@@ -96,5 +96,11 @@ private fun ContentView(
             onClicked = activityClick,
             modifier = Modifier.fillMaxWidth()
         )
+        Spacer(modifier = Modifier.height(16.dp))
+        CravingSupportOtherActivitiesView(
+            activities = data.otherActivities,
+            modifier = Modifier.fillMaxWidth(),
+        )
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }

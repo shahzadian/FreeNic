@@ -89,8 +89,8 @@
     <string name="cravings_tool_relaxation_subtitle">Снимите напряжение быстрой расслабляющей техникой</string>
     <string name="cravings_tool_distraction_title">Отвлекающее действие</string>
     <string name="cravings_tool_distraction_subtitle">Переключите внимание с помощью простого задания на 30 секунд</string>
-    <string name="cravings_tool_water_title">Выпить воды</string>
-    <string name="cravings_tool_water_subtitle">Сделайте глоток воды и дайте мозгу перезагрузиться</string>
+    <string name="cravings_tool_water_title">Стакан воды</string>
+    <string name="cravings_tool_water_subtitle">Иногда обычная вода помогает снизить тягу и переключить внимание</string>
     <string name="cravings_tool_mini_mindfulness_title">Мини-осознанность</string>
     <string name="cravings_tool_mini_mindfulness_subtitle">Сфокусируйтесь с помощью короткой практики осознанности</string>
 
@@ -597,5 +597,12 @@
     <string name="craving_support_craving_strength_strong">Сильное</string>
     <string name="craving_support_activity_title">Попробуйте это сейчас</string>
     <string name="craving_support_activity_submit_button">Начать активность</string>
+    <string name="cravings_tool_walking_title">Небольшая прогулка</string>
+    <string name="cravings_tool_walking_subtitle">Короткое движение или смена обстановки могут заметно облегчить состояние</string>
+    <string name="cravings_tool_surrounding_title">Смена обстановки</string>
+    <string name="cravings_tool_surrounding_subtitle">Перейдите в другое место или займитесь чем-то простым, чтобы разорвать привычный сценарий</string>
+    <string name="cravings_tool_stretch_title">Потянитесь или подвигайтесь</string>
+    <string name="cravings_tool_stretch_subtitle">Лёгкое движение или растяжка помогают снять напряжение и переключить внимание</string>
+    <string name="cravings_support_other_title">Также может помочь</string>
 
 </resources>
