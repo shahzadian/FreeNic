@@ -7,6 +7,7 @@ import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.cravings.domain.CravingTool
 import com.shahzadian.cravings.domain.GetCravingToolsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,7 +24,6 @@ internal class CravingSupportViewModel @Inject constructor(
     private var selectedCravingStrength: CravingSupportViewState.CravingStrength? = null
 
     private var _cravingTools: List<CravingTool>? = null
-    private var currentCravingTool: CravingTool? = null
 
     init {
         setData()
@@ -49,7 +49,7 @@ internal class CravingSupportViewModel @Inject constructor(
         viewModelScope.launch {
             setViewState(
                 CravingSupportViewState.Data(
-                    activityUiModel = getCurrentCravingTool().toUiModel(),
+                    activities = getCravingTools().map { it.toUiModel() }.toImmutableList(),
                     selectedCravingStrength = selectedCravingStrength,
                 )
             )
@@ -90,14 +90,6 @@ internal class CravingSupportViewModel @Inject constructor(
             val tools = getCravingToolsUseCase()
             _cravingTools = tools
             return@let _cravingTools!!
-        }
-    }
-
-    private suspend fun getCurrentCravingTool(): CravingTool {
-        return currentCravingTool ?: let {
-            val tools = getCravingTools()
-            currentCravingTool = tools.random()
-            return@let currentCravingTool!!
         }
     }
 

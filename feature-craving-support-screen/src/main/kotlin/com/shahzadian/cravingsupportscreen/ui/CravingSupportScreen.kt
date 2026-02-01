@@ -79,7 +79,7 @@ private fun ContentView(
         onBackIconClicked = backIconClick,
         modifier = modifier,
     ) {
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         CravingSupportHeaderView(
             modifier = Modifier.fillMaxWidth()
         )
@@ -92,7 +92,7 @@ private fun ContentView(
         )
         Spacer(modifier = Modifier.height(16.dp))
         CravingSupportActivityView(
-            uiModel = data.activityUiModel,
+            activities = data.activities,
             onClicked = activityClick,
             modifier = Modifier.fillMaxWidth()
         )

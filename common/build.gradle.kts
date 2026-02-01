@@ -50,6 +50,7 @@ dependencies {
 
     api(libs.androidx.navigation.compose)
     api(libs.androidx.lifecycle.viewmodel.compose)
+    api(libs.kotlinx.collections.immutable)
 
     api(libs.hilt.android)
     api(libs.hilt.nav.compose)

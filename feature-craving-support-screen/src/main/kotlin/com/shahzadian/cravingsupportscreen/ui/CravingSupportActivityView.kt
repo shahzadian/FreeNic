@@ -1,13 +1,20 @@
 package com.shahzadian.cravingsupportscreen.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,10 +29,11 @@ import com.freenic.ui.extensions.mainCardBackground
 import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.cravingsupportscreen.ui.viewmodel.CravingSupportViewState
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 internal fun CravingSupportActivityView(
-    uiModel: CravingSupportViewState.CravingSupportActivityUiModel,
+    activities: ImmutableList<CravingSupportViewState.CravingSupportActivityUiModel>,
     onClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -36,25 +44,81 @@ internal fun CravingSupportActivityView(
             color = MaterialTheme.colorScheme.onPrimary,
             modifier = modifier
                 .padding(bottom = 16.dp)
-                .clickable {
-                    onClicked(uiModel.id)
-                }
         )
-        ContentView(
-            uiModel = uiModel,
-            onClicked = onClicked,
-            modifier = Modifier.fillMaxSize()
+        CarouselView(
+            activities = activities,
+            onItemClicked = onClicked,
+            modifier = modifier,
         )
     }
 }
 
 @Composable
-private fun ContentView(
-    uiModel: CravingSupportViewState.CravingSupportActivityUiModel,
-    onClicked: (String) -> Unit,
+private fun CarouselView(
+    activities: ImmutableList<CravingSupportViewState.CravingSupportActivityUiModel>,
+    onItemClicked: (id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val click = remember { { onClicked(uiModel.id) } }
+    val initialPageIndex = 0
+    val pagerState = rememberPagerState(initialPage = initialPageIndex) {
+        activities.size
+    }
+    Column(
+        modifier = modifier
+            .clickable {
+                onItemClicked(activities[pagerState.currentPage].id)
+            },
+    ) {
+        HorizontalPager(
+            state = pagerState,
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            verticalAlignment = Alignment.Top,
+            pageSpacing = 8.dp
+        ) { index ->
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                val item = activities[index]
+                ItemView(
+                    uiModel = item,
+                    onClicked = {
+                        onItemClicked(item.id)
+                    }
+                )
+            }
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            repeat(activities.size) { index ->
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .background(
+                            color = if (index == pagerState.currentPage) {
+                                MaterialTheme.colorScheme.primary
+                            } else MaterialTheme.colorScheme.surfaceVariant,
+                            shape = CircleShape
+                        )
+                        .align(Alignment.CenterVertically),
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ItemView(
+    uiModel: CravingSupportViewState.CravingSupportActivityUiModel,
+    onClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val click = remember { { onClicked() } }
     Column(
         modifier = modifier
             .mainCardBackground()

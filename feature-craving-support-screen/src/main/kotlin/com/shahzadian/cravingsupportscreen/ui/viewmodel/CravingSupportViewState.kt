@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 internal sealed interface CravingSupportViewState : ViewState {
@@ -12,7 +13,7 @@ internal sealed interface CravingSupportViewState : ViewState {
 
     data class Data(
         val selectedCravingStrength: CravingStrength?,
-        val activityUiModel: CravingSupportActivityUiModel,
+        val activities: ImmutableList<CravingSupportActivityUiModel>,
     ) : CravingSupportViewState
 
     data class CravingSupportActivityUiModel(
