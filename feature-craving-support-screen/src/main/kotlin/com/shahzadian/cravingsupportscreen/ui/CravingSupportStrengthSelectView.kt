@@ -1,23 +1,15 @@
 package com.shahzadian.cravingsupportscreen.ui
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,45 +21,17 @@ import com.shahzadian.cravingsupportscreen.ui.viewmodel.CravingSupportViewState
 internal fun CravingSupportStrengthSelectView(
     selectedStrength: CravingSupportViewState.CravingStrength?,
     onStrengthSelected: (CravingSupportViewState.CravingStrength) -> Unit,
-    animationDuration: Int,
-    animationDelay: Int,
-    modifier: Modifier = Modifier,
-) {
-    var isVisible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
-        isVisible = true
-    }
-    AnimatedVisibility(
-        visible = isVisible,
-        enter = fadeIn(
-            animationSpec = tween(
-                durationMillis = animationDuration,
-                delayMillis = animationDelay,
-            ),
-        ),
-        modifier = modifier,
-    ) {
-        ContentView(
-            modifier = Modifier.fillMaxWidth(),
-            selectedStrength = selectedStrength,
-            onStrengthSelected = onStrengthSelected,
-        )
-    }
-}
-
-@Composable
-private fun ContentView(
-    selectedStrength: CravingSupportViewState.CravingStrength?,
-    onStrengthSelected: (CravingSupportViewState.CravingStrength) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .mainCardBackground()
+            .padding(16.dp),
     ) {
         Text(
             text = stringResource(com.shahzadian.baseui.R.string.craving_support_craving_strength),
             color = MaterialTheme.colorScheme.onPrimary,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 16.dp),
         )
         Row(

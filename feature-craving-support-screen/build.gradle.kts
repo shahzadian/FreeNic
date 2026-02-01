@@ -39,7 +39,7 @@ android {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":feature-motivational-notes"))
+    implementation(project(":feature-cravings"))
 
 
     implementation(libs.androidx.core.ktx)

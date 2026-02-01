@@ -1,6 +1,6 @@
-package com.shahzadian.cravingsscreen.domain
+package com.shahzadian.cravings.domain
 
-import com.shahzadian.cravingsscreen.data.CravingToolsRepository
+import com.shahzadian.cravings.data.CravingToolsRepository
 import javax.inject.Inject
 
 interface GetCravingToolsUseCase {

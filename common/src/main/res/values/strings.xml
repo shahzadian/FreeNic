@@ -600,5 +600,7 @@
     <string name="craving_support_craving_strength_low">Mild</string>
     <string name="craving_support_craving_strength_mid">Moderate</string>
     <string name="craving_support_craving_strength_strong">Strong</string>
+    <string name="craving_support_activity_title">Try this now</string>
+    <string name="craving_support_activity_submit_button">Start activity</string>
 
 </resources>

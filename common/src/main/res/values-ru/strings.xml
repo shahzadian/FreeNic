@@ -595,5 +595,7 @@
     <string name="craving_support_craving_strength_low">Слабое</string>
     <string name="craving_support_craving_strength_mid">Среднее</string>
     <string name="craving_support_craving_strength_strong">Сильное</string>
+    <string name="craving_support_activity_title">Попробуйте это сейчас</string>
+    <string name="craving_support_activity_submit_button">Начать активность</string>
 
 </resources>

@@ -1,9 +1,9 @@
-package com.shahzadian.cravingsscreen.di
+package com.shahzadian.cravings.di
 
-import com.shahzadian.cravingsscreen.data.CravingToolsRepository
-import com.shahzadian.cravingsscreen.data.CravingToolsRepositoryImpl
-import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
-import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCaseImpl
+import com.shahzadian.cravings.data.CravingToolsRepository
+import com.shahzadian.cravings.data.CravingToolsRepositoryImpl
+import com.shahzadian.cravings.domain.GetCravingToolsUseCase
+import com.shahzadian.cravings.domain.GetCravingToolsUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

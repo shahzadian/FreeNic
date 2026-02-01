@@ -82,6 +82,7 @@ dependencies {
     implementation(project(":feature-daily-check-in"))
     implementation(project(":feature-promo-code"))
     implementation(project(":feature-craving-support-screen"))
+    implementation(project(":feature-cravings"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))

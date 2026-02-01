@@ -9,8 +9,8 @@ import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.ad.AdHelper
-import com.shahzadian.cravingsscreen.domain.CravingTool
-import com.shahzadian.cravingsscreen.domain.GetCravingToolsUseCase
+import com.shahzadian.cravings.domain.CravingTool
+import com.shahzadian.cravings.domain.GetCravingToolsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -57,7 +57,7 @@ internal class CravingsViewModel @Inject constructor(
                         when (tool.behavior) {
                             is CravingTool.Behavior.NavigateToScreen -> {
                                 viewModelScope.launch {
-                                    sendViewCommand(CravingsViewCommand.NavigateTo(tool.behavior.screen))
+                                    sendViewCommand(CravingsViewCommand.NavigateTo((tool.behavior as CravingTool.Behavior.NavigateToScreen).screen))
                                 }
                             }
 

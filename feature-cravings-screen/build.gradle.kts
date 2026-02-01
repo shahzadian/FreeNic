@@ -40,8 +40,8 @@ android {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":feature-breathe-exercise-screen"))
     implementation(project(":feature-ad"))
+    implementation(project(":feature-cravings"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

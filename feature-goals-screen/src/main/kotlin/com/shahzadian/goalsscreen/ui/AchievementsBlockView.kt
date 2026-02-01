@@ -89,12 +89,6 @@ private fun NonLazyListContent(
                         )
                     }
                 }
-                val placeholders = itemsPerRow - rowItems.size
-                if (placeholders > 0) {
-                    repeat(placeholders) {
-                        Spacer(modifier = Modifier.weight(1f))
-                    }
-                }
             }
         }
     }

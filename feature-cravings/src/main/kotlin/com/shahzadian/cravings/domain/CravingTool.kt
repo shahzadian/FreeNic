@@ -1,4 +1,4 @@
-package com.shahzadian.cravingsscreen.domain
+package com.shahzadian.cravings.domain
 
 import com.freenic.ui.AppScreen
 import com.freenic.ui.wrapper.ImageWrapper

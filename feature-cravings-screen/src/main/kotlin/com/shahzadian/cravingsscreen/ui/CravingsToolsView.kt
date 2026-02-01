@@ -107,7 +107,7 @@ private fun CravingToolView(
                 )
             }
             Image(
-                painter = painterResource(com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_arrow),
+                painter = painterResource(com.shahzadian.cravings.R.drawable.ic_cravings_tool_arrow),
                 contentDescription = "Arrow",
                 modifier = Modifier.weight(0.3f)
             )

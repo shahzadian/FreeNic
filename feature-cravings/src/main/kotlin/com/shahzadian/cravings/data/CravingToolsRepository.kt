@@ -1,11 +1,11 @@
-package com.shahzadian.cravingsscreen.data
+package com.shahzadian.cravings.data
 
 import com.freenic.ui.AppScreen
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.breatheexercisescreen.domain.GetBreatheExerciseSettingsUseCase
-import com.shahzadian.cravingsscreen.domain.CravingTool
+import com.shahzadian.cravings.domain.CravingTool
 import javax.inject.Inject
 
 internal interface CravingToolsRepository {
@@ -34,7 +34,7 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
                     R.string.cravings_tool_breathing_subtitle
                 ),
                 icon = ImageWrapper.FromRes(
-                    com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_breathe,
+                    com.shahzadian.cravings.R.drawable.ic_cravings_tool_breathe,
                 ),
                 behavior = CravingTool.Behavior.NavigateToScreen(AppScreen.BreatheExerciseScreen),
             ),
@@ -47,7 +47,7 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
                     R.string.cravings_tool_distraction_subtitle,
                 ),
                 icon = ImageWrapper.FromRes(
-                    com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_distraction
+                    com.shahzadian.cravings.R.drawable.ic_cravings_tool_distraction
                 ),
                 behavior = CravingTool.Behavior.NavigateToScreen(
                     screen = AppScreen.DistractionActivityScreen,
@@ -62,7 +62,7 @@ internal class CravingToolsRepositoryImpl @Inject constructor(
                     R.string.craving_tool_motivational_notes_subtitle
                 ),
                 icon = ImageWrapper.FromRes(
-                    com.shahzadian.cravingsscreen.R.drawable.ic_cravings_tool_motivational_notes
+                    com.shahzadian.cravings.R.drawable.ic_cravings_tool_motivational_notes
                 ),
                 behavior = CravingTool.Behavior.NavigateToScreen(AppScreen.MotivationalNotesScreen)
             )
