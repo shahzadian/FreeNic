@@ -48,7 +48,7 @@ sealed class AppScreen {
         override val route: String = "dashboard_screen"
     }
 
-    object CravingsScreen : AppScreen(), NavBarScreen {
+    object CravingsScreen : AppScreen() {
         override val route: String = "cravings_screen"
     }
 
@@ -123,7 +123,7 @@ sealed class AppScreen {
         private const val BASE_ROUTE: String = "achievement_share_screen"
     }
 
-    object InsightsScreen : AppScreen() {
+    object InsightsScreen : AppScreen(), NavBarScreen {
         override val route: String = "insights_screen"
     }
 

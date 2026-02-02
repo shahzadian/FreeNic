@@ -27,12 +27,12 @@ internal class MainScreenPageRepositoryImpl @Inject constructor() : MainScreenPa
             ),
             MainScreenPage(
                 name = TextWrapper.FromRes(
-                    R.string.main_page_cravings_name
+                    R.string.main_page_insights_name
                 ),
                 icon = ImageWrapper.FromRes(
-                    com.shahzadian.mainscreen.R.drawable.ic_main_page_cravings
+                    com.shahzadian.mainscreen.R.drawable.ic_main_page_insights
                 ),
-                screen = AppScreen.CravingsScreen
+                screen = AppScreen.InsightsScreen
             ),
             MainScreenPage(
                 name = TextWrapper.FromRes(

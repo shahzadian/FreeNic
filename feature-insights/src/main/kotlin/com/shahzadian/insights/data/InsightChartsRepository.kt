@@ -43,8 +43,8 @@ internal class InsightChartsRepositoryImpl(
 
     override suspend fun getAllBlocks(): List<InsightChartsBlock> {
         return listOf(
-            getSlipCasesBlock(),
             getHealthProgressBlock(),
+            getSlipCasesBlock(),
         )
     }
 
