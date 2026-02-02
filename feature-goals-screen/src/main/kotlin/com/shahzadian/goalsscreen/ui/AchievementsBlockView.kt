@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
@@ -64,7 +65,7 @@ private fun NonLazyListContent(
         remember { { onAchievementShareClicked(it) } }
     val moreClick: () -> Unit = remember { { onMoreClicked() } }
     Column(
-        modifier = modifier.padding(bottom = 16.dp)
+        modifier = modifier
     ) {
         rows.forEachIndexed { rowIndex, rowItems ->
             Row(
@@ -102,6 +103,7 @@ private fun NonLazyListContent(
                 onClick = moreClick,
             )
     )
+    Spacer(modifier = Modifier.height(16.dp))
 }
 
 @Composable

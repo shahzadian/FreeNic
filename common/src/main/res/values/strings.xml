@@ -614,8 +614,8 @@
     <string name="craving_support_strength_submit">Save</string>
     <string name="craving_support_strength_successfully_saved">Craving successfully saved</string>
     <string name="insights_chart_slips">Slips</string>
-    <string name="insight_chart_slips_empty_title">There\’s nothing to show yet</string>
-    <string name="insight_chart_slips_empty_subtitle">When cravings or slips are recorded, analytics will appear here</string>
+    <string name="insight_chart_slips_empty_title">There\’s nothing to show</string>
+    <string name="insight_chart_slips_empty_subtitle">There were no cravings or slips during this period</string>
     <string name="insight_chart_slips_empty_add_slip_button">Report smoking</string>
 
     <string name="insights_charts_slip_weekday_monday">Mon</string>

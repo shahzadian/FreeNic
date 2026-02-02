@@ -61,7 +61,11 @@ fun GoalsScreen(
                     }
 
                     is GoalsViewCommand.NavigateToAchievementShareScreen -> {
-                        navigator.navigateToRoute(AppScreen.AchievementShareScreen.composeRoute(command.id))
+                        navigator.navigateToRoute(
+                            AppScreen.AchievementShareScreen.composeRoute(
+                                command.id
+                            )
+                        )
                     }
                 }
             }

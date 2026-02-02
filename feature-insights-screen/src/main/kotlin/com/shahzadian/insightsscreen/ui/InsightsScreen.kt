@@ -2,9 +2,12 @@ package com.shahzadian.insightsscreen.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -174,6 +177,7 @@ private fun ChartBlockTabsView(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(IntrinsicSize.Min)
                     .padding(bottom = if (index == chunkedBlocks.lastIndex) 0.dp else 8.dp)
             ) {
                 blocks.forEachIndexed { blockIndex, block ->
@@ -187,6 +191,7 @@ private fun ChartBlockTabsView(
                                 start = if (blockIndex == 0) 0.dp else 2.dp,
                             )
                             .weight(1f)
+                            .fillMaxHeight()
                             .clickable {
                                 selectedChartTabId = block.id
                                 chartClick()

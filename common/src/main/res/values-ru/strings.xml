@@ -611,8 +611,8 @@
     <string name="craving_support_strength_submit">Сохранить</string>
     <string name="craving_support_strength_successfully_saved">Случай тяги успешно сохранён</string>
     <string name="insights_chart_slips">Срывы</string>
-    <string name="insight_chart_slips_empty_title">Пока нет данных для отображения</string>
-    <string name="insight_chart_slips_empty_subtitle">Когда появятся записи о тягах или срывах, здесь будет статистика</string>
+    <string name="insight_chart_slips_empty_title">Нет данных для отображения</string>
+    <string name="insight_chart_slips_empty_subtitle">В этот период не было тяг и срывов</string>
     <string name="insight_chart_slips_empty_add_slip_button">Сообщить о курении</string>
 
     <string name="insights_charts_slip_weekday_monday">Пн</string>
