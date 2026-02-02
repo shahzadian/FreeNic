@@ -622,5 +622,8 @@
     <string name="insights_charts_slip_weekday_friday">Пт</string>
     <string name="insights_charts_slip_weekday_saturday">Сб</string>
     <string name="insights_charts_slip_weekday_sunday">Вс</string>
+    <string name="insights_slips_header_title">Тяги и срывы со временем</string>
+    <string name="insights_slip_legend_slip">Срывы</string>
+    <string name="insights_slip_legend_cravings">Тяги</string>
 
 </resources>

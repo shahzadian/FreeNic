@@ -29,7 +29,7 @@ import com.shahzadian.insightsscreen.ui.chart.ChartTabView
 import com.shahzadian.insightsscreen.ui.chart.DisclaimerView
 import com.shahzadian.insightsscreen.ui.chart.HeartRecoveryChart
 import com.shahzadian.insightsscreen.ui.chart.LungsRecoveryChart
-import com.shahzadian.insightsscreen.ui.chart.SlipCaseChart
+import com.shahzadian.insightsscreen.ui.chart.SlipCaseChartView
 import com.shahzadian.insightsscreen.ui.chart.TitleAndPercentsChart
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewCommand
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewEvent
@@ -238,7 +238,7 @@ private fun ChartsView(
                 }
 
                 is InsightsViewState.ChartUiModel.SlipCasesChartUiModel -> {
-                    SlipCaseChart(
+                    SlipCaseChartView(
                         uiModel = chart,
                         onLogSlipClicked = logSlipClick,
                         modifier = Modifier

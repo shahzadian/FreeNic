@@ -625,5 +625,8 @@
     <string name="insights_charts_slip_weekday_friday">Fri</string>
     <string name="insights_charts_slip_weekday_saturday">Sat</string>
     <string name="insights_charts_slip_weekday_sunday">Sun</string>
+    <string name="insights_slips_header_title">Cravings and slips over time</string>
+    <string name="insights_slip_legend_slip">Slips</string>
+    <string name="insights_slip_legend_cravings">Cravings</string>
 
 </resources>

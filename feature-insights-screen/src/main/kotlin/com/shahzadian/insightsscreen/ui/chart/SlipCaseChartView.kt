@@ -1,15 +1,22 @@
 package com.shahzadian.insightsscreen.ui.chart
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainSubmitButton
@@ -25,7 +32,7 @@ import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
 import ir.ehsannarmani.compose_charts.models.LabelProperties
 
 @Composable
-internal fun SlipCaseChart(
+internal fun SlipCaseChartView(
     uiModel: InsightsViewState.ChartUiModel.SlipCasesChartUiModel,
     onLogSlipClicked: () -> Unit,
     modifier: Modifier = Modifier,
@@ -43,6 +50,7 @@ internal fun SlipCaseChart(
             MaterialTheme.colorScheme.tertiary,
         )
     )
+
     if (uiModel.items.all { it.fixedSlipsCount == 0 && it.fixedCravingsCount == 0 }) {
         EmptyView(
             onLogSlipClicked = logSlipClick,
@@ -50,6 +58,43 @@ internal fun SlipCaseChart(
         )
         return
     }
+
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            text = stringResource(com.shahzadian.baseui.R.string.insights_slips_header_title),
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.onPrimary,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        ChartView(
+            uiModel = uiModel,
+            slipBrush = slipBrush,
+            cravingBrush = cravingBrush,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(screenHeight.dp / 2)
+                .padding(bottom = 16.dp),
+        )
+        LegendsView(
+            slipBrush = slipBrush,
+            cravingsBrush = cravingBrush,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+        )
+    }
+
+}
+
+@Composable
+private fun ChartView(
+    uiModel: InsightsViewState.ChartUiModel.SlipCasesChartUiModel,
+    slipBrush: Brush,
+    cravingBrush: Brush,
+    modifier: Modifier = Modifier,
+) {
     ColumnChart(
         data = remember {
             uiModel.items.map {
@@ -90,8 +135,6 @@ internal fun SlipCaseChart(
             ),
         ),
         modifier = modifier
-            .fillMaxWidth()
-            .height(screenHeight.dp / 2),
     )
 }
 
@@ -122,6 +165,58 @@ private fun EmptyView(
             text = TextWrapper.FromRes(com.shahzadian.baseui.R.string.insight_chart_slips_empty_add_slip_button),
             onClick = logSlipClick,
             modifier = Modifier.fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+private fun LegendsView(
+    slipBrush: Brush,
+    cravingsBrush: Brush,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        LegendView(
+            brush = slipBrush,
+            label = stringResource(com.shahzadian.baseui.R.string.insights_slip_legend_slip),
+            modifier = Modifier.weight(1f)
+        )
+        LegendView(
+            brush = cravingsBrush,
+            label = stringResource(com.shahzadian.baseui.R.string.insights_slip_legend_cravings),
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
+private fun LegendView(
+    brush: Brush,
+    label: String,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(end = 8.dp)
+                .size(12.dp)
+                .background(
+                    brush = brush,
+                    shape = RectangleShape,
+                ),
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onPrimary,
         )
     }
 }
