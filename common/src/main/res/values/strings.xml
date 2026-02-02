@@ -84,7 +84,7 @@
     <string name="main_page_goals_name">Goals</string>
     <string name="main_page_profile_name">Profile</string>
 
-    <string name="cravings_header_title">You feel an Urge?</string>
+    <string name="cravings_header_title">Feeling an urge?</string>
     <string name="cravings_header_subtitle">Let\'s get through this together</string>
 
     <string name="cravings_tools_title">Try one of these quick tools</string>
@@ -274,7 +274,7 @@
     </plurals>
 
     <plurals name="achievement_share_motivational_days_title">
-        <item quantity="one">%d day strong!</item>"
+        <item quantity="one">%d day strong!</item>
         <item quantity="other">%d days strong!</item>
     </plurals>
 
