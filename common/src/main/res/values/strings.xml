@@ -321,7 +321,7 @@
     <string name="insights_disclaimer_description">These insights are based on medical research and population studies. They are informational only and do not replace professional medical advice.</string>
     <string name="insights_disclaimer_title">About this data</string>
     <string name="insights_chart_medical">Medical</string>
-    <string name="insights_chart_health">Health progress</string>
+    <string name="insights_chart_health">Health</string>
     <string name="insights_chart_long_term_risk">Long-term risks</string>
     <string name="insights_tab_premium">Premium insights</string>
     <string name="insights_long_term_risk_reduction_title">Long-term risk reduction</string>
@@ -613,5 +613,6 @@
     <string name="journey_calendar_event_craving_subtitle">On this day, you experienced a craving</string>
     <string name="craving_support_strength_submit">Save</string>
     <string name="craving_support_strength_successfully_saved">Craving successfully saved</string>
+    <string name="insights_chart_slips">Slips</string>
 
 </resources>

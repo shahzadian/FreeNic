@@ -286,7 +286,7 @@
     <string name="insights_disclaimer_description">Эти инсайты основаны на медицинских и популяционных исследованиях и носят информационный характер. Они не заменяют консультацию врача.</string>
     <string name="insights_disclaimer_title">Про данные</string>
     <string name="insights_chart_medical">Медицинское</string>
-    <string name="insights_chart_health">Восстановление</string>
+    <string name="insights_chart_health">Здоровье</string>
     <string name="insights_chart_long_term_risk">Долгосрочные риски</string>
     <string name="insights_tab_premium">Премиум аналитика</string>
     <string name="insights_long_term_risk_reduction_title">Долгосрочное снижение рисков</string>
@@ -610,5 +610,6 @@
     <string name="journey_calendar_event_craving_subtitle">В этот день у вас возникла тяга к курению</string>
     <string name="craving_support_strength_submit">Сохранить</string>
     <string name="craving_support_strength_successfully_saved">Случай тяги успешно сохранён</string>
+    <string name="insights_chart_slips">Срывы</string>
 
 </resources>

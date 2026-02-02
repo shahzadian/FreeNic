@@ -25,6 +25,8 @@ sealed interface InsightChart {
         val achieveDateMillis: Long
     }
 
+    interface SingleChart : InsightChart
+
     class TitleAndPercentsChart(
         override val id: String,
 //        TODO
@@ -59,7 +61,7 @@ sealed interface InsightChart {
     class SlipCasesChart(
         override val id: String,
         val items: List<Item>,
-    ) : InsightChart {
+    ) : SingleChart {
         class Item(
             val label: TextWrapper,
             val value: Int,

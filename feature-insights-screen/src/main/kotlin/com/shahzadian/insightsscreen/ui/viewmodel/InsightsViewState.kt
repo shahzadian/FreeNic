@@ -20,7 +20,6 @@ internal sealed interface InsightsViewState : ViewState {
     @Immutable
     data class Data(
         val accessType: InsightsAccessType,
-        val hasPaidSubscription: Boolean,
         val chartBlocks: List<ChartBlockUiModel>,
         val selectedBlockId: String,
     ) : InsightsViewState
@@ -37,6 +36,8 @@ internal sealed interface InsightsViewState : ViewState {
         val title: TextWrapper,
         val icon: ImageWrapper,
         val charts: List<ChartUiModel>,
+        val shouldShowDisclaimer: Boolean,
+        val isScrollable: Boolean,
     )
 
     sealed interface ChartUiModel {
@@ -69,7 +70,7 @@ internal sealed interface InsightsViewState : ViewState {
             val items: ImmutableList<ChartItem>,
         ) : ChartUiModel {
             data class ChartItem(
-                val label: TextWrapper,
+                val label: String,
                 val value: Int,
             )
         }

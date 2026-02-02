@@ -24,18 +24,59 @@ internal class InsightChartsRepositoryImpl(
 
     override suspend fun getAllBlocks(): List<InsightChartsBlock> {
         return listOf(
-            getMedicalBlock(),
+            getSlipCasesBlock(),
             getHealthProgressBlock(),
-            getWhoBlock(),
-            getEstimatedBlock()
         )
     }
 
-    private fun getMedicalBlock(): InsightChartsBlock {
+    private fun getSlipCasesBlock(): InsightChartsBlock {
         return InsightChartsBlock(
-            id = "Medical",
-            title = TextWrapper.FromRes(R.string.insights_chart_medical),
-            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_tab_medical),
+            id = "Slip cases",
+            title = TextWrapper.FromRes(R.string.insights_chart_slips),
+            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_tab_slips),
+            charts = listOf(
+                InsightChart.SlipCasesChart(
+                    id = "Slip cases",
+                    items = listOf(
+                        InsightChart.SlipCasesChart.Item(
+                            label = TextWrapper.FromString("Mon"),
+                            value = 2,
+                        ),
+                        InsightChart.SlipCasesChart.Item(
+                            label = TextWrapper.FromString("Tue"),
+                            value = 4,
+                        ),
+                        InsightChart.SlipCasesChart.Item(
+                            label = TextWrapper.FromString("Wed"),
+                            value = 1,
+                        ),
+                        InsightChart.SlipCasesChart.Item(
+                            label = TextWrapper.FromString("Thu"),
+                            value = 0,
+                        ),
+                        InsightChart.SlipCasesChart.Item(
+                            label = TextWrapper.FromString("Fri"),
+                            value = 5,
+                        ),
+                        InsightChart.SlipCasesChart.Item(
+                            label = TextWrapper.FromString("Sat"),
+                            value = 7,
+                        ),
+                        InsightChart.SlipCasesChart.Item(
+                            label = TextWrapper.FromString("Sun"),
+                            value = 2,
+                        )
+                    )
+                ),
+            )
+        )
+    }
+
+    private fun getHealthProgressBlock(): InsightChartsBlock {
+        return InsightChartsBlock(
+            id = "Health progress",
+            title = TextWrapper.FromRes(R.string.insights_chart_health),
+            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_tab_health),
             charts = listOf(
                 InsightChart.LungsRecoveryChart(
                     id = "Lung self-cleaning",
@@ -107,86 +148,7 @@ internal class InsightChartsRepositoryImpl(
                     achieveDateMillis = recoveryCalculator.calculateSleepQualityDateMillisForPercents(
                         99
                     ),
-                )
-            )
-        )
-    }
-
-    private fun getHealthProgressBlock(): InsightChartsBlock {
-        return InsightChartsBlock(
-            id = "Health progress",
-            title = TextWrapper.FromRes(R.string.insights_chart_health),
-            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insights_tab_health),
-            charts = listOf(
-                InsightChart.TitleAndPercentsChart(
-                    id = "Energy level",
-                    title = TextWrapper.FromRes(R.string.insights_energy_level_title),
-                    description = TextWrapper.FromRes(R.string.insights_energy_level_subtitle),
-                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_energy_level),
-                    badge = InsightChartBadge.Estimated,
-                    percents = recoveryCalculator.calculateEnergyLevelPercent(),
-                    achieveDateMillis = recoveryCalculator.calculateEnergyLevelDateMillisForPercents(99),
                 ),
-                InsightChart.TitleAndPercentsChart(
-                    id = "Breathing comfort",
-                    title = TextWrapper.FromRes(R.string.insights_breathing_comfort_title),
-                    description = TextWrapper.FromRes(R.string.insights_breathing_comfort_subtitle),
-                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_breathing_comfort),
-                    badge = InsightChartBadge.Estimated,
-                    percents = recoveryCalculator.calculateBreathingComfortPercent(),
-                    achieveDateMillis = recoveryCalculator.calculateBreathingComfortDateMillisForPercents(99),
-                ),
-                InsightChart.TitleAndPercentsChart(
-                    id = "Physical endurance",
-                    title = TextWrapper.FromRes(R.string.insights_endurance_title),
-                    description = TextWrapper.FromRes(R.string.insights_endurance_subtitle),
-                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_endurance),
-                    badge = InsightChartBadge.Estimated,
-                    percents = recoveryCalculator.calculatePhysicalEndurancePercent(),
-                    achieveDateMillis = recoveryCalculator.calculatePhysicalEnduranceDateMillisForPercents(99),
-                )
-            )
-        )
-    }
-
-    private fun getEstimatedBlock(): InsightChartsBlock {
-        return InsightChartsBlock(
-            id = "Estimated",
-            title = TextWrapper.FromRes(R.string.insight_chart_block_estimated),
-            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_estimated),
-            charts = listOf(
-                InsightChart.TitleAndPercentsChart(
-                    id = "Stress regulation",
-                    title = TextWrapper.FromRes(R.string.insights_stress_regulation_title),
-                    description = TextWrapper.FromRes(R.string.insights_stress_regulation_subtitle),
-                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_stress_regulation),
-                    badge = InsightChartBadge.MedicalEvidence,
-                    percents = recoveryCalculator.calculateStressRegulationPercent(),
-                    achieveDateMillis = recoveryCalculator.calculateStressRegulationDateMillisForPercents(
-                        99
-                    ),
-                ),
-                InsightChart.TitleAndPercentsChart(
-                    id = "Skin improvement",
-                    title = TextWrapper.FromRes(R.string.insights_skin_title),
-                    description = TextWrapper.FromRes(R.string.insights_skin_subtitle),
-                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_skin_improvement),
-                    badge = InsightChartBadge.Estimated,
-                    percents = recoveryCalculator.calculateSkinImprovementPercent(),
-                    achieveDateMillis = recoveryCalculator.calculateSkinImprovementDateMillisForPercents(
-                        99
-                    ),
-                )
-            )
-        )
-    }
-
-    private fun getWhoBlock(): InsightChartsBlock {
-        return InsightChartsBlock(
-            id = "WHO",
-            title = TextWrapper.FromRes(R.string.insight_chart_who),
-            icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_who),
-            charts = listOf(
                 InsightChart.TitleAndPercentsChart(
                     id = "Stroke risk reduction",
                     title = TextWrapper.FromRes(R.string.insights_stroke_title),
@@ -213,6 +175,55 @@ internal class InsightChartsRepositoryImpl(
                     badge = InsightChartBadge.Who,
                     percents = recoveryCalculator.calculateLongTermRiskReductionPercent(),
                     achieveDateMillis = recoveryCalculator.calculateLongTermRiskReductionDateMillisForPercents(99),
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Energy level",
+                    title = TextWrapper.FromRes(R.string.insights_energy_level_title),
+                    description = TextWrapper.FromRes(R.string.insights_energy_level_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_energy_level),
+                    badge = InsightChartBadge.Estimated,
+                    percents = recoveryCalculator.calculateEnergyLevelPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateEnergyLevelDateMillisForPercents(99),
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Breathing comfort",
+                    title = TextWrapper.FromRes(R.string.insights_breathing_comfort_title),
+                    description = TextWrapper.FromRes(R.string.insights_breathing_comfort_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_breathing_comfort),
+                    badge = InsightChartBadge.Estimated,
+                    percents = recoveryCalculator.calculateBreathingComfortPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateBreathingComfortDateMillisForPercents(99),
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Physical endurance",
+                    title = TextWrapper.FromRes(R.string.insights_endurance_title),
+                    description = TextWrapper.FromRes(R.string.insights_endurance_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_chart_endurance),
+                    badge = InsightChartBadge.Estimated,
+                    percents = recoveryCalculator.calculatePhysicalEndurancePercent(),
+                    achieveDateMillis = recoveryCalculator.calculatePhysicalEnduranceDateMillisForPercents(99),
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Stress regulation",
+                    title = TextWrapper.FromRes(R.string.insights_stress_regulation_title),
+                    description = TextWrapper.FromRes(R.string.insights_stress_regulation_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_stress_regulation),
+                    badge = InsightChartBadge.MedicalEvidence,
+                    percents = recoveryCalculator.calculateStressRegulationPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateStressRegulationDateMillisForPercents(
+                        99
+                    ),
+                ),
+                InsightChart.TitleAndPercentsChart(
+                    id = "Skin improvement",
+                    title = TextWrapper.FromRes(R.string.insights_skin_title),
+                    description = TextWrapper.FromRes(R.string.insights_skin_subtitle),
+                    icon = ImageWrapper.FromRes(com.shahzadian.insightsscreen.R.drawable.ic_insight_skin_improvement),
+                    badge = InsightChartBadge.Estimated,
+                    percents = recoveryCalculator.calculateSkinImprovementPercent(),
+                    achieveDateMillis = recoveryCalculator.calculateSkinImprovementDateMillisForPercents(
+                        99
+                    ),
                 )
             )
         )

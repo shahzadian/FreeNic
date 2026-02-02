@@ -76,7 +76,6 @@ internal class InsightsViewModel @Inject constructor(
                 if (chartBlocks.isNotEmpty()) {
                     setViewState(
                         InsightsViewState.Data(
-                            hasPaidSubscription = hasPaidSubscription,
                             chartBlocks = chartBlocks,
                             selectedBlockId = chartBlocks.first().id,
                             accessType = if (hasPaidSubscription) {
