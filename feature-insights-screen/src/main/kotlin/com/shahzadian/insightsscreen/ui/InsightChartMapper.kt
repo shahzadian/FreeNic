@@ -2,9 +2,9 @@ package com.shahzadian.insightsscreen.ui
 
 import android.content.Context
 import com.freenic.ui.extensions.textFromWrapper
-import com.shahzadian.insightsscreen.domain.InsightChart
-import com.shahzadian.insightsscreen.domain.InsightChartBadge
-import com.shahzadian.insightsscreen.domain.InsightChartsBlock
+import com.shahzadian.insights.domain.InsightChart
+import com.shahzadian.insights.domain.InsightChartBadge
+import com.shahzadian.insights.domain.InsightChartsBlock
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState.ChartUiModel.HeartRecoveryUiModel
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState.ChartUiModel.LungsRecoveryUiModel

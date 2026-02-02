@@ -45,7 +45,6 @@ dependencies {
     implementation(project(":feature-savings-goal"))
     implementation(project(":feature-ad"))
     implementation(project(":feature-subscription"))
-    implementation(project(":feature-insights-screen"))
     implementation(project(":feature-daily-check-in"))
     implementation(project(":feature-journey-calendar"))
 

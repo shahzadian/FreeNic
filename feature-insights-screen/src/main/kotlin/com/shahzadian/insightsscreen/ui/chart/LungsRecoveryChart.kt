@@ -85,7 +85,7 @@ private fun HeartImageView(
     modifier: Modifier = Modifier,
 ) {
     Image(
-        painter = painterResource(com.shahzadian.insightsscreen.R.drawable.ic_insight_lungs),
+        painter = painterResource(com.shahzadian.insights.R.drawable.ic_insight_lungs),
         contentDescription = "Lungs recovery",
         modifier = modifier,
     )

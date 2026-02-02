@@ -4,7 +4,7 @@ import android.content.Context
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
 import com.shahzadian.cravings.cravingcase.domain.GetCravingCasesUseCase
 import com.shahzadian.dailycheckin.domain.GetDailyCheckInForDayUseCase
-import com.shahzadian.insightsscreen.domain.GetInsightChartsBlocksUseCase
+import com.shahzadian.insights.domain.GetInsightChartsBlocksUseCase
 import com.shahzadian.savingsgoal.domain.GetCurrentSavingsGoalUseCase
 import com.shahzadian.slip.slipcase.domain.GetSlipCasesUseCase
 import com.shahzadian.user.domain.UserDataHelperFactory

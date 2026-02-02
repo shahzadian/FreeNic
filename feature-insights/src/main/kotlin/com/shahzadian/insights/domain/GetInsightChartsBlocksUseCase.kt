@@ -1,6 +1,6 @@
-package com.shahzadian.insightsscreen.domain
+package com.shahzadian.insights.domain
 
-import com.shahzadian.insightsscreen.data.InsightChartsRepository
+import com.shahzadian.insights.data.InsightChartsRepository
 import com.shahzadian.recoverycalculator.domain.factory.HealthRecoveryCalculatorFactory
 import javax.inject.Inject
 

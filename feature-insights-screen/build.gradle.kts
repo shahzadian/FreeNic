@@ -40,9 +40,9 @@ android {
 
 dependencies {
     implementation(project(":common"))
-    implementation(project(":feature-recovery-calculator"))
     implementation(project(":feature-subscription"))
     implementation(project(":feature-ad"))
+    implementation(project(":feature-insights"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -39,7 +39,7 @@ dependencies {
     implementation(project(":feature-slip"))
     implementation(project(":feature-achievements"))
     implementation(project(":feature-savings-goal"))
-    implementation(project(":feature-insights-screen"))
+    implementation(project(":feature-insights"))
     implementation(project(":feature-daily-check-in"))
     implementation(project(":feature-cravings"))
 

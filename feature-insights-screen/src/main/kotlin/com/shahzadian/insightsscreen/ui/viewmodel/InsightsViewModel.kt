@@ -12,7 +12,7 @@ import com.freenic.ui.vm.BaseViewModel
 import com.shahzadian.ad.AdHelper
 import com.shahzadian.ad.reward.RewardHelper
 import com.shahzadian.ad.reward.RewardHelperFactory
-import com.shahzadian.insightsscreen.domain.GetInsightChartsBlocksUseCase
+import com.shahzadian.insights.domain.GetInsightChartsBlocksUseCase
 import com.shahzadian.insightsscreen.ui.InsightChartMapper
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus

@@ -1,4 +1,4 @@
-package com.shahzadian.insightsscreen.domain
+package com.shahzadian.insights.domain
 
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.wrapper.ImageWrapper

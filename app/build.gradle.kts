@@ -83,6 +83,7 @@ dependencies {
     implementation(project(":feature-promo-code"))
     implementation(project(":feature-craving-support-screen"))
     implementation(project(":feature-cravings"))
+    implementation(project(":feature-insights"))
 
 //    Firebase
     implementation(platform(libs.firebase.bom))
