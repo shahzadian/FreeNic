@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import com.freenic.ui.vm.ViewState
 import com.freenic.ui.wrapper.ImageWrapper
 import com.freenic.ui.wrapper.TextWrapper
+import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 internal sealed interface InsightsViewState : ViewState {
@@ -63,6 +64,15 @@ internal sealed interface InsightsViewState : ViewState {
         data class HeartRecoveryUiModel(
             val percents: Int,
         ) : ChartUiModel
+
+        data class SlipCasesChartUiModel(
+            val items: ImmutableList<ChartItem>,
+        ) : ChartUiModel {
+            data class ChartItem(
+                val label: TextWrapper,
+                val value: Int,
+            )
+        }
     }
 
     @Immutable

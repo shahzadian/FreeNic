@@ -5,6 +5,7 @@ import com.freenic.ui.extensions.extract
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.insightsscreen.domain.GetInsightChartsBlocksUseCase
+import com.shahzadian.insightsscreen.domain.InsightChart
 import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayEvent
 import java.time.LocalDate
 
@@ -18,6 +19,7 @@ internal class InsightChartsEventFinder(
             .flatMap { chartsBlock ->
                 chartsBlock
                     .charts
+                    .filterIsInstance<InsightChart.AchievableChart>()
                     .filter { chart ->
                         val startOfDay = date.startOfDayMillis()
                         val endOfDay = date.endOfDayMillis()

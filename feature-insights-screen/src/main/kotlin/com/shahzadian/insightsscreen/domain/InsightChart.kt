@@ -15,11 +15,15 @@ class InsightChartsBlock(
 sealed interface InsightChart {
 
     val id: String
-    val achieveDateMillis: Long
-    val title: TextWrapper
-    val description: TextWrapper
-    val icon: ImageWrapper
-    val badge: InsightChartBadge
+
+    interface AchievableChart : InsightChart {
+
+        val title: TextWrapper
+        val description: TextWrapper
+        val icon: ImageWrapper
+        val badge: InsightChartBadge
+        val achieveDateMillis: Long
+    }
 
     class TitleAndPercentsChart(
         override val id: String,
@@ -30,7 +34,7 @@ sealed interface InsightChart {
         override val icon: ImageWrapper,
         override val badge: InsightChartBadge,
         val percents: Int,
-    ) : InsightChart
+    ) : AchievableChart
 
     class LungsRecoveryChart(
         override val id: String,
@@ -40,7 +44,7 @@ sealed interface InsightChart {
         override val icon: ImageWrapper,
         override val badge: InsightChartBadge,
         val currentPercents: Int,
-    ) : InsightChart
+    ) : AchievableChart
 
     class HeartRecoveryChart(
         override val id: String,
@@ -50,7 +54,17 @@ sealed interface InsightChart {
         override val icon: ImageWrapper,
         override val badge: InsightChartBadge,
         val currentPercents: Int,
-    ) : InsightChart
+    ) : AchievableChart
+
+    class SlipCasesChart(
+        override val id: String,
+        val items: List<Item>,
+    ) : InsightChart {
+        class Item(
+            val label: TextWrapper,
+            val value: Int,
+        )
+    }
 }
 
 sealed interface InsightChartBadge {

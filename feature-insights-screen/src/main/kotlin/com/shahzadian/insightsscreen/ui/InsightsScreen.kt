@@ -28,6 +28,7 @@ import com.shahzadian.insightsscreen.ui.chart.ChartTabView
 import com.shahzadian.insightsscreen.ui.chart.DisclaimerView
 import com.shahzadian.insightsscreen.ui.chart.HeartRecoveryChart
 import com.shahzadian.insightsscreen.ui.chart.LungsRecoveryChart
+import com.shahzadian.insightsscreen.ui.chart.SlipCaseChart
 import com.shahzadian.insightsscreen.ui.chart.TitleAndPercentsChart
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewCommand
 import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewEvent
@@ -204,6 +205,15 @@ private fun ChartsView(
 
                 is InsightsViewState.ChartUiModel.HeartRecoveryUiModel -> {
                     HeartRecoveryChart(
+                        uiModel = chart,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                    )
+                }
+
+                is InsightsViewState.ChartUiModel.SlipCasesChartUiModel -> {
+                    SlipCaseChart(
                         uiModel = chart,
                         modifier = Modifier
                             .fillMaxWidth()
