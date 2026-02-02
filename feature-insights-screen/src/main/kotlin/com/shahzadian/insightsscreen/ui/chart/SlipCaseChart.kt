@@ -13,6 +13,9 @@ import com.shahzadian.insightsscreen.ui.viewmodel.InsightsViewState
 import ir.ehsannarmani.compose_charts.ColumnChart
 import ir.ehsannarmani.compose_charts.models.BarProperties
 import ir.ehsannarmani.compose_charts.models.Bars
+import ir.ehsannarmani.compose_charts.models.HorizontalIndicatorProperties
+import ir.ehsannarmani.compose_charts.models.LabelHelperProperties
+import ir.ehsannarmani.compose_charts.models.LabelProperties
 
 @Composable
 internal fun SlipCaseChart(
@@ -41,7 +44,24 @@ internal fun SlipCaseChart(
         },
         barProperties = BarProperties(
             spacing = 1.dp,
-            thickness = 10.dp
+            thickness = 20.dp,
+            cornerRadius = Bars.Data.Radius.Circular(
+                radius = 4.dp
+            )
+        ),
+        labelHelperProperties = LabelHelperProperties(
+            enabled = false,
+        ),
+        labelProperties = LabelProperties(
+            enabled = true,
+            textStyle = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.onPrimary
+            ),
+        ),
+        indicatorProperties = HorizontalIndicatorProperties(
+            textStyle = MaterialTheme.typography.bodyMedium.copy(
+                color = MaterialTheme.colorScheme.onPrimary
+            ),
         ),
         modifier = modifier
             .fillMaxWidth()
