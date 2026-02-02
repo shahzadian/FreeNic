@@ -40,31 +40,38 @@ internal class InsightChartsRepositoryImpl(
                     items = listOf(
                         InsightChart.SlipCasesChart.Item(
                             label = TextWrapper.FromString("Mon"),
-                            value = 2,
+                            fixedSlipsCount = 2,
+                            fixedCravingsCount = 1,
                         ),
                         InsightChart.SlipCasesChart.Item(
                             label = TextWrapper.FromString("Tue"),
-                            value = 4,
+                            fixedSlipsCount = 4,
+                            fixedCravingsCount = 3,
                         ),
                         InsightChart.SlipCasesChart.Item(
                             label = TextWrapper.FromString("Wed"),
-                            value = 1,
+                            fixedSlipsCount = 1,
+                            fixedCravingsCount = 5
                         ),
                         InsightChart.SlipCasesChart.Item(
                             label = TextWrapper.FromString("Thu"),
-                            value = 0,
+                            fixedSlipsCount = 0,
+                            fixedCravingsCount = 3
                         ),
                         InsightChart.SlipCasesChart.Item(
                             label = TextWrapper.FromString("Fri"),
-                            value = 5,
+                            fixedSlipsCount = 5,
+                            fixedCravingsCount = 0
                         ),
                         InsightChart.SlipCasesChart.Item(
                             label = TextWrapper.FromString("Sat"),
-                            value = 7,
+                            fixedSlipsCount = 7,
+                            fixedCravingsCount = 2
                         ),
                         InsightChart.SlipCasesChart.Item(
                             label = TextWrapper.FromString("Sun"),
-                            value = 2,
+                            fixedSlipsCount = 2,
+                            fixedCravingsCount = 5
                         )
                     )
                 ),

@@ -64,7 +64,8 @@ sealed interface InsightChart {
     ) : SingleChart {
         class Item(
             val label: TextWrapper,
-            val value: Int,
+            val fixedSlipsCount: Int,
+            val fixedCravingsCount: Int,
         )
     }
 }

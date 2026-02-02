@@ -70,7 +70,8 @@ internal class InsightChartMapperImpl @Inject constructor(
                     items = this.items.map {
                         ChartItem(
                             label = context.textFromWrapper(it.label),
-                            value = it.value
+                            fixedSlipsCount = it.fixedSlipsCount,
+                            fixedCravingsCount = it.fixedCravingsCount,
                         )
                     }.toImmutableList()
                 )

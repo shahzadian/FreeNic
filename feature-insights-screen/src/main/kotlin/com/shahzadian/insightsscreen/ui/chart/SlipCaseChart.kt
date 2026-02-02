@@ -22,10 +22,16 @@ internal fun SlipCaseChart(
     uiModel: InsightsViewState.ChartUiModel.SlipCasesChartUiModel,
     modifier: Modifier = Modifier,
 ) {
-    val chartBrush = Brush.linearGradient(
+    val slipBrush = Brush.linearGradient(
         colors = listOf(
             MaterialTheme.colorScheme.primary,
             MaterialTheme.colorScheme.primary,
+        )
+    )
+    val cravingBrush = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.tertiary,
+            MaterialTheme.colorScheme.tertiary,
         )
     )
     ColumnChart(
@@ -35,8 +41,12 @@ internal fun SlipCaseChart(
                     label = it.label,
                     values = listOf(
                         Bars.Data(
-                            value = it.value.toDouble(),
-                            color = chartBrush,
+                            value = it.fixedSlipsCount.toDouble(),
+                            color = slipBrush,
+                        ),
+                        Bars.Data(
+                            value = it.fixedCravingsCount.toDouble(),
+                            color = cravingBrush,
                         )
                     )
                 )

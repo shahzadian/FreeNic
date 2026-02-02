@@ -71,7 +71,8 @@ internal sealed interface InsightsViewState : ViewState {
         ) : ChartUiModel {
             data class ChartItem(
                 val label: String,
-                val value: Int,
+                val fixedSlipsCount: Int,
+                val fixedCravingsCount: Int,
             )
         }
     }
