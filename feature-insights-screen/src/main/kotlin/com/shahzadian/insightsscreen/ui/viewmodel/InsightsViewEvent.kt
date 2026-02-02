@@ -14,4 +14,7 @@ internal sealed interface InsightsViewEvent : ViewEvent {
 
     @Immutable
     data object OnWatchVideoClicked : InsightsViewEvent
+
+    @Immutable
+    data object OnLogSlipClicked : InsightsViewEvent
 }

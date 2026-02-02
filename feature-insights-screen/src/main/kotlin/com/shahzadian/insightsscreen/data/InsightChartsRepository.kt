@@ -40,39 +40,39 @@ internal class InsightChartsRepositoryImpl(
                     items = listOf(
                         InsightChart.SlipCasesChart.Item(
                             label = TextWrapper.FromString("Mon"),
-                            fixedSlipsCount = 2,
-                            fixedCravingsCount = 1,
-                        ),
-                        InsightChart.SlipCasesChart.Item(
-                            label = TextWrapper.FromString("Tue"),
-                            fixedSlipsCount = 4,
-                            fixedCravingsCount = 3,
-                        ),
-                        InsightChart.SlipCasesChart.Item(
-                            label = TextWrapper.FromString("Wed"),
-                            fixedSlipsCount = 1,
-                            fixedCravingsCount = 5
-                        ),
-                        InsightChart.SlipCasesChart.Item(
-                            label = TextWrapper.FromString("Thu"),
                             fixedSlipsCount = 0,
-                            fixedCravingsCount = 3
+                            fixedCravingsCount = 0,
                         ),
-                        InsightChart.SlipCasesChart.Item(
-                            label = TextWrapper.FromString("Fri"),
-                            fixedSlipsCount = 5,
-                            fixedCravingsCount = 0
-                        ),
-                        InsightChart.SlipCasesChart.Item(
-                            label = TextWrapper.FromString("Sat"),
-                            fixedSlipsCount = 7,
-                            fixedCravingsCount = 2
-                        ),
-                        InsightChart.SlipCasesChart.Item(
-                            label = TextWrapper.FromString("Sun"),
-                            fixedSlipsCount = 2,
-                            fixedCravingsCount = 5
-                        )
+//                        InsightChart.SlipCasesChart.Item(
+//                            label = TextWrapper.FromString("Tue"),
+//                            fixedSlipsCount = 4,
+//                            fixedCravingsCount = 3,
+//                        ),
+//                        InsightChart.SlipCasesChart.Item(
+//                            label = TextWrapper.FromString("Wed"),
+//                            fixedSlipsCount = 1,
+//                            fixedCravingsCount = 5
+//                        ),
+//                        InsightChart.SlipCasesChart.Item(
+//                            label = TextWrapper.FromString("Thu"),
+//                            fixedSlipsCount = 0,
+//                            fixedCravingsCount = 3
+//                        ),
+//                        InsightChart.SlipCasesChart.Item(
+//                            label = TextWrapper.FromString("Fri"),
+//                            fixedSlipsCount = 5,
+//                            fixedCravingsCount = 0
+//                        ),
+//                        InsightChart.SlipCasesChart.Item(
+//                            label = TextWrapper.FromString("Sat"),
+//                            fixedSlipsCount = 7,
+//                            fixedCravingsCount = 2
+//                        ),
+//                        InsightChart.SlipCasesChart.Item(
+//                            label = TextWrapper.FromString("Sun"),
+//                            fixedSlipsCount = 2,
+//                            fixedCravingsCount = 5
+//                        )
                     )
                 ),
             )

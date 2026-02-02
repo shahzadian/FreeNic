@@ -62,6 +62,10 @@ internal class InsightsViewModel @Inject constructor(
             is InsightsViewEvent.OnWatchVideoClicked -> {
                 onWatchVideoClicked()
             }
+
+            is InsightsViewEvent.OnLogSlipClicked -> {
+                onLogSlipClicked()
+            }
         }
     }
 
@@ -138,6 +142,19 @@ internal class InsightsViewModel @Inject constructor(
             )
             val currentState = viewState as? InsightsViewState.Preview ?: return@launch
             setViewState(currentState.copy(previewRewardState = InsightsViewState.PreviewRewardState.Loading))
+        }
+    }
+
+    private fun onLogSlipClicked() {
+        viewModelScope.launch {
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.INSIGHTS_LOG_SLIP_TAP
+                )
+            )
+            sendViewCommand(
+                InsightsViewCommand.NavigateTo(AppScreen.SlipConfirmationScreen)
+            )
         }
     }
 }

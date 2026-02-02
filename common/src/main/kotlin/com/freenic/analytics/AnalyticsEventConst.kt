@@ -100,6 +100,7 @@ object AnalyticsEventConst {
     const val APP_RATE_NOT_NOW_TAP: String = "app_rate_not_now_tap"
     const val INSIGHTS_SUBSCRIBE_TAP: String = "insights_subscribe_tap"
     const val INSIGHTS_WATCH_VIDEO_TAP: String = "insights_watch_video_tap"
+    const val INSIGHTS_LOG_SLIP_TAP: String = "insights_log_slip_tap"
     const val SUBSCRIPTION_SUCCESS: String = "subscription_success"
     const val PROFILE_PRIVACY_POLICY_TAP: String = "profile_privacy_policy_tap"
     const val PROFILE_TERMS_OF_SERVICES_TAP: String = "profile_terms_of_services_tap"

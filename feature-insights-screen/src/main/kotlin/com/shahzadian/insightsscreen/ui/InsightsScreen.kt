@@ -79,6 +79,7 @@ private fun ContentView(
     modifier: Modifier = Modifier,
 ) {
     var selectedChartTabId by remember { mutableStateOf("") }
+    val logSlipClickEvent = remember { { onEvent(InsightsViewEvent.OnLogSlipClicked) } }
     Scaffold(
         modifier = modifier
             .fillMaxSize()
@@ -142,6 +143,7 @@ private fun ContentView(
             ChartsView(
                 charts = state.chartBlocks.firstOrNull { it.id == selectedChartTabId }?.charts
                     ?: throw IllegalStateException("No charts found for selected block id: $selectedChartTabId"),
+                onLogSlipClicked = logSlipClickEvent,
                 modifier = Modifier.padding(bottom = 16.dp),
             )
             if (state.chartBlocks.firstOrNull { it.id == selectedChartTabId }?.shouldShowDisclaimer == true) {
@@ -199,8 +201,10 @@ private fun ChartBlockTabsView(
 @Composable
 private fun ChartsView(
     charts: List<InsightsViewState.ChartUiModel>,
+    onLogSlipClicked: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val logSlipClick = remember { { onLogSlipClicked() } }
     Column(
         modifier = modifier,
     ) {
@@ -236,6 +240,7 @@ private fun ChartsView(
                 is InsightsViewState.ChartUiModel.SlipCasesChartUiModel -> {
                     SlipCaseChart(
                         uiModel = chart,
+                        onLogSlipClicked = logSlipClick,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 8.dp),
