@@ -98,38 +98,11 @@ private fun HeaderView(
 }
 
 @Composable
-private fun PremiumBadge(
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                shape = MaterialTheme.shapes.medium,
-            )
-            .padding(8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Image(
-            painter = painterResource(R.drawable.ic_premium),
-            contentDescription = "premium badge",
-            modifier = Modifier
-                .padding(end = 8.dp)
-        )
-        Text(
-            text = stringResource(R.string.journey_calendar_preview_header_premium),
-            color = MaterialTheme.colorScheme.primary,
-            style = MaterialTheme.typography.titleMedium
-        )
-    }
-}
-
-@Composable
 private fun CarouselView(
     modifier: Modifier = Modifier,
 ) {
     val images = listOf(
+        com.shahzadian.insightsscreen.R.drawable.image_insights_preview_4,
         com.shahzadian.insightsscreen.R.drawable.image_insights_preview_1,
         com.shahzadian.insightsscreen.R.drawable.image_insights_preview_2,
         com.shahzadian.insightsscreen.R.drawable.image_insights_preview_3,
@@ -246,6 +219,7 @@ private fun WatchVideoButton(
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
             }
+
             is InsightsViewState.PreviewRewardState.Default -> {
                 Image(
                     painter = painterResource(com.shahzadian.insightsscreen.R.drawable.ic_calendar_video_button),
