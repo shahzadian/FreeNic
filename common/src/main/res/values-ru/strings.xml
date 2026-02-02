@@ -578,12 +578,14 @@
     <plurals name="achievement_title_cigs">
         <item quantity="one">%d сигарета</item>
         <item quantity="few">%d сигареты</item>
+        <item quantity="many">%d сигарет</item>
         <item quantity="other">%d сигарет</item>
     </plurals>
 
     <plurals name="achievement_desc_cigs">
         <item quantity="one">Вы не выкурили %d сигарету</item>
         <item quantity="few">Вы не выкурили %d сигареты</item>
+        <item quantity="many">Вы не выкурили %d сигарет</item>
         <item quantity="other">Вы не выкурили %d сигарет</item>
     </plurals>
     <string name="dashboard_calendar_header_today">Сегодня, %s</string>
@@ -604,5 +606,7 @@
     <string name="cravings_tool_stretch_title">Потянитесь или подвигайтесь</string>
     <string name="cravings_tool_stretch_subtitle">Лёгкое движение или растяжка помогают снять напряжение и переключить внимание</string>
     <string name="cravings_support_other_title">Также может помочь</string>
+    <string name="journey_calendar_event_craving_title">Случай тяги (%s)</string>
+    <string name="journey_calendar_event_craving_subtitle">В этот день у вас возникла тяга к курению</string>
 
 </resources>

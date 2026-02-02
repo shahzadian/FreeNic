@@ -609,5 +609,7 @@
     <string name="cravings_tool_stretch_title">Stretch or move</string>
     <string name="cravings_tool_stretch_subtitle">Light movement or stretching helps release tension and shift your focus</string>
     <string name="cravings_support_other_title">These may also help</string>
+    <string name="journey_calendar_event_craving_title">Craving moment (%s)</string>
+    <string name="journey_calendar_event_craving_subtitle">On this day, you experienced a craving</string>
 
 </resources>

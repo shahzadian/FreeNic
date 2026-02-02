@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":feature-savings-goal"))
     implementation(project(":feature-insights-screen"))
     implementation(project(":feature-daily-check-in"))
+    implementation(project(":feature-cravings"))
 
     implementation(libs.androidx.core.ktx)
 

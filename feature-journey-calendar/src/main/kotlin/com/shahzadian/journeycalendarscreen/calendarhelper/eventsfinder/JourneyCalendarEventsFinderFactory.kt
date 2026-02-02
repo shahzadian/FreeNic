@@ -2,6 +2,7 @@ package com.shahzadian.journeycalendarscreen.calendarhelper.eventsfinder
 
 import android.content.Context
 import com.shahzadian.achievements.domain.GetAchievementsUseCase
+import com.shahzadian.cravings.cravingcase.domain.GetCravingCasesUseCase
 import com.shahzadian.dailycheckin.domain.GetDailyCheckInForDayUseCase
 import com.shahzadian.insightsscreen.domain.GetInsightChartsBlocksUseCase
 import com.shahzadian.savingsgoal.domain.GetCurrentSavingsGoalUseCase
@@ -25,6 +26,7 @@ internal class JourneyCalendarEventsFinderFactoryImpl @Inject constructor(
     private val userDataHelperFactory: UserDataHelperFactory,
     private val getInsightChartsBlocksUseCase: GetInsightChartsBlocksUseCase,
     private val getDailyCheckInForDayUseCase: GetDailyCheckInForDayUseCase,
+    private val getCravingCasesUseCase: GetCravingCasesUseCase,
 ) : JourneyCalendarEventsFinderFactory {
 
     override fun getAll(): List<JourneyCalendarEventsFinder> {
@@ -53,6 +55,10 @@ internal class JourneyCalendarEventsFinderFactoryImpl @Inject constructor(
             ),
             DailyCheckInEventFinder(
                 getDailyCheckInForDayUseCase = getDailyCheckInForDayUseCase,
+            ),
+            CravingCaseEventFinder(
+                context = context,
+                getCravingCasesUseCase = getCravingCasesUseCase,
             )
         )
     }
