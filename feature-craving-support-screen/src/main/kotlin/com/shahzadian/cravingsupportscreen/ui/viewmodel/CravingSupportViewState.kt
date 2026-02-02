@@ -12,7 +12,7 @@ internal sealed interface CravingSupportViewState : ViewState {
     data object Loading : CravingSupportViewState
 
     data class Data(
-        val selectedCravingStrength: CravingStrength?,
+        val selectedCravingStrength: CravingStrengthUiModel?,
         val activities: ImmutableList<CravingSupportActivityUiModel>,
         val otherActivities: ImmutableList<CravingSupportActivityUiModel>,
     ) : CravingSupportViewState
@@ -24,26 +24,26 @@ internal sealed interface CravingSupportViewState : ViewState {
         val icon: ImageWrapper,
     )
 
-    sealed interface CravingStrength {
+    sealed interface CravingStrengthUiModel {
         val analyticsLabel: String
         val emoji: String
         val labelRes: Int
 
-        data object Low : CravingStrength {
+        data object Low : CravingStrengthUiModel {
             override val analyticsLabel: String = "low"
             override val emoji: String = "\uD83D\uDE0C"
             override val labelRes: Int =
                 com.shahzadian.baseui.R.string.craving_support_craving_strength_low
         }
 
-        data object Middle : CravingStrength {
-            override val analyticsLabel: String = "middle"
+        data object Medium : CravingStrengthUiModel {
+            override val analyticsLabel: String = "medium"
             override val emoji: String = "\uD83D\uDE10"
             override val labelRes: Int =
                 com.shahzadian.baseui.R.string.craving_support_craving_strength_mid
         }
 
-        data object Strong : CravingStrength {
+        data object Strong : CravingStrengthUiModel {
             override val analyticsLabel: String = "strong"
             override val emoji: String = "\uD83D\uDE23"
             override val labelRes: Int =

@@ -67,7 +67,7 @@ private fun ContentView(
     modifier: Modifier = Modifier,
 ) {
     val backIconClick = remember { { onEvent(CravingSupportViewEvent.OnBackIconClicked) } }
-    val strengthSelectEvent: (CravingSupportViewState.CravingStrength) -> Unit = { strength ->
+    val strengthSelectEvent: (CravingSupportViewState.CravingStrengthUiModel) -> Unit = { strength ->
         onEvent(CravingSupportViewEvent.OnCravingStrengthSelected(strength))
     }
     val activityClick: (String) -> Unit = { id ->

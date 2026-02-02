@@ -66,7 +66,7 @@ internal class CravingsViewModel @Inject constructor(
                     },
                 )
             },
-            showAllButton = this.size > 3,
+            showAllButton = this.filter { it.behavior !is CravingTool.Behavior.None }.size > 3,
             onAllButtonClick = {}
         )
     }

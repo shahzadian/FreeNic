@@ -19,8 +19,8 @@ import com.shahzadian.cravingsupportscreen.ui.viewmodel.CravingSupportViewState
 
 @Composable
 internal fun CravingSupportStrengthSelectView(
-    selectedStrength: CravingSupportViewState.CravingStrength?,
-    onStrengthSelected: (CravingSupportViewState.CravingStrength) -> Unit,
+    selectedStrength: CravingSupportViewState.CravingStrengthUiModel?,
+    onStrengthSelected: (CravingSupportViewState.CravingStrengthUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -38,21 +38,21 @@ internal fun CravingSupportStrengthSelectView(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             StrengthView(
-                strength = CravingSupportViewState.CravingStrength.Low,
-                onSelected = { onStrengthSelected(CravingSupportViewState.CravingStrength.Low) },
-                isSelected = selectedStrength == CravingSupportViewState.CravingStrength.Low,
+                strength = CravingSupportViewState.CravingStrengthUiModel.Low,
+                onSelected = { onStrengthSelected(CravingSupportViewState.CravingStrengthUiModel.Low) },
+                isSelected = selectedStrength == CravingSupportViewState.CravingStrengthUiModel.Low,
                 modifier = Modifier.weight(1f),
             )
             StrengthView(
-                strength = CravingSupportViewState.CravingStrength.Middle,
-                onSelected = { onStrengthSelected(CravingSupportViewState.CravingStrength.Middle) },
-                isSelected = selectedStrength == CravingSupportViewState.CravingStrength.Middle,
+                strength = CravingSupportViewState.CravingStrengthUiModel.Medium,
+                onSelected = { onStrengthSelected(CravingSupportViewState.CravingStrengthUiModel.Medium) },
+                isSelected = selectedStrength == CravingSupportViewState.CravingStrengthUiModel.Medium,
                 modifier = Modifier.weight(1f),
             )
             StrengthView(
-                strength = CravingSupportViewState.CravingStrength.Strong,
-                onSelected = { onStrengthSelected(CravingSupportViewState.CravingStrength.Strong) },
-                isSelected = selectedStrength == CravingSupportViewState.CravingStrength.Strong,
+                strength = CravingSupportViewState.CravingStrengthUiModel.Strong,
+                onSelected = { onStrengthSelected(CravingSupportViewState.CravingStrengthUiModel.Strong) },
+                isSelected = selectedStrength == CravingSupportViewState.CravingStrengthUiModel.Strong,
                 modifier = Modifier.weight(1f),
             )
         }
@@ -61,7 +61,7 @@ internal fun CravingSupportStrengthSelectView(
 
 @Composable
 private fun StrengthView(
-    strength: CravingSupportViewState.CravingStrength,
+    strength: CravingSupportViewState.CravingStrengthUiModel,
     onSelected: () -> Unit,
     isSelected: Boolean,
     modifier: Modifier = Modifier,
