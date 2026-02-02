@@ -51,3 +51,17 @@ internal class ClearCravingCasesUseCaseImpl @Inject constructor(
         cravingCaseRepository.clear()
     }
 }
+
+interface DeleteCravingCasesEarlierThanMillisUseCase {
+
+    suspend operator fun invoke(millis: Long)
+}
+
+internal class DeleteCravingCasesEarlierThanMillisUseCaseImpl @Inject constructor(
+    private val cravingCaseRepository: CravingCaseRepository,
+) : DeleteCravingCasesEarlierThanMillisUseCase {
+
+    override suspend fun invoke(millis: Long) {
+        cravingCaseRepository.deleteCravingCasesEarlierThanMillis(millis)
+    }
+}

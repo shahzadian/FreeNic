@@ -9,6 +9,8 @@ import com.shahzadian.cravings.cravingcase.domain.AddCravingCaseUseCase
 import com.shahzadian.cravings.cravingcase.domain.AddCravingCaseUseCaseImpl
 import com.shahzadian.cravings.cravingcase.domain.ClearCravingCasesUseCase
 import com.shahzadian.cravings.cravingcase.domain.ClearCravingCasesUseCaseImpl
+import com.shahzadian.cravings.cravingcase.domain.DeleteCravingCasesEarlierThanMillisUseCase
+import com.shahzadian.cravings.cravingcase.domain.DeleteCravingCasesEarlierThanMillisUseCaseImpl
 import com.shahzadian.cravings.cravingcase.domain.GetCravingCasesUseCase
 import com.shahzadian.cravings.cravingcase.domain.GetCravingCasesUseCaseImpl
 import com.shahzadian.cravings.data.CravingToolsRepository
@@ -44,6 +46,11 @@ internal interface CravingsModule {
 
     @Binds
     fun clearCravingCasesUseCase(impl: ClearCravingCasesUseCaseImpl): ClearCravingCasesUseCase
+
+    @Binds
+    fun bindDeleteCravingCasesEarlierThanMillisUseCase(
+        impl: DeleteCravingCasesEarlierThanMillisUseCaseImpl
+    ) : DeleteCravingCasesEarlierThanMillisUseCase
 
     companion object {
 

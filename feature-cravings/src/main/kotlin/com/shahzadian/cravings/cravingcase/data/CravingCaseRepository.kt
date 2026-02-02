@@ -16,6 +16,8 @@ internal interface CravingCaseRepository {
 
     suspend fun getAll(): List<CravingCase>
 
+    suspend fun deleteCravingCasesEarlierThanMillis(millis: Long)
+
     suspend fun clear()
 }
 
@@ -45,6 +47,15 @@ internal class CravingCaseRepositoryImpl @Inject constructor(
     override suspend fun clear() {
         withContext(coroutineContexts.io) {
             cravingCaseDatabase.clearAllTables()
+        }
+    }
+
+    override suspend fun deleteCravingCasesEarlierThanMillis(millis: Long) {
+        withContext(coroutineContexts.io) {
+            val dao = cravingCaseDatabase.cravingCaseDao()
+            dao.getAll()
+                .filter { it.millis < millis }
+                .forEach { dao.deleteByMillis(it.millis) }
         }
     }
 

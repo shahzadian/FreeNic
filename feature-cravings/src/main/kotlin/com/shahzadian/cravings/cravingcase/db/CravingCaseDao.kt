@@ -15,4 +15,7 @@ internal interface CravingCaseDao {
 
     @Query("SELECT * FROM cravingcaseentity ORDER BY millis DESC LIMIT 1")
     suspend fun getLatestCravingCase(): CravingCaseEntity?
+
+    @Query("DELETE FROM cravingcaseentity WHERE :millis < millis")
+    suspend fun deleteByMillis(millis: Long)
 }

@@ -16,6 +16,7 @@ import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
+import com.shahzadian.cravings.cravingcase.domain.DeleteCravingCasesEarlierThanMillisUseCase
 import com.shahzadian.slip.slipcase.domain.DeleteSlipCasesEarlierThanMillisUseCase
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.SubscriptionPlan
@@ -40,7 +41,8 @@ internal class ProfileViewModel @Inject constructor(
     private val clearAppDataUseCase: ClearAppDataUseCase,
     private val analyticsEventSender: AnalyticsEventSender,
     private val activityEventSender: ActivityEventSender,
-    private val deleteSlipCasesByMillisUseCase: DeleteSlipCasesEarlierThanMillisUseCase
+    private val deleteSlipCasesByMillisUseCase: DeleteSlipCasesEarlierThanMillisUseCase,
+    private val deleteCravingCasesEarlierThanMillisUseCase: DeleteCravingCasesEarlierThanMillisUseCase,
 ) : BaseViewModel<ProfileViewState, ProfileViewEvent, ProfileViewCommand>() {
 
     override val initState: ProfileViewState by lazyUnsafe { ProfileViewState.Loading }
@@ -159,6 +161,7 @@ internal class ProfileViewModel @Inject constructor(
             }
             updateUserDataUseCase.updateQuidDate(event.millis)
             deleteSlipCasesByMillisUseCase(event.millis)
+            deleteCravingCasesEarlierThanMillisUseCase(event.millis)
         }
     }
 
