@@ -30,7 +30,7 @@ internal class AddCravingCaseUseCaseImpl @Inject constructor(
         val shouldFix = cravingCaseRepository
             .getLatestCravingCase()
             ?.let { case ->
-                System.currentTimeMillis() - case.caseMillis > 1000 * 60 * 60
+                System.currentTimeMillis() - case.caseMillis > 1000 * 60 * 30
             } ?: true
         if (shouldFix) {
             cravingCaseRepository.insert(cravingCase)

@@ -608,5 +608,7 @@
     <string name="cravings_support_other_title">Также может помочь</string>
     <string name="journey_calendar_event_craving_title">Случай тяги (%s)</string>
     <string name="journey_calendar_event_craving_subtitle">В этот день у вас возникла тяга к курению</string>
+    <string name="craving_support_strength_submit">Сохранить</string>
+    <string name="craving_support_strength_successfully_saved">Случай тяги успешно сохранён</string>
 
 </resources>

@@ -70,6 +70,7 @@ private fun ContentView(
     val strengthSelectEvent: (CravingSupportViewState.CravingStrengthUiModel) -> Unit = { strength ->
         onEvent(CravingSupportViewEvent.OnCravingStrengthSelected(strength))
     }
+    val strengthSubmitClick: () -> Unit = { onEvent(CravingSupportViewEvent.OnStrengthSubmitClicked) }
     val activityClick: (String) -> Unit = { id ->
         onEvent(CravingSupportViewEvent.OnActivityClicked(id))
     }
@@ -85,11 +86,23 @@ private fun ContentView(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Spacer(modifier = Modifier.height(16.dp))
-        CravingSupportStrengthSelectView(
-            selectedStrength = data.selectedCravingStrength,
-            onStrengthSelected = strengthSelectEvent,
-            modifier = Modifier.fillMaxWidth()
-        )
+        when (data.strengthUiModel) {
+
+            is CravingSupportViewState.CravingStrengthSelectUiModel.Selecting -> {
+                CravingSupportStrengthSelectView(
+                    selectedStrength = data.strengthUiModel.selectedCravingStrength,
+                    onStrengthSelected = strengthSelectEvent,
+                    onSubmit = strengthSubmitClick,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            is CravingSupportViewState.CravingStrengthSelectUiModel.Selected -> {
+                CravingSupportStrengthSavedView(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
         Spacer(modifier = Modifier.height(16.dp))
         CravingSupportActivityView(
             activities = data.activities,

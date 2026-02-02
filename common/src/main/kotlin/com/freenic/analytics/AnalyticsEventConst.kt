@@ -55,7 +55,7 @@ object AnalyticsEventConst {
 
     const val DAILY_CHECK_IN_PARAM_VALUE_MOOD: String = "mood"
 
-    const val CRAVING_SUPPORT_STRENGTH_SELECTED_PARAM_STRENGTH_LABEL: String = "strength_label"
+    const val CRAVING_SUPPORT_CASE_SAVED_PARAM_STRENGTH_LABEL: String = "strength_label"
     const val CRAVING_SUPPORT_ACTIVITY_TAP_PARAM_ACTIVITY_ID: String = "activity_id"
 
     const val SCREEN_VIEW: String = "screen_view"
@@ -107,6 +107,6 @@ object AnalyticsEventConst {
     const val PUSH_PERMISSION_GRANTED: String = "push_permission_granted"
     const val PUSH_PERMISSION_DENIED: String = "push_permission_denied"
     const val PAYWALL_PROMO_CODE_ACTIVATED: String = "paywall_promo_code_activated"
-    const val CRAVING_SUPPORT_STRENGTH_SELECTED: String = "craving_support_strength_selected"
+    const val CRAVING_SUPPORT_CASE_SAVED: String = "craving_support_case_saved"
     const val CRAVING_SUPPORT_ACTIVITY_TAP: String = "craving_support_activity_tap"
 }

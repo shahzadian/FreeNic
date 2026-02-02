@@ -5,6 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -14,15 +17,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.freenic.ui.extensions.MainSubmitButton
 import com.freenic.ui.extensions.mainCardBackground
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.cravingsupportscreen.ui.viewmodel.CravingSupportViewState
 
 @Composable
 internal fun CravingSupportStrengthSelectView(
     selectedStrength: CravingSupportViewState.CravingStrengthUiModel?,
     onStrengthSelected: (CravingSupportViewState.CravingStrengthUiModel) -> Unit,
+    onSubmit: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val submitClick = remember { { onSubmit() } }
     Column(
         modifier = modifier
             .mainCardBackground()
@@ -56,6 +63,12 @@ internal fun CravingSupportStrengthSelectView(
                 modifier = Modifier.weight(1f),
             )
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        MainSubmitButton(
+            text = TextWrapper.FromRes(com.shahzadian.baseui.R.string.craving_support_strength_submit),
+            onClick = submitClick,
+            modifier = Modifier.fillMaxWidth(),
+        )
     }
 }
 

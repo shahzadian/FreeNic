@@ -13,5 +13,8 @@ internal sealed interface CravingSupportViewEvent : ViewEvent {
     data class OnCravingStrengthSelected(val strength: CravingSupportViewState.CravingStrengthUiModel) : CravingSupportViewEvent
 
     @Immutable
+    data object OnStrengthSubmitClicked : CravingSupportViewEvent
+
+    @Immutable
     data class OnActivityClicked(val id: String) : CravingSupportViewEvent
 }

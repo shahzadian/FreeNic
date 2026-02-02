@@ -12,7 +12,7 @@ internal sealed interface CravingSupportViewState : ViewState {
     data object Loading : CravingSupportViewState
 
     data class Data(
-        val selectedCravingStrength: CravingStrengthUiModel?,
+        val strengthUiModel: CravingStrengthSelectUiModel,
         val activities: ImmutableList<CravingSupportActivityUiModel>,
         val otherActivities: ImmutableList<CravingSupportActivityUiModel>,
     ) : CravingSupportViewState
@@ -23,6 +23,15 @@ internal sealed interface CravingSupportViewState : ViewState {
         val description: TextWrapper,
         val icon: ImageWrapper,
     )
+
+    sealed interface CravingStrengthSelectUiModel {
+
+        data class Selecting(
+            val selectedCravingStrength: CravingStrengthUiModel?,
+        ) : CravingStrengthSelectUiModel
+
+        data object Selected : CravingStrengthSelectUiModel
+    }
 
     sealed interface CravingStrengthUiModel {
         val analyticsLabel: String

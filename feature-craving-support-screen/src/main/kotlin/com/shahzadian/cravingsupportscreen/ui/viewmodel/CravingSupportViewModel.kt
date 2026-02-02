@@ -14,8 +14,6 @@ import com.shahzadian.cravings.domain.CravingTool
 import com.shahzadian.cravings.domain.GetCravingToolsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -34,13 +32,10 @@ internal class CravingSupportViewModel @Inject constructor(
 
     private var _cravingTools: List<CravingTool>? = null
 
-    private var screenEnterTime: Long = System.currentTimeMillis()
-
-    private var isCravingFixed: Boolean = false
+    private var isStrengthSaved: Boolean = false
 
     init {
         setData()
-        observeForCravingFixing()
     }
 
     override fun onViewEventHappened(event: CravingSupportViewEvent) {
@@ -51,6 +46,10 @@ internal class CravingSupportViewModel @Inject constructor(
 
             is CravingSupportViewEvent.OnCravingStrengthSelected -> {
                 onCravingStrengthSelected(event.strength)
+            }
+
+            is CravingSupportViewEvent.OnStrengthSubmitClicked -> {
+                onStrengthSubmitClicked()
             }
 
             is CravingSupportViewEvent.OnActivityClicked -> {
@@ -69,7 +68,7 @@ internal class CravingSupportViewModel @Inject constructor(
                             tool.toUiModel()
                         }
                         .toImmutableList(),
-                    selectedCravingStrength = selectedCravingStrength,
+                    strengthUiModel = getStrengthUiModel(),
                     otherActivities = getCravingTools()
                         .mapNotNull { tool ->
                             if (tool.behavior !is CravingTool.Behavior.None) return@mapNotNull null
@@ -90,12 +89,24 @@ internal class CravingSupportViewModel @Inject constructor(
     private fun onCravingStrengthSelected(strength: CravingSupportViewState.CravingStrengthUiModel) {
         selectedCravingStrength = strength
         setData()
-        if (shouldFixCraving()) {
+    }
+
+    private fun onStrengthSubmitClicked() {
+        viewModelScope.launch {
+            val strength = selectedCravingStrength ?: return@launch
+            isStrengthSaved = true
+            setData()
+            addCravingCaseUseCase(
+                CravingCase(
+                    strength = strength.toDomain(),
+                    caseMillis = System.currentTimeMillis()
+                )
+            )
             analyticsEventSender.send(
                 AnalyticsEvent(
-                    name = AnalyticsEventConst.CRAVING_SUPPORT_STRENGTH_SELECTED,
+                    name = AnalyticsEventConst.CRAVING_SUPPORT_CASE_SAVED,
                     params = mapOf(
-                        AnalyticsEventConst.CRAVING_SUPPORT_STRENGTH_SELECTED_PARAM_STRENGTH_LABEL to strength.analyticsLabel.asAnalyticsProperty()
+                        AnalyticsEventConst.CRAVING_SUPPORT_CASE_SAVED_PARAM_STRENGTH_LABEL to strength.analyticsLabel.asAnalyticsProperty()
                     )
                 )
             )
@@ -117,16 +128,14 @@ internal class CravingSupportViewModel @Inject constructor(
                     is CravingTool.Behavior.None -> {}
                 }
             }
-            if (shouldFixCraving()) {
-                analyticsEventSender.send(
-                    AnalyticsEvent(
-                        name = AnalyticsEventConst.CRAVING_SUPPORT_ACTIVITY_TAP,
-                        params = mapOf(
-                            AnalyticsEventConst.CRAVING_SUPPORT_ACTIVITY_TAP_PARAM_ACTIVITY_ID to id.asAnalyticsProperty(),
-                        )
+            analyticsEventSender.send(
+                AnalyticsEvent(
+                    name = AnalyticsEventConst.CRAVING_SUPPORT_ACTIVITY_TAP,
+                    params = mapOf(
+                        AnalyticsEventConst.CRAVING_SUPPORT_ACTIVITY_TAP_PARAM_ACTIVITY_ID to id.asAnalyticsProperty(),
                     )
                 )
-            }
+            )
         }
     }
 
@@ -135,28 +144,6 @@ internal class CravingSupportViewModel @Inject constructor(
             val tools = getCravingToolsUseCase()
             _cravingTools = tools
             return@let _cravingTools!!
-        }
-    }
-
-    private fun shouldFixCraving(): Boolean {
-        return System.currentTimeMillis() - screenEnterTime > SCREEN_TIME_FOR_CRAVING_FIX &&
-                selectedCravingStrength != null
-    }
-
-    private fun observeForCravingFixing() {
-        if (isCravingFixed) return
-        viewModelScope.launch(Dispatchers.Default) {
-            while (!shouldFixCraving()) {
-                delay(5000)
-            }
-            val strength = selectedCravingStrength ?: return@launch
-            addCravingCaseUseCase(
-                CravingCase(
-                    strength = strength.toDomain(),
-                    caseMillis = System.currentTimeMillis()
-                )
-            )
-            isCravingFixed = true
         }
     }
 
@@ -169,15 +156,21 @@ internal class CravingSupportViewModel @Inject constructor(
         )
     }
 
+    private fun getStrengthUiModel(): CravingSupportViewState.CravingStrengthSelectUiModel {
+        return if (isStrengthSaved) {
+            CravingSupportViewState.CravingStrengthSelectUiModel.Selected
+        } else {
+            CravingSupportViewState.CravingStrengthSelectUiModel.Selecting(
+                selectedCravingStrength = selectedCravingStrength,
+            )
+        }
+    }
+
     private fun CravingSupportViewState.CravingStrengthUiModel.toDomain(): CravingStrength {
         return when (this) {
             is CravingSupportViewState.CravingStrengthUiModel.Low -> CravingStrength.LOW
             is CravingSupportViewState.CravingStrengthUiModel.Medium -> CravingStrength.MEDIUM
             is CravingSupportViewState.CravingStrengthUiModel.Strong -> CravingStrength.STRONG
         }
-    }
-
-    private companion object {
-        const val SCREEN_TIME_FOR_CRAVING_FIX = 5000L
     }
 }
