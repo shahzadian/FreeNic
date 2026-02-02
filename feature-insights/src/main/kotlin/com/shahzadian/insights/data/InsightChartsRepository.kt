@@ -7,19 +7,38 @@ import com.shahzadian.insights.domain.InsightChart
 import com.shahzadian.insights.domain.InsightChartBadge
 import com.shahzadian.insights.domain.InsightChartsBlock
 import com.shahzadian.recoverycalculator.domain.HealthRecoveryCalculator
+import com.shahzadian.recoverycalculator.domain.factory.HealthRecoveryCalculatorFactory
+import javax.inject.Inject
+
+internal interface InsightsChartsRepositoryFactory {
+
+    suspend fun create(params: InsightChart.Params): InsightChartsRepository
+}
+
+internal class InsightsChartsRepositoryFactoryImpl @Inject constructor(
+    private val healthRecoveryCalculatorFactory: HealthRecoveryCalculatorFactory,
+    private val slipCaseChartHelper: SlipCaseChartHelper,
+) : InsightsChartsRepositoryFactory {
+
+    override suspend fun create(params: InsightChart.Params): InsightChartsRepository {
+        return InsightChartsRepositoryImpl(
+            recoveryCalculator = healthRecoveryCalculatorFactory.create(),
+            slipCaseChartHelper = slipCaseChartHelper,
+            params = params,
+        )
+    }
+}
 
 internal interface InsightChartsRepository {
 
     suspend fun getAllBlocks(): List<InsightChartsBlock>
 
-    companion object {
-        operator fun invoke(recoveryCalculator: HealthRecoveryCalculator): InsightChartsRepository =
-            InsightChartsRepositoryImpl(recoveryCalculator)
-    }
 }
 
 internal class InsightChartsRepositoryImpl(
     private val recoveryCalculator: HealthRecoveryCalculator,
+    private val slipCaseChartHelper: SlipCaseChartHelper,
+    private val params: InsightChart.Params,
 ) : InsightChartsRepository {
 
     override suspend fun getAllBlocks(): List<InsightChartsBlock> {
@@ -29,7 +48,7 @@ internal class InsightChartsRepositoryImpl(
         )
     }
 
-    private fun getSlipCasesBlock(): InsightChartsBlock {
+    private suspend fun getSlipCasesBlock(): InsightChartsBlock {
         return InsightChartsBlock(
             id = "Slip cases",
             title = TextWrapper.FromRes(R.string.insights_chart_slips),
@@ -37,43 +56,7 @@ internal class InsightChartsRepositoryImpl(
             charts = listOf(
                 InsightChart.SlipCasesChart(
                     id = "Slip cases",
-                    items = listOf(
-                        InsightChart.SlipCasesChart.Item(
-                            label = TextWrapper.FromString("Mon"),
-                            fixedSlipsCount = 0,
-                            fixedCravingsCount = 0,
-                        ),
-//                        InsightChart.SlipCasesChart.Item(
-//                            label = TextWrapper.FromString("Tue"),
-//                            fixedSlipsCount = 4,
-//                            fixedCravingsCount = 3,
-//                        ),
-//                        InsightChart.SlipCasesChart.Item(
-//                            label = TextWrapper.FromString("Wed"),
-//                            fixedSlipsCount = 1,
-//                            fixedCravingsCount = 5
-//                        ),
-//                        InsightChart.SlipCasesChart.Item(
-//                            label = TextWrapper.FromString("Thu"),
-//                            fixedSlipsCount = 0,
-//                            fixedCravingsCount = 3
-//                        ),
-//                        InsightChart.SlipCasesChart.Item(
-//                            label = TextWrapper.FromString("Fri"),
-//                            fixedSlipsCount = 5,
-//                            fixedCravingsCount = 0
-//                        ),
-//                        InsightChart.SlipCasesChart.Item(
-//                            label = TextWrapper.FromString("Sat"),
-//                            fixedSlipsCount = 7,
-//                            fixedCravingsCount = 2
-//                        ),
-//                        InsightChart.SlipCasesChart.Item(
-//                            label = TextWrapper.FromString("Sun"),
-//                            fixedSlipsCount = 2,
-//                            fixedCravingsCount = 5
-//                        )
-                    )
+                    items = slipCaseChartHelper.getCharts(params)
                 ),
             )
         )

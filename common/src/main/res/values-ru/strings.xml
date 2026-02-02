@@ -615,4 +615,12 @@
     <string name="insight_chart_slips_empty_subtitle">Когда появятся записи о тягах или срывах, здесь будет статистика</string>
     <string name="insight_chart_slips_empty_add_slip_button">Сообщить о курении</string>
 
+    <string name="insights_charts_slip_weekday_monday">Пн</string>
+    <string name="insights_charts_slip_weekday_tuesday">Вт</string>
+    <string name="insights_charts_slip_weekday_wednesday">Ср</string>
+    <string name="insights_charts_slip_weekday_thursday">Чт</string>
+    <string name="insights_charts_slip_weekday_friday">Пт</string>
+    <string name="insights_charts_slip_weekday_saturday">Сб</string>
+    <string name="insights_charts_slip_weekday_sunday">Вс</string>
+
 </resources>

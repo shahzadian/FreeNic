@@ -68,6 +68,20 @@ sealed interface InsightChart {
             val fixedCravingsCount: Int,
         )
     }
+
+    class Params(
+        val chartPeriod: InsightChartPeriod,
+    ) {
+
+        companion object {
+            fun default() = Params(InsightChartPeriod.Week)
+        }
+    }
+
+    sealed interface InsightChartPeriod {
+
+        data object Week : InsightChartPeriod
+    }
 }
 
 sealed interface InsightChartBadge {

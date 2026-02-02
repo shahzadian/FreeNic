@@ -37,6 +37,8 @@ dependencies {
     implementation(project(":common"))
     implementation(project(":feature-recovery-calculator"))
     implementation(project(":feature-subscription"))
+    implementation(project(":feature-slip"))
+    implementation(project(":feature-cravings"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
