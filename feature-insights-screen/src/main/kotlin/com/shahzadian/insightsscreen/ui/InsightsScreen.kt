@@ -126,7 +126,7 @@ private fun ContentView(
                 onSubscribeClicked = subscribeClick,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues)
+                    .padding(top = paddingValues.calculateTopPadding())
             )
             return@Scaffold
         }

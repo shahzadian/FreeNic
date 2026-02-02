@@ -260,8 +260,8 @@
         <item quantity="few">%d осознанных шага к жизни без сигарет</item>
         <item quantity="other">%d осознанных шагов к жизни без сигарет</item>
     </plurals>
-    <string name="insights_header_title">Инсайты о здоровье</string>
-    <string name="insights_header_subtitle">Ваш прогресс восстановления на основе медицинских данных</string>
+    <string name="insights_header_title">Аналитика</string>
+    <string name="insights_header_subtitle">Ваш прогресс восстановления, срывы и тяги</string>
     <string name="insights_blood_pressure_subtitle">Сосудистый тонус постепенно приходит в норму, и давление становится стабильнее в течение первых недель</string>
     <string name="insights_badge_medical">Медицинские данные</string>
     <string name="insights_oxygen_title">Нормализация кислорода и CO</string>

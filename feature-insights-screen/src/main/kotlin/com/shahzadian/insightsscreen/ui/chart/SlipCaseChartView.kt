@@ -75,7 +75,7 @@ internal fun SlipCaseChartView(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(screenHeight.dp / 2)
-                .padding(bottom = 16.dp),
+                .padding(bottom = 32.dp),
         )
         LegendsView(
             slipBrush = slipBrush,

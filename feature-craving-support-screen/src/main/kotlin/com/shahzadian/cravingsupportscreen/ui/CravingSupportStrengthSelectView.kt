@@ -42,7 +42,7 @@ internal fun CravingSupportStrengthSelectView(
             modifier = Modifier.padding(bottom = 16.dp),
         )
         Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             StrengthView(
                 strength = CravingSupportViewState.CravingStrengthUiModel.Low,

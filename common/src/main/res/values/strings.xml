@@ -292,8 +292,8 @@
     <string name="achievement_share_error">Couldn\'t share the achievement</string>
     <string name="ic_achievement_share_submit_button">Share</string>
 
-    <string name="insights_header_title">Health insights</string>
-    <string name="insights_header_subtitle">Your recovery progress, based on medical research</string>
+    <string name="insights_header_title">Analytics</string>
+    <string name="insights_header_subtitle">Your recovery progress, slips and cravings</string>
 
     <string name="insights_oxygen_title">Oxygen &amp; CO normalization</string>
     <string name="insights_oxygen_subtitle">Carbon monoxide levels typically normalize within 24–48 hours</string>
