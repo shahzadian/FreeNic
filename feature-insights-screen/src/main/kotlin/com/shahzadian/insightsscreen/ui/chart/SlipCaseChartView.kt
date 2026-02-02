@@ -80,6 +80,8 @@ internal fun SlipCaseChartView(
         LegendsView(
             slipBrush = slipBrush,
             cravingsBrush = cravingBrush,
+            slipCount = uiModel.items.sumOf { it.fixedSlipsCount },
+            cravingsCount = uiModel.items.sumOf { it.fixedCravingsCount },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
@@ -173,8 +175,12 @@ private fun EmptyView(
 private fun LegendsView(
     slipBrush: Brush,
     cravingsBrush: Brush,
+    slipCount: Int,
+    cravingsCount: Int,
     modifier: Modifier = Modifier,
 ) {
+    val slipsLabel = stringResource(com.shahzadian.baseui.R.string.insights_slip_legend_slip)
+    val cravingsLabel = stringResource(com.shahzadian.baseui.R.string.insights_slip_legend_cravings)
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Center,
@@ -182,12 +188,12 @@ private fun LegendsView(
     ) {
         LegendView(
             brush = slipBrush,
-            label = stringResource(com.shahzadian.baseui.R.string.insights_slip_legend_slip),
+            label = "$slipsLabel ($slipCount)",
             modifier = Modifier.weight(1f)
         )
         LegendView(
             brush = cravingsBrush,
-            label = stringResource(com.shahzadian.baseui.R.string.insights_slip_legend_cravings),
+            label = "$cravingsLabel ($cravingsCount)",
             modifier = Modifier.weight(1f)
         )
     }
