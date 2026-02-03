@@ -75,11 +75,7 @@ internal class ProfileViewModel @Inject constructor(
                             name = AnalyticsEventConst.PROFILE_SUBSCRIPTION_MANAGE_TAP,
                         )
                     )
-                    sendViewCommand(
-                        ProfileViewCommand.NavigateToPaywallScreen(
-                            source = AppScreen.ProfileScreen.getBaseRoute()
-                        )
-                    )
+                    sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.ManageSubscriptionScreen))
                 }
             }
 

@@ -148,8 +148,13 @@ internal class BillingDataSourceImpl @Inject constructor(
             .build()
 
         return suspendCancellableCoroutine { cont ->
+            var isCallbackSent = false
             purchaseCallback = { billingResult ->
-                cont.resume(billingResult.responseCode == BillingClient.BillingResponseCode.OK)
+                if (!isCallbackSent) {
+                    cont.resume(billingResult.responseCode == BillingClient.BillingResponseCode.OK)
+                    isCallbackSent = true
+                    purchaseCallback = null
+                }
             }
             client.launchBillingFlow(activity, flowParams)
         }
