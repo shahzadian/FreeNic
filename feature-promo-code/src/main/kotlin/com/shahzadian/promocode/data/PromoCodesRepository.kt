@@ -22,7 +22,7 @@ internal class PromoCodesRepositoryImpl @Inject constructor() : PromoCodesReposi
 
     init {
         val settings = remoteConfigSettings {
-            minimumFetchIntervalInSeconds = 0
+            minimumFetchIntervalInSeconds = 3600
         }
         config.setConfigSettingsAsync(settings)
         config.setDefaultsAsync(
