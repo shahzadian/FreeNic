@@ -2,6 +2,7 @@ package com.shahzadian.welcomescreen.ui.welcomescreen
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.freenic.CommonConst
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
@@ -26,7 +27,11 @@ internal class WelcomeViewModel @Inject constructor(
     }
 
     private val targetScreen: String? by lazyUnsafe {
-        savedStateHandle.get<String>(AppScreen.WelcomeScreen.ARG_TARGET_SCREEN)
+        savedStateHandle.get<String>(CommonConst.KEY_INTENT_TARGET_SCREEN)
+    }
+
+    private val source: String? by lazyUnsafe {
+        savedStateHandle.get<String>(CommonConst.KEY_INTENT_SOURCE)
     }
 
     init {
@@ -58,11 +63,20 @@ internal class WelcomeViewModel @Inject constructor(
                         )
                     }
                     delay(500)
-                    sendViewCommand(
-                        WelcomeViewCommand.Navigate(
-                            screen = screenToNavigate
+                    if (screenToNavigate == AppScreen.PaywallScreen) {
+                        sendViewCommand(
+                            WelcomeViewCommand.NavigateToPaywallScreen(
+                                source = source ?: ""
+                            )
                         )
-                    )
+                    } else {
+                        sendViewCommand(
+                            WelcomeViewCommand.Navigate(
+                                screen = screenToNavigate
+                            )
+                        )
+                    }
+
                 }
             } else {
                 setViewState(

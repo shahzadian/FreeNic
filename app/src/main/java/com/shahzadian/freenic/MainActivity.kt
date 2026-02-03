@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -89,10 +90,13 @@ internal class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         val targetScreen =
             intent.getStringExtra(CommonConst.KEY_INTENT_TARGET_SCREEN)
+        val source = intent.getStringExtra(CommonConst.KEY_INTENT_SOURCE)
+        Log.d("LogMog", "source: $source")
         setContent {
             FreeNicTheme {
                 AppNavigation(
                     targetScreen = targetScreen,
+                    targetScreenSource = source,
                     appNavigatorFactory = appNavigatorFactory,
                 )
                 AppRateView()

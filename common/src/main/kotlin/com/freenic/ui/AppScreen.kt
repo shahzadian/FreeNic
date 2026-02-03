@@ -1,5 +1,8 @@
 package com.freenic.ui
 
+import com.freenic.CommonConst
+import com.freenic.ui.AppScreen.PaywallScreen.ARG_SOURCE
+
 sealed class AppScreen {
 
     abstract val route: String
@@ -15,17 +18,18 @@ sealed class AppScreen {
 
     object WelcomeScreen : AppScreen() {
 
-        override val route: String = "$BASE_ROUTE?${ARG_TARGET_SCREEN}={${ARG_TARGET_SCREEN}}"
+        override val route: String = "$BASE_ROUTE?${ARG_TARGET_SCREEN}={${ARG_TARGET_SCREEN}}&${ARG_SOURCE}={${ARG_SOURCE}}"
 
-        fun composeRoute(targetScreen: String?): String {
-            return targetScreen?.let { "$BASE_ROUTE?${ARG_TARGET_SCREEN}=$it" } ?: BASE_ROUTE
+        fun composeRoute(targetScreen: String?, targetScreenSource: String?): String {
+            return targetScreen?.let { "$BASE_ROUTE?${ARG_TARGET_SCREEN}=$it&${ARG_TARGET_SCREEN_SOURCE}=$targetScreenSource" } ?: BASE_ROUTE
         }
 
         override fun getBaseRoute(): String {
             return BASE_ROUTE
         }
 
-        const val ARG_TARGET_SCREEN: String = "target_screen"
+        const val ARG_TARGET_SCREEN: String = CommonConst.KEY_INTENT_TARGET_SCREEN
+        const val ARG_TARGET_SCREEN_SOURCE: String = CommonConst.KEY_INTENT_SOURCE
         private const val BASE_ROUTE: String = "welcome_screen"
     }
 
@@ -69,7 +73,15 @@ sealed class AppScreen {
     }
 
     object PaywallScreen : AppScreen() {
-        override val route: String = "paywall_screen"
+        // Route должен использовать значение BASE_ROUTE, а не литерал "$BASE_ROUTE"
+        override val route: String = "${BASE_ROUTE}/{${ARG_SOURCE}}"
+
+        fun composeRoute(source: String): String {
+            return "$BASE_ROUTE/$source"
+        }
+
+        const val ARG_SOURCE: String = "source"
+        private const val BASE_ROUTE: String = "paywall_screen"
     }
 
     object GoalsScreen : AppScreen(), NavBarScreen {

@@ -175,7 +175,11 @@ internal class JourneyCalendarViewModel @Inject constructor(
                     name = AnalyticsEventConst.JOURNEY_CALENDAR_PREVIEW_SUBSCRIBE_TAP,
                 )
             )
-            sendViewCommand(JourneyCalendarViewCommand.NavigateTo(AppScreen.PaywallScreen))
+            sendViewCommand(
+                JourneyCalendarViewCommand.NavigateToPaywallScreen(
+                    source = AppScreen.JourneyCalendarScreen.getBaseRoute()
+                )
+            )
         }
     }
 

@@ -67,6 +67,14 @@ fun GoalsScreen(
                             )
                         )
                     }
+
+                    is GoalsViewCommand.NavigateToPaywallScreen -> {
+                        navigator.navigateToRoute(
+                            AppScreen.PaywallScreen.composeRoute(
+                                source = command.source,
+                            )
+                        )
+                    }
                 }
             }
     }

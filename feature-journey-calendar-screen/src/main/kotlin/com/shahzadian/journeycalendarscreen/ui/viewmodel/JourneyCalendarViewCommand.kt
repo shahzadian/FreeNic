@@ -12,4 +12,8 @@ internal sealed interface JourneyCalendarViewCommand : ViewCommand {
 
     @Immutable
     data class NavigateTo(val screen: AppScreen) : JourneyCalendarViewCommand
+
+    data class NavigateToPaywallScreen(
+        val source: String,
+    ) : JourneyCalendarViewCommand
 }

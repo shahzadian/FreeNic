@@ -144,6 +144,7 @@ private fun UpgradeWidget() {
         ?.apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             this.putExtra(CommonConst.KEY_INTENT_TARGET_SCREEN, AppScreen.PaywallScreen.route)
+            this.putExtra(CommonConst.KEY_INTENT_SOURCE, CommonConst.SOURCE_MAIN_APP_WIDGET)
         }
     var modifier = GlanceModifier
         .fillMaxSize()

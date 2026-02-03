@@ -48,6 +48,7 @@ object AnalyticsEventConst {
     const val ACHIEVEMENT_SHARE_TAP_PARAM_TEMPLATE_ID: String = "template_id"
 
     const val PAYWALL_UPGRADE_TAP_PARAM_PLAN_ID: String = "plan_id"
+    const val PAYWALL_PARAM_SOURCE: String = "source"
 
     const val APP_RATE_PARAM_STARS_COUNT: String = "stars_count"
 

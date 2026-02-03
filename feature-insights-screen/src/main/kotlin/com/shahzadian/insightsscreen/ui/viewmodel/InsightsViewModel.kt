@@ -113,7 +113,11 @@ internal class InsightsViewModel @Inject constructor(
                     name = AnalyticsEventConst.INSIGHTS_SUBSCRIBE_TAP
                 )
             )
-            sendViewCommand(InsightsViewCommand.NavigateTo(AppScreen.PaywallScreen))
+            sendViewCommand(
+                InsightsViewCommand.NavigateToPaywallScreen(
+                    source = AppScreen.InsightsScreen.getBaseRoute()
+                )
+            )
         }
     }
 

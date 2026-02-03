@@ -60,7 +60,11 @@ internal class ProfileViewModel @Inject constructor(
                             name = AnalyticsEventConst.PROFILE_SUBSCRIPTION_UPGRADE_TAP,
                         )
                     )
-                    sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.PaywallScreen))
+                    sendViewCommand(
+                        ProfileViewCommand.NavigateToPaywallScreen(
+                            source = AppScreen.ProfileScreen.getBaseRoute()
+                        )
+                    )
                 }
             }
 
@@ -71,7 +75,11 @@ internal class ProfileViewModel @Inject constructor(
                             name = AnalyticsEventConst.PROFILE_SUBSCRIPTION_MANAGE_TAP,
                         )
                     )
-                    sendViewCommand(ProfileViewCommand.NavigateTo(AppScreen.ManageSubscriptionScreen))
+                    sendViewCommand(
+                        ProfileViewCommand.NavigateToPaywallScreen(
+                            source = AppScreen.ProfileScreen.getBaseRoute()
+                        )
+                    )
                 }
             }
 

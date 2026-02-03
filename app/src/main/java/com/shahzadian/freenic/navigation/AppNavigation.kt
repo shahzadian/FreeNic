@@ -57,6 +57,7 @@ import com.shahzadian.welcomescreen.ui.welcomescreen.WelcomeScreen
 @Composable
 fun AppNavigation(
     targetScreen: String?,
+    targetScreenSource: String?,
     appNavigatorFactory: AppNavigatorFactory,
 ) {
     val navController = rememberNavController()
@@ -127,7 +128,8 @@ fun AppNavigation(
         NavHost(
             navController = navController,
             startDestination = AppScreen.WelcomeScreen.composeRoute(
-                targetScreen = targetScreen
+                targetScreen = targetScreen,
+                targetScreenSource = targetScreenSource,
             ),
             modifier = Modifier.padding(innerPadding),
         ) {
@@ -135,6 +137,11 @@ fun AppNavigation(
                 route = AppScreen.WelcomeScreen.route,
                 arguments = listOf(
                     navArgument(AppScreen.WelcomeScreen.ARG_TARGET_SCREEN) {
+                        type = NavType.StringType
+                        nullable = true
+                        defaultValue = null
+                    },
+                    navArgument(AppScreen.WelcomeScreen.ARG_TARGET_SCREEN_SOURCE) {
                         type = NavType.StringType
                         nullable = true
                         defaultValue = null
@@ -232,6 +239,11 @@ fun AppNavigation(
                 route = AppScreen.PaywallScreen.route,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
+                arguments = listOf(
+                    navArgument(AppScreen.PaywallScreen.ARG_SOURCE) {
+                        type = NavType.StringType
+                    }
+                )
             ) {
                 PaywallScreen(
                     navigator = appNavigator,

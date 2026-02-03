@@ -1,11 +1,13 @@
 package com.shahzadian.subscription.paywall.ui.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.freenic.activityevent.ActivityEvent
 import com.freenic.activityevent.ActivityEventSender
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
 import com.freenic.analytics.AnalyticsEventSender
+import com.freenic.analytics.AnalyticsProperty
 import com.freenic.analytics.asAnalyticsProperty
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.lazyUnsafe
@@ -31,9 +33,14 @@ internal class PaywallViewModel @Inject constructor(
     private val analyticsEventSender: AnalyticsEventSender,
     private val activityEventSender: ActivityEventSender,
     private val promoCodeHelper: PromoCodeHelper,
+    private val savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<PaywallViewState, PaywallViewEvent, PaywallViewCommand>() {
 
     override val initState: PaywallViewState by lazyUnsafe { PaywallViewState.Loading }
+
+    private val source: String? by lazyUnsafe {
+        savedStateHandle[AppScreen.PaywallScreen.ARG_SOURCE]
+    }
 
     init {
         setDataViewState()
@@ -168,7 +175,7 @@ internal class PaywallViewModel @Inject constructor(
                 name = AnalyticsEventConst.PAYWALL_UPGRADE_TAP,
                 params = mapOf(
                     AnalyticsEventConst.PAYWALL_UPGRADE_TAP_PARAM_PLAN_ID to planId.asAnalyticsProperty(),
-                )
+                ).appendSource()
             )
         )
         viewModelScope.launch {
@@ -184,10 +191,17 @@ internal class PaywallViewModel @Inject constructor(
         viewModelScope.launch {
             analyticsEventSender.send(
                 AnalyticsEvent(
-                    name = AnalyticsEventConst.SUBSCRIPTION_TERMS_TAP
+                    name = AnalyticsEventConst.SUBSCRIPTION_TERMS_TAP,
+                    params = mapOf<String, AnalyticsProperty<*>>().appendSource(),
                 )
             )
             activityEventSender.sendEvent(ActivityEvent.SubscriptionTermsOpenRequest)
         }
+    }
+
+    private fun Map<String, AnalyticsProperty<*>>.appendSource(): Map<String, AnalyticsProperty<*>> {
+        return source?.let {
+            this + (AnalyticsEventConst.PAYWALL_PARAM_SOURCE to it.asAnalyticsProperty())
+        } ?: this
     }
 }

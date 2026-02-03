@@ -10,6 +10,10 @@ internal sealed interface InsightsViewCommand : ViewCommand {
     @Immutable
     data class NavigateTo(val screen: AppScreen): InsightsViewCommand
 
+    data class NavigateToPaywallScreen(
+        val source: String,
+    ) : InsightsViewCommand
+
     @Immutable
     data object NavigateBack : InsightsViewCommand
 }

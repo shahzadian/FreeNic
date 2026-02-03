@@ -75,6 +75,14 @@ fun WelcomeScreen(
                         }
 
                     }
+
+                    is WelcomeViewCommand.NavigateToPaywallScreen -> {
+                        navigator.navigateToRoute(
+                            route = AppScreen.PaywallScreen.composeRoute(
+                                source = command.source,
+                            )
+                        )
+                    }
                 }
             }
     }

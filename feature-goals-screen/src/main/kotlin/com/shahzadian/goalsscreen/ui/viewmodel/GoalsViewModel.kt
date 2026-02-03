@@ -45,7 +45,9 @@ internal class GoalsViewModel @Inject constructor(
                             name = AnalyticsEventConst.GOALS_SAVINGS_GOAL_UPGRADE_TAP
                         )
                     )
-                    sendViewCommand(GoalsViewCommand.NavigateTo(AppScreen.PaywallScreen))
+                    sendViewCommand(GoalsViewCommand.NavigateToPaywallScreen(
+                        source = AppScreen.GoalsScreen.getBaseRoute()
+                    ))
                 }
             }
 

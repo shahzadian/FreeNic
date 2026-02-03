@@ -11,4 +11,8 @@ sealed interface WelcomeViewCommand : ViewCommand {
         val screen: AppScreen,
         val keepInStack: Boolean = true,
     ) : WelcomeViewCommand
+
+    data class NavigateToPaywallScreen(
+        val source: String,
+    ) : WelcomeViewCommand
 }

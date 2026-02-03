@@ -63,6 +63,13 @@ fun ProfileScreen(
                             popUpTo(AppScreen.WelcomeScreen.route) { inclusive = true }
                         }
                     }
+                    is ProfileViewCommand.NavigateToPaywallScreen -> {
+                        navigator.navigateToRoute(
+                            route = AppScreen.PaywallScreen.composeRoute(
+                                source = command.source,
+                            )
+                        )
+                    }
                 }
             }
     }

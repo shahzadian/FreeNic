@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
+import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.MainToolbarView
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
@@ -53,6 +54,14 @@ fun JourneyCalendarScreen(
 
                     is JourneyCalendarViewCommand.NavigateTo -> {
                         navigator.navigateToScreen(command.screen)
+                    }
+
+                    is JourneyCalendarViewCommand.NavigateToPaywallScreen -> {
+                        navigator.navigateToRoute(
+                            route = AppScreen.PaywallScreen.composeRoute(
+                                source = command.source,
+                            )
+                        )
                     }
                 }
             }

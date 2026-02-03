@@ -12,4 +12,8 @@ internal sealed interface ProfileViewCommand : ViewCommand {
         val screen: AppScreen,
         val clearFromStack: Boolean = false,
     ) : ProfileViewCommand
+
+    data class NavigateToPaywallScreen(
+        val source: String,
+    ) : ProfileViewCommand
 }
