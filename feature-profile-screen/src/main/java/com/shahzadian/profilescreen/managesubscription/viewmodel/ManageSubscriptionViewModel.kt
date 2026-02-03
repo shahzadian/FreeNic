@@ -102,18 +102,13 @@ internal class ManageSubscriptionViewModel @Inject constructor(
             )
         )
         viewModelScope.launch {
-            getSubscriptionPlansUseCase()
-                .let { plans ->
-                    plans.firstOrNull { it.paymentFrequency == SubscriptionPlan.PaymentFrequency.ANNUAL }
-                        ?: plans.firstOrNull()
-                }
-                ?.let {
-                    activityEventSender.sendEvent(
-                        ActivityEvent.AppSubscriptionRequest(
-                            planId = it.id
-                        )
-                    )
-                }
+            val currentSubscription =
+                getUserCurrentSubscriptionUseCase() as? UserSubscriptionStatus.HasSubscription ?: return@launch
+            activityEventSender.sendEvent(
+                ActivityEvent.AppSubscriptionRequest(
+                    planId = currentSubscription.plan.id
+                )
+            )
         }
     }
 
