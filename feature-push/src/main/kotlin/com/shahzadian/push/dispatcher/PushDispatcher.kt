@@ -4,6 +4,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.shahzadian.push.api.PushNotificationData
@@ -29,7 +30,11 @@ class PushDispatcherImpl @Inject constructor() : PushDispatcher {
             .setContentIntent(data.pendingIntent)
             .setAutoCancel(true)
 
-        NotificationManagerCompat.from(context).notify(data.notificationId, builder.build())
+        val code = ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS)
+        if (code == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+            NotificationManagerCompat.from(context).notify(data.notificationId, builder.build())
+        }
+
     }
 
     override fun showAll(context: Context, list: List<PushNotificationData>) {

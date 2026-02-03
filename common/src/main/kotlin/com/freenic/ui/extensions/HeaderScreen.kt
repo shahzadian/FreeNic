@@ -118,9 +118,9 @@ fun HeaderScreen(
 @Composable
 internal fun HeaderView(
     title: TextWrapper,
-    subtitle: TextWrapper? = null,
     image: @Composable (() -> Unit)?,
     modifier: Modifier = Modifier,
+    subtitle: TextWrapper? = null,
 ) {
     Row(
         modifier = modifier,
@@ -142,8 +142,8 @@ internal fun HeaderView(
 @Composable
 private fun TitleView(
     title: TextWrapper,
-    subtitle: TextWrapper? = null,
     modifier: Modifier = Modifier,
+    subtitle: TextWrapper? = null,
 ) {
     Column(
         modifier = modifier,

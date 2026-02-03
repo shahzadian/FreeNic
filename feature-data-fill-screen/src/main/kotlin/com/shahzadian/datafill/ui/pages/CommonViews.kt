@@ -82,9 +82,9 @@ internal fun DataFillInputDescription(
 @Composable
 internal fun DataFillFieldBlock(
     label: TextWrapper,
-    description: TextWrapper? = null,
     inputField: @Composable (Modifier) -> Unit,
     modifier: Modifier = Modifier,
+    description: TextWrapper? = null,
 ) {
     Column(
         modifier = modifier,

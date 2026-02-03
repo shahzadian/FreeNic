@@ -249,9 +249,9 @@ private fun InputView(
 @Composable
 internal fun InputField(
     value: String?,
-    hint: String? = null,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    hint: String? = null,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     hasNextField: Boolean = false,
     trailingContent: (@Composable (() -> Unit))? = null,

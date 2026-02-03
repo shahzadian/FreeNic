@@ -72,8 +72,8 @@ fun JourneyCalendarLegendsView(
 private fun LegendView(
     iconRes: Int,
     labelRes: Int,
-    hasBackground: Boolean = true,
     modifier: Modifier = Modifier,
+    hasBackground: Boolean = true,
 ) {
     Row(
         modifier = modifier,

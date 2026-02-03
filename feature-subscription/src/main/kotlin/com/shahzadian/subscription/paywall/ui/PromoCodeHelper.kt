@@ -66,7 +66,7 @@ internal class PromoCodeHelperImpl @Inject constructor(
                 }
             } else {
                 if (cachedValue < System.currentTimeMillis() - 60 * 60 * 1000) {
-                    sharedPreferences.edit().remove(PREF_KEY_PROMO_CODE_ENTER_MILLIS)
+                    sharedPreferences.edit().remove(PREF_KEY_PROMO_CODE_ENTER_MILLIS).apply()
                     return@withContext true
                 } else {
                     return@withContext false

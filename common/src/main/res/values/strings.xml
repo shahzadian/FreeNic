@@ -9,7 +9,7 @@
     <string name="onboarding_1_subtitle">Smoking harms your body silently, slowly, but surely. Today is the best day to stop</string>
     <string name="onboarding_1_submit">Next</string>
 
-    <string name="onboarding_2_title">You don’t hold the cigarette - it holds you</string>
+    <string name="onboarding_2_title">You don\’t hold the cigarette - it holds you</string>
     <string name="onboarding_2_subtitle">Smoking dulls your will and steals your freedom. FreeNic helps you take control back</string>
     <string name="onboarding_2_submit">Next</string>
 
@@ -17,7 +17,7 @@
     <string name="onboarding_3_subtitle">Cigarettes quietly steal your money. Imagine how much you could save if you quit</string>
     <string name="onboarding_3_submit">Next</string>
 
-    <string name="onboarding_4_title">You can change everything. We’ll help you!</string>
+    <string name="onboarding_4_title">You can change everything. We\’ll help you!</string>
     <string name="onboarding_4_subtitle">FreeNic is your first step to freedom. Support, motivation, and a smoke-free journey start here</string>
     <string name="onboarding_4_submit">I am ready!</string>
 
@@ -427,7 +427,7 @@
     <string name="craving_tool_motivational_notes_title">Motivational notes</string>
     <string name="craving_tool_motivational_notes_subtitle">Read motivational notes to remind yourself why staying strong matters</string>
     <string name="slip_confirmation_title">Thanks for being honest</string>
-    <string name="slip_confirmation_subtitle">This happens to many people. Let’s just acknowledge it and move forward</string>
+    <string name="slip_confirmation_subtitle">This happens to many people. Let\’s just acknowledge it and move forward</string>
     <string name="slip_confirmation_submit">Log this</string>
     <string name="slip_confirmation_cancel">Cancel</string>
     <string name="slip_context_stress">Stress</string>
@@ -566,7 +566,7 @@
     <string name="dashboard_daily_check_in_hard">Hard</string>
     <string name="dashboard_daily_check_in_okay">Okay</string>
     <string name="dashboard_daily_check_in_happy">Happy</string>
-    <string name="dashboard_daily_check_in_confirmation">Thanks! We’ll include this in your stats</string>
+    <string name="dashboard_daily_check_in_confirmation">Thanks! We\’ll include this in your stats</string>
     <string name="calendar_event_daily_check_in_hard">It was tough</string>
     <string name="calendar_event_daily_check_in_okay">An ordinary day</string>
     <string name="calendar_event_daily_check_in_happy">A good day</string>
