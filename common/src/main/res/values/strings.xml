@@ -166,12 +166,14 @@
     <string name="paywall_feature_journey_calendar_subtitle">Your entire quit-smoking journey, day by day</string>
 
     <string name="subscription_plan_title">Choose your plan</string>
+    <string name="subscription_plan_name_weekly">Weekly</string>
     <string name="subscription_plan_name_monthly">Monthly</string>
     <string name="subscription_plan_name_yearly">Yearly</string>
     <string name="subscription_plan_saving_percents">Save %d%%</string>
     <string name="subscription_plan_submit">Upgrade</string>
     <string name="subscription_plan_cancel_info_text">Cancel anytime. Subscription renews automatically</string>
     <string name="subscription_plan_price_per_month_postfix">%.1f/month</string>
+    <string name="subscription_plan_price_per_week">per week</string>
     <string name="subscription_plan_price_per_month">per month</string>
 
     <string name="goals_header_title">Goals</string>

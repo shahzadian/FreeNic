@@ -39,6 +39,10 @@ internal class SubscriptionPlanMapperImpl @Inject constructor(
 
     private fun getTitle(plan: SubscriptionPlan): TextWrapper {
         return when (plan.paymentFrequency) {
+            SubscriptionPlan.PaymentFrequency.WEEKLY -> {
+                TextWrapper.FromRes(R.string.subscription_plan_name_weekly)
+            }
+
             SubscriptionPlan.PaymentFrequency.MONTHLY -> {
                 TextWrapper.FromRes(R.string.subscription_plan_name_monthly)
             }
@@ -51,6 +55,10 @@ internal class SubscriptionPlanMapperImpl @Inject constructor(
 
     private fun getPriceDetails(plan: SubscriptionPlan): TextWrapper {
         return when (plan.paymentFrequency) {
+            SubscriptionPlan.PaymentFrequency.WEEKLY -> {
+                TextWrapper.FromRes(R.string.subscription_plan_price_per_week)
+            }
+
             SubscriptionPlan.PaymentFrequency.MONTHLY -> {
                 TextWrapper.FromRes(R.string.subscription_plan_price_per_month)
             }

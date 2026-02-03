@@ -309,6 +309,10 @@ internal class ProfileViewModel @Inject constructor(
 
     private fun getSubscriptionTitle(plan: SubscriptionPlan): TextWrapper {
         return when (plan.paymentFrequency) {
+            SubscriptionPlan.PaymentFrequency.WEEKLY -> {
+                TextWrapper.FromRes(R.string.subscription_plan_name_weekly)
+            }
+
             SubscriptionPlan.PaymentFrequency.MONTHLY -> {
                 TextWrapper.FromRes(R.string.subscription_plan_name_monthly)
             }

@@ -24,6 +24,14 @@ internal class UpdateSubscriptionUseCaseImpl @Inject constructor(
     private fun SubscriptionPlan.getExpirationMillis(): Long {
         val nowMillis = System.currentTimeMillis()
         return when (this.paymentFrequency) {
+            SubscriptionPlan.PaymentFrequency.WEEKLY -> {
+                Instant
+                    .ofEpochMilli(nowMillis)
+                    .atZone(ZoneId.systemDefault())
+                    .plusWeeks(1)
+                    .toInstant()
+                    .toEpochMilli()
+            }
             SubscriptionPlan.PaymentFrequency.MONTHLY -> {
                 Instant
                     .ofEpochMilli(nowMillis)

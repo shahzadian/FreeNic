@@ -11,6 +11,7 @@ sealed interface PromoCodeBehavior {
     ) : PromoCodeBehavior {
 
         sealed interface Expiration {
+            object Week : Expiration
             object Month : Expiration
             object Year : Expiration
         }

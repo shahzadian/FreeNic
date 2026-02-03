@@ -1,6 +1,7 @@
 package com.shahzadian.subscription.paywall.ui
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.freenic.CommonConst
 import com.freenic.analytics.AnalyticsEvent
 import com.freenic.analytics.AnalyticsEventConst
@@ -39,9 +40,9 @@ internal class PromoCodeHelperImpl @Inject constructor(
         promoCodeEnterIteration++
         if (promoCodeEnterIteration >= PROMO_CODE_ITERATION_LIMIT) {
             withContext(coroutineContexts.io) {
-                sharedPreferences.edit()
-                    .putLong(PREF_KEY_PROMO_CODE_ENTER_MILLIS, System.currentTimeMillis())
-                    .apply()
+                sharedPreferences.edit {
+                    putLong(PREF_KEY_PROMO_CODE_ENTER_MILLIS, System.currentTimeMillis())
+                }
             }
         }
         return getPromoCodeDataUseCase(promoCode)
@@ -99,6 +100,7 @@ internal class PromoCodeHelperImpl @Inject constructor(
 
     private fun PromoCodeBehavior.PremiumSubscription.getPaymentFrequency(): SubscriptionPlan.PaymentFrequency {
         return when (this.expiration) {
+            is PromoCodeBehavior.PremiumSubscription.Expiration.Week -> SubscriptionPlan.PaymentFrequency.WEEKLY
             is PromoCodeBehavior.PremiumSubscription.Expiration.Month -> SubscriptionPlan.PaymentFrequency.MONTHLY
             is PromoCodeBehavior.PremiumSubscription.Expiration.Year -> SubscriptionPlan.PaymentFrequency.ANNUAL
         }

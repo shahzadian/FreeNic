@@ -3,7 +3,7 @@ package com.shahzadian.subscription.subscription
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import com.shahzadian.subscription.data.SubscriptionPlansRepository
 import com.shahzadian.subscription.domain.SubscriptionPlan
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
@@ -102,12 +102,12 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
         val planId = stateMutex.withLock { local.getCurrentPlanId() }
         val packageName = appContext.packageName
         val uri = if (planId != null) {
-            Uri.parse("https://play.google.com/store/account/subscriptions").buildUpon()
+            "https://play.google.com/store/account/subscriptions".toUri().buildUpon()
                 .appendQueryParameter("sku", planId)
                 .appendQueryParameter("package", packageName)
                 .build()
         } else {
-            Uri.parse("https://play.google.com/store/account/subscriptions")
+            "https://play.google.com/store/account/subscriptions".toUri()
         }
 
         val intent =
@@ -124,20 +124,27 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
         val plan = plansRepository.getPlans().firstOrNull { it.id == productId }
             ?: throw IllegalArgumentException("Unknown plan ID: $productId")
         return when (plan.paymentFrequency) {
-            SubscriptionPlan.PaymentFrequency.MONTHLY -> addMonthsMillis(purchaseTimeMillis, 1)
-            SubscriptionPlan.PaymentFrequency.ANNUAL -> addYearsMillis(purchaseTimeMillis, 1)
+            SubscriptionPlan.PaymentFrequency.WEEKLY -> addWeekMillis(purchaseTimeMillis)
+            SubscriptionPlan.PaymentFrequency.MONTHLY -> addMonthsMillis(purchaseTimeMillis)
+            SubscriptionPlan.PaymentFrequency.ANNUAL -> addYearsMillis(purchaseTimeMillis)
         }
     }
 
-    private fun addMonthsMillis(baseMillis: Long, months: Int): Long =
+    private fun addWeekMillis(baseMillis: Long): Long =
         Calendar.getInstance().apply {
             timeInMillis = baseMillis
-            add(Calendar.MONTH, months)
+            add(Calendar.WEEK_OF_MONTH, 1)
         }.timeInMillis
 
-    private fun addYearsMillis(baseMillis: Long, years: Int): Long =
+    private fun addMonthsMillis(baseMillis: Long): Long =
         Calendar.getInstance().apply {
             timeInMillis = baseMillis
-            add(Calendar.YEAR, years)
+            add(Calendar.MONTH, 1)
+        }.timeInMillis
+
+    private fun addYearsMillis(baseMillis: Long): Long =
+        Calendar.getInstance().apply {
+            timeInMillis = baseMillis
+            add(Calendar.YEAR, 1)
         }.timeInMillis
 }
