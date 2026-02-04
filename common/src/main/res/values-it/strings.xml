@@ -1,0 +1,703 @@
+<resources>
+    <string name="app_name">FreeNic</string>
+    <string name="welcome_screen_title">Benvenuto in FreeNic</string>
+    <string name="welcome_screen_desc">Il tuo percorso verso una vita senza fumo inizia qui. Sono con te a ogni passo</string>
+    <string name="welcome_screen_button">Inizia</string>
+
+    <!--    Onboarding-->
+    <string name="onboarding_1_title">Ogni respiro di fumo ti allontana dalla vita</string>
+    <string name="onboarding_1_subtitle">Fumare danneggia il tuo corpo in silenzio, lentamente, ma sicuramente. Oggi è il giorno migliore per smettere</string>
+    <string name="onboarding_1_submit">Avanti</string>
+
+    <string name="onboarding_2_title">Non sei tu a tenere la sigaretta — è lei che tiene te</string>
+    <string name="onboarding_2_subtitle">Il fumo indebolisce la tua volontà e ruba la tua libertà. FreeNic ti aiuta a riprendere il controllo</string>
+    <string name="onboarding_2_submit">Avanti</string>
+
+    <string name="onboarding_3_title">Paghi per questa abitudine ogni giorno</string>
+    <string name="onboarding_3_subtitle">Le sigarette ti rubano silenziosamente i soldi. Immagina quanto potresti risparmiare se smettessi</string>
+    <string name="onboarding_3_submit">Avanti</string>
+
+    <string name="onboarding_4_title">Puoi cambiare tutto. Ti aiuteremo!</string>
+    <string name="onboarding_4_subtitle">FreeNic è il tuo primo passo verso la libertà. Supporto, motivazione e un percorso senza fumo iniziano qui</string>
+    <string name="onboarding_4_submit">Sono pronto!</string>
+
+    <!--    Data fill-->
+    <string name="data_fill_start_title">Raccontaci qualcosa su di te</string>
+    <string name="data_fill_start_subtitle">Così possiamo aiutarti a smettere in modo più efficace</string>
+    <string name="data_fill_submit_button">Continua</string>
+
+    <string name="data_fill_about_title">Su di te</string>
+    <string name="data_fill_about_subtitle">Queste informazioni aiutano a stimare come il tuo corpo si riprende dopo aver smesso di fumare</string>
+
+    <string name="data_fill_about_field_name_label">Nome</string>
+    <string name="data_fill_about_field_name_hint">Inserisci il tuo nome</string>
+    <string name="data_fill_about_field_name_desc">Lo useremo per personalizzare la tua esperienza</string>
+
+    <string name="data_fill_about_field_age_label">Età</string>
+    <string name="data_fill_about_field_age_hint">Inserisci la tua età</string>
+    <string name="data_fill_about_field_age_desc">La tua età aiuta a stimare la velocità di recupero</string>
+
+    <string name="data_fill_about_confidential_info">Tutti i tuoi dati sono riservati e usati solo per analisi</string>
+
+    <string name="data_fill_smoking_habits_title">Le tue abitudini di fumo</string>
+    <string name="data_fill_smoking_habits_subtitle">Queste informazioni aiutano a stimare quanto risparmi</string>
+
+    <string name="data_fill_cigarettes_per_day_label">Quante sigarette fumavi al giorno?</string>
+    <string name="data_fill_cigarettes_per_day_desc">In media nelle ultime settimane</string>
+
+    <string name="data_fill_cigarettes_per_day_packs_per_day_suffix">Pacchetti al giorno</string>
+
+    <string name="data_fill_price_title">Maggiori informazioni</string>
+    <string name="data_fill_price_subtitle">Lo useremo per calcolare quanto risparmi</string>
+    <string name="data_fill_price_label">Quanto costa un pacchetto di sigarette in dollari USA?</string>
+    <string name="data_fill_price_input_hint">Inserisci il prezzo in USD</string>
+
+    <string name="data_fill_result_title">Tutto pronto</string>
+    <string name="data_fill_result_subtitle">Abbiamo creato un piano personalizzato per te</string>
+    <string name="data_fill_result_card_title">Il tuo profilo</string>
+    <string name="data_fill_result_card_name">Nome</string>
+    <string name="data_fill_result_card_age">Età</string>
+    <string name="data_fill_result_card_daily_cigarettes">Sigarette giornaliere</string>
+
+    <string name="dashboard_lungs_rec_title">Recupero dei polmoni</string>
+    <string name="dashboard_lungs_rec_subtitle">I tuoi polmoni hanno recuperato il %d per cento della loro capacità</string>
+    <string name="dashboard_lungs_rec_hint">In miglioramento ogni giorno</string>
+
+    <plurals name="dashboard_no_cig_days_title">
+        <item quantity="one">giorno senza sigarette</item>
+        <item quantity="other">giorni senza sigarette</item>
+    </plurals>
+    <string name="dashboard_no_cig_days_subtitle">Il tuo corpo sta già guarendo</string>
+
+    <string name="dashboard_saved_money_title">Denaro\nrisparmiato</string>
+
+    <string name="dashboard_cigs_avoided_title">Sigarette\nevitate</string>
+
+    <string name="dashboard_header_title">Dashboard</string>
+    <string name="dashboard_header_subtitle">Bentornato, %s!</string>
+    <string name="dashboard_health_progress_title">Progressi di salute</string>
+    <string name="dashboard_health_progress_heart_label">Salute del cuore</string>
+    <string name="dashboard_health_progress_energy_label">Aumento dell\'energia</string>
+
+    <string name="main_page_home_name">Home</string>
+    <string name="main_page_cravings_name">Desideri</string>
+    <string name="main_page_goals_name">Obiettivi</string>
+    <string name="main_page_profile_name">Profilo</string>
+
+    <string name="cravings_header_title">Senti un desiderio?</string>
+    <string name="cravings_header_subtitle">Superiamolo insieme</string>
+
+    <string name="cravings_tools_title">Prova uno di questi strumenti rapidi</string>
+    <string name="cravings_tools_title_see_more">Mostra altro</string>
+
+    <string name="cravings_tool_breathing_title">Respirazione %d-%d-%d</string>
+    <string name="cravings_tool_breathing_subtitle">Calma il corpo con un breve ciclo di respirazione</string>
+    <string name="cravings_tool_relaxation_title">Rilassamento di un minuto</string>
+    <string name="cravings_tool_relaxation_subtitle">Rilascia la tensione con un rapido rilassamento guidato</string>
+    <string name="cravings_tool_distraction_title">Attività di distrazione</string>
+    <string name="cravings_tool_distraction_subtitle">Sposta l\'attenzione con un semplice compito di 30 secondi</string>
+    <string name="cravings_tool_water_title">Bevi acqua</string>
+    <string name="cravings_tool_water_subtitle">A volte un bicchiere d\'acqua aiuta a ridurre il desiderio e a distrarti</string>
+    <string name="cravings_tool_mini_mindfulness_title">Mini mindfulness</string>
+    <string name="cravings_tool_mini_mindfulness_subtitle">Riconnettiti con un breve esercizio di consapevolezza</string>
+
+    <string name="breathe_exercise_header_title">Respirazione %d-%d-%d</string>
+    <string name="breathe_exercise_header_subtitle">Calma il corpo con un breve ciclo di respirazione</string>
+    <string name="breathe_exercise_start_button">Inizia</string>
+    <string name="breathe_exercise_finish_button">Fine</string>
+    <string name="breathe_exercise_inhale">Inspira</string>
+    <string name="breathe_exercise_hold">Trattieni</string>
+    <string name="breathe_exercise_exhale">Espira</string>
+    <string name="breathe_exercise_cycle_of">Ciclo %d di %d</string>
+    <string name="breathe_exercise_helping_text_body_is_relaxing">Il tuo corpo si sta rilassando...</string>
+    <string name="breathe_exercise_helping_text_stay_with_the_rhythm">Segui il ritmo...</string>
+    <string name="breathe_exercise_helping_text_breathe_calmly">Respira con calma...</string>
+    <string name="breathe_exercise_helping_text_slow_and_steady">Lento e costante...</string>
+    <string name="breathe_exercise_helping_text_you_are_doing_great">Stai andando alla grande...</string>
+
+    <string name="guess_shape_showing_title">Ricorda le forme</string>
+    <string name="guess_shape_guessing_title">Quale forma mancava?</string>
+    <string name="guess_shape_guessing_submit">Conferma</string>
+    <string name="guess_shape_result_correct">Corretto!</string>
+    <string name="guess_shape_result_incorrect">Sbagliato!</string>
+    <string name="guess_shape_result_restart">Ricomincia</string>
+    <string name="guess_shape_result_close">Chiudi</string>
+
+    <string name="profile_header_title">Profilo &amp; impostazioni</string>
+    <string name="profile_header_subtitle">Gestisci il tuo account</string>
+
+    <string name="profile_title_block_personal_info">Informazioni personali</string>
+    <string name="profile_label_name">Nome</string>
+    <plurals name="profile_age_postfix">
+        <item quantity="one">anno</item>
+        <item quantity="other">anni</item>
+    </plurals>
+    <string name="profile_label_age">Età</string>
+    <string name="profile_quit_date">Data di cessazione</string>
+
+    <string name="profile_title_block_smoking_details">Dettagli sul fumo</string>
+    <string name="profile_cigs_per_day">Sigarette al giorno</string>
+    <plurals name="profile_cigs_per_day_postfix">
+        <item quantity="one">sigaretta</item>
+        <item quantity="other">sigarette</item>
+    </plurals>
+    <string name="profile_cigs_price">Prezzo per pacchetto</string>
+    <string name="profile_cigs_currency">Valuta</string>
+
+    <string name="profile_subscription_title">Premium</string>
+    <string name="profile_subscription_desc">Sblocca tutte le funzionalità premium</string>
+    <string name="profile_subscription_badge">PREMIUM</string>
+    <string name="profile_subscription_submit_button">Passa a Premium</string>
+
+    <string name="paywall_header_title">Sblocca l\'accesso completo</string>
+    <string name="paywall_header_subtitle">Ottieni l\'esperienza completa FreeNic</string>
+    <string name="paywall_features_title">Funzionalità premium</string>
+    <string name="paywall_feature_goal_tracker_title">Monitor obiettivi di risparmio</string>
+    <string name="paywall_feature_widget_title">Widget schermata Home</string>
+    <string name="paywall_feature_motivation_notes_title">Note motivazionali personali</string>
+    <string name="paywall_feature_analytics_title">Analisi avanzate</string>
+    <string name="paywall_feature_goal_tracker_subtitle">Imposta un obiettivo di risparmio e monitora i progressi verso un acquisto o una somma</string>
+    <string name="paywall_feature_widget_subtitle">Aggiungi un widget con progresso in tempo reale alla schermata Home e resta motivato ogni giorno</string>
+    <string name="paywall_feature_motivation_notes_subtitle">Crea note motivazionali che appaiono durante i momenti di desiderio</string>
+    <string name="paywall_feature_analytics_subtitle">Sblocca grafici dettagliati, tendenze di progresso e analisi comportamentali</string>
+    <string name="paywall_feature_no_ads_title">Nessuna pubblicità</string>
+    <string name="paywall_feature_no_ads_subtitle">Rimuovi tutte le pubblicità per un\'esperienza più pulita e focalizzata</string>
+    <string name="paywall_feature_journey_calendar_title">Calendario del percorso</string>
+    <string name="paywall_feature_journey_calendar_subtitle">L\'intero percorso per smettere di fumare, giorno per giorno</string>
+
+    <string name="subscription_plan_title">Scegli il tuo piano</string>
+    <string name="subscription_plan_name_weekly">Settimanale</string>
+    <string name="subscription_plan_name_monthly">Mensile</string>
+    <string name="subscription_plan_name_yearly">Annuale</string>
+    <string name="subscription_plan_saving_percents">Risparmia %d%%</string>
+    <string name="subscription_plan_submit">Aggiorna</string>
+    <string name="subscription_plan_cancel_info_text">Annulla in qualsiasi momento. L\'abbonamento si rinnova automaticamente</string>
+    <string name="subscription_plan_price_per_month_postfix">%.1f/mese</string>
+    <string name="subscription_plan_price_per_week">a settimana</string>
+    <string name="subscription_plan_price_per_month">al mese</string>
+
+    <string name="goals_header_title">Obiettivi</string>
+    <string name="goals_header_subtitle">Obiettivi e traguardi</string>
+
+    <string name="goals_locked_view_title">Obiettivo di risparmio</string>
+    <string name="goals_locked_view_subtitle">Sblocca per monitorare i tuoi obiettivi di risparmio personali</string>
+    <string name="goals_locked_view_button">Passa a Premium</string>
+    <string name="goals_achievements_block_title">I tuoi traguardi</string>
+
+    <string name="achievement_title_first_step">Primo passo</string>
+    <string name="achievement_desc_first_step">1 giorno senza sigarette!</string>
+    <string name="achievement_title_stability">Stabilità</string>
+    <string name="achievement_desc_stability">3 giorni senza sigarette!</string>
+    <string name="achievement_title_week_of_freedom">Settimana di libertà</string>
+    <string name="achievement_desc_week_of_freedom">1 settimana senza sigarette!</string>
+    <string name="achievement_title_two_weeks_of_strength">Due settimane di forza</string>
+    <string name="achievement_desc_two_weeks_of_strength">2 settimane senza sigarette!</string>
+    <string name="achievement_title_habit_forming">Creazione dell\'abitudine</string>
+    <string name="achievement_desc_habit_forming">3 settimane senza sigarette!</string>
+    <string name="achievement_title_month_of_victory">Mese di vittoria</string>
+    <string name="achievement_desc_month_of_victory">1 mese senza sigarette!</string>
+    <string name="achievement_title_first_skipped_pack">Primo pacchetto evitato</string>
+    <string name="achievement_desc_first_skipped_pack">Primo pacchetto evitato!</string>
+    <string name="achievement_title_fifty_victories">Cinquanta vittorie</string>
+    <string name="achievement_desc_fifty_victories">50 sigarette evitate!</string>
+    <string name="achievement_title_3_months">Nuova fase</string>
+    <string name="achievement_desc_3_months">Sei rimasto senza fumare per 90 giorni!</string>
+    <string name="achievement_title_6_months">Sei mesi</string>
+    <string name="achievement_desc_6_months">Sei rimasto senza fumare per 180 giorni!</string>
+    <string name="achievement_title_12_months">Un anno</string>
+    <string name="achievement_desc_12_months">Sei rimasto senza fumare per un anno!</string>
+    <string name="achievement_desc_100_cigs">Hai evitato 100 sigarette!</string>
+    <string name="achievement_title_200_cigs">200 sigarette</string>
+    <string name="achievement_desc_200_cigs">Hai evitato 200 sigarette!</string>
+    <string name="achievement_title_500_cigs">500 sigarette</string>
+    <string name="achievement_desc_500_cigs">Hai evitato 500 sigarette!</string>
+    <string name="achievement_title_1000_cigs">1000 sigarette</string>
+    <string name="achievement_desc_1000_cigs">Hai evitato 1000 sigarette!</string>
+
+    <plurals name="achievement_title_cigs">
+        <item quantity="one">%d sigaretta</item>
+        <item quantity="other">%d sigarette</item>
+    </plurals>
+
+    <plurals name="achievement_desc_cigs">
+        <item quantity="one">Hai evitato %d sigaretta</item>
+        <item quantity="other">Hai evitato %d sigarette</item>
+    </plurals>
+    <string name="main_page_insights_name">Analisi</string>
+
+    <string name="date_picker_dialog_cancel">Annulla</string>
+    <string name="date_picker_dialog_ok">OK</string>
+
+    <plurals name="quantity_days">
+        <item quantity="one">%d giorno</item>
+        <item quantity="other">%d giorni</item>
+    </plurals>
+
+    <plurals name="quantity_cigarettes">
+        <item quantity="one">sigaretta</item>
+        <item quantity="other">sigarette</item>
+    </plurals>
+
+    <!-- Validation messages -->
+    <string name="validation_age_min">L\'età deve essere di almeno 10</string>
+    <string name="validation_price_min">Il prezzo deve essere di almeno 0,1</string>
+    <string name="achievement_show_more">Altro</string>
+
+    <plurals name="achievement_share_minimal_days_title">
+        <item quantity="one">Giorno senza fumo!</item>
+        <item quantity="other">Giorni senza fumo!</item>
+    </plurals>
+
+    <plurals name="achievement_share_minimal_cigs_title">
+        <item quantity="one">Sigaretta evitata</item>
+        <item quantity="other">Sigarette evitate</item>
+    </plurals>
+
+    <string name="achievement_share_minimal_days_subtitle">Un passo più vicino a una vita senza fumo</string>
+
+    <plurals name="achievement_share_minimal_cigs_subtitle">
+        <item quantity="one">%d scelta consapevole verso una vita senza fumo</item>
+        <item quantity="other">%d scelte consapevoli verso una vita senza fumo</item>
+    </plurals>
+
+    <string name="achievement_share_celebratory_days_title">Senza fumo!</string>
+    <plurals name="achievement_share_celebratory_cigs_title">
+        <item quantity="one">Sigaretta evitata</item>
+        <item quantity="other">Sigarette evitate</item>
+    </plurals>
+
+    <string name="achievement_share_celebratory_days_subtitle">Festeggio i miei progressi</string>
+    <plurals name="achievement_share_celebratory_cigs_subtitle">
+        <item quantity="one">%d scelta consapevole verso una vita senza fumo</item>
+        <item quantity="other">%d scelte consapevoli verso una vita senza fumo</item>
+    </plurals>
+
+    <plurals name="achievement_share_motivational_days_title">
+        <item quantity="one">%d giorno forte!</item>
+        <item quantity="other">%d giorni forti!</item>
+    </plurals>
+
+    <plurals name="achievement_share_motivational_cigs_title">
+        <item quantity="one">Sigaretta evitata</item>
+        <item quantity="other">Sigarette evitate</item>
+    </plurals>
+
+    <string name="achievement_share_motivational_days_subtitle">Ogni giorno è una vittoria. Continua così!</string>
+    <plurals name="achievement_share_motivational_cigs_subtitle">
+        <item quantity="one">%d scelta consapevole verso una vita senza fumo</item>
+        <item quantity="other">%d scelte consapevoli verso una vita senza fumo</item>
+    </plurals>
+
+    <string name="achievement_share_error">Impossibile condividere il traguardo</string>
+    <string name="ic_achievement_share_submit_button">Condividi</string>
+
+    <string name="insights_header_title">Analisi</string>
+    <string name="insights_header_subtitle">Progresso di recupero, ricadute e desideri</string>
+
+    <string name="insights_oxygen_title">Normalizzazione ossigeno e CO</string>
+    <string name="insights_oxygen_subtitle">I livelli di monossido di carbonio si normalizzano in genere entro 24–48 ore</string>
+
+    <string name="insights_circulation_title">Circolazione e recupero cardiaco</string>
+    <string name="insights_circulation_subtitle">La circolazione migliora e il rischio cardiovascolare inizia a diminuire settimane dopo aver smesso</string>
+    <string name="insights_lung_self_cleaning_title">Autopulizia dei polmoni</string>
+    <string name="insights_lung_self_cleaning_subtitle">I polmoni recuperano gradualmente la loro capacità naturale di pulizia nei mesi successivi</string>
+    <string name="insights_risk_reduction_title">Riduzione dei rischi a lungo termine</string>
+    <string name="insights_risk_reduction_subtitle">I rischi a lungo termine diminuiscono negli anni rispetto al continuare a fumare</string>
+    <string name="insights_energy_level_title">Livello di energia</string>
+    <string name="insights_energy_level_subtitle">Molte persone segnalano più energia nelle settimane e nei mesi successivi</string>
+    <string name="insights_breathing_comfort_title">Comfort respiratorio</string>
+    <string name="insights_breathing_comfort_subtitle">Respirare diventa spesso più facile man mano che le vie aeree si riprendono</string>
+    <string name="insights_endurance_title">Resistenza fisica</string>
+    <string name="insights_endurance_subtitle">La resistenza migliora con il recupero dell\'ossigenazione e della circolazione</string>
+    <string name="insights_minutes_regained_title">Tempo di vita recuperato</string>
+    <string name="insights_minutes_regained_subtitle">Smettere di fumare è associato al recupero del tempo perso con il fumo</string>
+    <string name="insights_blood_pressure_title">Stabilizzazione della pressione sanguigna</string>
+    <string name="insights_blood_pressure_subtitle">Il tono dei vasi si normalizza gradualmente e la pressione diventa più stabile</string>
+
+    <string name="insights_badge_medical">Medico</string>
+    <string name="insights_badge_who">OMS</string>
+    <string name="insights_badge_studies">Studi</string>
+    <string name="insights_badge_estimated">Stimato</string>
+
+    <string name="insights_disclaimer_description">Questi dati si basano su ricerche mediche e studi sulla popolazione. Sono solo informativi e non sostituiscono il parere medico professionale.</string>
+    <string name="insights_disclaimer_title">Informazioni sui dati</string>
+
+    <string name="insights_chart_medical">Medico</string>
+    <string name="insights_chart_health">Salute</string>
+    <string name="insights_chart_long_term_risk">Rischi a lungo termine</string>
+    <string name="insights_tab_premium">Approfondimenti premium</string>
+
+    <string name="insights_long_term_risk_reduction_title">Riduzione dei rischi a lungo termine</string>
+    <string name="insights_long_term_risk_reduction_subtitle">I rischi diminuiscono nel corso degli anni rispetto al continuare a fumare</string>
+
+    <string name="goals_savings_goal_title">Trasforma i risparmi in un obiettivo</string>
+    <string name="goals_savings_goal_subtitle">Stai già risparmiando smettendo di fumare</string>
+    <string name="goals_savings_goal_create_button">Crea un obiettivo di risparmio</string>
+    <string name="goals_savings_goal_premium_info">Funzionalità premium</string>
+
+    <string name="savings_goal_header_title">Imposta un obiettivo di risparmio</string>
+    <string name="savings_goal_create_hint_title">Il tuo futuro ti aspetta</string>
+    <string name="savings_goal_create_hint_desc">Trasforma ogni giorno senza fumo in qualcosa di significativo. Imposta un obiettivo e guarda crescere i risparmi.</string>
+    <string name="savings_goal_create_label_name">Nome obiettivo</string>
+    <string name="savings_goal_create_label_amount">Prezzo obiettivo</string>
+    <string name="savings_goal_create_label_current_amount">Importo attuale</string>
+    <string name="savings_goal_create_input_hint_name">Nuovo laptop, Vacanza al mare</string>
+    <string name="savings_goal_create_label_category">Categoria</string>
+    <string name="savings_goal_create_hint_amount">100</string>
+
+    <string name="savings_create_category_tech">Tecnologia</string>
+    <string name="savings_create_category_travel">Viaggi</string>
+    <string name="savings_create_category_health">Salute</string>
+    <string name="savings_create_category_other">Altro</string>
+
+    <string name="savings_goal_create_submit">Salva obiettivo</string>
+    <string name="goals_savings_goal">Obiettivo di risparmio</string>
+    <string name="goals_savings_goal_progress_label">Risparmiato %d%%</string>
+
+    <plurals name="goals_savings_goal_calendar">
+        <item quantity="one">%d giorno senza fumo</item>
+        <item quantity="other">%d giorni senza fumo</item>
+    </plurals>
+    <string name="goals_savings_goal_details">Dettagli ></string>
+    <string name="savings_goal_details_header">Obiettivo di risparmio</string>
+    <string name="savings_goal_details_saved_so_far">Risparmiato finora</string>
+    <string name="savings_goal_details_card_goal">Obiettivo: %s</string>
+    <string name="savings_goal_details_card_progress">Progresso</string>
+    <string name="savings_goal_details_card_left_amount">Rimanente</string>
+    <string name="savings_goal_details_card_left_days">Al tuo ritmo attuale</string>
+    <string name="savings_goal_details_info">I tuoi progressi sono reali! Ogni giorno senza fumo ti avvicina al tuo obiettivo</string>
+    <string name="savings_goal_details_edit">Modifica obiettivo</string>
+    <string name="savings_goal_details_delete">Elimina obiettivo</string>
+    <string name="savings_goal_delete_confirm_title">Eliminare l\'obiettivo di risparmio?</string>
+    <string name="savings_goal_delete_confirm_message">Questa azione non può essere annullata. Sei sicuro di voler eliminare il tuo obiettivo di risparmio?</string>
+    <string name="savings_goal_delete_confirm_yes">Elimina</string>
+    <string name="savings_goal_delete_confirm_no">Annulla</string>
+    <string name="savings_goal_share_title">Condividi</string>
+    <string name="savings_goal_share_orange_title">Smettere di fumare sta dando i suoi frutti!</string>
+    <string name="savings_goal_share_orange_data_title">Il mio obiettivo</string>
+    <string name="savings_goal_share_orange_data_money">Denaro risparmiato</string>
+    <string name="savings_goal_share_orange_data_progress">Progresso</string>
+    <string name="savings_goal_share_submit_button">Condividi</string>
+    <string name="savings_goal_share_classic_title">Ogni giorno senza fumo</string>
+    <string name="savings_goal_share_classic_subtitle">Mi avvicina all\'obiettivo</string>
+    <string name="savings_goal_share_blue_title">Scelgo il mio obiettivo invece delle sigarette</string>
+    <string name="savings_goal_share_blue_progress_goal_label">Obiettivo</string>
+    <string name="savings_goal_share_blue_progress_label">Progresso</string>
+    <string name="savings_goal_share_blue_days_label">Giorni senza fumo</string>
+    <string name="savings_goal_share_blue_saved_money_label">Denaro risparmiato</string>
+    <string name="savings_goal_share_classic_data_header_subtitle">Target: %s</string>
+    <string name="savings_goal_share_classic_data_progress_label">Denaro risparmiato</string>
+
+    <string name="widget_main_name">Widget FreeNic</string>
+    <string name="widget_main_smoke_free">Senza fumo</string>
+    <string name="widget_main_info_money_saved">Denaro risparmiato</string>
+    <string name="widget_main_info_cigs_skipped">Non fumate</string>
+    <string name="widget_main_upgrade">Aggiorna il piano per vedere le info del widget</string>
+    <string name="widget_main_upgrade_button">Aggiorna</string>
+    <string name="widget_main_info">Il widget si aggiorna ogni 30 minuti</string>
+
+    <string name="paywall_page_title">Abbonamento premium</string>
+
+    <plurals name="dashboard_analytics_no_cig_days">
+        <item quantity="one">giorno senza fumo</item>
+        <item quantity="other">giorni senza fumo</item>
+    </plurals>
+
+    <string name="dashboard_analytics_money_saved">denaro risparmiato</string>
+    <string name="dashboard_craving_title">Hai voglia di fumare adesso?</string>
+    <string name="dashboard_craving_subtitle">Questo impulso passerà</string>
+    <string name="dashboard_craving_button">Ho bisogno di aiuto!</string>
+
+    <string name="dashboard_health_insights_title">Approfondimenti sulla salute</string>
+    <string name="dashboard_health_insights_subtitle">Il tuo corpo sta già guarendo</string>
+    <string name="dashboard_health_insights_see_details">Visualizza approfondimenti dettagliati</string>
+
+    <string name="motivational_note_1">Questo desiderio passerà, ma fumare non aiuta!</string>
+    <string name="motivational_note_2">Ti pentirai di questa sigaretta subito dopo il primo tiro!</string>
+    <string name="motivational_note_3">Non hai smesso per niente. Continua così!</string>
+    <string name="motivational_note_4">Una sigaretta non risolverà nulla!</string>
+    <string name="motivational_note_5">Respira. Questo momento passerà!</string>
+    <string name="motivational_note_6">Hai già fatto troppa strada per tornare indietro!</string>
+    <string name="motivational_note_7">Fumare non renderà questo momento migliore!</string>
+    <string name="motivational_note_8">Scegli come ti sentirai tra 10 minuti!</string>
+    <string name="motivational_note_9">Sei più forte di questo impulso!</string>
+    <string name="motivational_note_10">Ogni volta che resisti, la prossima volta sarà più facile!</string>
+
+    <string name="dashboard_motivational_notes_see_all">Tutte le note</string>
+    <string name="motivational_notes_header">Note motivazionali</string>
+    <string name="motivational_notes_badge_general">Da FreeNic</string>
+    <string name="motivational_notes_badge_by_user">Da te</string>
+    <string name="motivational_notes_swipe_hint">Scorri per vedere altro</string>
+
+    <string name="dashboard_analytics_view_more">Analisi dettagliate</string>
+    <string name="dashboard_want_to_smoke_title">Voglio fumare</string>
+    <string name="dashboard_want_to_smoke_subtitle">Tocca per supporto</string>
+    <string name="dashboard_i_smoked_title">Ho fumato</string>
+    <string name="dashboard_i_smoked_subtitle">Puoi sempre ricominciare</string>
+    <string name="dashboard_motivational_note_show_another">Mostra un\'altra nota</string>
+
+    <string name="craving_tool_motivational_notes_title">Note motivazionali</string>
+    <string name="craving_tool_motivational_notes_subtitle">Leggi note motivazionali per ricordarti perché essere forte conta</string>
+
+    <string name="slip_confirmation_title">Grazie per essere stato onesto</string>
+    <string name="slip_confirmation_subtitle">Succede a molte persone. Riconosciamolo e andiamo avanti</string>
+    <string name="slip_confirmation_submit">Registra</string>
+    <string name="slip_confirmation_cancel">Annulla</string>
+
+    <string name="slip_context_stress">Stress</string>
+    <string name="slip_reason_social">Situazione sociale</string>
+    <string name="slip_reason_habit">Abitudine</string>
+    <string name="slip_reason_craving">Forte desiderio</string>
+    <string name="slip_reason_other">Altro</string>
+
+    <string name="slip_context_toolbar_title">Aiutaci a capire</string>
+    <string name="slip_context_toolbar_subtitle">Cosa ha reso più difficile questa volta?</string>
+    <string name="slip_context_submit">Continua</string>
+    <string name="slip_context_skip">Salta</string>
+
+    <string name="slip_reason_date_title">Quando è successo?</string>
+    <string name="slip_reason_date_subtitle">(opzionale)</string>
+    <string name="slip_reason_date_today">Oggi</string>
+
+    <string name="slip_result_title">Questo non cancella i tuoi progressi</string>
+    <string name="slip_result_subtitle">Sei rimasto senza fumo per %s. Questo conta ancora.</string>
+    <string name="slip_result_secondary">Una nuova serie inizia ora - ed è okay.</string>
+    <string name="slip_result_read_motvation_note">Leggi una nota di supporto</string>
+    <string name="slip_result_back_to_dashboard">Torna alla dashboard</string>
+    <string name="slip_result_hint">I tuoi progressi totali, i miglioramenti della salute e il denaro risparmiato restano invariati.</string>
+
+    <string name="journey_calendar_weekday_monday">Lun</string>
+    <string name="journey_calendar_weekday_tuesday">Mar</string>
+    <string name="journey_calendar_weekday_wednesday">Mer</string>
+    <string name="journey_calendar_weekday_thursday">Gio</string>
+    <string name="journey_calendar_weekday_friday">Ven</string>
+    <string name="journey_calendar_weekday_saturday">Sab</string>
+    <string name="journey_calendar_weekday_sunday">Dom</string>
+
+    <string name="journey_calendar_header">Calendario del percorso</string>
+    <string name="dashboard_journey_calendar">Calendario del percorso</string>
+
+    <string name="journey_calendar_legend_achievement">Traguardo</string>
+    <string name="journey_calendar_legend_slip">Ricaduta</string>
+    <string name="journey_calendar_legend_smoke_free">Senza fumo</string>
+    <string name="journey_calendar_legend_savings">Risparmi</string>
+
+    <string name="journey_calendar_event_achievement_title">Traguardo raggiunto</string>
+
+    <plurals name="journey_calendar_event_day_based_achievement_subtitle">
+        <item quantity="one">Sei rimasto senza fumo per %d giorno</item>
+        <item quantity="other">Sei rimasto senza fumo per %d giorni</item>
+    </plurals>
+
+    <plurals name="journey_calendar_event_no_cigs_based_achievement_subtitle">
+        <item quantity="one">Hai evitato %d sigaretta</item>
+        <item quantity="other">Hai evitato %d sigarette</item>
+    </plurals>
+
+    <string name="journey_calendar_event_money_based_achievement_subtitle">Hai risparmiato %s</string>
+    <string name="journey_calendar_event_quit_start_title">Percorso iniziato</string>
+    <string name="journey_calendar_event_quit_start_subtitle">Hai deciso di smettere di fumare</string>
+    <string name="journey_calendar_event_slip_title">È avvenuta una ricaduta</string>
+    <string name="journey_calendar_event_slip_subtitle">Hai fumato in questo giorno</string>
+
+    <string name="journey_calendar_event_savings_goal_title">Obiettivo di risparmio raggiunto</string>
+    <string name="journey_calendar_event_savings_goal_subtitle">Hai risparmiato %1$s verso %2$s</string>
+
+    <string name="fillable_info_pack_price_quit_date">Data di stop</string>
+    <string name="data_fill_quit_date_today">Oggi</string>
+
+    <string name="journey_calendar_event_no_cig_title">Giorno senza fumo</string>
+
+    <plurals name="journey_calendar_event_no_cig_subtitle">
+        <item quantity="one">%d giorno senza fumo. %s risparmiati</item>
+        <item quantity="other">%d giorni senza fumo. %s risparmiati</item>
+    </plurals>
+    <string name="profile_clear_all_data_title">Cancella i miei dati</string>
+    <string name="profile_clear_all_data_subtitle">Questo azzererà i tuoi progressi e la cronologia</string>
+    <string name="profile_clear_all_data_confirmation_title">Cancellare tutti i dati?</string>
+    <string name="profile_clear_all_data_confirmation_subtitle">Questo rimuoverà progressi, cronologia e approfondimenti. Puoi ricominciare in qualsiasi momento.</string>
+    <string name="profile_clear_all_data_confirmation_submit">Sì</string>
+    <string name="profile_clear_all_data_confirmation_cancel">No</string>
+
+    <string name="achievements_header_title">Obiettivi raggiunti</string>
+
+    <string name="achievement_title_10_bucks">10$</string>
+    <string name="achievement_desc_10_bucks">Hai risparmiato 10$</string>
+    <string name="achievement_title_20_bucks">20$</string>
+    <string name="achievement_desc_20_bucks">Hai risparmiato 20$</string>
+    <string name="achievement_title_30_bucks">30$</string>
+    <string name="achievement_desc_30_bucks">Hai risparmiato 30$</string>
+    <string name="achievement_title_40_bucks">40$</string>
+    <string name="achievement_desc_40_bucks">Hai risparmiato 40$</string>
+    <string name="achievement_title_50_bucks">50$</string>
+    <string name="achievement_desc_bucks">Hai risparmiato %s</string>
+
+    <string name="achievement_share_money_based_title">DENARO RISPARMIATO!</string>
+    <string name="achievement_share_money_based_subtitle">Denaro non speso in sigarette</string>
+    <string name="achievement_share_money_based_celebratory_title">DENARO RISPARMIATO!</string>
+    <string name="achievement_share_money_based_celebratory_subtitle">Ho risparmiato denaro non fumando! Tracciato con FreeNic</string>
+
+    <string name="manage_subscription_header_title">Gestisci abbonamento</string>
+    <string name="manage_subscription_current_plan_premium_badge">• Premium attivo</string>
+    <string name="manage_subscription_current_plan_premium_renewal">Rinnovo il %s</string>
+    <string name="manage_subscription_current_plan_premium_info">Gestito tramite Google Play</string>
+    <string name="manage_subscription_paid_features_title">Cosa è incluso</string>
+
+    <string name="profile_premium_active">Premium attivo</string>
+    <string name="profile_premium_active_until">Attivo fino al %s</string>
+    <string name="profile_premium_manage_button">Gestisci abbonamento</string>
+
+    <string name="manage_subscription_cancel_button">Annulla abbonamento</string>
+    <string name="manage_subscription_cancel_confirmation_title">Annullare l\'abbonamento?</string>
+    <string name="manage_subscription_cancel_confirmation_subtitle">Le funzioni premium resteranno disponibili fino al %s. Dopo, il tuo account passerà alla versione gratuita.</string>
+    <string name="manage_subscription_cancel_confirmation_confirm">Sì</string>
+    <string name="manage_subscription_cancel_confirmation_cancel">No</string>
+    <string name="manage_subscription_current_plan_premium_active_until">Attivo fino al %s</string>
+
+    <string name="app_rate_title">In che modo FreeNic ti sta aiutando?</string>
+    <string name="app_rate_subtitle">Il tuo feedback ci aiuta a rendere l\'app più utile e di supporto.</string>
+    <string name="app_rate_submit_button">Valuta FreeNic</string>
+    <string name="app_rate_cancel_button">Non ora</string>
+
+    <string name="journey_calendar_preview_header_title">Calendario del percorso</string>
+    <string name="journey_calendar_preview_header_subtitle">Controllo completo dei tuoi progressi - con abbonamento</string>
+    <string name="journey_calendar_preview_feature_1">Cronologia completa per giorni, settimane e mesi</string>
+    <string name="journey_calendar_preview_feature_2">Visualizzazione chiara del tuo percorso</string>
+    <string name="journey_calendar_preview_header_premium">Funzione premium</string>
+    <string name="journey_calendar_preview_submit_button">Abbonati ora</string>
+
+    <string name="insights_immune_recovery_title">Recupero del sistema immunitario</string>
+    <string name="insights_immune_recovery_subtitle">Nel corso di settimane e mesi, il sistema immunitario si rafforza gradualmente e la riparazione dei tessuti diventa più efficace</string>
+
+    <string name="insights_stress_regulation_title">Miglioramento della regolazione dello stress</string>
+    <string name="insights_stress_regulation_subtitle">Col tempo, il sistema nervoso diventa più resiliente e gli sbalzi d\'umore legati alla nicotina tendono a ridursi</string>
+
+    <string name="insights_sleep_quality_title">Miglioramento della qualità del sonno</string>
+    <string name="insights_sleep_quality_subtitle">Quando la nicotina esce dalla tua routine, il sonno diventa spesso più profondo e stabile nelle prime settimane</string>
+
+    <string name="insights_taste_and_smell_title">Recupero di gusto &amp; olfatto</string>
+    <string name="insights_taste_and_smell_subtitle">I recettori sensoriali iniziano a recuperare in pochi giorni e gusto e olfatto diventano più acuti entro 1–2 settimane</string>
+
+    <string name="insights_skin_title">Miglioramento della pelle</string>
+    <string name="insights_skin_subtitle">Circolazione e riparazione dei tessuti migliorano gradualmente e l\'aspetto può cambiare visibilmente in meglio</string>
+
+    <string name="insights_stroke_title">Riduzione del rischio di ictus</string>
+    <string name="insights_stroke_subtitle">Nel lungo periodo, il rischio di ictus diminuisce e i benefici continuano a crescere negli anni</string>
+
+    <string name="insights_cancer_title">Riduzione del rischio di cancro</string>
+    <string name="insights_cancer_subtitle">Con il tempo, il rischio di diversi tumori diminuisce, con benefici significativi negli anni</string>
+
+    <string name="insight_chart_block_estimated">Stimato</string>
+    <string name="insight_chart_who">OMS</string>
+
+    <string name="journey_calendar_event_insight_title">Raggiunto: %s</string>
+
+    <string name="insights_lungs_recovery_title">Recupero dei polmoni</string>
+    <string name="insights_heart_recovery_title">Recupero di circolazione &amp; cuore</string>
+
+    <string name="profile_privacy">Informativa sulla privacy</string>
+    <string name="profile_terms">Termini di servizio</string>
+    <string name="paywall_subscription_terms">Termini di abbonamento</string>
+
+    <string name="push_achievement_title">Nuovo traguardo!</string>
+    <string name="push_default_title">Resta sulla buona strada</string>
+    <string name="push_default_subtitle">Abilita le notifiche per ricevere promemoria gentili, monitorare i progressi e restare motivato</string>
+    <string name="push_default_submit">Abilita</string>
+    <string name="push_default_cancel">Non ora</string>
+
+    <string name="push_soft_ask_title">Vuoi promemoria?</string>
+    <string name="push_soft_ask_subtitle">Le notifiche possono aiutarti a rimanere costante e ricordarti dei tuoi progressi</string>
+    <string name="push_soft_ask_submit">Abilita</string>
+    <string name="push_soft_ask_cancel">No grazie</string>
+
+    <string name="profile_support_email">Email di contatto: %s</string>
+    <string name="dashboard_daily_check_in_title">Com\'è andata la tua giornata?</string>
+    <string name="dashboard_daily_check_in_subtitle">Dicci come ti sei sentito oggi</string>
+    <string name="dashboard_daily_check_in_hard">Difficile</string>
+    <string name="dashboard_daily_check_in_okay">Così così</string>
+    <string name="dashboard_daily_check_in_happy">Felice</string>
+    <string name="dashboard_daily_check_in_confirmation">Grazie! Lo includeremo nelle tue statistiche</string>
+
+    <string name="calendar_event_daily_check_in_hard">È stata dura</string>
+    <string name="calendar_event_daily_check_in_okay">Una giornata normale</string>
+    <string name="calendar_event_daily_check_in_happy">Una bella giornata</string>
+    <string name="calendar_event_daily_check_in_desc">Hai segnato questo giorno</string>
+
+    <string name="paywall_promo_code_text">Hai un codice promozionale?</string>
+    <string name="paywall_promo_code_input_label">Inserisci codice</string>
+    <string name="paywall_promo_code_loading">Verifica del codice promozionale</string>
+    <string name="paywall_promo_code_success">Codice promozionale applicato</string>
+    <string name="paywall_promo_code_invalid">Codice promozionale non valido.</string>
+    <string name="paywall_promo_code_try_again">Riprova</string>
+    <string name="paywall_promo_code_blocked">Non puoi inserire un codice promozionale ora. Riprova più tardi</string>
+
+    <string name="push_daily_check_in_title">%s, com\'è andata la tua giornata?</string>
+    <string name="push_daily_check_in_desc">Dicci come ti sei sentito oggi</string>
+
+    <string name="push_savings_goal_existing_title">%s, i tuoi risparmi stanno crescendo!</string>
+    <string name="push_savings_goal_existing_desc">Hai già risparmiato %s</string>
+    <string name="push_savings_goal_none_title">%s, vuoi iniziare a risparmiare?</string>
+    <string name="push_savings_goal_none_desc">Inizia a risparmiare il denaro che spendevi per le sigarette</string>
+
+    <string name="manage_subscription_restore_button">Ripristina abbonamento</string>
+
+    <string name="journey_calendar_reward_info">Guarda un breve video per ottenere l\'accesso di oggi</string>
+    <string name="journey_calendar_reward_submit">Guarda video</string>
+    <string name="journey_calendar_preview_reward_hint">Accesso per oggi</string>
+    <string name="journey_calendar_preview_button_or">Oppure</string>
+
+    <string name="journey_calendar_header_subtitle_access_until_day_end">Il calendario è disponibile fino alle 23:59 di oggi</string>
+    <string name="insights_header_subtitle_access_until_day_end">La pagina è disponibile fino alle 23:59 di oggi</string>
+
+    <string name="dashboard_smoke_view_title">Hai bisogno di supporto?</string>
+    <string name="dashboard_smoke_view_subtitle">Siamo qui per aiutarti</string>
+
+    <string name="dashboard_calendar_header_today">Oggi, %s</string>
+    <string name="dashboard_calendar_view_full_button">Visualizza calendario completo</string>
+
+    <string name="craving_support_toolbar_title">Supporto</string>
+    <string name="craving_support_header_title">Questa sensazione passerà</string>
+    <string name="craving_support_header_subtitle">Non sei solo. Superiamo questo momento con calma</string>
+
+    <string name="craving_support_craving_strength">Quanto è forte il desiderio adesso?</string>
+    <string name="craving_support_craving_strength_low">Lieve</string>
+    <string name="craving_support_craving_strength_mid">Moderato</string>
+    <string name="craving_support_craving_strength_strong">Forte</string>
+
+    <string name="craving_support_activity_title">Prova questo ora</string>
+    <string name="craving_support_activity_submit_button">Avvia attività</string>
+
+    <string name="cravings_tool_walking_title">Breve passeggiata</string>
+    <string name="cravings_tool_walking_subtitle">Una breve passeggiata o un cambio di ambiente può ridurre notevolmente il desiderio</string>
+
+    <string name="cravings_tool_surrounding_title">Cambia ambiente</string>
+    <string name="cravings_tool_surrounding_subtitle">Vai in un altro posto o fai qualcosa di semplice per interrompere il modello abituale</string>
+
+    <string name="cravings_tool_stretch_title">Allungati o muoviti</string>
+    <string name="cravings_tool_stretch_subtitle">Movimenti leggeri o stretching aiutano a rilasciare la tensione e spostare l\'attenzione</string>
+
+    <string name="cravings_support_other_title">Anche questi possono aiutare</string>
+
+    <string name="journey_calendar_event_craving_title">Momento di desiderio (%s)</string>
+    <string name="journey_calendar_event_craving_subtitle">In questo giorno hai provato un desiderio</string>
+
+    <string name="craving_support_strength_submit">Salva</string>
+    <string name="craving_support_strength_successfully_saved">Desiderio salvato con successo</string>
+
+    <string name="insights_chart_slips">Ricadute</string>
+    <string name="insight_chart_slips_empty_title">Non c\'è nulla da mostrare</string>
+    <string name="insight_chart_slips_empty_subtitle">Non ci sono stati desideri o ricadute in questo periodo</string>
+    <string name="insight_chart_slips_empty_add_slip_button">Segnala fumo</string>
+
+    <string name="insights_charts_slip_weekday_monday">Lun</string>
+    <string name="insights_charts_slip_weekday_tuesday">Mar</string>
+    <string name="insights_charts_slip_weekday_wednesday">Mer</string>
+    <string name="insights_charts_slip_weekday_thursday">Gio</string>
+    <string name="insights_charts_slip_weekday_friday">Ven</string>
+    <string name="insights_charts_slip_weekday_saturday">Sab</string>
+    <string name="insights_charts_slip_weekday_sunday">Dom</string>
+
+    <string name="insights_slips_header_title">Desideri e ricadute nel tempo</string>
+    <string name="insights_slip_legend_slip">Ricadute</string>
+    <string name="insights_slip_legend_cravings">Desideri</string>
+</resources>
