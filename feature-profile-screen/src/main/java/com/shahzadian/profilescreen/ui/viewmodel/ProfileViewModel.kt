@@ -106,7 +106,7 @@ internal class ProfileViewModel @Inject constructor(
             val userNameLetter = userData.personalData.name.first().toString()
             val appName = context.getString(R.string.app_name)
             val appVersion = appInfoHelper.getAppVersion()
-            val displayableVersion = "$appName v${appVersion.versionName}"
+            val displayableVersion = "$appName v${appVersion.versionName} (${appVersion.buildNumber})"
             val subscriptionStatus =
                 getUserCurrentSubscriptionUseCase()
             setViewState(
