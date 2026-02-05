@@ -5,12 +5,11 @@ import androidx.compose.runtime.Immutable
 @Immutable
 internal data class SavingsGoalDataUiModel(
     val name: String,
-    val necessaryAmount: Float,
-    val currentAmount: Float,
+    val necessaryAmount: String,
+    val currentAmount: String,
     val noCigDays: Int,
-    val currency: String?,
     val achievedPercents: Int,
     val daysLeft: Int,
-    val amountLeft: Float,
+    val amountLeft: String,
     val category: SavingsGoalCategoryUiModel,
 )

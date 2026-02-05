@@ -43,7 +43,6 @@ internal fun SavingsGoalDetailsCardView(
         HeaderView(
             goalName = dataUiModel.name,
             necessaryAmount = dataUiModel.necessaryAmount,
-            currency = dataUiModel.currency,
             categoryIcon = dataUiModel.category.icon,
             modifier = Modifier
                 .fillMaxWidth()
@@ -51,7 +50,6 @@ internal fun SavingsGoalDetailsCardView(
         )
         ProgressView(
             amount = dataUiModel.currentAmount,
-            currency = dataUiModel.currency,
             percents = dataUiModel.achievedPercents,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -61,7 +59,6 @@ internal fun SavingsGoalDetailsCardView(
         )
         ForecastView(
             amountLeft = dataUiModel.amountLeft,
-            currency = dataUiModel.currency,
             daysLeft = dataUiModel.daysLeft,
             modifier = Modifier.fillMaxWidth()
         )
@@ -71,8 +68,7 @@ internal fun SavingsGoalDetailsCardView(
 @Composable
 private fun HeaderView(
     goalName: String,
-    necessaryAmount: Float,
-    currency: String?,
+    necessaryAmount: String,
     categoryIcon: ImageWrapper,
     modifier: Modifier = Modifier,
 ) {
@@ -93,11 +89,10 @@ private fun HeaderView(
                 color = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.padding(bottom = 4.dp),
             )
-            val displayableCurrency = currency ?: ""
             Text(
                 text = stringResource(
                     R.string.savings_goal_details_card_goal,
-                    "$necessaryAmount$displayableCurrency"
+                    necessaryAmount
                 ),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSecondary,
@@ -112,8 +107,7 @@ private fun HeaderView(
 
 @Composable
 private fun ProgressView(
-    amount: Float,
-    currency: String?,
+    amount: String,
     percents: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -122,16 +116,6 @@ private fun ProgressView(
         percentsAnimatable.snapTo(0f)
         percentsAnimatable.animateTo(
             targetValue = percents.toFloat(),
-            animationSpec = tween(
-                durationMillis = ComposeConst.PROGRESS_ANIMATION_DURATION,
-            )
-        )
-    }
-    val amountAnimatable = remember { Animatable(amount) }
-    LaunchedEffect(amount) {
-        amountAnimatable.snapTo(0f)
-        amountAnimatable.animateTo(
-            targetValue = amount,
             animationSpec = tween(
                 durationMillis = ComposeConst.PROGRESS_ANIMATION_DURATION,
             )
@@ -151,16 +135,10 @@ private fun ProgressView(
                 color = MaterialTheme.colorScheme.onSecondary,
                 modifier = Modifier.weight(1f),
             )
-            val displayableCurrency = currency ?: ""
-            val displayableAmount = if (amountAnimatable.value == amount) {
-                amountAnimatable.value
-            } else {
-                amountAnimatable.value.toInt().toFloat()
-            }
             Text(
                 buildAnnotatedString {
                     withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
-                        append("$displayableAmount$displayableCurrency")
+                        append(amount)
                     }
                     append(" / ")
                     withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onPrimary)) {
@@ -178,8 +156,7 @@ private fun ProgressView(
 
 @Composable
 private fun ForecastView(
-    amountLeft: Float,
-    currency: String?,
+    amountLeft: String,
     daysLeft: Int,
     modifier: Modifier = Modifier,
 ) {
@@ -190,7 +167,6 @@ private fun ForecastView(
     ) {
         AmountLeftView(
             amountLeft = amountLeft,
-            currency = currency,
         )
         DaysLeftView(
             daysLeft = daysLeft,
@@ -200,8 +176,7 @@ private fun ForecastView(
 
 @Composable
 private fun AmountLeftView(
-    amountLeft: Float,
-    currency: String?,
+    amountLeft: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -214,9 +189,8 @@ private fun AmountLeftView(
             color = MaterialTheme.colorScheme.onSecondary,
             modifier = Modifier.padding(bottom = 4.dp),
         )
-        val displayableCurrency = currency ?: ""
         Text(
-            text = "$amountLeft$displayableCurrency",
+            text = amountLeft,
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.onPrimary,
         )

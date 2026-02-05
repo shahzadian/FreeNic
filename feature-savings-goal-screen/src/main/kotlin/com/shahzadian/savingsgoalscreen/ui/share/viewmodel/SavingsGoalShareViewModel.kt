@@ -64,13 +64,12 @@ internal class SavingsGoalShareViewModel @Inject constructor(
             ?: throw IllegalStateException("No category found for id ${this.categoryId}")
         return SavingsGoalDataUiModel(
             name = this.name,
-            necessaryAmount = this.necessaryAmount,
-            currentAmount = this.currentAmount,
+            necessaryAmount = this.displayableNecessaryAmount,
+            currentAmount = this.displayableCurrentAmount,
             noCigDays = this.noCigDays,
-            currency = this.currency,
             achievedPercents = this.achievedPercents.toInt(),
             daysLeft = this.daysLeft,
-            amountLeft = this.amountLeft,
+            amountLeft = this.displayableAmountLeft,
             category = SavingsGoalCategoryUiModel(
                 id = category.id,
                 name = category.name,

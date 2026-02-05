@@ -48,7 +48,6 @@ internal fun SavingsGoalViewExisting(
             percents = savingsGoal.achievedPercents,
             currentAmount = savingsGoal.currentAmount,
             necessaryAmount = savingsGoal.necessaryAmount,
-            currency = savingsGoal.currency,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)
@@ -99,9 +98,8 @@ private fun HeaderView(
 @Composable
 private fun ProgressView(
     percents: Int,
-    currentAmount: Float,
-    necessaryAmount: Float,
-    currency: String?,
+    currentAmount: String,
+    necessaryAmount: String,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -114,7 +112,6 @@ private fun ProgressView(
                 .padding(bottom = 8.dp)
                 .fillMaxWidth()
         ) {
-            val displayableCurrency = currency ?: ""
             Text(
                 text = stringResource(
                     com.shahzadian.baseui.R.string.goals_savings_goal_progress_label,
@@ -127,7 +124,7 @@ private fun ProgressView(
                 verticalAlignment = Alignment.Bottom,
             ) {
                 Text(
-                    text = "$currentAmount$displayableCurrency / $necessaryAmount$displayableCurrency",
+                    text = "$currentAmount / $necessaryAmount",
                     color = MaterialTheme.colorScheme.onPrimary,
                     style = MaterialTheme.typography.titleLarge.copy(
                         platformStyle = PlatformTextStyle(

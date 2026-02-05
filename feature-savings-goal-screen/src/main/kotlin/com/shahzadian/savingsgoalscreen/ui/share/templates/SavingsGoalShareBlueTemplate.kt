@@ -93,10 +93,9 @@ private fun ContentView(
                     .weight(1f)
                     .padding(end = 4.dp)
             )
-            val displayableCurrency = dataUiModel.currency ?: ""
             InfoView(
                 infoLabel = stringResource(R.string.savings_goal_share_blue_saved_money_label),
-                infoData = "${dataUiModel.currentAmount}$displayableCurrency",
+                infoData = dataUiModel.currentAmount,
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 4.dp)

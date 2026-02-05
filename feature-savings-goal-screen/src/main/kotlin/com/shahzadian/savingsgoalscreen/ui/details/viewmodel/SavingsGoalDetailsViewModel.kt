@@ -64,13 +64,12 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
     private suspend fun SavingsGoal.toUiModel(): SavingsGoalDataUiModel {
         return SavingsGoalDataUiModel(
             name = this.name,
-            currency = this.currency,
-            currentAmount = this.currentAmount,
-            necessaryAmount = this.necessaryAmount,
+            currentAmount = displayableCurrentAmount,
+            necessaryAmount = displayableNecessaryAmount,
             noCigDays = this.noCigDays,
             achievedPercents = this.achievedPercents.toInt(),
             daysLeft = this.daysLeft,
-            amountLeft = this.amountLeft,
+            amountLeft = this.displayableAmountLeft,
             category = savingsGoalHelper.getAllCategories().firstOrNull { category ->
                 category.id == this.categoryId
             }?.toUiModel()

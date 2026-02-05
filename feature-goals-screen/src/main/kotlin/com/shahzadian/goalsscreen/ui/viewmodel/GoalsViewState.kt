@@ -20,10 +20,9 @@ internal sealed interface GoalsViewState : ViewState {
     @Immutable
     data class SavingsGoalUiModel(
         val name: String,
-        val necessaryAmount: Float,
-        val currentAmount: Float,
+        val necessaryAmount: String,
+        val currentAmount: String,
         val noCigDays: Int,
-        val currency: String?,
         val achievedPercents: Int,
         val category: TextWrapper,
     )

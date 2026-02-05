@@ -149,11 +149,10 @@ private fun DataHeaderView(
                 modifier = Modifier.padding(bottom = 4.dp),
             )
             val necessaryAmount = dataUiModel.necessaryAmount
-            val displayableCurrency = dataUiModel.currency ?: ""
             Text(
                 text = stringResource(
                     R.string.savings_goal_share_classic_data_header_subtitle,
-                    "$necessaryAmount$displayableCurrency"
+                    necessaryAmount
                 ),
                 color = MaterialTheme.colorScheme.onSecondary,
                 style = MaterialTheme.typography.bodyMedium,
@@ -182,10 +181,8 @@ private fun ProgressView(
                 color = MaterialTheme.colorScheme.onSecondary,
                 style = MaterialTheme.typography.titleMedium,
             )
-            val savedMoney = dataUiModel.currentAmount
-            val displayableCurrency = dataUiModel.currency ?: ""
             Text(
-                text = "${savedMoney}$displayableCurrency",
+                text = dataUiModel.currentAmount,
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.titleMedium,
             )
