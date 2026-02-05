@@ -8,6 +8,7 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -58,6 +59,7 @@ import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateVie
 import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewEvent
 import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewModel
 import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalCreateViewState
+import com.shahzadian.savingsgoalscreen.ui.create.viewmodel.SavingsGoalFieldValidationState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -103,16 +105,28 @@ private fun ContentView(
     onEvent: (SavingsGoalCreateViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var goalAmount by remember {
+        mutableStateOf(data.goalAmount)
+    }
+    var currentAmount by remember {
+        mutableStateOf(data.currentAmount)
+    }
     val onGoalNameChange: (String) -> Unit = remember {
         { onEvent(SavingsGoalCreateViewEvent.OnGoalNameChanged(it)) }
     }
 
-    val onAmountChange: (String) -> Unit = remember {
-        { onEvent(SavingsGoalCreateViewEvent.OnAmountChanged(it)) }
+    val onGoalAmountChange: (String) -> Unit = remember {
+        {
+            goalAmount = it
+            onEvent(SavingsGoalCreateViewEvent.OnAmountChanged(it))
+        }
     }
 
     val onCurrentAmountChange: (String) -> Unit = remember {
-        { onEvent(SavingsGoalCreateViewEvent.OnCurrentAmountChanged(it)) }
+        {
+            currentAmount = it
+            onEvent(SavingsGoalCreateViewEvent.OnCurrentAmountChanged(it))
+        }
     }
 
     val onCategoryClick: (String) -> Unit = remember {
@@ -147,14 +161,18 @@ private fun ContentView(
                 modifier = Modifier.fillMaxWidth()
             )
         }
+        val goalAmountErrorMessage = goalAmount?.takeIf { it.isNotBlank() }?.let {
+            (data.goalAmountValidationState(it) as? SavingsGoalFieldValidationState.Invalid)?.errorMessage
+        }
         InputView(
             label = stringResource(R.string.savings_goal_create_label_amount),
+            errorMessage = goalAmountErrorMessage,
             modifier = Modifier.padding(bottom = 16.dp),
         ) {
             InputField(
                 value = data.goalAmount,
                 hint = stringResource(R.string.savings_goal_create_hint_amount),
-                onValueChange = onAmountChange,
+                onValueChange = onGoalAmountChange,
                 hasNextField = true,
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(
@@ -162,8 +180,12 @@ private fun ContentView(
                 )
             )
         }
+        val currentAmountErrorMessage = currentAmount?.takeIf { it.isNotBlank() }?.let {
+            (data.currentAmountValidationState(it) as? SavingsGoalFieldValidationState.Invalid)?.errorMessage
+        }
         InputView(
             label = stringResource(R.string.savings_goal_create_label_current_amount),
+            errorMessage = currentAmountErrorMessage,
             modifier = Modifier.padding(bottom = 16.dp),
         ) {
             InputField(
@@ -231,6 +253,7 @@ private fun HintView(
 private fun InputView(
     label: String,
     modifier: Modifier = Modifier,
+    errorMessage: TextWrapper? = null,
     input: @Composable () -> Unit
 ) {
     Column(
@@ -243,6 +266,16 @@ private fun InputView(
             modifier = Modifier.padding(bottom = 8.dp),
         )
         input()
+        errorMessage?.let {
+            Spacer(modifier = Modifier.padding(bottom = 4.dp))
+            Text(
+                text = textFromWrapper(it),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error,
+            )
+        }
+
+
     }
 }
 

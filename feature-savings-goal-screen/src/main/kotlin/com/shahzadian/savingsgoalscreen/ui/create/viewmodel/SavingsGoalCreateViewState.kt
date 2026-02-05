@@ -11,5 +11,4 @@ internal sealed interface SavingsGoalCreateViewState : ViewState {
     data class Data(
         val model: SavingsGoalCreateDataUiModel,
     ) : SavingsGoalCreateViewState
-
 }

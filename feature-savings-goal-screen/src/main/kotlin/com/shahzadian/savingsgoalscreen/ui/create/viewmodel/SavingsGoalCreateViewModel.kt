@@ -12,6 +12,7 @@ import com.freenic.ui.AppScreen
 import com.freenic.ui.appinfo.appdatacache.AppDataCacheUpdater
 import com.freenic.ui.extensions.lazyUnsafe
 import com.freenic.ui.vm.BaseViewModel
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.savingsgoal.domain.SavingsGoalCategory
 import com.shahzadian.savingsgoal.domain.SavingsGoalHelper
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalCategoryUiModel
@@ -34,7 +35,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
 
     private var goalName: String? = null
     private var goalAmount: String? = null
-    private var currentAmount: String = "0"
+    private var currentAmount: String? = null
     private var categories: List<SavingsGoalCategory>? = null
     private var currentCategoryId: String? = null
     private val isEdit: Boolean by lazyUnsafe {
@@ -87,6 +88,10 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
 
     private fun setData() {
         viewModelScope.launch {
+            val isGoalAmountValid = goalAmount?.let { validateGoalAmount(it) }
+                ?.let { it is SavingsGoalFieldValidationState.Valid } ?: false
+            val isCurrentAmountValid = currentAmount?.let { validateCurrentAmount(it) }
+            ?.let { it is SavingsGoalFieldValidationState.Valid } ?: false
             setViewState(
                 SavingsGoalCreateViewState.Data(
                     model = SavingsGoalCreateDataUiModel(
@@ -95,9 +100,10 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                         currentAmount = currentAmount,
                         categories = getAllCategories().map { it.toUiModel() },
                         selectedCategoryId = currentCategoryId,
+                        goalAmountValidationState = ::validateGoalAmount,
+                        currentAmountValidationState = ::validateCurrentAmount,
                         isSubmitButtonEnabled = goalName?.isNotBlank() == true &&
-                                goalAmount?.toFloatOrNull()?.let { it > 0 } == true &&
-                                currentAmount.toFloatOrNull()?.let { it >= 0 } == true &&
+                                isGoalAmountValid && isCurrentAmountValid &&
                                 currentCategoryId != null
                     ),
                 )
@@ -130,10 +136,48 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
         }
     }
 
+    private fun validateGoalAmount(amount: String): SavingsGoalFieldValidationState {
+        val isValid = amount.toFloatOrNull()?.let {
+            it in 0f..MAX_GOAL_AMOUNT
+        } ?: false
+        return if (isValid) {
+            SavingsGoalFieldValidationState.Valid
+        } else {
+            SavingsGoalFieldValidationState.Invalid(
+                errorMessage = TextWrapper.FromRes(
+                    com.shahzadian.baseui.R.string.savings_goal_create_amount_error,
+                    listOf(MAX_GOAL_AMOUNT)
+                )
+            )
+        }
+    }
+
+    private fun validateCurrentAmount(amount: String): SavingsGoalFieldValidationState {
+        val goalAmount = goalAmount?.toFloatOrNull() ?: return SavingsGoalFieldValidationState.Invalid(
+            errorMessage = TextWrapper.FromRes(
+                com.shahzadian.baseui.R.string.savings_goal_create_not_all_fields_correct_error,
+            )
+        )
+        val isValid = amount.toFloatOrNull()?.let {
+            it in 0f..goalAmount
+        } ?: false
+        return if (isValid) {
+            SavingsGoalFieldValidationState.Valid
+        } else {
+            SavingsGoalFieldValidationState.Invalid(
+                errorMessage = TextWrapper.FromRes(
+                    com.shahzadian.baseui.R.string.savings_goal_create_amount_error,
+                    listOf(goalAmount)
+                )
+            )
+        }
+    }
+
     private suspend fun saveGoal() {
         val name = goalName ?: throw IllegalStateException("Goal name is empty")
         val amount = goalAmount ?: throw IllegalStateException("Goal amount is empty")
-        val currentAmount = currentAmount.toFloatOrNull() ?: throw IllegalStateException("Current amount is empty")
+        val currentAmount =
+            currentAmount?.toFloatOrNull() ?: throw IllegalStateException("Current amount is empty")
         val category = categories
             ?.firstOrNull { it.id == currentCategoryId }
             ?: throw IllegalStateException("No category selected")
@@ -162,5 +206,9 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
                 currentAmount = currentAmount,
             )
         }
+    }
+
+    private companion object {
+        const val MAX_GOAL_AMOUNT: Float = 1000f
     }
 }
