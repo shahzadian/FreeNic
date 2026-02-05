@@ -1,5 +1,7 @@
 package com.shahzadian.savingsgoal.mapper
 
+import com.freenic.ui.wrapper.TextWrapper
+import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoal.data.SavingsGoalData
 import com.shahzadian.savingsgoal.domain.SavingsGoal
 import com.shahzadian.user.domain.UserDataHelper
@@ -53,7 +55,7 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
         val noCigDays = getUserDataHelper().getSkippedDaysCount()
         val moneyLeft = necessaryMoney - currentAmount
-        val daysLeft = (moneyLeft / savedMoneyPerDay).toInt()
+        val daysLeft = maxOf(0, (moneyLeft / savedMoneyPerDay).toInt())
         val displayableCurrency = currency ?: ""
         val displayableCurrentAmount =
             getDisplayableAmount(currentAmount.coerceAtLeast(0f).toDouble())
@@ -64,15 +66,16 @@ internal class SavingsGoalMapperImpl @Inject constructor(
             name = savingsGoalData.name,
             necessaryAmount = savingsGoalData.necessaryAmount,
             currentAmount = currentAmount.coerceAtLeast(0f),
-            displayableCurrentAmount = "$displayableCurrentAmount$displayableCurrency",
-            displayableNecessaryAmount = "$displayableNecessaryAmount$displayableCurrency",
+            displayableCurrentAmount = TextWrapper.FromString("$displayableCurrentAmount$displayableCurrency"),
+            displayableNecessaryAmount = TextWrapper.FromString("$displayableNecessaryAmount$displayableCurrency"),
             currency = currency,
             noCigDays = noCigDays,
             achievedPercents = minOf(percents, 100f),
             createTimeMillis = savingsGoalData.createTimeMillis,
-            daysLeft = maxOf(0, daysLeft),
+            daysLeft = daysLeft,
+            displayableDaysLeft = getDisplayableDaysLeft(daysLeft),
             amountLeft = maxOf(0f, moneyLeft),
-            displayableAmountLeft = "$displayableAmountLeft$displayableCurrency",
+            displayableAmountLeft = TextWrapper.FromString("$displayableAmountLeft$displayableCurrency"),
             categoryId = savingsGoalData.categoryId
         )
     }
@@ -89,7 +92,7 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         val computedCurrent = currentAmount
         val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
         val amountLeft = (amount - computedCurrent).coerceAtLeast(0f)
-        val daysLeft = (amountLeft / savedMoneyPerDay).toInt()
+        val daysLeft = maxOf(0, (amountLeft / savedMoneyPerDay).toInt())
         val achievedPercents =
             if (amount == 0f) 0f else ((computedCurrent / amount) * 100f).coerceAtMost(100f)
         val displayableCurrency = currency ?: ""
@@ -101,15 +104,16 @@ internal class SavingsGoalMapperImpl @Inject constructor(
             name = name,
             necessaryAmount = amount,
             currentAmount = computedCurrent.coerceAtLeast(0f),
-            displayableCurrentAmount = "$displayableCurrentAmount$displayableCurrency",
-            displayableNecessaryAmount = "$displayableNecessaryAmount$displayableCurrency",
+            displayableCurrentAmount = TextWrapper.FromString("$displayableCurrentAmount$displayableCurrency"),
+            displayableNecessaryAmount = TextWrapper.FromString("$displayableNecessaryAmount$displayableCurrency"),
             currency = currency,
             noCigDays = getUserDataHelper().getSkippedDaysCount(),
             achievedPercents = achievedPercents,
-            daysLeft = maxOf(0, daysLeft),
+            daysLeft = daysLeft,
+            displayableDaysLeft = getDisplayableDaysLeft(daysLeft),
             createTimeMillis = createTimeMillis,
             amountLeft = amountLeft,
-            displayableAmountLeft = "$displayableAmountLeft$displayableCurrency",
+            displayableAmountLeft = TextWrapper.FromString("$displayableAmountLeft$displayableCurrency"),
             categoryId = categoryId
         )
     }
@@ -141,6 +145,14 @@ internal class SavingsGoalMapperImpl @Inject constructor(
     private fun getPassedDaysFromMillis(millis: Long): Int {
         val passedMillis = System.currentTimeMillis() - millis
         return (passedMillis / (1000 * 60 * 60 * 24)).toInt()
+    }
+
+    private fun getDisplayableDaysLeft(daysCount: Int): TextWrapper {
+        return TextWrapper.FromPlural(
+            R.plurals.quantity_days,
+            daysCount,
+            listOf(daysCount)
+        )
     }
 
     private fun getDisplayableAmount(amount: Double): String {

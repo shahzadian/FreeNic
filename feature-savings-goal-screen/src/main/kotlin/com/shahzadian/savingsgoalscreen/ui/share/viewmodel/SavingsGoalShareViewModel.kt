@@ -68,7 +68,7 @@ internal class SavingsGoalShareViewModel @Inject constructor(
             currentAmount = this.displayableCurrentAmount,
             noCigDays = this.noCigDays,
             achievedPercents = this.achievedPercents.toInt(),
-            daysLeft = this.daysLeft,
+            daysLeft = this.displayableDaysLeft,
             amountLeft = this.displayableAmountLeft,
             category = SavingsGoalCategoryUiModel(
                 id = category.id,

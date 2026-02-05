@@ -68,7 +68,7 @@ internal class SavingsGoalDetailsViewModel @Inject constructor(
             necessaryAmount = displayableNecessaryAmount,
             noCigDays = this.noCigDays,
             achievedPercents = this.achievedPercents.toInt(),
-            daysLeft = this.daysLeft,
+            daysLeft = this.displayableDaysLeft,
             amountLeft = this.displayableAmountLeft,
             category = savingsGoalHelper.getAllCategories().firstOrNull { category ->
                 category.id == this.categoryId

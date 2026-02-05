@@ -1,5 +1,6 @@
 package com.shahzadian.savingsgoal.domain
 
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.savingsgoal.data.SavingsGoalData
 import com.shahzadian.savingsgoal.data.SavingsGoalRepository
 import com.shahzadian.savingsgoal.data.category.SavingsGoalCategoryRepository
@@ -82,12 +83,16 @@ internal class SavingsGoalHelperUpdateTest {
             return@doAnswer SavingsGoal(
                 name = d.name,
                 necessaryAmount = d.necessaryAmount,
+                displayableAmountLeft = "${d.necessaryAmount}",
+                displayableCurrentAmount = "${d.currentAmount}",
+                displayableNecessaryAmount = "${d.necessaryAmount}",
                 currentAmount = d.currentAmount + savedPerDay * daysAgo,
                 currency = Currency.getInstance("USD").symbol,
                 noCigDays = 0,
                 achievedPercents = 0f,
                 createTimeMillis = d.createTimeMillis,
                 daysLeft = 0,
+                displayableDaysLeft = TextWrapper.FromString("0"),
                 amountLeft = 0f,
                 categoryId = d.categoryId
             )

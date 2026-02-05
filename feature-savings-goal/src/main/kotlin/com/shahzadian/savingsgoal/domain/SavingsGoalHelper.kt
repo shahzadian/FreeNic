@@ -156,5 +156,4 @@ internal class SavingsGoalHelperImpl @Inject constructor(
         val passedMillis = System.currentTimeMillis() - millis
         return (passedMillis / (1000 * 60 * 60 * 24)).toInt()
     }
-    // endregion
 }

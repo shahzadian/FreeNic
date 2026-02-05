@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.freenic.ui.extensions.mainCardBackground
+import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.goalsscreen.R
 import com.shahzadian.goalsscreen.ui.viewmodel.GoalsViewState
 
@@ -46,8 +47,8 @@ internal fun SavingsGoalViewExisting(
         )
         ProgressView(
             percents = savingsGoal.achievedPercents,
-            currentAmount = savingsGoal.currentAmount,
-            necessaryAmount = savingsGoal.necessaryAmount,
+            currentAmount = textFromWrapper(savingsGoal.currentAmount),
+            necessaryAmount = textFromWrapper(savingsGoal.necessaryAmount),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)

@@ -16,7 +16,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -26,7 +25,9 @@ import com.freenic.ui.extensions.ComposeConst
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.freenic.ui.extensions.imageFromWrapper
 import com.freenic.ui.extensions.mainCardBackground
+import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.ImageWrapper
+import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 
@@ -42,14 +43,14 @@ internal fun SavingsGoalDetailsCardView(
     ) {
         HeaderView(
             goalName = dataUiModel.name,
-            necessaryAmount = dataUiModel.necessaryAmount,
+            necessaryAmount = textFromWrapper(dataUiModel.necessaryAmount),
             categoryIcon = dataUiModel.category.icon,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
         ProgressView(
-            amount = dataUiModel.currentAmount,
+            amount = textFromWrapper(dataUiModel.currentAmount),
             percents = dataUiModel.achievedPercents,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -58,7 +59,7 @@ internal fun SavingsGoalDetailsCardView(
             modifier = Modifier.padding(bottom = 16.dp)
         )
         ForecastView(
-            amountLeft = dataUiModel.amountLeft,
+            amountLeft = textFromWrapper(dataUiModel.amountLeft),
             daysLeft = dataUiModel.daysLeft,
             modifier = Modifier.fillMaxWidth()
         )
@@ -157,7 +158,7 @@ private fun ProgressView(
 @Composable
 private fun ForecastView(
     amountLeft: String,
-    daysLeft: Int,
+    daysLeft: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -199,7 +200,7 @@ private fun AmountLeftView(
 
 @Composable
 private fun DaysLeftView(
-    daysLeft: Int,
+    daysLeft: TextWrapper,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -212,10 +213,8 @@ private fun DaysLeftView(
             color = MaterialTheme.colorScheme.onSecondary,
             modifier = Modifier.padding(bottom = 4.dp),
         )
-        val daysPlural = pluralStringResource(R.plurals.quantity_days, daysLeft, daysLeft)
-        val displayableText = "~ $daysPlural"
         Text(
-            text = displayableText,
+            text = textFromWrapper(daysLeft),
             style = MaterialTheme.typography.headlineSmall,
             color = MaterialTheme.colorScheme.tertiary,
         )

@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 import com.shahzadian.savingsgoalscreen.ui.share.SavingsGoalShareCard
@@ -149,7 +150,7 @@ private fun DataView(
         DataRowView(
             iconRes = com.shahzadian.savingsgoalscreen.R.drawable.ic_savings_goal_share_orange_data_money,
             title = stringResource(R.string.savings_goal_share_orange_data_money),
-            data = dataUiModel.currentAmount,
+            data = textFromWrapper(dataUiModel.currentAmount),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 8.dp)

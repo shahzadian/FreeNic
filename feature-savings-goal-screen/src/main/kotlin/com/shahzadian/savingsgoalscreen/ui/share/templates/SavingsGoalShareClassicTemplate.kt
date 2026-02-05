@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 import com.shahzadian.savingsgoalscreen.ui.share.SavingsGoalShareCard
@@ -182,7 +183,7 @@ private fun ProgressView(
                 style = MaterialTheme.typography.titleMedium,
             )
             Text(
-                text = dataUiModel.currentAmount,
+                text = textFromWrapper(dataUiModel.currentAmount),
                 color = MaterialTheme.colorScheme.primary,
                 style = MaterialTheme.typography.titleMedium,
             )

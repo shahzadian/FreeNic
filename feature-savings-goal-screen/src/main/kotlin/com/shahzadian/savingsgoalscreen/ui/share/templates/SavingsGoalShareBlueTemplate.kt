@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.freenic.ui.extensions.MainAnimatableLinearProgressIndicator
 import com.freenic.ui.extensions.imageFromWrapper
+import com.freenic.ui.extensions.textFromWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.savingsgoalscreen.ui.SavingsGoalDataUiModel
 import com.shahzadian.savingsgoalscreen.ui.share.SavingsGoalShareCard
@@ -95,7 +96,7 @@ private fun ContentView(
             )
             InfoView(
                 infoLabel = stringResource(R.string.savings_goal_share_blue_saved_money_label),
-                infoData = dataUiModel.currentAmount,
+                infoData = textFromWrapper(dataUiModel.currentAmount),
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 4.dp)
