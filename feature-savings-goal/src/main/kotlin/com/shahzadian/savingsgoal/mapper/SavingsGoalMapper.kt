@@ -34,9 +34,6 @@ internal class SavingsGoalMapperImpl @Inject constructor(
     private val getUserDataUseCase: GetUserDataUseCase,
 ) : SavingsGoalMapper {
 
-    private var _userData: UserData? = null
-    private var _userDataHelper: UserDataHelper? = null
-
     override fun fromDomainToData(savingsGoal: SavingsGoal): SavingsGoalData {
         return SavingsGoalData(
             name = savingsGoal.name,
@@ -58,8 +55,10 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         val moneyLeft = necessaryMoney - currentAmount
         val daysLeft = (moneyLeft / savedMoneyPerDay).toInt()
         val displayableCurrency = currency ?: ""
-        val displayableCurrentAmount = getDisplayableAmount(currentAmount.coerceAtLeast(0f).toDouble())
-        val displayableNecessaryAmount = getDisplayableAmount(necessaryMoney.coerceAtLeast(0f).toDouble())
+        val displayableCurrentAmount =
+            getDisplayableAmount(currentAmount.coerceAtLeast(0f).toDouble())
+        val displayableNecessaryAmount =
+            getDisplayableAmount(necessaryMoney.coerceAtLeast(0f).toDouble())
         val displayableAmountLeft = getDisplayableAmount(moneyLeft.coerceAtLeast(0f).toDouble())
         return SavingsGoal(
             name = savingsGoalData.name,
@@ -91,9 +90,11 @@ internal class SavingsGoalMapperImpl @Inject constructor(
         val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
         val amountLeft = (amount - computedCurrent).coerceAtLeast(0f)
         val daysLeft = (amountLeft / savedMoneyPerDay).toInt()
-        val achievedPercents = if (amount == 0f) 0f else ((computedCurrent / amount) * 100f).coerceAtMost(100f)
+        val achievedPercents =
+            if (amount == 0f) 0f else ((computedCurrent / amount) * 100f).coerceAtMost(100f)
         val displayableCurrency = currency ?: ""
-        val displayableCurrentAmount = getDisplayableAmount(currentAmount.coerceAtLeast(0f).toDouble())
+        val displayableCurrentAmount =
+            getDisplayableAmount(currentAmount.coerceAtLeast(0f).toDouble())
         val displayableNecessaryAmount = getDisplayableAmount(amount.coerceAtLeast(0f).toDouble())
         val displayableAmountLeft = getDisplayableAmount(amountLeft.coerceAtLeast(0f).toDouble())
         return SavingsGoal(
@@ -129,20 +130,12 @@ internal class SavingsGoalMapperImpl @Inject constructor(
     }
 
     private suspend fun getUserData(): UserData {
-        return _userData ?: let {
-            val userData = getUserDataUseCase()
-                ?: throw IllegalStateException("User data is null")
-            this._userData = userData
-            userData
-        }
+        return getUserDataUseCase()
+            ?: throw IllegalStateException("User data is null")
     }
 
     private suspend fun getUserDataHelper(): UserDataHelper {
-        return _userDataHelper ?: let {
-            val userDataHelper = userDataHelperFactory.create(getUserData())
-            this._userDataHelper = userDataHelper
-            userDataHelper
-        }
+        return userDataHelperFactory.create(getUserData())
     }
 
     private fun getPassedDaysFromMillis(millis: Long): Int {
