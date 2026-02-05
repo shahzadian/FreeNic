@@ -91,7 +91,7 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
             val isGoalAmountValid = goalAmount?.let { validateGoalAmount(it) }
                 ?.let { it is SavingsGoalFieldValidationState.Valid } ?: false
             val isCurrentAmountValid = currentAmount?.let { validateCurrentAmount(it) }
-            ?.let { it is SavingsGoalFieldValidationState.Valid } ?: false
+                ?.let { it is SavingsGoalFieldValidationState.Valid } ?: false
             setViewState(
                 SavingsGoalCreateViewState.Data(
                     model = SavingsGoalCreateDataUiModel(
@@ -153,11 +153,12 @@ internal class SavingsGoalCreateViewModel @Inject constructor(
     }
 
     private fun validateCurrentAmount(amount: String): SavingsGoalFieldValidationState {
-        val goalAmount = goalAmount?.toFloatOrNull() ?: return SavingsGoalFieldValidationState.Invalid(
-            errorMessage = TextWrapper.FromRes(
-                com.shahzadian.baseui.R.string.savings_goal_create_not_all_fields_correct_error,
+        val goalAmount =
+            goalAmount?.toFloatOrNull() ?: return SavingsGoalFieldValidationState.Invalid(
+                errorMessage = TextWrapper.FromRes(
+                    com.shahzadian.baseui.R.string.savings_goal_create_not_all_fields_correct_error,
+                )
             )
-        )
         val isValid = amount.toFloatOrNull()?.let {
             it in 0f..goalAmount
         } ?: false

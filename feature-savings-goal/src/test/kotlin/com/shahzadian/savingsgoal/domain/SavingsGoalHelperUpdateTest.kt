@@ -102,8 +102,6 @@ internal class SavingsGoalHelperUpdateTest {
             savingsGoalRepository = repo,
             savingsGoalCategoryRepository = categoryRepo,
             savingsGoalMapper = mapper,
-            userDataHelperFactory = userDataHelperFactory,
-            getUserDataUseCase = getUserDataUseCase,
         )
 
         val newUserEnteredCurrentToday = 150f // user edits to set current amount today

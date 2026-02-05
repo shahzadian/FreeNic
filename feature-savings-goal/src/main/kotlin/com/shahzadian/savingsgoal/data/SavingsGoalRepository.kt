@@ -54,7 +54,8 @@ internal class SavingsGoalRepositoryImpl @Inject constructor(
                 prefs[floatPreferencesKey(PREF_KEY_NECESSARY_AMOUNT)] = savingsGoal.necessaryAmount
                 prefs[floatPreferencesKey(PREF_KEY_CURRENT_AMOUNT)] = savingsGoal.currentAmount
                 prefs[stringPreferencesKey(PREF_KEY_GOAL_CATEGORY_ID)] = savingsGoal.categoryId
-                prefs[longPreferencesKey(PREF_KEY_CREATED_TIME_MILLIS)] = savingsGoal.createTimeMillis
+                prefs[longPreferencesKey(PREF_KEY_CREATED_TIME_MILLIS)] =
+                    savingsGoal.createTimeMillis
             }
         }
     }

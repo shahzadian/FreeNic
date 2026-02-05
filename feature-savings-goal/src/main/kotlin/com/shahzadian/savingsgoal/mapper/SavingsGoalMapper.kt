@@ -49,8 +49,7 @@ internal class SavingsGoalMapperImpl @Inject constructor(
     override suspend fun fromDataToDomain(savingsGoalData: SavingsGoalData): SavingsGoal {
         val necessaryMoney = savingsGoalData.necessaryAmount
         val savedMoneyPerDay = getUserDataHelper().getSavedMoneyPerDay()
-        val passedDays = getPassedDaysFromMillis(savingsGoalData.createTimeMillis)
-        val currentAmount = savingsGoalData.currentAmount + savedMoneyPerDay * passedDays
+        val currentAmount = savingsGoalData.currentAmount
         val percents = (currentAmount / necessaryMoney) * 100
         val currency = getUserData().cigarettesData.priceData.getValidCurrencyOrNull()?.symbol
         val noCigDays = getUserDataHelper().getSkippedDaysCount()
