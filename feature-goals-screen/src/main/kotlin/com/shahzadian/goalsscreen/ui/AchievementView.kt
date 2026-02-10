@@ -43,13 +43,22 @@ internal fun AchievementView(
     modifier: Modifier = Modifier,
     shouldShowShareButton: Boolean = true,
     shouldShowProgress: Boolean = true,
+    onClick: () -> Unit = {},
     onAchievementShareClicked: () -> Unit = {},
 ) {
     val isAchievementUnlocked =
         achievement.state is AchievementUiModel.AchievementStateUiModel.Unlocked
     val achievementShareClick = remember { { onAchievementShareClicked() } }
+    val click: () -> Unit = remember { { onClick() } }
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .then(
+                if (isAchievementUnlocked) {
+                    Modifier.clickable(onClick = click)
+                } else {
+                    Modifier
+                }
+            ),
         colors = CardDefaults.cardColors(
             containerColor = if (isAchievementUnlocked) {
                 mainCardBackground

@@ -27,6 +27,7 @@ internal fun AchievementsBlockView(
     data: AchievementsData,
     modifier: Modifier = Modifier,
     onMoreClick: () -> Unit = {},
+    onAchievementClicked: (id: String) -> Unit = {},
     onAchievementShareClicked: (id: String) -> Unit = {},
 ) {
     val items = data.achievements
@@ -38,8 +39,8 @@ internal fun AchievementsBlockView(
     if (data.shouldShowMoreAchievementsButton) {
         NonLazyListContent(
             rows = rows,
-            itemsPerRow = itemsPerRow,
             onMoreClicked = onMoreClick,
+            onAchievementClicked = onAchievementClicked,
             onAchievementShareClicked = onAchievementShareClicked,
             modifier = modifier
         )
@@ -47,6 +48,7 @@ internal fun AchievementsBlockView(
         LazyListContent(
             rows = rows,
             itemsPerRow = itemsPerRow,
+            onAchievementClicked = onAchievementClicked,
             onAchievementShareClicked = onAchievementShareClicked,
             modifier = modifier
         )
@@ -56,7 +58,7 @@ internal fun AchievementsBlockView(
 @Composable
 private fun NonLazyListContent(
     rows: List<List<AchievementUiModel>>,
-    itemsPerRow: Int,
+    onAchievementClicked: (id: String) -> Unit,
     onMoreClicked: () -> Unit,
     onAchievementShareClicked: (id: String) -> Unit,
     modifier: Modifier = Modifier,
@@ -64,6 +66,7 @@ private fun NonLazyListContent(
     val achievementShareClick: (id: String) -> Unit =
         remember { { onAchievementShareClicked(it) } }
     val moreClick: () -> Unit = remember { { onMoreClicked() } }
+    val achievementClick: (String) -> Unit = remember { { onAchievementClicked(it) } }
     Column(
         modifier = modifier
     ) {
@@ -84,6 +87,9 @@ private fun NonLazyListContent(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight(),
+                            onClick = {
+                                achievementClick(achievement.id)
+                            },
                             onAchievementShareClicked = {
                                 achievementShareClick(achievement.id)
                             }
@@ -110,6 +116,7 @@ private fun NonLazyListContent(
 private fun LazyListContent(
     rows: List<List<AchievementUiModel>>,
     itemsPerRow: Int,
+    onAchievementClicked: (id: String) -> Unit,
     onAchievementShareClicked: (id: String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -135,6 +142,9 @@ private fun LazyListContent(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight(),
+                            onClick = {
+                                onAchievementClicked(achievement.id)
+                            },
                             onAchievementShareClicked = {
                                 achievementShareClick(achievement.id)
                             }

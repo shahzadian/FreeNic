@@ -13,6 +13,11 @@ internal sealed interface GoalsViewEvent : ViewEvent {
     data object OnShowMoreAchievementsClicked : GoalsViewEvent
 
     @Immutable
+    data class OnAchievementClicked(
+        val id: String,
+    ) : GoalsViewEvent
+
+    @Immutable
     data class OnAchievementShareClicked(
         val id: String,
     ) : GoalsViewEvent

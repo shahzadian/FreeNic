@@ -59,6 +59,8 @@ object AnalyticsEventConst {
     const val CRAVING_SUPPORT_CASE_SAVED_PARAM_STRENGTH_LABEL: String = "strength_label"
     const val CRAVING_SUPPORT_ACTIVITY_TAP_PARAM_ACTIVITY_ID: String = "activity_id"
 
+    const val ACHIEVEMENT_PARAM_ID: String = "achievement_id"
+
     const val SCREEN_VIEW: String = "screen_view"
     const val REGISTRATION_START: String = "registration_start"
     const val REGISTRATION_FINISH: String = "registration_finish"
@@ -73,6 +75,7 @@ object AnalyticsEventConst {
     const val GOALS_SAVINGS_GOAL_CREATE_TAP: String = "goals_savings_goal_create_tap"
     const val GOALS_SAVINGS_GOAL_DETAILS_TAP: String = "goals_savings_goal_details_tap"
     const val GOALS_SAVINGS_GOAL_UPGRADE_TAP: String = "goals_savings_goal_upgrade_tap"
+    const val GOALS_ACHIEVEMENT_TAP: String = "goals_achievement_tap"
     const val GOALS_ACHIEVEMENT_SHARE_TAP: String = "goals_achievement_share_tap"
     const val PROFILE_QUIT_DATE_EDITED: String = "profile_quit_date_edited"
     const val PROFILE_SUBSCRIPTION_UPGRADE_TAP: String = "profile_subscription_upgrade_tap"
@@ -93,6 +96,7 @@ object AnalyticsEventConst {
     const val SAVINGS_GOAL_CREATED: String = "savings_goal_created"
     const val SAVINGS_GOAL_SHARE_TAP: String = "savings_goal_share_tap"
     const val SAVINGS_GOAL_DELETED: String = "savings_goal_deleted"
+    const val ACHIEVEMENT_TAP: String = "achievement_tap"
     const val ACHIEVEMENT_SHARE_TAP: String = "achievement_share_tap"
     const val PAYWALL_UPGRADE_TAP: String = "paywall_upgrade_tap"
     const val MANAGE_SUBSCRIPTION_CANCEL_TAP: String = "manage_subscription_cancel_tap"

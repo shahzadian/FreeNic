@@ -92,6 +92,9 @@ private fun ContentView(
     val onShowMoreAchievementsClickedEvent = remember {
         { onEvent(GoalsViewEvent.OnShowMoreAchievementsClicked) }
     }
+    val onAchievementClickedEvent: (id: String) -> Unit = remember {
+        { onEvent(GoalsViewEvent.OnAchievementClicked(it)) }
+    }
     val onAchievementShareClick: (id: String) -> Unit = remember {
         { onEvent(GoalsViewEvent.OnAchievementShareClicked(it)) }
     }
@@ -141,6 +144,7 @@ private fun ContentView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
+            onAchievementClicked = onAchievementClickedEvent,
             onAchievementShareClicked = onAchievementShareClick
         )
 

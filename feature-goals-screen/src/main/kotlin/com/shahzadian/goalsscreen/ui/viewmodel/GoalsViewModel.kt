@@ -58,6 +58,24 @@ internal class GoalsViewModel @Inject constructor(
                 }
             }
 
+            is GoalsViewEvent.OnAchievementClicked -> {
+                viewModelScope.launch {
+                    analyticsEventSender.send(
+                        AnalyticsEvent(
+                            name = AnalyticsEventConst.GOALS_ACHIEVEMENT_TAP,
+                            params = mapOf(
+                                AnalyticsEventConst.GOALS_ACHIEVEMENT_SHARE_PARAM_ACHIEVEMENT_ID to event.id.asAnalyticsProperty()
+                            )
+                        ),
+                    )
+                    sendViewCommand(
+                        GoalsViewCommand.NavigateToAchievementShareScreen(
+                            id = event.id
+                        )
+                    )
+                }
+            }
+
             is GoalsViewEvent.OnAchievementShareClicked -> {
                 viewModelScope.launch {
                     analyticsEventSender.send(

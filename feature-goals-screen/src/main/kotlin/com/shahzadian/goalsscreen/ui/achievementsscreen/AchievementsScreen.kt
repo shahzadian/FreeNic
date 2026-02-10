@@ -69,6 +69,9 @@ private fun ContentView(
     onEvent: (AchievementsViewEvent) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val onClick: (String) -> Unit = remember {
+        { onEvent(AchievementsViewEvent.OnAchievementClicked(it)) }
+    }
     val onShareClick: (String) -> Unit = remember {
         { onEvent(AchievementsViewEvent.OnAchievementShareClicked(it)) }
     }
@@ -91,6 +94,7 @@ private fun ContentView(
             modifier = modifier
                 .fillMaxSize()
                 .padding(it),
+            onAchievementClicked = onClick,
             onAchievementShareClicked = onShareClick,
         )
     }
