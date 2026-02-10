@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.freenic.CommonConst
+import com.freenic.activityevent.ActivityEvent
 import com.freenic.activityevent.ActivityEventReceiver
 import com.freenic.activityevent.OnAdEventResult
 import com.freenic.logger.AppLogger
@@ -83,6 +84,8 @@ internal class MainActivity : ComponentActivity() {
     private val pushPermissionRequestCommandFlow: MutableSharedFlow<ActivityCommand.PushPermissionRequestCommand> by lazyUnsafe {
         MutableSharedFlow()
     }
+
+    private var currentAdShowJob: kotlinx.coroutines.Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -219,40 +222,55 @@ internal class MainActivity : ComponentActivity() {
             adHelper.initialize(this@MainActivity)
             loadAd(AdHelper.AdType.Interstitial)
         }
-        adHelper
-            .adShowRequestFlow
-            .flatMapConcat { type ->
-                adHelper.showAd(this@MainActivity, type)
-            }
-            .onEach { result ->
-                when (result) {
-                    is AdHelper.BannerAdShowResult.Error -> {
-                        loadAd(
-                            adType = result.adType,
-                        )
-                        activityEventReceiver.sendResult(
-                            OnAdEventResult.Error(result.throwable)
-                        )
-                    }
-
-                    is AdHelper.BannerAdShowResult.Dismissed -> {
-                        loadAd(
-                            adType = result.adType,
-                        )
-                    }
-
-                    is AdHelper.BannerAdShowResult.Showing -> {}
-
-                    is AdHelper.BannerAdShowResult.Rewarded -> {
-                        activityEventReceiver.sendResult(
-                            OnAdEventResult.AdShown(
-                                hasReward = true,
+        currentAdShowJob = lifecycleScope.launch {
+            adHelper
+                .adShowRequestFlow
+                .flatMapConcat { type ->
+                    adHelper.showAd(this@MainActivity, type)
+                }
+                .onEach { result ->
+                    when (result) {
+                        is AdHelper.BannerAdShowResult.Error -> {
+                            loadAd(
+                                adType = result.adType,
                             )
-                        )
+                            activityEventReceiver.sendResult(
+                                OnAdEventResult.Error(result.throwable)
+                            )
+                        }
+
+                        is AdHelper.BannerAdShowResult.Dismissed -> {
+                            loadAd(
+                                adType = result.adType,
+                            )
+                        }
+
+                        is AdHelper.BannerAdShowResult.Showing -> {
+                            activityEventReceiver.sendResult(
+                                OnAdEventResult.AdLoading
+                            )
+                        }
+
+                        is AdHelper.BannerAdShowResult.Rewarded -> {
+                            activityEventReceiver.sendResult(
+                                OnAdEventResult.AdShown(
+                                    hasReward = true,
+                                )
+                            )
+                        }
                     }
                 }
+                .launchIn(this)
+        }
+
+        // Listen for ad loading cancel requests from ViewModels
+        lifecycleScope.launch {
+            activityEventReceiver.eventFlow.collect { event ->
+                if (event is ActivityEvent.AdLoadingCancel) {
+                    currentAdShowJob?.cancel()
+                }
             }
-            .launchIn(lifecycleScope)
+        }
     }
 
     private fun loadAd(adType: AdHelper.AdType) {

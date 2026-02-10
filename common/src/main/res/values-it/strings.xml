@@ -700,6 +700,8 @@
     <string name="insights_slips_header_title">Desideri e ricadute nel tempo</string>
     <string name="insights_slip_legend_slip">Ricadute</string>
     <string name="insights_slip_legend_cravings">Desideri</string>
-    <string name="savings_goal_create_amount_error">L\'importo non può essere inferiore a 0 né superiore a %1$.2f</string>
+    <string name="savings_goal_create_amount_error">L\'importo non pu essere inferiore a 0 n superiore a %1$.2f</string>
     <string name="savings_goal_create_not_all_fields_correct_error">Non tutti i campi sono compilati correttamente</string>
+    <string name="ad_load_error">Impossibile caricare l\'annuncio. Riprova più tardi</string>
+    <string name="ad_load_timeout">Timeout nel caricamento dell\'annuncio. Riprova</string>
 </resources>

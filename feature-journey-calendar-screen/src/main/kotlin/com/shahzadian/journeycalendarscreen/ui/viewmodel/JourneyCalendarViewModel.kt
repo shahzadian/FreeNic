@@ -19,9 +19,6 @@ import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarHelper
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -191,24 +188,79 @@ internal class JourneyCalendarViewModel @Inject constructor(
                     name = AnalyticsEventConst.JOURNEY_CALENDAR_WATCH_VIDEO_TAP,
                 )
             )
-            activityEventSender
-                .resultFlow
-                .filterIsInstance<OnAdEventResult.AdShown>()
-                .onEach { eventResult ->
-                    (viewState as? JourneyCalendarViewState.Preview)?.let { currentState ->
-                        setViewState(currentState.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Default))
+
+            // Set loading state
+            val currentState = viewState as? JourneyCalendarViewState.Preview ?: return@launch
+            setViewState(currentState.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Loading))
+
+            var isAdHandled = false
+
+            // Listen for ad callbacks (both success and error)
+            val callbackJob = launch {
+                activityEventSender.resultFlow.collect { result ->
+                    when (result) {
+                        is OnAdEventResult.AdLoading -> {
+                            // Ad started showing, cancel timeout
+                            if (isAdHandled) return@collect
+                            isAdHandled = true
+                        }
+                        is OnAdEventResult.AdShown -> {
+                            (viewState as? JourneyCalendarViewState.Preview)?.let { state ->
+                                setViewState(state.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Default))
+                            }
+                            if (result.hasReward) {
+                                rewardHelper.onRewarded()
+                                setData()
+                            }
+                        }
+                        is OnAdEventResult.Error -> {
+                            if (isAdHandled) return@collect
+
+                            (viewState as? JourneyCalendarViewState.Preview)?.let { state ->
+                                setViewState(state.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Default))
+                            }
+                            sendViewCommand(
+                                JourneyCalendarViewCommand.ShowError(
+                                    message = com.freenic.ui.wrapper.TextWrapper.FromRes(
+                                        resId = com.shahzadian.baseui.R.string.ad_load_error
+                                    )
+                                )
+                            )
+                        }
                     }
-                    if (eventResult.hasReward) {
-                        rewardHelper.onRewarded()
-                        setData()
-                    }
-                }.launchIn(viewModelScope)
+                }
+            }
+
+            // Request ad to show
             adHelper.requestAdShow(
                 adType = AdHelper.AdType.Rewarded,
                 forceShow = true,
             )
-            val currentState = viewState as? JourneyCalendarViewState.Preview ?: return@launch
-            setViewState(currentState.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Loading))
+
+            // Start timeout timer (5 seconds for ad loading only)
+            launch {
+                kotlinx.coroutines.delay(5000)
+                if (!isAdHandled) {
+                    isAdHandled = true
+                    callbackJob.cancel()
+
+                    // Cancel ad loading in MainActivity
+                    activityEventSender.sendEvent(
+                        com.freenic.activityevent.ActivityEvent.AdLoadingCancel
+                    )
+
+                    (viewState as? JourneyCalendarViewState.Preview)?.let { state ->
+                        setViewState(state.copy(previewRewardState = JourneyCalendarViewState.PreviewRewardState.Default))
+                    }
+                    sendViewCommand(
+                        JourneyCalendarViewCommand.ShowError(
+                            message = com.freenic.ui.wrapper.TextWrapper.FromRes(
+                                resId = com.shahzadian.baseui.R.string.ad_load_timeout
+                            )
+                        )
+                    )
+                }
+            }
         }
     }
 

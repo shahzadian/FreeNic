@@ -35,6 +35,8 @@ sealed interface ActivityEvent {
     data object SubscriptionTermsOpenRequest : ActivityEvent
 
     data object PushPermissionShowRequest : ActivityEvent
+
+    data object AdLoadingCancel : ActivityEvent
 }
 
 interface ActivityEventResult
@@ -44,10 +46,11 @@ data class OnPushPermissionResult(
 ) : ActivityEventResult
 
 sealed interface OnAdEventResult : ActivityEventResult {
-
     data class Error(
         val throwable: Throwable,
     ) : OnAdEventResult
+
+    data object AdLoading : OnAdEventResult
 
     data class AdShown(
         val hasReward: Boolean,

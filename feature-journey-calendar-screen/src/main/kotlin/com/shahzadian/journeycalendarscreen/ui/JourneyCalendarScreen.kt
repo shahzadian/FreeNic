@@ -1,5 +1,6 @@
 package com.shahzadian.journeycalendarscreen.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -23,6 +25,7 @@ import com.freenic.navigation.AppNavigator
 import com.freenic.ui.AppLoaderView
 import com.freenic.ui.AppScreen
 import com.freenic.ui.extensions.MainToolbarView
+import com.freenic.ui.extensions.textFromWrapper
 import com.freenic.ui.wrapper.TextWrapper
 import com.shahzadian.baseui.R
 import com.shahzadian.journeycalendarscreen.calendarhelper.JourneyCalendarDayCell
@@ -43,6 +46,7 @@ fun JourneyCalendarScreen(
         onEvent = viewModel::onViewEvent,
         modifier = modifier.fillMaxSize(),
     )
+    val context = LocalContext.current
     LaunchedEffect(viewModel) {
         viewModel
             .viewCommandFlow
@@ -62,6 +66,14 @@ fun JourneyCalendarScreen(
                                 source = command.source,
                             )
                         )
+                    }
+
+                    is JourneyCalendarViewCommand.ShowError -> {
+                        Toast.makeText(
+                            context,
+                            context.textFromWrapper(command.message),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }

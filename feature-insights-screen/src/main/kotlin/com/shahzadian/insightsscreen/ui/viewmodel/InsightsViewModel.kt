@@ -17,9 +17,6 @@ import com.shahzadian.insightsscreen.ui.InsightChartMapper
 import com.shahzadian.subscription.domain.GetUserCurrentSubscriptionUseCase
 import com.shahzadian.subscription.domain.UserSubscriptionStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -129,23 +126,79 @@ internal class InsightsViewModel @Inject constructor(
                     name = AnalyticsEventConst.INSIGHTS_WATCH_VIDEO_TAP,
                 )
             )
-            activityEventSender
-                .resultFlow
-                .filterIsInstance<OnAdEventResult.AdShown>()
-                .onEach {
-                    val currentState = viewState as? InsightsViewState.Preview ?: return@onEach
-                    setViewState(currentState.copy(previewRewardState = InsightsViewState.PreviewRewardState.Default))
-                    if (it.hasReward) {
-                        rewardHelper.onRewarded()
+
+            // Set loading state
+            val currentState = viewState as? InsightsViewState.Preview ?: return@launch
+            setViewState(currentState.copy(previewRewardState = InsightsViewState.PreviewRewardState.Loading))
+
+            var isAdHandled = false
+
+            // Listen for ad callbacks (both success and error)
+            val callbackJob = launch {
+                activityEventSender.resultFlow.collect { result ->
+                    when (result) {
+                        is OnAdEventResult.AdLoading -> {
+                            // Ad started showing, cancel timeout
+                            if (isAdHandled) return@collect
+                            isAdHandled = true
+                        }
+                        is OnAdEventResult.AdShown -> {
+                            (viewState as? InsightsViewState.Preview)?.let { state ->
+                                setViewState(state.copy(previewRewardState = InsightsViewState.PreviewRewardState.Default))
+                            }
+                            if (result.hasReward) {
+                                rewardHelper.onRewarded()
+                            }
+                            setData()
+                        }
+                        is OnAdEventResult.Error -> {
+                            if (isAdHandled) return@collect
+
+                            (viewState as? InsightsViewState.Preview)?.let { state ->
+                                setViewState(state.copy(previewRewardState = InsightsViewState.PreviewRewardState.Default))
+                            }
+                            sendViewCommand(
+                                InsightsViewCommand.ShowError(
+                                    message = com.freenic.ui.wrapper.TextWrapper.FromRes(
+                                        resId = com.shahzadian.baseui.R.string.ad_load_error
+                                    )
+                                )
+                            )
+                        }
                     }
-                    setData()
-                }.launchIn(viewModelScope)
+                }
+            }
+
+            // Request ad to show
             adHelper.requestAdShow(
                 adType = AdHelper.AdType.Rewarded,
                 forceShow = true,
             )
-            val currentState = viewState as? InsightsViewState.Preview ?: return@launch
-            setViewState(currentState.copy(previewRewardState = InsightsViewState.PreviewRewardState.Loading))
+
+            // Start timeout timer (5 seconds for ad loading only)
+            launch {
+                kotlinx.coroutines.delay(5000)
+                if (!isAdHandled) {
+                    isAdHandled = true
+                    callbackJob.cancel()
+
+                    // Cancel ad loading in MainActivity
+                    activityEventSender.sendEvent(
+                        com.freenic.activityevent.ActivityEvent.AdLoadingCancel
+                    )
+
+                    (viewState as? InsightsViewState.Preview)?.let { state ->
+                        setViewState(state.copy(previewRewardState = InsightsViewState.PreviewRewardState.Default))
+                    }
+                    sendViewCommand(
+                        InsightsViewCommand.ShowError(
+                            message = com.freenic.ui.wrapper.TextWrapper.FromRes(
+                                resId = com.shahzadian.baseui.R.string.ad_load_timeout
+                            )
+                        )
+                    )
+                }
+            }
         }
     }
 
