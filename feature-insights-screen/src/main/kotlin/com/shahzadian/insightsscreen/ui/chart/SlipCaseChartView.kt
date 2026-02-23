@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -61,6 +63,7 @@ internal fun SlipCaseChartView(
 
     Column(
         modifier = modifier
+            .verticalScroll(rememberScrollState())
     ) {
         Text(
             text = stringResource(com.shahzadian.baseui.R.string.insights_slips_header_title),
@@ -83,8 +86,7 @@ internal fun SlipCaseChartView(
             slipCount = uiModel.items.sumOf { it.fixedSlipsCount },
             cravingsCount = uiModel.items.sumOf { it.fixedCravingsCount },
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                .fillMaxWidth(),
         )
     }
 
