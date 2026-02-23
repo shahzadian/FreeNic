@@ -237,12 +237,7 @@ internal class MainActivity : ComponentActivity() {
                             activityEventReceiver.sendResult(
                                 OnAdEventResult.Error(result.throwable)
                             )
-                        }
-
-                        is AdHelper.BannerAdShowResult.Dismissed -> {
-                            loadAd(
-                                adType = result.adType,
-                            )
+                            currentAdShowJob?.cancel()
                         }
 
                         is AdHelper.BannerAdShowResult.Showing -> {
@@ -251,12 +246,14 @@ internal class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        is AdHelper.BannerAdShowResult.Rewarded -> {
+                        is AdHelper.BannerAdShowResult.Rewarded,
+                        is AdHelper.BannerAdShowResult.Dismissed -> {
                             activityEventReceiver.sendResult(
                                 OnAdEventResult.AdShown(
                                     hasReward = true,
                                 )
                             )
+                            currentAdShowJob?.cancel()
                         }
                     }
                 }

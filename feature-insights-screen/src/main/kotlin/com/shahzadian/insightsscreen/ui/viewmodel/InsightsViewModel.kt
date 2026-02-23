@@ -142,6 +142,7 @@ internal class InsightsViewModel @Inject constructor(
                             if (isAdHandled) return@collect
                             isAdHandled = true
                         }
+
                         is OnAdEventResult.AdShown -> {
                             (viewState as? InsightsViewState.Preview)?.let { state ->
                                 setViewState(state.copy(previewRewardState = InsightsViewState.PreviewRewardState.Default))
@@ -151,6 +152,7 @@ internal class InsightsViewModel @Inject constructor(
                             }
                             setData()
                         }
+
                         is OnAdEventResult.Error -> {
                             if (isAdHandled) return@collect
 
