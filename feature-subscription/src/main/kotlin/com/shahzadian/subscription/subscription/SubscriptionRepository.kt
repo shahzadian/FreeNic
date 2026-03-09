@@ -45,9 +45,6 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
     override suspend fun onSubscriptionUpdated(planId: String?, expiresAtMillis: Long?) {
         stateMutex.withLock {
             local.setCurrentPlanId(planId)
-            Calendar.getInstance().apply {
-                timeInMillis = expiresAtMillis!!
-            }
             local.setCurrentExpiresAtMillis(expiresAtMillis)
         }
     }
@@ -76,16 +73,22 @@ internal class SubscriptionRepositoryImpl @Inject constructor(
         return stateMutex.withLock {
             val planId =
                 local.getCurrentPlanId() ?: return@withLock UserSubscriptionStatus.NoSubscription
-            val plan =
-                plansRepository.getPlans().firstOrNull { it.id == planId }
-                    ?: throw IllegalStateException("Unknown plan ID: $planId")
+            val plan = plansRepository.getPlans().firstOrNull { it.id == planId }
+            if (plan == null) {
+                // Plan не найден в репозитории (например, промокод с несуществующим planId)
+                local.setCurrentPlanId(null)
+                local.setCurrentExpiresAtMillis(null)
+                return@withLock UserSubscriptionStatus.NoSubscription
+            }
             val expiresAt = local.getCurrentExpiresAtMillis()
-                ?: throw IllegalStateException("No expiresAtMillis for plan ID: $planId")
+            if (expiresAt == null) {
+                // Нет даты истечения - очищаем состояние
+                local.setCurrentPlanId(null)
+                return@withLock UserSubscriptionStatus.NoSubscription
+            }
             if (expiresAt <= System.currentTimeMillis()) {
-                onSubscriptionUpdated(
-                    planId = null,
-                    expiresAtMillis = null
-                )
+                local.setCurrentPlanId(null)
+                local.setCurrentExpiresAtMillis(null)
                 return@withLock UserSubscriptionStatus.NoSubscription
             }
             val isAutoRenewing = local.getIsAutoRenewing()
