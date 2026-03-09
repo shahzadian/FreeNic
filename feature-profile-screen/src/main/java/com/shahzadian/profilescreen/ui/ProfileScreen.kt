@@ -157,7 +157,9 @@ private fun ContentView(
             onClicked = {
                 onEvent(ProfileViewEvent.OnClearAllDataConfirmed)
             },
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
         )
         Column(
             modifier = Modifier
