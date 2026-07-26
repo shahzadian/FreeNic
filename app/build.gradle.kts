@@ -18,8 +18,8 @@ android {
         applicationId = "com.shahzadian.freenic"
         minSdk = 27
         targetSdk = 36
-        versionCode = 700
-        versionName = "1.0.5"
+        versionCode = 800
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
