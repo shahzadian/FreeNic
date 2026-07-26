@@ -6,6 +6,7 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
@@ -51,7 +52,11 @@ internal class BillingDataSourceImpl @Inject constructor(
     private fun newClient(): BillingClient =
         BillingClient.newBuilder(context)
             .setListener(purchasesUpdatedListener)
-            .enablePendingPurchases()
+            .enablePendingPurchases(
+                PendingPurchasesParams.newBuilder()
+                    .enableOneTimeProducts()
+                    .build()
+            )
             .build()
 
     private suspend fun BillingClient.ensureConnected(): Boolean =
@@ -127,12 +132,12 @@ internal class BillingDataSourceImpl @Inject constructor(
             )
             .build()
         val productDetails: ProductDetails = suspendCancellableCoroutine { cont ->
-            client.queryProductDetailsAsync(queryParams) { billingResult, productDetailsList ->
+            client.queryProductDetailsAsync(queryParams) { billingResult, queryResult ->
                 if (billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
                     cont.resume(null as ProductDetails?)
                     return@queryProductDetailsAsync
                 }
-                cont.resume(productDetailsList.firstOrNull())
+                cont.resume(queryResult.productDetailsList.firstOrNull())
             }
         } ?: return false
 
