@@ -1,25 +1,14 @@
 package com.shahzadian.freenic.navigation
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,21 +18,15 @@ import com.freenic.ui.AppScreen
 import com.shahzadian.breatheexercisescreen.ui.BreatheExerciseScreen
 import com.shahzadian.cravingsscreen.ui.CravingsScreen
 import com.shahzadian.cravingsupportscreen.ui.CravingSupportScreen
-import com.shahzadian.dashboard.ui.DashboardScreen
 import com.shahzadian.datafill.ui.DataFillScreen
 import com.shahzadian.debugpanelscreen.ui.DebugPanelScreen
 import com.shahzadian.distractionactivityscreen.guessshape.ui.GuessShapeScreen
 import com.shahzadian.distractionactivityscreen.ui.DistractionActivityScreen
-import com.shahzadian.goalsscreen.ui.GoalsScreen
 import com.shahzadian.goalsscreen.ui.achievementsharescreen.AchievementShareScreen
 import com.shahzadian.goalsscreen.ui.achievementsscreen.AchievementsScreen
-import com.shahzadian.insightsscreen.ui.InsightsScreen
 import com.shahzadian.journeycalendarscreen.ui.JourneyCalendarScreen
-import com.shahzadian.mainscreen.ui.MainBottomBar
-import com.shahzadian.mainscreen.ui.MainScreen
 import com.shahzadian.motivationalnotesscreen.ui.MotivationalNotesScreen
 import com.shahzadian.profilescreen.managesubscription.ManageSubscriptionScreen
-import com.shahzadian.profilescreen.ui.ProfileScreen
 import com.shahzadian.savingsgoalscreen.ui.create.SavingsGoalCreateScreen
 import com.shahzadian.savingsgoalscreen.ui.details.SavingsGoalDetailsScreen
 import com.shahzadian.savingsgoalscreen.ui.share.SavingsGoalShareScreen
@@ -61,70 +44,16 @@ fun AppNavigation(
     appNavigatorFactory: AppNavigatorFactory,
 ) {
     val navController = rememberNavController()
-    // Keep explicit remembered state for bottom bar visibility to avoid timing issues
-    val showBottomBarState = remember { mutableStateOf(false) }
+    val tabsHost = remember { MainTabsHost() }
 
     val appNavigator = remember {
         appNavigatorFactory.create(
             navController = navController,
+            tabsHost = tabsHost,
         )
     }
 
-    val bottomBarRoutes = remember {
-        AppScreen
-            .getAll()
-            .filter { it is AppScreen.NavBarScreen }
-            .map { it.route }
-    }
-
-    DisposableEffect(navController) {
-        val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
-            val shouldShow = destination.hierarchy.any { it.route in bottomBarRoutes }
-            showBottomBarState.value = shouldShow
-        }
-        navController.addOnDestinationChangedListener(listener)
-        onDispose {
-            navController.removeOnDestinationChangedListener(listener)
-        }
-    }
-
-    Scaffold(
-        bottomBar = {
-            AnimatedVisibility(
-                visible = showBottomBarState.value,
-                enter = fadeIn(
-                    animationSpec = tween(
-                        durationMillis = 220,
-                        easing = FastOutSlowInEasing
-                    )
-                ) +
-                        slideInVertically(
-                            animationSpec = tween(
-                                durationMillis = 220,
-                                easing = FastOutSlowInEasing
-                            ),
-                            initialOffsetY = { it / 3 } // slight slide from below
-                        ),
-                exit = fadeOut(
-                    animationSpec = tween(
-                        durationMillis = 180,
-                        easing = FastOutSlowInEasing
-                    )
-                ) +
-                        slideOutVertically(
-                            animationSpec = tween(
-                                durationMillis = 180,
-                                easing = FastOutSlowInEasing
-                            ),
-                            targetOffsetY = { it / 3 }
-                        )
-            ) {
-                MainBottomBar(
-                    navigator = appNavigator,
-                )
-            }
-        }
-    ) { innerPadding ->
+    Scaffold { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = AppScreen.WelcomeScreen.composeRoute(
@@ -165,23 +94,15 @@ fun AppNavigation(
                     modifier = BaseModifier,
                 )
             }
+//            Bottom bar destinations live in their own NavHost inside this container
             composable(
-                route = AppScreen.MainScreen.route,
+                route = MAIN_TABS_ROUTE,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
             ) {
-                MainScreen(
+                MainTabsScreen(
+                    tabsHost = tabsHost,
                     navigator = appNavigator,
-                )
-            }
-            composable(
-                route = AppScreen.DashboardScreen.route,
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None },
-            ) {
-                DashboardScreen(
-                    navigator = appNavigator,
-                    modifier = BaseModifier,
                 )
             }
 
@@ -225,17 +146,6 @@ fun AppNavigation(
             }
 
             composable(
-                route = AppScreen.ProfileScreen.route,
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None },
-            ) {
-                ProfileScreen(
-                    navigator = appNavigator,
-                    modifier = BaseModifier,
-                )
-            }
-
-            composable(
                 route = AppScreen.PaywallScreen.route,
                 enterTransition = { EnterTransition.None },
                 exitTransition = { ExitTransition.None },
@@ -246,17 +156,6 @@ fun AppNavigation(
                 )
             ) {
                 PaywallScreen(
-                    navigator = appNavigator,
-                    modifier = BaseModifier,
-                )
-            }
-
-            composable(
-                route = AppScreen.GoalsScreen.route,
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None },
-            ) {
-                GoalsScreen(
                     navigator = appNavigator,
                     modifier = BaseModifier,
                 )
@@ -324,17 +223,6 @@ fun AppNavigation(
                 )
             ) { _ ->
                 AchievementShareScreen(
-                    navigator = appNavigator,
-                    modifier = BaseModifier,
-                )
-            }
-
-            composable(
-                route = AppScreen.InsightsScreen.route,
-                enterTransition = { EnterTransition.None },
-                exitTransition = { ExitTransition.None },
-            ) { _ ->
-                InsightsScreen(
                     navigator = appNavigator,
                     modifier = BaseModifier,
                 )
@@ -430,6 +318,6 @@ fun AppNavigation(
     }
 }
 
-private val BaseModifier: Modifier
+internal val BaseModifier: Modifier
     @Composable
     get() = Modifier.background(MaterialTheme.colorScheme.background)

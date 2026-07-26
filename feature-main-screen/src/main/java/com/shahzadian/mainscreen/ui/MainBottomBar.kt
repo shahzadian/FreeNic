@@ -2,6 +2,7 @@ package com.shahzadian.mainscreen.ui
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -57,6 +58,8 @@ private fun NavBarView(
     NavigationBar(
         modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
+        // System insets are already applied by the Scaffold hosting this bar
+        windowInsets = WindowInsets(0, 0, 0, 0),
     ) {
         pages.forEach { item ->
             val isSelected = currentRoute == item.screen.route

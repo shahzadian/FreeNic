@@ -9,6 +9,7 @@ interface AppNavigatorFactory {
 
     fun create(
         navController: NavController,
+        tabsHost: MainTabsHost,
     ): AppNavigator
 }
 
@@ -16,9 +17,13 @@ internal class AppNavigatorFactoryImpl @Inject constructor(
     private val analyticsEventSender: AnalyticsEventSender,
 ) : AppNavigatorFactory {
 
-    override fun create(navController: NavController): AppNavigator {
+    override fun create(
+        navController: NavController,
+        tabsHost: MainTabsHost,
+    ): AppNavigator {
         return AppNavigatorImpl(
             navController = navController,
+            tabsHost = tabsHost,
             analyticsEventSender = analyticsEventSender,
         )
     }
