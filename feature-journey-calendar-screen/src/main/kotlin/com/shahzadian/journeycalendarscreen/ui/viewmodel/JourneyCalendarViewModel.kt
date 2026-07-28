@@ -181,7 +181,6 @@ internal class JourneyCalendarViewModel @Inject constructor(
     }
 
     private fun onWatchVideoClicked() {
-        if (adHelper.isLoading(AdHelper.AdType.Rewarded)) return
         viewModelScope.launch {
             analyticsEventSender.send(
                 AnalyticsEvent(

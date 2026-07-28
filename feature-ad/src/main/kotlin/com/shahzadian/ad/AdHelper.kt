@@ -57,8 +57,6 @@ interface AdHelper {
 
     sealed interface BannerAdLoadResult {
 
-        object AlreadyLoading : BannerAdLoadResult
-
         object Success : BannerAdLoadResult
 
         class Error(
@@ -115,6 +113,10 @@ internal class AdHelperImpl @Inject constructor(
     @Volatile
     private var isLoadingRewardedInterstitialAd: Boolean = false
 
+    private var interstitialAdDeferred: kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>? = null
+    private var rewardedAdDeferred: kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>? = null
+    private var rewardedInterstitialAdDeferred: kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>? = null
+
     override val adShowRequestFlow: MutableSharedFlow<AdHelper.AdType> by lazyUnsafe {
         MutableSharedFlow()
     }
@@ -141,9 +143,14 @@ internal class AdHelperImpl @Inject constructor(
                 AdHelper.AdType.Interstitial -> {
                     if (currentInterstitialAd != null) {
                         adShowRequestFlow.emit(adType)
-                    } else {
+                    } else if (forceShow) {
                         withContext(coroutineContexts.main) {
-                            loadBannerAd(adType)
+                            val result = loadBannerAd(adType)
+                            if (result is AdHelper.BannerAdLoadResult.Success &&
+                                currentInterstitialAd != null
+                            ) {
+                                adShowRequestFlow.emit(adType)
+                            }
                         }
                     }
                 }
@@ -151,16 +158,13 @@ internal class AdHelperImpl @Inject constructor(
                 AdHelper.AdType.Rewarded -> {
                     if (currentRewardedAd != null) {
                         adShowRequestFlow.emit(adType)
-                    } else {
+                    } else if (forceShow) {
                         withContext(coroutineContexts.main) {
                             val result = loadBannerAd(adType)
-                            if (forceShow && result is AdHelper.BannerAdLoadResult.Success &&
+                            if (result is AdHelper.BannerAdLoadResult.Success &&
                                 currentRewardedAd != null
                             ) {
-                                requestAdShow(
-                                    adType = adType,
-                                    forceShow = false,
-                                )
+                                adShowRequestFlow.emit(adType)
                             }
                         }
                     }
@@ -169,9 +173,14 @@ internal class AdHelperImpl @Inject constructor(
                 AdHelper.AdType.RewardedInterstitial -> {
                     if (currentRewardedInterstitialAd != null) {
                         adShowRequestFlow.emit(adType)
-                    } else {
+                    } else if (forceShow) {
                         withContext(coroutineContexts.main) {
-                            loadBannerAd(adType)
+                            val result = loadBannerAd(adType)
+                            if (result is AdHelper.BannerAdLoadResult.Success &&
+                                currentRewardedInterstitialAd != null
+                            ) {
+                                adShowRequestFlow.emit(adType)
+                            }
                         }
                     }
                 }
@@ -395,16 +404,23 @@ internal class AdHelperImpl @Inject constructor(
     }
 
     private suspend fun loadInterstitialAd(): AdHelper.BannerAdLoadResult {
-        if (isLoadingInterstitialAd) {
-            return AdHelper.BannerAdLoadResult.AlreadyLoading
-        }
+        interstitialAdDeferred?.let { return it.await() }
+        val deferred = kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>()
+        interstitialAdDeferred = deferred
+
         isLoadingInterstitialAd = true
         if (!canShowAdToUser(adType = AdHelper.AdType.Interstitial)) {
             isLoadingInterstitialAd = false
-            return AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+            val result = AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+            deferred.complete(result)
+            interstitialAdDeferred = null
+            return result
         }
-        return suspendCancellableCoroutine { continuation ->
-            continuation.invokeOnCancellation { isLoadingInterstitialAd = false }
+        val result = suspendCancellableCoroutine { continuation ->
+            continuation.invokeOnCancellation {
+                isLoadingInterstitialAd = false
+                interstitialAdDeferred = null
+            }
             InterstitialAd.load(
                 context,
                 getAppAdId(AdHelper.AdType.Interstitial),
@@ -428,6 +444,9 @@ internal class AdHelperImpl @Inject constructor(
                 }
             )
         }
+        deferred.complete(result)
+        interstitialAdDeferred = null
+        return result
     }
 
     override suspend fun loadBannerAd(adType: AdHelper.AdType): AdHelper.BannerAdLoadResult {
@@ -439,14 +458,23 @@ internal class AdHelperImpl @Inject constructor(
     }
 
     private suspend fun loadRewardedAd(): AdHelper.BannerAdLoadResult {
-        if (isLoadingRewardedAd) return AdHelper.BannerAdLoadResult.AlreadyLoading
+        rewardedAdDeferred?.let { return it.await() }
+        val deferred = kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>()
+        rewardedAdDeferred = deferred
+
         isLoadingRewardedAd = true
         if (!canShowAdToUser(adType = AdHelper.AdType.Rewarded)) {
             isLoadingRewardedAd = false
-            return AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+            val result = AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+            deferred.complete(result)
+            rewardedAdDeferred = null
+            return result
         }
-        return suspendCancellableCoroutine { continuation ->
-            continuation.invokeOnCancellation { isLoadingRewardedAd = false }
+        val result = suspendCancellableCoroutine { continuation ->
+            continuation.invokeOnCancellation {
+                isLoadingRewardedAd = false
+                rewardedAdDeferred = null
+            }
             RewardedAd.load(
                 context,
                 getAppAdId(AdHelper.AdType.Rewarded),
@@ -466,17 +494,29 @@ internal class AdHelperImpl @Inject constructor(
                 }
             )
         }
+        deferred.complete(result)
+        rewardedAdDeferred = null
+        return result
     }
 
     private suspend fun loadRewardedInterstitialAd(): AdHelper.BannerAdLoadResult {
-        if (isLoadingRewardedInterstitialAd) return AdHelper.BannerAdLoadResult.AlreadyLoading
+        rewardedInterstitialAdDeferred?.let { return it.await() }
+        val deferred = kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>()
+        rewardedInterstitialAdDeferred = deferred
+
         isLoadingRewardedInterstitialAd = true
         if (!canShowAdToUser(adType = AdHelper.AdType.RewardedInterstitial)) {
             isLoadingRewardedInterstitialAd = false
-            return AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+            val result = AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+            deferred.complete(result)
+            rewardedInterstitialAdDeferred = null
+            return result
         }
-        return suspendCancellableCoroutine { continuation ->
-            continuation.invokeOnCancellation { isLoadingRewardedInterstitialAd = false }
+        val result = suspendCancellableCoroutine { continuation ->
+            continuation.invokeOnCancellation {
+                isLoadingRewardedInterstitialAd = false
+                rewardedInterstitialAdDeferred = null
+            }
             RewardedInterstitialAd.load(
                 context,
                 getAppAdId(AdHelper.AdType.RewardedInterstitial),
@@ -496,6 +536,9 @@ internal class AdHelperImpl @Inject constructor(
                 }
             )
         }
+        deferred.complete(result)
+        rewardedInterstitialAdDeferred = null
+        return result
     }
 
     override suspend fun initialize(context: Context) {

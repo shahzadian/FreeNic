@@ -221,7 +221,23 @@ internal class MainActivity : ComponentActivity() {
             delay(1000)
             adHelper.initialize(this@MainActivity)
             loadAd(AdHelper.AdType.Interstitial)
+            loadAd(AdHelper.AdType.Rewarded)
         }
+        startAdShowListener()
+
+        // Listen for ad loading cancel requests from ViewModels
+        lifecycleScope.launch {
+            activityEventReceiver.eventFlow.collect { event ->
+                if (event is ActivityEvent.AdLoadingCancel) {
+                    currentAdShowJob?.cancel()
+                    startAdShowListener()
+                }
+            }
+        }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun startAdShowListener() {
         currentAdShowJob = lifecycleScope.launch {
             adHelper
                 .adShowRequestFlow
@@ -237,7 +253,6 @@ internal class MainActivity : ComponentActivity() {
                             activityEventReceiver.sendResult(
                                 OnAdEventResult.Error(result.throwable)
                             )
-                            currentAdShowJob?.cancel()
                         }
 
                         is AdHelper.BannerAdShowResult.Showing -> {
@@ -246,27 +261,30 @@ internal class MainActivity : ComponentActivity() {
                             )
                         }
 
-                        is AdHelper.BannerAdShowResult.Rewarded,
-                        is AdHelper.BannerAdShowResult.Dismissed -> {
+                        is AdHelper.BannerAdShowResult.Rewarded -> {
+                            loadAd(
+                                adType = result.adType,
+                            )
                             activityEventReceiver.sendResult(
                                 OnAdEventResult.AdShown(
                                     hasReward = true,
                                 )
                             )
-                            currentAdShowJob?.cancel()
+                        }
+
+                        is AdHelper.BannerAdShowResult.Dismissed -> {
+                            loadAd(
+                                adType = result.adType,
+                            )
+                            activityEventReceiver.sendResult(
+                                OnAdEventResult.AdShown(
+                                    hasReward = false,
+                                )
+                            )
                         }
                     }
                 }
                 .launchIn(this)
-        }
-
-        // Listen for ad loading cancel requests from ViewModels
-        lifecycleScope.launch {
-            activityEventReceiver.eventFlow.collect { event ->
-                if (event is ActivityEvent.AdLoadingCancel) {
-                    currentAdShowJob?.cancel()
-                }
-            }
         }
     }
 
