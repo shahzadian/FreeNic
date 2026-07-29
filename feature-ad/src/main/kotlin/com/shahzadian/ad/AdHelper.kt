@@ -108,14 +108,19 @@ internal class AdHelperImpl @Inject constructor(
 
     @Volatile
     private var isLoadingInterstitialAd: Boolean = false
+
     @Volatile
     private var isLoadingRewardedAd: Boolean = false
+
     @Volatile
     private var isLoadingRewardedInterstitialAd: Boolean = false
 
-    private var interstitialAdDeferred: kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>? = null
-    private var rewardedAdDeferred: kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>? = null
-    private var rewardedInterstitialAdDeferred: kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>? = null
+    private var interstitialAdDeferred: kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>? =
+        null
+    private var rewardedAdDeferred: kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>? =
+        null
+    private var rewardedInterstitialAdDeferred: kotlinx.coroutines.CompletableDeferred<AdHelper.BannerAdLoadResult>? =
+        null
 
     override val adShowRequestFlow: MutableSharedFlow<AdHelper.AdType> by lazyUnsafe {
         MutableSharedFlow()
@@ -411,7 +416,8 @@ internal class AdHelperImpl @Inject constructor(
         isLoadingInterstitialAd = true
         if (!canShowAdToUser(adType = AdHelper.AdType.Interstitial)) {
             isLoadingInterstitialAd = false
-            val result = AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+            val result =
+                AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
             deferred.complete(result)
             interstitialAdDeferred = null
             return result
@@ -465,7 +471,8 @@ internal class AdHelperImpl @Inject constructor(
         isLoadingRewardedAd = true
         if (!canShowAdToUser(adType = AdHelper.AdType.Rewarded)) {
             isLoadingRewardedAd = false
-            val result = AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+            val result =
+                AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
             deferred.complete(result)
             rewardedAdDeferred = null
             return result
@@ -507,7 +514,8 @@ internal class AdHelperImpl @Inject constructor(
         isLoadingRewardedInterstitialAd = true
         if (!canShowAdToUser(adType = AdHelper.AdType.RewardedInterstitial)) {
             isLoadingRewardedInterstitialAd = false
-            val result = AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
+            val result =
+                AdHelper.BannerAdLoadResult.Error(IllegalStateException("Cannot show ad currently"))
             deferred.complete(result)
             rewardedInterstitialAdDeferred = null
             return result
@@ -562,8 +570,11 @@ internal class AdHelperImpl @Inject constructor(
                 AdHelper.AdType.RewardedInterstitial -> ADS_TEST_REWARDED_INTERSTITIAL_ID
             }
         }
-        // Prod: пока используем один и тот же ID, до передачи отдельных ID
-        return ADS_PROD_ID
+        return when (adType) {
+            AdHelper.AdType.Interstitial -> ADS_PROD_ID
+            AdHelper.AdType.Rewarded -> ADS_PROD_REWARDED_ID
+            AdHelper.AdType.RewardedInterstitial -> ADS_PROD_REWARDED_INTERSTITIAL_ID
+        }
     }
 
     private companion object {
@@ -572,6 +583,9 @@ internal class AdHelperImpl @Inject constructor(
         const val ADS_TEST_REWARDED_INTERSTITIAL_ID: String =
             "ca-app-pub-3940256099942544/5354046379"
         const val ADS_PROD_ID: String = "ca-app-pub-3104359766953553/8805483242"
+        const val ADS_PROD_REWARDED_ID: String = "ca-app-pub-3104359766953553/8040554348"
+        const val ADS_PROD_REWARDED_INTERSTITIAL_ID: String =
+            "ca-app-pub-3104359766953553/8040554348"
         const val AD_SHOW_MINIMAL_INTERVAL_MILLIS: Long = 1000 * 60 * 2
     }
 }

@@ -148,8 +148,8 @@ internal class InsightsViewModel @Inject constructor(
                             }
                             if (result.hasReward) {
                                 rewardHelper.onRewarded()
+                                setData()
                             }
-                            setData()
                         }
 
                         is OnAdEventResult.Error -> {
